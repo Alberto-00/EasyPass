@@ -1,2 +1,4 @@
 RAD
-1. Classe Studente può essere eliminata? (Class Diagram)
+1. Attore esterno Ministero della salute nello scenario?
+2. Aggiungere negli attori secondari "MinisteroAPI" fornendo solo un riferimento senza aggiungerlo 
+alla colonna degli attori?
