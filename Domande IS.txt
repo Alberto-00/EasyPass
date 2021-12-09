@@ -2,3 +2,8 @@ RAD
 1. Aggiungere il Ministero API nello scenario 1?
 2. Dashboard con statistiche va messo come requisito?
 3. Stesso boundary può dare vita a più control? (es. gestioneReportButton)
+
+TPD
+1. Cap. 6 - 7
+2. test sulla doppia data
+3. domande Gennaro
