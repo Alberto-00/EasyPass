@@ -1,4 +1,4 @@
 RAD
-1. Attore esterno Ministero della salute nello scenario?
-2. Aggiungere negli attori secondari "MinisteroAPI" fornendo solo un riferimento senza aggiungerlo 
-alla colonna degli attori?
+1. Aggiungere il Ministero API nello scenario 1?
+2. Dashboard con statistiche va messo come requisito?
+3. Stesso boundary può dare vita a più control? (es. gestioneReportButton)
