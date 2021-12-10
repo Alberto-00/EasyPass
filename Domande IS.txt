@@ -1,13 +1,2 @@
 RAD
-1. Aggiungere il Ministero API nello scenario 1?
-2. Dashboard con statistiche va messo come requisito?
-3. Stesso boundary può dare vita a più control? (es. gestioneReportButton)
-
-SDD
-1. Aggiungere il dispositivo mobile nel deployment?
-
-TPD
-1. Cap. 6 - 7
-2. Indice del documento Test Case Specification
-3. test sulla doppia data (Alberto)
-4. domande Gennaro
+1. Stesso boundary può dare vita a più control? (es. gestioneReportButton)
