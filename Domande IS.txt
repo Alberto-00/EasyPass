@@ -8,5 +8,6 @@ SDD
 
 TPD
 1. Cap. 6 - 7
-2. test sulla doppia data
-3. domande Gennaro
+2. Indice del documento Test Case Specification
+3. test sulla doppia data (Alberto)
+4. domande Gennaro
