@@ -1,2 +1,0 @@
-RAD
-1. Stesso boundary può dare vita a più control? (es. gestioneReportButton)
