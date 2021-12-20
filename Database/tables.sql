@@ -45,6 +45,7 @@ CREATE TABLE Direttore (
 CREATE TABLE Sessione (
 	QRcode TEXT PRIMARY KEY,
     Username_Doc TEXT NOT NULL,
+    isInCorso BOOLEAN NOT NULL,
     foreign key (Username_Doc) references Docente (Username_Doc)
     ON UPDATE CASCADE
     ON DELETE CASCADE
