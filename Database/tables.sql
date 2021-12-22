@@ -1,6 +1,6 @@
-DROP database if exists easyPass;
-CREATE DATABASE easyPass;
-USE easyPass;
+DROP database if exists easypass;
+CREATE DATABASE easypass;
+USE easypass;
 
 CREATE TABLE Formato(
 	ID_formato INT PRIMARY KEY,
@@ -13,7 +13,7 @@ CREATE TABLE Formato(
 
 CREATE TABLE Dipartimento (
 	Codice_Dip VARCHAR(20) PRIMARY KEY,
-    Nome TEXT NOT NULL,
+    Nome VARCHAR(50) NOT NULL,
     ID_formato INT NOT NULL,
     foreign key (ID_formato) references Formato (ID_formato)
     ON UPDATE CASCADE
@@ -21,10 +21,10 @@ CREATE TABLE Dipartimento (
 );
 
 CREATE TABLE Docente (
-	Username_Doc TEXT PRIMARY KEY,
+	Username_Doc VARCHAR(50) PRIMARY KEY,
     Nome_Doc VARCHAR(20) NOT NULL,
     Cognome_Doc VARCHAR(20) NOT NULL,
-    Password_Doc TEXT NOT NULL,
+    Password_Doc VARCHAR(50) NOT NULL,
 	Codice_Dip VARCHAR(20) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
@@ -32,10 +32,10 @@ CREATE TABLE Docente (
 );
 
 CREATE TABLE Direttore (
-	Username_Dir TEXT PRIMARY KEY,
+	Username_Dir VARCHAR(50) PRIMARY KEY,
     Nome_Dir VARCHAR(20) NOT NULL,
     Cognome_Dir VARCHAR(20) NOT NULL,
-    Password_Dir TEXT NOT NULL,
+    Password_Dir VARCHAR(50) NOT NULL,
 	Codice_Dip VARCHAR(20) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
@@ -43,8 +43,8 @@ CREATE TABLE Direttore (
 );
 
 CREATE TABLE Sessione (
-	QRcode TEXT PRIMARY KEY,
-    Username_Doc TEXT NOT NULL,
+	QRcode VARCHAR(50) PRIMARY KEY,
+    Username_Doc VARCHAR(50) NOT NULL,
     isInCorso BOOLEAN NOT NULL,
     foreign key (Username_Doc) references Docente (Username_Doc)
     ON UPDATE CASCADE
@@ -55,12 +55,12 @@ CREATE TABLE Report (
 	ID_report INT auto_increment PRIMARY KEY,
     Orario TIME NOT NULL,
     Data_report DATE NOT NULL,
-    PathFile TEXT NOT NULL,
+    PathFile VARCHAR(100) NOT NULL,
     Codice_Dip VARCHAR(20) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-    QRcode_session TEXT NOT NULL,
+    QRcode_session VARCHAR(50) NOT NULL,
 	foreign key (QRcode_session) references Sessione (QRcode)
     ON UPDATE CASCADE
     ON DELETE CASCADE
@@ -69,7 +69,7 @@ CREATE TABLE Report (
 CREATE TABLE Esito (
 	ID_Esito INT auto_increment PRIMARY KEY,
     Valido BOOLEAN NOT NULL,
-    ID_report INT auto_increment NOT NULL,
+    ID_report INT NOT NULL,
     Nome_Studente VARCHAR(20) NOT NULL,
     Cognome_Studente VARCHAR(20) NOT NULL,
     Ddn_Studente BOOLEAN NOT NULL default false,
