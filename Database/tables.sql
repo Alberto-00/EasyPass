@@ -69,10 +69,10 @@ CREATE TABLE Report (
 CREATE TABLE Esito (
 	ID_Esito INT auto_increment PRIMARY KEY,
     Valido BOOLEAN NOT NULL,
-    ID_report INT NOT NULL,
+    ID_Report INT NOT NULL,
     Nome_Studente VARCHAR(20) NOT NULL,
     Cognome_Studente VARCHAR(20) NOT NULL,
-    Ddn_Studente BOOLEAN NOT NULL default false,
+    Ddn_Studente date NOT NULL,
     foreign key (ID_report) references Report (ID_report)
     ON UPDATE CASCADE
     ON DELETE CASCADE
