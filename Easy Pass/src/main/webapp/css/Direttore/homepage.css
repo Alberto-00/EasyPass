@@ -1,0 +1,23 @@
+.covidImg{
+    width: 41%;
+    height: auto;
+    margin: auto;
+}
+
+@media screen and (max-width: 1024px){
+    .covidImg{
+        width: 55%;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .covidImg{
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 570px){
+    .covidImg{
+        width: 100%;
+    }
+}

@@ -1,0 +1,379 @@
+:root{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: clamp(16px, 2vw, 24px);
+    --green: #009578;
+    --greenS: #008067;
+    --white: #ffffff;
+    --grey: #dddddd;
+    --hover: #fd7e14;
+    --black: #000000;
+    --error: #CC0000FF;
+}
+
+*{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: var(--green);
+    color: var(--white);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: row;
+    margin: 0;
+    overflow: hidden;
+}
+
+.error{
+    color: var(--error);
+}
+
+
+
+/******************************
+ *  INIZIO CSS di Navbar.jsp  *
+ ******************************/
+.col-1 {
+    background: var(--greenS);
+    flex: 0.5;
+    transition: all .3s ease-in-out
+}
+
+.col-1.collapse{
+    transform: translate3d(-230px,0,0);
+}
+
+.col-2 {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    transition: all .3s ease-in-out
+}
+
+.col-2.full-width{
+    margin-left: -195px;
+}
+
+.grid-y{
+    display: flex;
+    flex-flow: column wrap;
+}
+
+nav{
+    padding: 0.3em;
+}
+
+nav > a{
+    text-decoration: none;
+    color: var(--white);
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-size: 17px;
+}
+
+nav > a:hover{
+    color: var(--hover);
+}
+
+a > .logoNavbar{
+    width: 90%;
+    height: auto;
+    margin: 9px;
+}
+
+.btn {
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+}
+
+.btn:hover {
+    background-color: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+    border-radius: 12px;
+}
+
+.covidRedImg{
+    width: 60%;
+    height: auto;
+    margin: auto;
+}
+
+
+
+/******************************
+ *  INIZIO CSS di Logout.jsp  *
+ ******************************/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* scroll se necessario */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Content */
+.modal-content {
+    position: fixed;
+    background-color: #fefefe;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    border: none;
+}
+
+.modal-header > h2{
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-weight: bold;
+    border: none;
+    transition: all 0.3s ease 0s;
+}
+
+/* Animation Modal*/
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* Close Button */
+.close {
+    padding: 0 10px 0 9px;
+    margin-top: 8px;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 10px;
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.close:hover{
+    background-color: #2EE59D;
+    border: 2px solid rgba(24,24,24,0.6);
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: var(--greenS);
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 0 0 25px;
+    background-color: var(--green);
+}
+
+.modal-body p{
+    font-size: 16px;
+    padding: 5px 0 5px 0;
+}
+
+.modal-footer {
+    padding: 18px;
+    background-color: var(--greenS);
+}
+
+.modal-button{
+    padding: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    background: var(--greenS);
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.modal-button:hover{
+    background-color: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+    border-radius: 14px;
+}
+
+.modal-button:first-child{
+    margin-right: 20px;
+}
+
+
+
+/******************************
+ *  INIZIO CSS di Header.jsp  *
+ ******************************/
+header {
+    background: var(--greenS);
+    padding: 0.1em;
+}
+
+.col-3 {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    transition: all .3s ease-in-out;
+    width: 6%;
+}
+
+.row{
+    display: grid;
+    grid-template-columns: 2.6em auto;
+    padding: 10px;
+}
+
+.col-4 {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    transition: all .3s ease-in-out;
+    width: 100%;
+}
+
+span.account {
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-size: 21px;
+    margin-top: 0.45em;
+}
+
+.angle-double-up{
+    border: 2px solid rgba(255,255,255,.5);
+    cursor: pointer;
+    transition: .3s;
+    padding: 2px;
+    width: 40.8px;
+    height: 40.8px;
+}
+
+.angle-double-up:hover{
+    background-color: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+    border-radius: 12px;
+}
+
+@media screen and (max-width: 1200px) {
+    span.account{
+        margin-left: 1em;
+        margin-top: 0;
+    }
+}
+
+
+
+/******************************
+ *  INIZIO CSS di Footer.jsp  *
+ ******************************/
+footer {
+    background: var(--green);
+    height: 3vh;
+    font-size: 14px;
+    align-content: flex-end;
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: 1.6em;
+}
+
+footer > span{
+    margin: 20px;
+}
+
+
+
+/******************************
+ *  INIZIO CSS di "Scrool Up"  *
+ ******************************/
+#scrollUp {
+    background: var(--black) none repeat scroll 0 0;
+    bottom: 85px;
+    color: var(--white);
+    cursor: pointer;
+    font-size: 20px;
+    height: 45px;
+    line-height: 43px;
+    right: 12px;
+    text-align: center;
+    width: 45px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    transition: 0.3s;
+    position: fixed;
+    z-index: 99;
+    display: none;
+    -moz-animation: fadeIn 0.7s; /* Firefox */
+    -webkit-animation: fadeIn 0.7s; /* Safari and Chrome */
+    -o-animation: fadeIn 0.7s; /* Opera */
+}
+
+#scrollUp:hover i{
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
