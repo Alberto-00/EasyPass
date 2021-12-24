@@ -18,13 +18,8 @@ public class Formato {
         this.numGPNonValidi = numGPNonValidi;
     }
 
-    public Formato(int id){
-        this.id = id;
-        this.numStudenti = false;
-        this.nomeCognome = false;
-        this.data = false;
-        this.numGPValidi = false;
-        this.numGPNonValidi = false;
+    public Formato(){
+        super();
     }
 
     public int getId() {

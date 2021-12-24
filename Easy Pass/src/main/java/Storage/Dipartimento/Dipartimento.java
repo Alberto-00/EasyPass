@@ -10,10 +10,14 @@ public class Dipartimento {
     private String codice;
     private Formato formato;
 
-    public Dipartimento(String nome, String codice) {
+    public Dipartimento(String nome, String codice, Formato formato) {
         this.nome = nome;
         this.codice = codice;
-        //this.formato = new Formato();
+        this.formato = formato;
+    }
+
+    public Dipartimento() {
+        super();
     }
 
     public String getNome() {
@@ -36,13 +40,8 @@ public class Dipartimento {
         return formato;
     }
 
-    //Serve?
-    /*public void setFormato(Formato formato) {
+    public void setFormato(Formato formato) {
         this.formato = formato;
-    }*/
-
-    public Formato impostaFormato (Formato formato) {
-        return this.formato=formato;
     }
 
     @Override

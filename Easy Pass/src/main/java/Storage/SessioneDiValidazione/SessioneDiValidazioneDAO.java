@@ -1,0 +1,84 @@
+package Storage.SessioneDiValidazione;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class SessioneDiValidazioneDAO {
+
+    public SessioneDiValidazione doRetrieveById(int codice) throws SQLException {
+        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+        try (Connection connection = connectionSingleton.getConnection()) {
+            String query = "SELECT * FROM sessione ses WHERE ses.QRcode=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, codice);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                SessioneDiValidazione sessione = SessioneDiValidazioneMapper.extract(rs);
+                return sessione;
+            }
+        }
+        return null;
+    }
+
+    //doCreate serve? dove si usa?
+
+    public boolean doCreate (SessioneDiValidazione sessione) throws SQLException {
+        if (sessione == null)
+            throw new IllegalArgumentException("Cannot save a null object");
+
+        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+        try (Connection connection = connectionSingleton.getConnection()) {
+            String query = "INSERT INTO sessione VALUES (?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, sessione.getqRCode());
+            ps.setString(2, sessione.getDocente().getUsername());
+            ps.setBoolean(3, sessione.isInCorso());
+
+            if (ps.executeUpdate() == 1)
+                return true;
+            else return false;
+        }
+    }
+
+    //doUpdate
+    public boolean doUpdate (SessioneDiValidazione sessione) throws SQLException {
+        if (sessione == null)
+            throw new IllegalArgumentException("Cannot update a null object");
+
+        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+        try (Connection connection = connectionSingleton.getConnection()) {
+            String query = "UPDATE sessione ses SET ses.Username_Doc=?, ses.isInCorso=? " +
+                    "WHERE ses.QRcode=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, sessione.getDocente().getUsername());
+            ps.setBoolean(2, sessione.isInCorso());
+            ps.setString(3, sessione.getqRCode());
+
+            if (ps.executeUpdate() == 1)
+                return true;
+            else return false;
+        }
+    }
+
+    //doDelete serve? dove si usa?
+
+    public boolean doDelete (SessioneDiValidazione sessione) throws SQLException {
+        if (sessione == null)
+            throw new IllegalArgumentException("Cannot delete a null object");
+
+        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+        try (Connection connection = connectionSingleton.getConnection()) {
+            String query = "DELETE FROM sessione ses WHERE ses.QRcode=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, sessione.getqRCode());
+
+            if (ps.executeUpdate() == 1)
+                return true;
+            else return false;
+        }
+    }
+}
