@@ -3,6 +3,8 @@ package Storage.PersonaleUnisa.Docente;
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoMapper;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
+import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
 import javax.print.Doc;
 import java.sql.Connection;
@@ -60,14 +62,18 @@ public class DocenteDAO {
             ps.setString(3, docente.getCognome());
             ps.setString(4, docente.getPassword());
             ps.setString(5,docente.getDipartimento().getCodice());
-            //Manca il salvataggio delle sessioni del docente, va fatto con il metodo doSave del DAO delle sessioni,
-            // appena viene implementato quello si può fare questo
+            SessioneDiValidazioneDAO sessioneDao=new SessioneDiValidazioneDAO();
+            for(SessioneDiValidazione sessione: docente.getSessioni()){
+                sessioneDao.doCreate(sessione);
+            }
             if (ps.executeUpdate()==1)
                 return true;
             else return false;
         }
     }
 
+    //L'update delle sessioni va fatto oppure è a cascata? Oppure non serve proprio perchè
+    //comunque non aggiorno mai l'id del docente, quindi se volessi modificare una sessione farei l'update della sessione e non del docente...?
     public boolean doUpdate(Docente docente) throws SQLException{
         if(docente==null){
             throw new IllegalArgumentException("Cannot update a null object");
@@ -81,7 +87,10 @@ public class DocenteDAO {
             ps.setString(2,docente.getCognome());
             ps.setString(3,docente.getPassword());
             ps.setString(4,docente.getDipartimento().getCodice());
-            //Manca l'update delle sessioni che va fatto sempre con il doSave del DAO delle sessioni come sopra
+            SessioneDiValidazioneDAO sessioneDao=new SessioneDiValidazioneDAO();
+            for(SessioneDiValidazione sessione: docente.getSessioni()){
+                sessioneDao.doUpdate(sessione);
+            }
             if(ps.executeUpdate()==1)
                 return true;
             else return false;
