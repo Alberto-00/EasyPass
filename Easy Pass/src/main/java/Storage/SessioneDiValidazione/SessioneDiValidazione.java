@@ -16,6 +16,10 @@ public class SessioneDiValidazione {
         this.docente = docente;
     }
 
+    public SessioneDiValidazione() {
+        super();
+    }
+
     public String getqRCode() {
         return qRCode;
     }
