@@ -26,7 +26,7 @@ public class EsitoDAO {
         }
     }
 
-    //Implementare doRetrieveWithRelations oppure fare il retrieve del Report nel metodo doRetrieveById
+    //Implementare doRetrieveWithRelations oppure fare il retrieve del Report nel metodo doRetrieveById?
 
     public ArrayList<Esito> doRetieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
