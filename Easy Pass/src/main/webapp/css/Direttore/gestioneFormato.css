@@ -34,10 +34,11 @@ form{
 .form-check > label{
     font-size: 20px;
     padding-bottom: 20px;
+    padding-left: 8px;
 }
 
 label > span{
-    font-size: 12px;
+    font-size: 18px;
 }
 
 button > span{
@@ -46,6 +47,13 @@ button > span{
 
 .btn-primary{
     padding: 2px 40px;
+}
+
+@media screen and (max-width: 950px){
+    .form-switch .form-check-input {
+        width: 2.3em;
+        height: 1.3em;
+    }
 }
 
 @media screen and (max-width: 480px){

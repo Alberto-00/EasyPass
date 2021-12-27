@@ -3,7 +3,7 @@
 <header>
     <div class="my-row">
         <div class="coll-3">
-            <img class="angle-double-up" src="${pageContext.request.contextPath}/icons/angle-double-up.svg" alt="">
+            <img class="angle-double-up" src="${pageContext.request.contextPath}/icons/menu.svg" alt="menu">
         </div>
         <div class="coll-4">
             <span class="account">${param.title}</span>

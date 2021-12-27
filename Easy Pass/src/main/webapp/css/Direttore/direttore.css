@@ -50,7 +50,7 @@ body {
     display: flex;
     flex-direction: column;
     flex: 6;
-    transition: all .3s ease-in-out
+    transition: all .3s ease-in-out;
 }
 
 .coll-2.full--width{
@@ -282,7 +282,7 @@ span.account {
     border: 2px solid rgba(255,255,255,.5);
     cursor: pointer;
     transition: .3s;
-    padding: 2px;
+    padding: 5px;
     width: 40.8px;
     height: 40.8px;
 }

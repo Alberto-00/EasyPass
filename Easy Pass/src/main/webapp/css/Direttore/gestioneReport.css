@@ -7,6 +7,11 @@
     grid-template-columns: 2.6em auto auto;
 }
 
+
+/*********************
+* INIZIO Navbar di   *
+* GestioneReport.jsp *
+**********************/
 .trash, .download{
     cursor: pointer;
     transition: .3s;
@@ -30,11 +35,12 @@
     flex-direction: column;
     flex: 6;
     transition: all .3s ease-in-out;
+    align-items: end;
 }
 
 .input-group{
-    float: right;
-    width: 60%;
+    align-items: end;
+    width: 100%;
 }
 
 .input-group-text{
@@ -47,10 +53,172 @@
 .input-group > .form-select {
     height: 37px;
     min-height: 0;
-    font-size: 23px;
+    font-size: 18px;
     width: 37px;
 }
 
 .form-control::placeholder {
-    font-size: 23px;
+    font-size: 18px;
+}
+
+.input-date{
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator{
+    margin: 0;
+}
+
+.input-date > .input-group{
+    padding-top: 0.7em;
+    width: 100%;
+    float: right;
+}
+
+.input > .form-control{
+    padding: 0;
+}
+
+.input > .form-control,
+.input > .form-select {
+    height: 30px;
+    font-size: 16px;
+}
+
+.input-group > span{
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    padding: 0 10px;
+}
+
+.input > input{
+    text-align: center;
+    border-radius: 5px !important;
+}
+
+.input > span{
+    font-size: 22px;
+}
+
+
+/*********************
+* INIZIO Table di   *
+* GestioneReport.jsp *
+**********************/
+th{
+    text-align: center;
+}
+
+h4 {
+    margin: 1.7rem 0 1rem;
+}
+
+table{
+    overflow-y: hidden;
+    max-height: 376px;
+    display: block;
+    margin-top: 1.3rem;
+}
+
+.justify-content-center {
+    margin: 0;
+}
+
+.table-image, td, th {
+    vertical-align: middle;
+}
+
+thead{
+    background-color: black;
+    color: white;
+}
+
+th:first-child{
+ width: 102px!important;
+}
+
+th:nth-child(2){
+    width: 38rem!important;
+}
+
+th:nth-child(3){
+    width: 154px!important;
+}
+
+.td-angle{
+    height: auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.angle-right{
+    width: 30px;
+    cursor: pointer;
+}
+
+.angle-right > img{
+    width: 30px;
+}
+
+.angle-right > img:hover{
+    width: 40px;
+    filter: invert(24%) sepia(30%)
+    saturate(5582%) hue-rotate(339deg)
+    brightness(97%) contrast(88%);
+    transition: all 0.3s ease 0s;
+}
+
+td a{
+    display: block;
+}
+
+.page-link{
+    font-size: 14px;
+    padding: 0.1rem 0.5rem;
+}
+
+.pagination{
+    margin: 0;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px){
+    .input-group > .form-control,
+    .input-group > .form-select {
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .input-group-text{
+        height: 30px;
+    }
+
+    .input-group {
+        width: 123%;
+        padding-right: 2.5em;
+    }
+
+    .form-control::placeholder {
+        font-size: 16px;
+    }
+
+    .form-control{
+        font-size: 15px;
+    }
+
+    .input-date > .input-group {
+        padding-top: 1.7em;
+        width: 167%;
+        float: right;
+    }
+
+    .trash, .download{
+        width: 33px;
+        height: 33px;
+    }
+
+    .input > .form-control,
+    .input > .form-select {
+        font-size: 14px;
+    }
 }
