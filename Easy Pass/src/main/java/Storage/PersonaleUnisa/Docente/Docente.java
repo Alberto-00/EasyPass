@@ -1,5 +1,6 @@
 package Storage.PersonaleUnisa.Docente;
 
+import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
@@ -12,11 +13,12 @@ public class Docente extends PersonaleUnisa {
 
     public Docente() {}
 
-    public Docente(String nome, String cognome, String username, String password,ArrayList<SessioneDiValidazione> sessioni){
+    public Docente(String nome, String cognome, String username, String password, Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni){
         this.setNome(nome);
         this.setCognome(cognome);
         this.setUsername(username);
         this.setPassword(password);
+        this.setDipartimento(dipartimento);
         this.sessioni=sessioni;
     }
 
@@ -31,13 +33,6 @@ public class Docente extends PersonaleUnisa {
 
 
     public SessioneDiValidazione avviaSessione(){
-
-        //Il QRCode della sessione dobbiamo farlo passare come parametro al costruttore oppure è meglio che
-        // viene generato "internamente" al momento della chiamata al costruttore?
-        //Perchè se va passato come argomento allor ava modificata la firma di questo metodo avviaSessione()
-
-
-        //Al posto della stringa qrCode ci va il QR code generato come identificativo della sessione
         //Come generiamo questo qrCode?
         SessioneDiValidazione sessione=new SessioneDiValidazione("qrCode",true,this);
         return sessione;
@@ -51,14 +46,12 @@ public class Docente extends PersonaleUnisa {
             sessione.setInCorso(false);
             this.sessioni.add(sessione);
             SessioneDiValidazioneDAO sessioneDao=new SessioneDiValidazioneDAO();
-            //E' giusto salvare la sessione nel database all'interno di questo metodo oppure è meglio farlo fuori?
             sessioneDao.doCreate(sessione);
             return sessione;
         }
     }
 
     //public boolean downloadReport(Report report){}
-    //Come si fa a far partire il download di un file?
 
     @Override
     public String toString() {

@@ -27,7 +27,7 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
-    //Implementare doRetrieveWithRelations oppure fare il retrieve delle relazioni nel metodo doRetrieveById?
+    //Implementare doRetrieveWithRelations
 
     public ArrayList<DirettoreDiDipartimento> doRetieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();

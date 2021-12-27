@@ -39,7 +39,7 @@ public abstract class PersonaleUnisa {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    } //Fare l'hashing
 
     public Dipartimento getDipartimento() {
         return dipartimento;

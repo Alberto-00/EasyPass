@@ -8,11 +8,12 @@ import Storage.Report.Report;
 public class DirettoreDiDipartimento extends PersonaleUnisa {
     public DirettoreDiDipartimento() {}
 
-    public DirettoreDiDipartimento(String nome, String cognome, String username, String password){
+    public DirettoreDiDipartimento(String nome, String cognome, String username, String password,Dipartimento dipartimento){
         this.setNome(nome);
         this.setCognome(cognome);
         this.setUsername(username);
         this.setPassword(password);
+        this.setDipartimento(dipartimento);
     }
 
     //public Report eliminaReport(Report report){}
