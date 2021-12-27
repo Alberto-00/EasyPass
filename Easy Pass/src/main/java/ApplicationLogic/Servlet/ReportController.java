@@ -18,6 +18,15 @@ public class ReportController extends RequestValidator {
         switch (path){
             case "/HomePage":{
                 request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/HomePage")).forward(request, response);
+                break;
+            }
+            case "/GestioneFormato":{
+                request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneFormato")).forward(request, response);
+                break;
+            }
+            case "/GestioneReport":{
+                request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
+                break;
             }
         }
     }
