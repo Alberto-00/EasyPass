@@ -20,7 +20,7 @@
 <link rel="apple-touch-startup-image" href="${pageContext.request.contextPath}/icons/logo.png">
 <meta name="theme-color" content="#93D07C">
 <link href="${pageContext.request.contextPath}/css/reset.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/frontend-lib/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <c:if test="${not empty param.direttoreStyles}">
     <c:forTokens items="${param.direttoreStyles}" delims="," var="direttoreStyle">
@@ -40,7 +40,7 @@
     </c:forTokens>
 </c:if>
 
-<script src="${pageContext.request.contextPath}/bootstrap-5.1.3/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/frontend-lib/bootstrap-5.1.3/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-validate-plugin.js"></script>
 <!--<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>-->

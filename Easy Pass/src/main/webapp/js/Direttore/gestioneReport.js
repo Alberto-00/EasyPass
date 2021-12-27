@@ -1,4 +1,9 @@
-$('#sandbox-container .input-daterange').datepicker({
-    language: "it",
-    orientation: "top right"
+$(document).ready(function() {
+    $('#example').DataTable({
+        "ordering": false,
+        "info": false,
+        "searching": false,
+        "dom": 'rtip',
+        "pageLength": 6
+    });
 });

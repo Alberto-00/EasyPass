@@ -24,11 +24,10 @@
         <div class="container-fluid">
             <p>Seleziona i dati del Formato</p>
             <span class="small-text">Attenzione: </span>
-            <span class="fst-italic">(se è stato selezionato il campo "</span>
-            <span class="fst-italic font-monospace"><u>Data di nascita</u></span>
-            <span class="fst-italic">" è necessario selezionare anche il campo "</span>
-            <span class="fst-italic font-monospace"><u>Nome e cognome</u></span>
-            <span class="fst-italic">")</span>
+            <span class="fst-italic">(se è stato selezionato il campo</span>
+            <span class="fst-italic font-monospace">"<u>Data di nascita</u>"</span>
+            <span class="fst-italic">è necessario selezionare anche il campo</span>
+            <span class="fst-italic font-monospace">"<u>Nome e cognome</u>")</span>
 
             <form action="${pageContext.request.contextPath}/direttoreServlet/checkFormato" method="get" name="gestioneFormato">
                 <div class="form-check form-switch">
@@ -44,12 +43,15 @@
                     <label class="form-check-label" for="numValidazioni">Numero di validazioni effettuate</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="esito" checked>
-                    <label class="form-check-label" for="esito">Esito della validazione
-                        <span class="fst-italic">(Green Pass "
-                            <span class="fst-italic font-monospace"><u>VALIDO</u></span>" o "
-                            <span class="fst-italic font-monospace"><u>NON VALIDO</u></span>")
-                        </span>
+                    <input class="form-check-input" type="checkbox" id="gpValido" checked>
+                    <label class="form-check-label" for="gpValido">Green Pass
+                        <span class="fst-italic font-monospace">"VALIDO"</span>
+                    </label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="gpNonValido" checked>
+                    <label class="form-check-label" for="gpNonValido">Green Pass
+                        <span class="fst-italic font-monospace">"NON VALIDO"</span>
                     </label>
                 </div>
             </form>
@@ -58,7 +60,6 @@
                     <span>SALVA</span>
                 </button>
             </div>
-            <%@include file="../Partials/Direttore/Popup-Pass.jsp"%>
         </div>
         <%@include file="../Partials/Direttore/Footer.jsp"%>
     </div>
