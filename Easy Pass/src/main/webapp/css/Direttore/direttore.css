@@ -36,28 +36,28 @@ body {
 /******************************
  *  INIZIO CSS di Navbar.jsp  *
  ******************************/
-.col-1 {
+.coll-1 {
     background: var(--greenS);
     flex: 0.5;
     transition: all .3s ease-in-out
 }
 
-.col-1.collapse{
+.coll-1.collapsee{
     transform: translate3d(-230px,0,0);
 }
 
-.col-2 {
+.coll-2 {
     display: flex;
     flex-direction: column;
     flex: 6;
     transition: all .3s ease-in-out
 }
 
-.col-2.full-width{
+.coll-2.full--width{
     margin-left: -195px;
 }
 
-.grid-y{
+.gridd-y{
     display: flex;
     flex-flow: column wrap;
 }
@@ -83,7 +83,7 @@ a > .logoNavbar{
     margin: 9px;
 }
 
-.btn {
+.btnn {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
     text-transform: uppercase;
@@ -98,7 +98,7 @@ a > .logoNavbar{
     margin: 1em;
 }
 
-.btn:hover {
+.btnn:hover {
     background-color: #2EE59D;
     box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
     color: var(--black);
@@ -116,7 +116,7 @@ a > .logoNavbar{
 /******************************
  *  INIZIO CSS di Logout.jsp  *
  ******************************/
-.modal {
+.modall {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -130,7 +130,7 @@ a > .logoNavbar{
 }
 
 /* Content */
-.modal-content {
+.modal-contentt {
     position: fixed;
     background-color: #fefefe;
     margin: auto;
@@ -146,13 +146,14 @@ a > .logoNavbar{
     border: none;
 }
 
-.modal-header > h2{
+.modal-headerr > h2{
     font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2.5px;
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
     font-weight: bold;
     border: none;
+    padding-top: 0.3em;
     transition: all 0.3s ease 0s;
 }
 
@@ -193,28 +194,28 @@ a > .logoNavbar{
     cursor: pointer;
 }
 
-.modal-header {
+.modal-headerr {
     padding: 2px 16px;
     background-color: var(--greenS);
     color: white;
 }
 
-.modal-body {
+.modal-bodyy {
     padding: 2px 0 0 25px;
     background-color: var(--green);
 }
 
-.modal-body p{
+.modal-bodyy p{
     font-size: 16px;
     padding: 5px 0 5px 0;
 }
 
-.modal-footer {
+.modal-footerr {
     padding: 18px;
     background-color: var(--greenS);
 }
 
-.modal-button{
+.modal-button {
     padding: 10px;
     color: #ffffff;
     font-weight: bold;
@@ -246,9 +247,10 @@ a > .logoNavbar{
 header {
     background: var(--greenS);
     padding: 0.1em;
+    width: inherit;
 }
 
-.col-3 {
+.coll-3 {
     display: flex;
     flex-direction: column;
     flex: 6;
@@ -256,13 +258,13 @@ header {
     width: 6%;
 }
 
-.row{
+.my-row{
     display: grid;
     grid-template-columns: 2.6em auto;
     padding: 10px;
 }
 
-.col-4 {
+.coll-4 {
     display: flex;
     flex-direction: column;
     flex: 6;

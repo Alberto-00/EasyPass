@@ -1,0 +1,77 @@
+.container, .container-fluid, .container-lg,
+.container-md, .container-sm, .container-xl,
+.container-xxl{
+    padding-top: 1em !important;
+    padding-left: 1.5em !important;
+}
+
+.container-fluid > p{
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    margin: 0;
+}
+
+p + span{
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--bs-warning)
+}
+
+.small-text ~ span{
+    font-size: 15px;
+}
+
+form{
+    padding: 1em 0 0 0;
+}
+
+.form-check{
+    min-height: 2.5rem !important;
+}
+
+.form-check > label{
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+
+label > span{
+    font-size: 12px;
+}
+
+button > span{
+    font-size: 18px;
+}
+
+.btn-primary{
+    padding: 2px 40px;
+}
+
+@media screen and (max-width: 480px){
+    .container-fluid > p{
+        text-align: center;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 423px){
+    .container-fluid > p{
+        text-align: center;
+        white-space: nowrap;
+        font-size: 22px;
+        margin-bottom: 0.6em;
+    }
+
+    form{
+        padding: 1.7em 0 0 0;
+    }
+
+    .btn-width{
+        margin-top: 1em;
+    }
+
+    .btn-primary{
+        padding: 5px 40px;
+    }
+}

@@ -1,0 +1,56 @@
+.container-fluid{
+    padding: 0.7em 1.2em 1.2em 1.2em;
+}
+
+.my-row3{
+    display: grid;
+    grid-template-columns: 2.6em auto auto;
+}
+
+.trash, .download{
+    cursor: pointer;
+    transition: .3s;
+    padding: 2px;
+    width: 37px;
+    height: 37px;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    filter: invert(100%) sepia(93%)
+    saturate(26%) hue-rotate(20deg)
+    brightness(106%) contrast(110%);
+}
+
+.trash:hover, .download:hover{
+    filter: invert(0%) sepia(94%)
+    saturate(0%) hue-rotate(259deg)
+    brightness(105%) contrast(105%);
+}
+
+.coll-5{
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    transition: all .3s ease-in-out;
+}
+
+.input-group{
+    float: right;
+    width: 60%;
+}
+
+.input-group-text{
+    height: 37px;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.input-group > .form-control,
+.input-group > .form-select {
+    height: 37px;
+    min-height: 0;
+    font-size: 23px;
+    width: 37px;
+}
+
+.form-control::placeholder {
+    font-size: 23px;
+}
