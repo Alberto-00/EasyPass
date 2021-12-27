@@ -5,6 +5,8 @@ import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.Report.Report;
 
+import java.sql.SQLException;
+
 public class DirettoreDiDipartimento extends PersonaleUnisa {
     public DirettoreDiDipartimento() {}
 
@@ -16,9 +18,17 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
         this.setDipartimento(dipartimento);
     }
 
-    //public Report eliminaReport(Report report){}
-    //public boolean downloadReport(Report report){}
+    public Report eliminaReport(Report report) throws SQLException {
+        if(report==null){
+            throw new IllegalArgumentException("Cannot delete a null object");
+        }
+        else{
+            this.getDipartimento().eliminaReport(report);
+            return report;
+        }
+    }
     //public ArrayList<Report> ricercaReport(String docente, Date primaData, Date secondaData){}
+
     public Formato impostaFormato(Formato formato){
         if(formato==null){
             throw new IllegalArgumentException("The argument cannot be a null object");
@@ -28,4 +38,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             return formato;
         }
     }
+
+    //Implementare il meccanismo di download
+    //public boolean downloadReport(Report report){}
 }

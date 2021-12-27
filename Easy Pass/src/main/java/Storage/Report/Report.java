@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Report {
 
-    private int id; //è auto increment, come lo gestiamo?
+    private int id;
     private Date data;
     private Time orario;
     private String pathFile;
@@ -16,7 +16,7 @@ public class Report {
     private SessioneDiValidazione sessione;
 
     public Report(int id, Date data, Time orario, String pathFile, Dipartimento dip, SessioneDiValidazione sessione) {
-        //this.id = id;
+        this.id = id;
         this.data = data;
         this.orario = orario;
         this.pathFile = pathFile;
@@ -25,7 +25,12 @@ public class Report {
     }
 
     public Report() {
-        super();
+        id=0;
+        data=null;
+        orario=null;
+        pathFile="";
+        dip=null;
+        sessione=null;
     }
 
     public int getId() {

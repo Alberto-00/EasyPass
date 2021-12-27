@@ -2,7 +2,6 @@ package Storage.Esito;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class EsitoMapper {
     public static Esito extract(ResultSet rs) throws SQLException {

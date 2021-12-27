@@ -33,8 +33,7 @@ public class Docente extends PersonaleUnisa {
 
 
 
-    public SessioneDiValidazione avviaSessione(){
-        //Come generiamo questo qrCode?
+    public SessioneDiValidazione avviaSessione() throws IOException {
         SessioneDiValidazione sessione=new SessioneDiValidazione(true,this);
         return sessione;
     }

@@ -2,14 +2,14 @@ package Storage.Formato;
 
 public class Formato {
 
-    private int id;
+    private int id; //L'id del formato è uguale all'id del dipartimento a cui appartiene
     private boolean numStudenti;
     private boolean nomeCognome;
     private boolean data;
     private boolean numGPValidi;
     private boolean numGPNonValidi;
 
-    public Formato(int id, boolean numStudenti, boolean nomeCognome, boolean data, boolean numGPValidi, boolean numGPNonValidi) {
+    public Formato(int id,boolean numStudenti, boolean nomeCognome, boolean data, boolean numGPValidi, boolean numGPNonValidi) {
         this.id = id;
         this.numStudenti = numStudenti;
         this.nomeCognome = nomeCognome;

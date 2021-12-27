@@ -1,10 +1,14 @@
 package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Esito.Esito;
+import Storage.Esito.EsitoMapper;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SessioneDiValidazioneDAO {
 
@@ -24,7 +28,19 @@ public class SessioneDiValidazioneDAO {
         return null;
     }
 
-    //doCreate serve? dove si usa?
+    public ArrayList<SessioneDiValidazione> doRetrieveAll() throws SQLException {
+        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+        try(Connection connection = connectionSingleton.getConnection()) {
+            String query = "SELECT * FROM sessione ses";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<SessioneDiValidazione> sessioni = new ArrayList<>();
+            while (rs.next()) {
+                sessioni.add(SessioneDiValidazioneMapper.extract(rs));
+            }
+            return sessioni;
+        }
+    }
 
     public boolean doCreate (SessioneDiValidazione sessione) throws SQLException {
         if (sessione == null)
@@ -44,7 +60,6 @@ public class SessioneDiValidazioneDAO {
         }
     }
 
-    //doUpdate
     public boolean doUpdate (SessioneDiValidazione sessione) throws SQLException {
         if (sessione == null)
             throw new IllegalArgumentException("Cannot update a null object");

@@ -7,10 +7,10 @@ public class ReportMapper {
 
     public static Report extract(ResultSet rs) throws SQLException {
         Report report = new Report();
-        report.setId(rs.getInt("ID_report"));
-        report.setOrario(rs.getTime("Orario"));
-        report.setData(rs.getDate("Data_report"));
-        report.setPathFile(rs.getString("PathFile"));
+        report.setId(rs.getInt("rep.ID_report"));
+        report.setOrario(rs.getTime("rep.Orario"));
+        report.setData(rs.getDate("rep.Data_report"));
+        report.setPathFile(rs.getString("rep.PathFile"));
         return report;
     }
 
