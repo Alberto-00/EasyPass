@@ -3,10 +3,10 @@
  ***********************/
 $(document).ready(function (){
     $("img.angle-double-up").click(function (){
-        const col1 = document.getElementsByClassName("col-1")[0];
-        const col2 = document.getElementsByClassName("col-2")[0];
-        col1.classList.toggle("collapse");
-        col2.classList.toggle("full-width");
+        const col1 = document.getElementsByClassName("coll-1")[0];
+        const col2 = document.getElementsByClassName("coll-2")[0];
+        col1.classList.toggle("collapsee");
+        col2.classList.toggle("full--width");
     });
 })
 

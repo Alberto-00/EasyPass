@@ -17,8 +17,10 @@
 </head>
 <body>
     <%@include file="../Partials/Direttore/Navbar.jsp"%>
-    <div class="col-2">
-        <%@include file="../Partials/Direttore/Header.jsp"%>
+    <div class="coll-2">
+        <jsp:include page="/WEB-INF/Interface/Partials/Direttore/Header.jsp">
+            <jsp:param name="title" value="Benvenuto "/>
+        </jsp:include>
         <img class="covidImg" src="${pageContext.request.contextPath}/icons/covid.png" alt="covid">
         <%@include file="../Partials/Direttore/Footer.jsp"%>
     </div>

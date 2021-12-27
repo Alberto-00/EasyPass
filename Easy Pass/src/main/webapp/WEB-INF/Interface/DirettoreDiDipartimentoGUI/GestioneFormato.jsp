@@ -21,35 +21,44 @@
         <jsp:include page="/WEB-INF/Interface/Partials/Direttore/Header.jsp">
             <jsp:param name="title" value="Gestione Formato"/>
         </jsp:include>
-        <div>
-            <form>
+        <div class="container-fluid">
+            <p>Seleziona i dati del Formato</p>
+            <span class="small-text">Attenzione: </span>
+            <span class="fst-italic">(se è stato selezionato il campo "</span>
+            <span class="fst-italic font-monospace"><u>Data di nascita</u></span>
+            <span class="fst-italic">" è necessario selezionare anche il campo "</span>
+            <span class="fst-italic font-monospace"><u>Nome e cognome</u></span>
+            <span class="fst-italic">")</span>
+
+            <form action="${pageContext.request.contextPath}/direttoreServlet/checkFormato" method="get" name="gestioneFormato">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Nome e cognome</label>
+                    <input class="form-check-input" type="checkbox" id="anagrafica" checked>
+                    <label class="form-check-label" for="anagrafica">Nome e cognome</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Data di nascita</label>
+                    <input class="form-check-input" type="checkbox" id="ddn">
+                    <label class="form-check-label" for="ddn">Data di nascita</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDisabled">
-                    <label class="form-check-label" for="flexSwitchCheckDisabled">Numero di validazioni effettuate</label>
+                    <input class="form-check-input" type="checkbox" id="numValidazioni">
+                    <label class="form-check-label" for="numValidazioni">Numero di validazioni effettuate</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                    <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Esito della validazione
-                        (Green Pass "VALIDO" o "NON Valido"
+                    <input class="form-check-input" type="checkbox" id="esito" checked>
+                    <label class="form-check-label" for="esito">Esito della validazione
+                        <span class="fst-italic">(Green Pass "
+                            <span class="fst-italic font-monospace"><u>VALIDO</u></span>" o "
+                            <span class="fst-italic font-monospace"><u>NON VALIDO</u></span>")
+                        </span>
                     </label>
                 </div>
-                <div>
-                    <button class="btn btn-primary btn-icon">
-                        <svg class="icon icon-white">
-                            <use xlink:href="/bootstrap-italia/dist/svg/sprite.svg#it-star-full"></use>
-                        </svg>
-                        <span>SALVA</span>
-                    </button>
-                </div>
             </form>
+            <div class="btn-width">
+                <button type="button" class="btn btn-primary">
+                    <span>SALVA</span>
+                </button>
+            </div>
+            <%@include file="../Partials/Direttore/Popup-Pass.jsp"%>
         </div>
         <%@include file="../Partials/Direttore/Footer.jsp"%>
     </div>
