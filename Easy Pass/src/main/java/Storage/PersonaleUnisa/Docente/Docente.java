@@ -4,6 +4,7 @@ import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class Docente extends PersonaleUnisa {
 
 
 
-    public SessioneDiValidazione avviaSessione(){
+    public SessioneDiValidazione avviaSessione() throws IOException {
 
         //Il QRCode della sessione dobbiamo farlo passare come parametro al costruttore oppure è meglio che
         // viene generato "internamente" al momento della chiamata al costruttore?
@@ -39,7 +40,7 @@ public class Docente extends PersonaleUnisa {
 
         //Al posto della stringa qrCode ci va il QR code generato come identificativo della sessione
         //Come generiamo questo qrCode?
-        SessioneDiValidazione sessione=new SessioneDiValidazione("qrCode",true,this);
+        SessioneDiValidazione sessione=new SessioneDiValidazione(true,this);
         return sessione;
     }
 

@@ -1,6 +1,7 @@
 package ApplicationLogic.Servlet;
 
 import ApplicationLogic.Utils.RequestValidator;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,6 +15,7 @@ public class ReportController extends RequestValidator {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = getPath(request);
+        SessioneDiValidazione s = new SessioneDiValidazione(true, null);
 
         switch (path){
             case "/HomePage":{
@@ -27,6 +29,12 @@ public class ReportController extends RequestValidator {
             case "/GestioneReport":{
                 request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                 break;
+            }
+            case "/AvvioSessione":{
+                request.getRequestDispatcher("DocenteGUI/AvvioSessione").forward(request, response);
+            }
+            case "/ElencoEsiti":{
+                request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
             }
         }
     }
