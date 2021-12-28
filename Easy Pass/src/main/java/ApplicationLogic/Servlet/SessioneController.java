@@ -27,7 +27,11 @@ public class SessioneController extends RequestValidator {
             case "/showQRCode":{
                 System.out.println("sono nella sevlet giusta");
                 System.out.println(request.getParameter("sessionId"));
-
+                break;
+            }
+            case "/InvioGP":{
+                request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
+                break;
             }
         }
     }
