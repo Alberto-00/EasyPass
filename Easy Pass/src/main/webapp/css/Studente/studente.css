@@ -1,0 +1,20 @@
+body{
+    background: #009578;
+    margin: 50px 15px 15px;
+}
+h1{
+    color: black;
+    text-align: center;
+}
+
+button{
+    margin-left: 43%;
+}
+
+#areaInvio{
+    flex: auto;
+    margin: 5% 15%;
+    text-align: center;
+    border-style: dashed;
+}
+
