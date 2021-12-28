@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DocenteDAO {
-    public Docente doRetieveByKey(String username) throws SQLException {
+    public Docente doRetrieveByKey(String username) throws SQLException {
         if(username==null){
             throw new IllegalArgumentException("The username must not be null");
         }
@@ -35,7 +35,7 @@ public class DocenteDAO {
 
     //Implementare doRetrieveWithRelations oppure fare il retrieve delle relazioni nel metodo doRetrieveById?
 
-    public ArrayList<Docente> doRetieveAll() throws SQLException {
+    public ArrayList<Docente> doRetrieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
         try(Connection connection = connectionSingleton.getConnection()) {
             String query = "SELECT * FROM docente doc";
@@ -49,7 +49,7 @@ public class DocenteDAO {
         }
     }
 
-    public boolean doSave(Docente docente) throws SQLException {
+    public boolean doCreate(Docente docente) throws SQLException {
         if(docente==null){
             throw new IllegalArgumentException("Cannot save a null object");
         }

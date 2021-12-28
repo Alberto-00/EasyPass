@@ -3,12 +3,17 @@ package Storage.SessioneDiValidazione;
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoMapper;
+import Storage.PersonaleUnisa.Docente.Docente;
+import Storage.PersonaleUnisa.Docente.DocenteMapper;
+import Storage.Report.Report;
+import Storage.Report.ReportMapper;
 
+import javax.print.Doc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class SessioneDiValidazioneDAO {
 

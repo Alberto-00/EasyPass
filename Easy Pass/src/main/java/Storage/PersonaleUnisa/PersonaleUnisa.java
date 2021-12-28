@@ -1,6 +1,7 @@
 package Storage.PersonaleUnisa;
 
 import Storage.Dipartimento.Dipartimento;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public abstract class PersonaleUnisa {
     private String nome;
@@ -38,8 +39,8 @@ public abstract class PersonaleUnisa {
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    } //Fare l'hashing
+        this.password = DigestUtils.sha256Hex(password);
+    }
 
     public Dipartimento getDipartimento() {
         return dipartimento;

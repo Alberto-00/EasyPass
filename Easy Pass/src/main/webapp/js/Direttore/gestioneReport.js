@@ -4,6 +4,6 @@ $(document).ready(function() {
         "info": false,
         "searching": false,
         "dom": 'rtip',
-        "pageLength": 6
+        "pageLength": 5
     });
 });

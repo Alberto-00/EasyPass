@@ -10,7 +10,7 @@
         </div>
       <div class="modal-bodyy">
           <p>Vuoi davvero uscire?</p>
-          <form method="post" action="${pageContext.request.contextPath}/direttoreServlet/Logout">
+          <form method="post" action="${pageContext.request.contextPath}/reportServlet/Logout">
               <button class="modal-button" type="submit">Si</button>
               <button class="modal-button" type="button" id="close">No</button>
           </form><br>

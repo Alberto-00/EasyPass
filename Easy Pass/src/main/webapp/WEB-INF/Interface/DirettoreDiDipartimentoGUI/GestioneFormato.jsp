@@ -29,7 +29,7 @@
             <span class="fst-italic">è necessario selezionare anche il campo</span>
             <span class="fst-italic font-monospace">"<u>Nome e cognome</u>")</span>
 
-            <form action="${pageContext.request.contextPath}/direttoreServlet/checkFormato" method="get" name="gestioneFormato">
+            <form action="${pageContext.request.contextPath}/reportServlet/checkFormato" method="get" name="gestioneFormato">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="anagrafica" checked>
                     <label class="form-check-label" for="anagrafica">Nome e cognome</label>

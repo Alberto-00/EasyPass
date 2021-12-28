@@ -1,10 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: albmo
-  Date: 24/12/2021
-  Time: 17:41
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Storage.Report.Report" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="Storage.PersonaleUnisa.Docente.Docente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -62,26 +58,31 @@
                                 <th scope="col">ID Report</th>
                                 <th scope="col">Docente</th>
                                 <th scope="col">Data</th>
+                                <th scope="col">Orario</th>
                                 <th scope="col">Anteprima</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <%for(int i = 0; i<17; i++){%>
+                            <%Map<Report, Docente> hashMap = (Map<Report, Docente>) request.getAttribute("hashMap");
+                            if (!hashMap.isEmpty()) {
+                                for (Report rep : hashMap.keySet()) {%>
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" checked>
-                                        <label class="custom-control-label" >1</label>
+                                        <input type="checkbox" class="custom-control-input" id="<%=rep.getId()%>">
+                                        <label class="custom-control-label" for="<%=rep.getId()%>"><%=rep.getId()%></label>
                                     </div>
                                 </td>
-                                <td>Bootstrap 4 CDN and Starter Template</td>
-                                <td>Cristina</td>
+                                <td><%=hashMap.get(rep).getNome() + " " + hashMap.get(rep).getCognome()%></td>
+                                <td><%=rep.getData().toString()%></td>
+                                <td><%=rep.getOrario().toString()%></td>
                                 <td class="td-angle">
                                     <a href="#" class="angle-right">
                                         <img src="${pageContext.request.contextPath}/icons/angle-right.svg" alt="angle-right">
                                     </a>
                                 </td>
                             </tr>
+                                <%}%>
                             <%}%>
                             </tbody>
                         </table>

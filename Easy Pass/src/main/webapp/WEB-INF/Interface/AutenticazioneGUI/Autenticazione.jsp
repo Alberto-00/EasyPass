@@ -19,13 +19,13 @@
 <body>
 
 <!--LOGIN-->
-<form name="admin-login" id="login-in" class="login-form" action="${pageContext.request.contextPath}/direttoreServlet/Autenticazione" method="post">
+<form name="admin-login" id="login-in" class="login-form" action="${pageContext.request.contextPath}/reportServlet/Autenticazione" method="post">
     <div class="login-form-logo-container">
         <img class="login-form-logo" src="${pageContext.request.contextPath}/icons/logo.svg" alt="logo">
     </div>
     <div class="login-form-content">
         <div class="login-form-header">
-            <label>Accedi al tuo account amministratore</label>
+            <label>Accedi al tuo account</label>
         </div>
         <input class="login-form-input" type='email' name="email" id="Email" placeholder="Email / Username" required autocomplete="off">
         <input class="login-form-input" type="password" name="password" id="password" placeholder="Password" required autocomplete="off">
@@ -40,7 +40,7 @@
 
 <!--REGISTRAZIONE-->
 <div class="register">
-    <form name="admin-registry" id="login-up" class="login-form none" action="${pageContext.request.contextPath}/direttoreServlet/Autenticazione" method="post">
+    <form name="admin-registry" id="login-up" class="login-form none" action="${pageContext.request.contextPath}/reportServlet/Autenticazione" method="post">
         <div class="login-form-logo-container">
             <img class="login-form-logo" src="${pageContext.request.contextPath}/icons/logo.svg" alt="logo">
         </div>
@@ -55,9 +55,9 @@
             <c:if test="${not empty msg}">
                 <label class="error">${msg}</label>
             </c:if>
-            <button class="login-form-button" type="button" id="sign-up">Registrati</button>
+            <button class="login-form-button" type="submit">Registrati</button>
             <span class="registrati">Hai già un account registrato?</span>
-            <button class="login-form-button">Accedi</button>
+            <button class="login-form-button" type="button" id="sign-up">Accedi</button>
         </div>
     </form>
 </div>

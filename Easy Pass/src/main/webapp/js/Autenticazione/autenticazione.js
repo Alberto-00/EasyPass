@@ -17,22 +17,11 @@ $(document).ready(function (){
             },
             password: {
                 required: true,
-                checklower: true,
-                checkupper: true,
-                checkdigit: true,
-                checkspecial: true,
-                minlength: 8,
             }
         },
         messages: {
             password: {
                 required: "Inserire la password.",
-                checklower: "La password deve contenere almeno un carattere minuscolo.",
-                strong_password: "La password non è sicura.",
-                minlength: "La password deve essere almeno di 8 caratteri.",
-                checkupper: "La password deve contenere almeno un carattere Maiuscolo.",
-                checkdigit: "La password deve avere almeno un numero.",
-                checkspecial: "La password deve contenere almeno un carattere speciale: ={}+çò°àù§èé#@$!%€*?&:,;'._<>|-",
             },
             email: {
                 required: "Inserire l'e-mail.",

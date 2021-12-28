@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DirettoreDiDipartimentoDAO {
-    public DirettoreDiDipartimento doRetieveByKey(String username) throws SQLException {
+    public DirettoreDiDipartimento doRetrieveByKey(String username) throws SQLException {
         if(username==null){
             throw new IllegalArgumentException("The username must not be null");
         }
