@@ -1,20 +1,55 @@
 body{
     background: #009578;
     margin: 50px 15px 15px;
-}
-h1{
-    color: black;
     text-align: center;
 }
 
-button{
-    margin-left: 43%;
+h1{
+    color: #000000;
 }
 
 #areaInvio{
     flex: auto;
-    margin: 5% 15%;
-    text-align: center;
+    margin: 5% 10%;
     border-style: dashed;
+    height: 50%;
+}
+
+a{
+    display: block;
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+img {
+    width: 10%;
+    height: auto;
+}
+
+button{
+    padding: 10px;
+    color: #000000;
+    font-weight: bold;
+    background: #009578;
+    width: 50%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:active{
+    background: #008067;
+}
+
+button:hover{
+    background-color: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    transition: all 0.3s ease 0s;
+    color: #ffffff;
 }
 

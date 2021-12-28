@@ -42,7 +42,13 @@
 
 <c:if test="${not empty param.errorStyles}">
     <c:forTokens items="${param.errorStyles}" delims="," var="errorStyle">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/errors/${errorStyle}.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Errori/${errorStyle}.css">
+    </c:forTokens>
+</c:if>
+
+<c:if test="${not empty param.studenteStyles}">
+    <c:forTokens items="${param.studenteStyles}" delims="," var="studenteStyle">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Studente/${studenteStyle}.css">
     </c:forTokens>
 </c:if>
 
