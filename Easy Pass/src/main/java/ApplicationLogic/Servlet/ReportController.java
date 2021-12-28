@@ -49,9 +49,6 @@ public class ReportController extends RequestValidator {
                 case "/ElencoEsiti":{
                     request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
                 }
-                case "/Autenticazione":{
-                    request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,46 +58,5 @@ public class ReportController extends RequestValidator {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            String path = getPath(request);
-            switch (path) {
-                case "/Autenticazione": {
-                    validate(DirettoreValidator.validateSigin(request));
-                    DirettoreDiDipartimento tmpDirettore = new DirettoreDiDipartimento();
-                    tmpDirettore.setUsername(request.getParameter("email"));
-                    tmpDirettore.setPassword(request.getParameter("password"));
-                    DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
-                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKey(tmpDirettore.getUsername());
-
-                    if (direttore != null) {
-                        session.setAttribute("direttoreSession", direttore);
-                        response.sendRedirect("./HomePage");
-                    } else {
-                        request.setAttribute("msg", "Credenziali errate.");
-                        request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
-                    }
-                    break;
-                }
-                case "/Registrazione": {
-                    request.getRequestDispatcher(view("AutenticazioneGUI/HomePage")).forward(request, response);
-                    break;
-                }
-                case "Logout":{
-                    DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
-                    if (direttoreSession != null) {
-                        session.removeAttribute("direttoreSession");
-                        session.invalidate();
-                        response.sendRedirect("./Autenticazione");
-                    }
-                    break;
-                }
-            }
-        } catch (InvalidRequestException e) {
-            e.printStackTrace();
-            e.handle(request,response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

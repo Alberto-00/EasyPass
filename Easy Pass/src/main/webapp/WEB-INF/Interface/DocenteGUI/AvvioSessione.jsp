@@ -15,7 +15,7 @@
     </jsp:include>
 </head>
 <body>
-    <form id="NumberOfStudentsForm" name="NumberOfStudentsForm" action="${pageContext.request.contextPath}/ReportController/ElencoEsiti" method="get">
+    <form id="NumberOfStudentsForm" name="NumberOfStudentsForm" action="${pageContext.request.contextPath}/reportServlet/ElencoEsiti" method="get">
         <input type="text" id="nStudents" name="nStudents" content="Numero di Studenti">
         <input type="submit">
     </form>
