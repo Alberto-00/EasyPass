@@ -13,7 +13,7 @@ CREATE TABLE Formato(
 
 CREATE TABLE Dipartimento (
 	Codice_Dip VARCHAR(20) PRIMARY KEY,
-    Nome VARCHAR(50) NOT NULL,
+    Nome VARCHAR(200) NOT NULL,
     ID_formato INT NOT NULL,
     foreign key (ID_formato) references Formato (ID_formato)
     ON UPDATE CASCADE
