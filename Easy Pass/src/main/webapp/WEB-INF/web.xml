@@ -5,7 +5,7 @@
          version="4.0">
 
     <welcome-file-list>
-        <welcome-file>HomePage</welcome-file>
+        <welcome-file>/WEB-INF/Interface/AutenticazioneGUI/Autenticazione.jsp</welcome-file>
     </welcome-file-list>
 
     <context-param>

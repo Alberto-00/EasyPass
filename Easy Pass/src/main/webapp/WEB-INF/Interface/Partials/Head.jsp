@@ -34,6 +34,12 @@
     </c:forTokens>
 </c:if>
 
+<c:if test="${not empty param.autenticazioneStyles}">
+    <c:forTokens items="${param.autenticazioneStyles}" delims="," var="autenticazioneStyle">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Autenticazione/${autenticazioneStyle}.css">
+    </c:forTokens>
+</c:if>
+
 <c:if test="${not empty param.errorStyles}">
     <c:forTokens items="${param.errorStyles}" delims="," var="errorStyle">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/errors/${errorStyle}.css">
@@ -43,7 +49,6 @@
 <script src="${pageContext.request.contextPath}/frontend-lib/bootstrap-5.1.3/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-validate-plugin.js"></script>
-<!--<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>-->
 
 <c:if test="${not empty param.direttoreScripts}">
     <c:forTokens items="${param.direttoreScripts}" delims="," var="direttoreScript">
@@ -54,5 +59,11 @@
 <c:if test="${not empty param.docenteScripts}">
     <c:forTokens items="${param.docenteScripts}" delims="," var="docenteScript">
         <script src="${pageContext.request.contextPath}/js/Docente/${docenteScript}.js" defer></script>
+    </c:forTokens>
+</c:if>
+
+<c:if test="${not empty param.autenticazioneScripts}">
+    <c:forTokens items="${param.autenticazioneScripts}" delims="," var="autenticazioneScript">
+        <script src="${pageContext.request.contextPath}/js/Autenticazione/${autenticazioneScript}.js" defer></script>
     </c:forTokens>
 </c:if>

@@ -1653,6 +1653,27 @@
         return this.optional( element ) || value.match( new RegExp( "\\.(" + param + ")$", "i" ) );
     }, $.validator.format( "Please enter a value with a valid extension." ) );
 
+    const value = $('#password').val();
+
+    $.validator.addMethod("checklower", function (value){
+       return /^(?=.*[a-z])/.test(value);
+    });
+    $.validator.addMethod("checkupper", function (value){
+        return /^(?=.*[A-Z])/.test(value);
+    });
+    $.validator.addMethod("checkdigit", function (value){
+        return /^(?=.*[0-9])/.test(value);
+    });
+    $.validator.addMethod("checkspecial", function (value){
+        return /^(?=.*[={}+çò°àù§èé#@$!%€*?&:,;'._<>|-])/.test(value);
+    });
+    $.validator.addMethod("strong_password", function (value) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[={}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d={}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,}$/.test(value)
+    });
+    $.validator.addMethod("name", function (value) {
+        return /^[a-zA-Z ,.'-]+$/.test(value)
+    });
+
     jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
         phone_number = phone_number.replace(/\s+/g, "");
         return this.optional(element) || phone_number.length > 9 &&
