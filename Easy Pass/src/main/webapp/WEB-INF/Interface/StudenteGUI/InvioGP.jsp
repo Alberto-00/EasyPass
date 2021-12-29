@@ -17,21 +17,15 @@
 </head>
 </head>
 <body>
-
-    <h1>Sei connesso alla sessione: </h1>
-
-    <form action="${pageContext.request.contextPath}/sessioneServlet/InvioEffettuato" method="post">
-
-    <div id="areaInvio">
-        <p>
-            <input type="file">
-            Carica file <br/>
-            <img src="${pageContext.request.contextPath}/icons/file.png">
-        </p>
-    </div>
-        <button>Invia Green Pass</button>
-
+    <h1>Sei connesso alla sessione: 123456</h1>
+    <form action="${pageContext.request.contextPath}/sessioneServlet/InvioGP" method="post">
+        <div class="areaInvio">
+            <label for="file-input">
+                <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file">
+            </label>
+        </div>
+        <input class="file_added" id="file-input" type="file" accept="application/pdf,image/*">
+        <button type="submit">Invia Green Pass</button>
     </form>
-
 </body>
 </html>
