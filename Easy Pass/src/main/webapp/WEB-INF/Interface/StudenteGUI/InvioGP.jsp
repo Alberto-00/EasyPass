@@ -18,15 +18,20 @@
 </head>
 <body>
 
-    <h1>Sei connesso alla sessione: <%session.getId();%></h1>
+    <h1>Sei connesso alla sessione: </h1>
+
+    <form action="${pageContext.request.contextPath}/sessioneServlet/InvioEffettuato" method="post">
 
     <div id="areaInvio">
-        <a href="http://google.com">Upload File<br/>
-        <img src="${pageContext.request.contextPath}/icons/file.png">
+        <p>
+            <input type="file">
+            Carica file <br/>
+            <img src="${pageContext.request.contextPath}/icons/file.png">
+        </p>
     </div>
-
         <button>Invia Green Pass</button>
 
+    </form>
 
 </body>
 </html>

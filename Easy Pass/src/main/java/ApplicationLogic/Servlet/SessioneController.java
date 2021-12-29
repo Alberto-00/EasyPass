@@ -30,6 +30,9 @@ public class SessioneController extends RequestValidator {
                 break;
             }
             case "/InvioGP":{
+                request.setAttribute("sessionId", request.getParameter("sessionId"));
+                System.out.println(request.getParameter("sessionId"));
+                System.out.println(request.getAttribute("sessionId"));
                 request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
                 break;
             }
@@ -38,8 +41,14 @@ public class SessioneController extends RequestValidator {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
+            String path = getPath(request);
+            switch (path) {
+                case "/InvioEffettuato": {
+                    request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                    break;
+                }
+            }
+        }
 
 }
 
