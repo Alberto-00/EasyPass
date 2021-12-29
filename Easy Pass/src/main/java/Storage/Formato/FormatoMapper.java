@@ -7,7 +7,7 @@ public class FormatoMapper {
 
     public static Formato extract(ResultSet rs) throws SQLException {
         Formato formato = new Formato();
-        formato.setId(rs.getInt("form.ID_formato"));
+        formato.setId(rs.getString("form.ID_formato"));
         formato.setNumStudenti(rs.getBoolean("form.N_studenti"));
         formato.setNumGPValidi(rs.getBoolean("form.GP_validi"));
         formato.setNumGPNonValidi(rs.getBoolean("form.GP_nonValidi"));

@@ -29,6 +29,13 @@ public class SessioneDiValidazione {
         this.docente = docente;
     }
 
+    public SessioneDiValidazione() {
+
+        this.qRCode="";
+        this.isInCorso=false;
+        this.docente=null;
+    }
+
     private void createqRCode(String url) throws IOException {
         QrCode qr0 = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
         BufferedImage img = toImage(qr0, 4, 10);  // See QrCodeGeneratorDemo
@@ -36,10 +43,6 @@ public class SessioneDiValidazione {
         ImageIO.write(img, "png", new File("qr-code.png"));
         System.out.println("Ho salvato l'immagine");
 
-    }
-
-    public SessioneDiValidazione() {
-        super();
     }
 
     public String getqRCode() {
