@@ -3,7 +3,7 @@ CREATE DATABASE easypass;
 USE easypass;
 
 CREATE TABLE Formato(
-	ID_formato INT PRIMARY KEY,
+	ID_formato VARCHAR(5) PRIMARY KEY,
     N_studenti BOOLEAN NOT NULL default false,
     GP_validi BOOLEAN NOT NULL default false,
     GP_nonValidi BOOLEAN NOT NULL default false,
@@ -12,9 +12,9 @@ CREATE TABLE Formato(
 );
 
 CREATE TABLE Dipartimento (
-	Codice_Dip VARCHAR(20) PRIMARY KEY,
+	Codice_Dip VARCHAR(5) PRIMARY KEY,
     Nome VARCHAR(50) NOT NULL,
-    ID_formato INT NOT NULL,
+    ID_formato VARCHAR(5) NOT NULL,
     foreign key (ID_formato) references Formato (ID_formato)
     ON UPDATE CASCADE
     ON DELETE CASCADE
