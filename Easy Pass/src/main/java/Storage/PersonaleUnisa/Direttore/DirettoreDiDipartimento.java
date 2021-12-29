@@ -8,7 +8,13 @@ import Storage.Report.Report;
 import java.sql.SQLException;
 
 public class DirettoreDiDipartimento extends PersonaleUnisa {
-    public DirettoreDiDipartimento() {}
+    public DirettoreDiDipartimento() {
+        this.setNome("");
+        this.setCognome("");
+        this.setUsername("");
+        this.setPassword("");
+        this.setDipartimento(null);
+    }
 
     public DirettoreDiDipartimento(String nome, String cognome, String username, String password,Dipartimento dipartimento){
         this.setNome(nome);

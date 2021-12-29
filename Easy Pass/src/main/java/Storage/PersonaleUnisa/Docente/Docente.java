@@ -12,7 +12,14 @@ import java.util.ArrayList;
 public class Docente extends PersonaleUnisa {
     private ArrayList<SessioneDiValidazione> sessioni;
 
-    public Docente() {}
+    public Docente() {
+        this.setNome("");
+        this.setCognome("");
+        this.setUsername("");
+        this.setPassword("");
+        this.setDipartimento(null);
+        this.sessioni=new ArrayList<>();
+    }
 
     public Docente(String nome, String cognome, String username, String password, Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni){
         this.setNome(nome);

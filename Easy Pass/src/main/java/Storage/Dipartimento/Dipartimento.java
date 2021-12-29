@@ -30,7 +30,10 @@ public class Dipartimento {
     }
 
     public Dipartimento() {
-        super();
+        this.nome = "";
+        this.codice = "";
+        this.formato = null;
+        this.reports=new ArrayList<>();
     }
 
     public String getNome() {
@@ -54,8 +57,11 @@ public class Dipartimento {
     }
 
     public void setFormato(Formato formato) {
-        if(formato.getId()==this.formato.getId()){
+        if(formato.getId().compareTo(this.codice)==0) {
             this.formato = formato;
+        }
+        else{
+            throw new IllegalArgumentException("The id of the object 'formato' must be the same of the id of this instance of Dipartimento");
         }
     }
 

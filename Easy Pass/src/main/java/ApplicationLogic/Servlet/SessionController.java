@@ -8,10 +8,10 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "SessioneController", value = "/sessioneServlet/*")
-public class SessioneController extends RequestValidator {
-   /* SessioneDiValidazione s;
 
+@WebServlet(name = "SessionController", value = "/sessioneServlet/*")
+public class SessionController extends RequestValidator {
+    /*SessioneDiValidazione s;
     {
         try {
             s = new SessioneDiValidazione(true, null);

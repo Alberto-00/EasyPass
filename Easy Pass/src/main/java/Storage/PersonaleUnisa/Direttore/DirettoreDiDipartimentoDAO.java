@@ -1,6 +1,7 @@
 package Storage.PersonaleUnisa.Direttore;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoMapper;
 
@@ -28,7 +29,27 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
-    //Implementare doRetrieveWithRelations
+    public DirettoreDiDipartimento doRetrieveByKeyWithRelations(String username) throws SQLException {
+        if(username==null){
+            throw new IllegalArgumentException("The username must not be null");
+        }
+        else{
+            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+            try(Connection connection = connectionSingleton.getConnection()) {
+                String query = "SELECT * FROM direttore dir WHERE dir.Username_Dir=?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, username);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    DirettoreDiDipartimento direttore = DirettoreDiDipartimentoMapper.extract(rs);
+                    String codiceDip=rs.getString("dir.Codice_Dip");
+                    direttore.setDipartimento(new DipartimentoDAO().doRetrieveByKeyWithRelations(codiceDip));
+                    return direttore;
+                }
+                return null;
+            }
+        }
+    }
 
     public ArrayList<DirettoreDiDipartimento> doRetieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();

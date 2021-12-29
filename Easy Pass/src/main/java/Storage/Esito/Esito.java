@@ -15,7 +15,15 @@ public class Esito {
     private boolean validita;
     private Report report;
 
-    public Esito(){}
+    public Esito(){
+        this.id = 0;
+        this.nomeStudente = "";
+        this.cognomeStudente = "";
+        this.dataDiNascitaStudente = null;
+        this.stringaGP = "";
+        this.validita = false;
+        this.report = null;
+    }
 
     public Esito(int id, String nomeStudente, String cognomeStudente, Date dataDiNascitaStudente, String stringaGP, boolean validita, Report report) {
         this.id = id;

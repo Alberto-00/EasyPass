@@ -1,10 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: albmo
-  Date: 23/12/2021
-  Time: 10:08
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Storage.Formato.Formato" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -14,8 +10,16 @@
         <jsp:param name="direttoreScripts" value="direttore"/>
         <jsp:param name="title" value="Easy Pass | Admin"/>
     </jsp:include>
+
+    <style>
+        p#messaggiUtente{
+            color: red;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
 </head>
-<body>
+<body onload="setCheckedParameters()">
     <%@include file="../Partials/Direttore/Navbar.jsp"%>
     <div class="coll-2">
         <jsp:include page="/WEB-INF/Interface/Partials/Direttore/Header.jsp">
@@ -29,34 +33,38 @@
             <span class="fst-italic">è necessario selezionare anche il campo</span>
             <span class="fst-italic font-monospace">"<u>Nome e cognome</u>")</span>
 
-            <form action="${pageContext.request.contextPath}/reportServlet/checkFormato" method="get" name="gestioneFormato">
+            <c:if test="${not empty messaggiUtente}">
+                <p id="messaggiUtente">${messaggiUtente}</p>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/reportServlet/salvaFormato" method="post" name="gestioneFormato" id="gestioneFormato">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="anagrafica" checked>
-                    <label class="form-check-label" for="anagrafica">Nome e cognome</label>
+                    <input class="form-check-input" type="checkbox" id="anagrafica" name="anagrafica" ${actualNomeCognome} >
+                    <label class="form-check-label" for="anagrafica">Nome e cognome dello studente</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="ddn">
-                    <label class="form-check-label" for="ddn">Data di nascita</label>
+                    <input class="form-check-input" type="checkbox" id="ddn" name="ddn" ${actualDataDiNascita}>
+                    <label class="form-check-label" for="ddn">Data di nascita dello studente</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="numValidazioni">
+                    <input class="form-check-input" type="checkbox" id="numValidazioni" name="numValidazioni" ${actualNumStudenti}>
                     <label class="form-check-label" for="numValidazioni">Numero di validazioni effettuate</label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="gpValido" checked>
-                    <label class="form-check-label" for="gpValido">Green Pass
-                        <span class="fst-italic font-monospace">"VALIDO"</span>
+                    <input class="form-check-input" type="checkbox" id="gpValidi" name="gpValidi" ${actualGPValidi}>
+                    <label class="form-check-label" for="gpValidi">Numero Green Pass
+                        <span class="fst-italic font-monospace">"VALIDI"</span>
                     </label>
                 </div>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="gpNonValido" checked>
-                    <label class="form-check-label" for="gpNonValido">Green Pass
-                        <span class="fst-italic font-monospace">"NON VALIDO"</span>
+                    <input class="form-check-input" type="checkbox" id="gpNonValidi" name="gpNonValidi" ${actualGPNonValidi}>
+                    <label class="form-check-label" for="gpNonValidi">Numero Green Pass
+                        <span class="fst-italic font-monospace">"NON VALIDI"</span>
                     </label>
                 </div>
             </form>
             <div class="btn-width">
-                <button type="button" class="btn btn-primary">
+               <button type="submit" id="salvaForm" class="btn btn-primary" form="gestioneFormato">
                     <span>SALVA</span>
                 </button>
             </div>

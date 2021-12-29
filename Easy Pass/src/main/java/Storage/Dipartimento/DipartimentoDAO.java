@@ -3,6 +3,10 @@ package Storage.Dipartimento;
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoMapper;
+import Storage.Formato.Formato;
+import Storage.Formato.FormatoDAO;
+import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
+import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,20 +16,49 @@ import java.util.ArrayList;
 
 public class DipartimentoDAO {
 
-    public Dipartimento doRetrieveById(int codice) throws SQLException {
+    public Dipartimento doRetrieveById(String codice) throws SQLException {
+        if(codice==null){
+            throw new IllegalArgumentException("The id must not be null");
+        }
+        else {
             ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
             try (Connection connection = connectionSingleton.getConnection()) {
                 String query = "SELECT * FROM dipartimento dip WHERE dip.Codice_Dip=?";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, codice);
+                ps.setString(1, codice);
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
                     Dipartimento dipartimento = DipartimentoMapper.extract(rs);
                     return dipartimento;
                 }
+                return null;
             }
-        return null;
+        }
+    }
+
+    public Dipartimento doRetrieveByKeyWithRelations(String codice) throws SQLException {
+        if(codice==null){
+            throw new IllegalArgumentException("The id must not be null");
+        }
+        else{
+            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
+            try(Connection connection = connectionSingleton.getConnection()) {
+                String query = "SELECT * FROM dipartimento dip WHERE dip.Codice_Dip=?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, codice);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    Dipartimento dipartimento = DipartimentoMapper.extract(rs);
+                    String idFormato=rs.getString("dip.ID_Formato");
+                    dipartimento.setFormato(new FormatoDAO().doRetrieveById(idFormato));
+                    //Riempire anche il riferimento alla collezione di oggetti report
+                    return dipartimento;
+                }
+                return null;
+            }
+        }
     }
 
     public ArrayList<Dipartimento> doRetrieveAll() throws SQLException {
@@ -52,7 +85,7 @@ public class DipartimentoDAO {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, dipartimento.getCodice());
             ps.setString(2, dipartimento.getNome());
-            ps.setInt(3, dipartimento.getFormato().getId());
+            ps.setString(3, dipartimento.getFormato().getId());
 
             if (ps.executeUpdate() == 1)
                 return true;
