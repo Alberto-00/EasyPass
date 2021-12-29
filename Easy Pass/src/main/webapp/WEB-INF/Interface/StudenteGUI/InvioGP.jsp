@@ -20,11 +20,12 @@
     <h1>Sei connesso alla sessione: 123456</h1>
     <form action="${pageContext.request.contextPath}/sessioneServlet/InvioGP" method="post">
         <div class="areaInvio">
-            <label for="file-input">
+            <label for="actual-btn">
                 <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file">
             </label>
         </div>
-        <input class="file_added" id="file-input" type="file" accept="application/pdf,image/*">
+        <input class="file_added" id="actual-btn" type="file" accept="application/pdf,image/*" hidden>
+        <span id="file-chosen"></span>
         <button type="submit">Invia Green Pass</button>
     </form>
 </body>

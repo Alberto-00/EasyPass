@@ -46,13 +46,6 @@ h1{
     margin: auto;
 }
 
-.file_added{
-    display: none;
-    margin: auto;
-    padding-top: 1.5em;
-    font-size: 20px;
-}
-
 .areaInvio > label{
     width: 100%;
     margin: auto;
@@ -76,6 +69,17 @@ button:hover{
     transition: all 0.3s ease 0s;
     width: 15.02em;
     font-size: 1.1em;
+}
+
+#file-chosen{
+    display: block;
+    margin: auto;
+    padding-top: 1.5em;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 4px 3px rgb(0 0 0 / 30%);
+    font-weight: bold;
+    letter-spacing: 2.5px;
 }
 
 @media screen and (min-width: 420px){
