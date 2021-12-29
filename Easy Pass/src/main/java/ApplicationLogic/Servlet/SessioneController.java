@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebServlet(name = "SessioneController", value = "/sessioneServlet/*")
 public class SessioneController extends RequestValidator {
-    SessioneDiValidazione s;
+   /* SessioneDiValidazione s;
 
     {
         try {
@@ -18,7 +18,7 @@ public class SessioneController extends RequestValidator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,7 +35,7 @@ public class SessioneController extends RequestValidator {
                 break;
             }
             case "/AvvioSessione":{
-                request.getRequestDispatcher("DocenteGUI/AvvioSessione").forward(request, response);
+                request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
             }
             case "/ElencoEsiti":{
                 request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
