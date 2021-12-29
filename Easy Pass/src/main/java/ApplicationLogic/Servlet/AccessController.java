@@ -9,7 +9,7 @@ import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreValidator;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
-import Storage.PersonaleUnisa.PersonaleUnisa;
+import Storage.PersonaleUnisa.Docente.DocenteValidator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -38,22 +38,27 @@ public class AccessController extends RequestValidator {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String path = getPath(request);
         try {
-            HttpSession session = request.getSession();
-            String path = getPath(request);
             switch (path) {
                 case "/Autenticazione": {
                     validate(DirettoreValidator.validateSigin(request));
-                    PersonaleUnisa tmpDirettore = new DirettoreDiDipartimento();
-                    tmpDirettore.setUsername(request.getParameter("email"));
-                    tmpDirettore.setPassword(request.getParameter("password"));
+                    validate(DocenteValidator.validateSigin(request));
+
                     DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
-                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKey(tmpDirettore.getUsername());
+                    DocenteDAO docenteDAO = new DocenteDAO();
+                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKey(request.getParameter("email"));
+                    Docente docente = docenteDAO.doRetrieveByKey(request.getParameter("email"));
 
                     if (direttore != null) {
                         session.setAttribute("direttoreSession", direttore);
-                        response.sendRedirect("./HomePage");
+                        response.sendRedirect("../reportServlet/HomePage");
+                    } else if (docente != null){
+                        session.setAttribute("docenteSession", docente);
+                        response.sendRedirect("../sessioneServlet/AvvioSessione");
                     } else {
+                        AccessController.riempiDipartimento(request);
                         request.setAttribute("msg", "Credenziali errate.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
@@ -61,13 +66,11 @@ public class AccessController extends RequestValidator {
                 }
 
                 case "/Registrazione": {
-                    validate(DirettoreValidator.validateSigup(request));
-                    System.out.println("2");
+                    validate(DocenteValidator.validateSigup(request));
                     Dipartimento dipartimento = new Dipartimento();
                     dipartimento.setCodice(request.getParameter("dipartimento"));
                     Docente docente = new Docente(request.getParameter("nome"), request.getParameter("cognome"),
                             request.getParameter("email2"), request.getParameter("password2"), dipartimento, null);
-                    System.out.println("1");
                     DocenteDAO docenteDAO = new DocenteDAO();
                     if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null){
                         docenteDAO.doCreate(docente);
@@ -79,10 +82,17 @@ public class AccessController extends RequestValidator {
                     break;
                 }
 
-                case "Logout":{
+                case "/Logout":{
                     DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
+                    Docente docente = (Docente) session.getAttribute("docenteSession");
+
                     if (direttoreSession != null) {
                         session.removeAttribute("direttoreSession");
+                        session.invalidate();
+                        response.sendRedirect("./Autenticazione");
+                    }
+                    else if (docente != null){
+                        session.removeAttribute("docenteSession");
                         session.invalidate();
                         response.sendRedirect("./Autenticazione");
                     }

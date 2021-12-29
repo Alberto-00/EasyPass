@@ -127,17 +127,17 @@ public class ReportDAO {
         }
     }
 
-    public Map<Report, Docente> doRetrieveDocByReport(String idDip) throws SQLException {
+    public Map<Docente, Report> doRetrieveDocByReport(String idDip) throws SQLException {
         try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
             String query="SELECT * FROM sessione ses, docente doc, report rep " +
                     "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
                     "and rep.Codice_Dip = ? ORDER BY rep.ID_report";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, idDip);
-            Map<Report, Docente> reportDocenteHashMap = new HashMap<>();
+            Map<Docente, Report> reportDocenteHashMap = new HashMap<>();
             ResultSet rs = ps.executeQuery();
             while (rs.next())
-                reportDocenteHashMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
+                reportDocenteHashMap.put(DocenteMapper.extract(rs), ReportMapper.extract(rs));
 
             return reportDocenteHashMap;
         }

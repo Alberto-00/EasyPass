@@ -9,13 +9,12 @@ $(document).ready(function (){
         $('#login-in').removeClass('none')
     });
 
-    var arg = "default";
-    $.validator.addMethod("select", function (value, element, arg){
-        return arg !== value;
-    }, "Seleziona un Dipartimento.");
+    $.validator.addMethod("email_unisa", function (value){
+        return /^[a-zA-Z0-9_.]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(unisa)\.it$/.test(value);
+    }, "Inserisci l'e-mail di ateneo.");
 
     $.validator.addMethod("strong_password", function (value) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,50}$/.test(value)
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$/.test(value)
     }, "La password è errata.");
 
     $.validator.addMethod("checklower", function (value){
@@ -42,7 +41,8 @@ $(document).ready(function (){
         rules: {
             email: {
                 required: true,
-                email: true
+                email: true,
+                email_unisa: true
             },
             password: {
                 required: true,
@@ -55,7 +55,7 @@ $(document).ready(function (){
             },
             email: {
                 required: "Inserire l'e-mail.",
-                email: "Inserire un'e-mail valida."
+                email: "Inserire un'e-mail valida.",
             }
         },
         submitHandler: function(form) {
@@ -78,7 +78,8 @@ $(document).ready(function (){
             },
             email2: {
                 required: true,
-                email: true
+                email: true,
+                email_unisa: true
             },
             password2: {
                 required: true,
@@ -87,18 +88,18 @@ $(document).ready(function (){
                 checkdigit: true,
                 checkspecial: true,
                 minlength: 8,
-                maxlength: 30,
+                maxlength: 20,
             }
         },
         messages: {
             password2: {
                 required: "Inserire la password.",
                 minlength: "La password deve essere almeno di 8 caratteri.",
-                maxlength: "La password deve essere almeno di 50 caratteri."
+                maxlength: "La password deve essere almeno di 20 caratteri."
             },
             email2: {
                 required: "Inserire l'e-mail.",
-                email: "Inserire un'e-mail valida."
+                email: "Inserire un'e-mail valida.",
             },
             nome: {
                 required: "Inserire il nome.",

@@ -36,6 +36,12 @@ public class SessioneController extends RequestValidator {
                 request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
                 break;
             }
+            case "/AvvioSessione":{
+                request.getRequestDispatcher("DocenteGUI/AvvioSessione").forward(request, response);
+            }
+            case "/ElencoEsiti":{
+                request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
+            }
         }
     }
 

@@ -42,17 +42,3 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-
-
-/*************
- * Scroll Up *
- *************/
-window.addEventListener("scroll", scrollFunction);
-const scrollUp = document.getElementById("scrollUp");
-window.onscroll = function() {scrollFunction()};
-function scrollFunction() {
-    if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250)
-        scrollUp.style.display = "block";
-    else
-        scrollUp.style.display = "none";
-}

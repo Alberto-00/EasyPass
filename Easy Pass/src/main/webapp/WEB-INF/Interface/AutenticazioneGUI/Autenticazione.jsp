@@ -1,13 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Storage.Dipartimento.Dipartimento" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: albmo
-  Date: 27/12/2021
-  Time: 20:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -29,7 +22,7 @@
         <div class="login-form-header">
             <label>Accedi al tuo account</label>
         </div>
-        <input class="login-form-input" type='email' name="email" id="email" placeholder="Email / Username" required autocomplete="off">
+        <input class="login-form-input" type='email' name="email" id="email" placeholder="Email Universitaria" required autocomplete="off">
         <input class="login-form-input" type="password" name="password" id="password" placeholder="Password" required autocomplete="off">
         <c:if test="${not empty msg}">
             <label class="error">${msg}</label>
@@ -55,11 +48,12 @@
             <select id="dipartimento" name="dipartimento" class="login-form-input form-select form-select-lg" aria-label=".form-select-lg" required>
                 <option disabled selected value="">Dipartimento</option>
                 <%List<Dipartimento> dipartimenti = (List<Dipartimento>) request.getAttribute("dipartimenti");
-                for (int i = 0; i < dipartimenti.size(); i++){%>
-                <option value="<%=dipartimenti.get(i).getCodice()%>">Dipartimento di <%=dipartimenti.get(i).getNome()%></option>
+                    for (Dipartimento dipartimento : dipartimenti) {%>
+                <option value="<%=dipartimento.getCodice()%>">Dipartimento di <%=dipartimento.getNome()%>
+                </option>
                 <%}%>
             </select>
-            <input class="login-form-input" type='email' name="email2" id="email2" placeholder="Email / Username" required autocomplete="off">
+            <input class="login-form-input" type='email' name="email2" id="email2" placeholder="Email Universitaria" required autocomplete="off">
             <input class="login-form-input" type="password" name="password2" id="password2" placeholder="Password" required autocomplete="off">
             <c:if test="${not empty msg2}">
                 <label class="error">${msg2}</label>
