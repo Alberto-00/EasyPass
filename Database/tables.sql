@@ -24,7 +24,7 @@ CREATE TABLE Docente (
 	Username_Doc VARCHAR(50) PRIMARY KEY,
     Nome_Doc VARCHAR(20) NOT NULL,
     Cognome_Doc VARCHAR(20) NOT NULL,
-    Password_Doc VARCHAR(50) NOT NULL,
+    Password_Doc VARCHAR(80) NOT NULL,
 	Codice_Dip VARCHAR(20) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
@@ -35,7 +35,7 @@ CREATE TABLE Direttore (
 	Username_Dir VARCHAR(50) PRIMARY KEY,
     Nome_Dir VARCHAR(20) NOT NULL,
     Cognome_Dir VARCHAR(20) NOT NULL,
-    Password_Dir VARCHAR(50) NOT NULL,
+    Password_Dir VARCHAR(80) NOT NULL,
 	Codice_Dip VARCHAR(20) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE

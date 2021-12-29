@@ -13,6 +13,7 @@ import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import org.json.simple.JSONObject;
 
 
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -26,13 +27,19 @@ public class ReportController extends RequestValidator {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String path = getPath(request);
         SessioneDiValidazione s = new SessioneDiValidazione(true, null);
         HttpSession session = request.getSession();
+        DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
+
         try {
             switch (path){
                 case "/HomePage":{
-                    request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/HomePage")).forward(request, response);
+                    if (direttore != null)
+                        request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/HomePage")).forward(request, response);
+                    else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                     break;
                 }
                 case "/GestioneFormato":{
@@ -70,24 +77,20 @@ public class ReportController extends RequestValidator {
                     break;
                 }
                 case "/GestioneReport":{
-                    DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
-                    ReportDAO reportDAO = new ReportDAO();
-                    request.setAttribute("hashMap", reportDAO.doRetrieveDocByReport(direttoreSession.getDipartimento().getCodice()));
-                    request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
+                    if (direttore != null){
+                        ReportDAO reportDAO = new ReportDAO();
+                        request.setAttribute("hashMap", reportDAO.doRetrieveDocByReport(direttore.getDipartimento().getCodice()));
+                        request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                     break;
-                }
-                case "/AvvioSessione":{
-                    request.getRequestDispatcher("DocenteGUI/AvvioSessione").forward(request, response);
-                }
-                case "/ElencoEsiti":{
-                    request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
-                }
-                case "/Autenticazione":{
-                    request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+            e.handle(request,response);
         }
     }
 

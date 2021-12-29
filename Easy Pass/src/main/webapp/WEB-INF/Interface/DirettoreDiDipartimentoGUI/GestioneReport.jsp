@@ -63,17 +63,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%Map<Report, Docente> hashMap = (Map<Report, Docente>) request.getAttribute("hashMap");
+                            <%Map<Docente, Report> hashMap = (Map<Docente, Report>) request.getAttribute("hashMap");
                             if (!hashMap.isEmpty()) {
-                                for (Report rep : hashMap.keySet()) {%>
+                                for (Docente docente : hashMap.keySet()) {%>
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="<%=rep.getId()%>">
-                                        <label class="custom-control-label" for="<%=rep.getId()%>"><%=rep.getId()%></label>
+                                        <input type="checkbox" class="custom-control-input" id="<%=hashMap.get(docente).getId()%>">
+                                        <label class="custom-control-label" for="<%=hashMap.get(docente).getId()%>"><%=hashMap.get(docente).getId()%></label>
                                     </div>
                                 </td>
-                                <td><%=hashMap.get(rep).getNome() + " " + hashMap.get(rep).getCognome()%></td>
+                                <td><%=docente.getNome() + " " + docente.getCognome()%></td>
                                 <td><%=rep.getData().toString()%></td>
                                 <td><%=rep.getOrario().toString()%></td>
                                 <td class="td-angle">

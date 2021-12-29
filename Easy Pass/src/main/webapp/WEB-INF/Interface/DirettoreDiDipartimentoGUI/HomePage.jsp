@@ -1,11 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: albmo
-  Date: 22/12/2021
-  Time: 11:37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="direttoreSession" scope="session" type="Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento"/>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -19,7 +13,7 @@
     <%@include file="../Partials/Direttore/Navbar.jsp"%>
     <div class="coll-2">
         <jsp:include page="/WEB-INF/Interface/Partials/Direttore/Header.jsp">
-            <jsp:param name="title" value="Benvenuto "/>
+            <jsp:param name="title" value="Benvenuto\a ${direttoreSession.cognome} ${direttoreSession.nome}"/>
         </jsp:include>
         <img class="covidImg" src="${pageContext.request.contextPath}/icons/covid.png" alt="covid">
         <%@include file="../Partials/Direttore/Footer.jsp"%>

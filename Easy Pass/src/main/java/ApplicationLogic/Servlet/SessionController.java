@@ -1,6 +1,7 @@
 package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.RequestValidator;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
+import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -33,13 +34,26 @@ public class SessionController extends RequestValidator {
                 request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
                 break;
             }
+            case "/AvvioSessione":{
+                request.getRequestDispatcher("DocenteGUI/AvvioSessione").forward(request, response);
+            }
+            case "/ElencoEsiti":{
+                request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
+            }
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            String path = getPath(request);
 
-    }
-
+            switch (path) {
+                case "/InvioGP": {
+                    request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                    break;
+                }
+            }
+        }
 }
 

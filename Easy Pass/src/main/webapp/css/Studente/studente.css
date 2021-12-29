@@ -1,20 +1,110 @@
+:root{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: clamp(16px, 2vw, 24px);
+    --green: #009578;
+    --greenS: #008067;
+    --white: #ffffff;
+    --grey: #dddddd;
+    --hover: #fd7e14;
+    --black: #000000;
+    --error: #CC0000FF;
+}
+
+*{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 body{
     background: #009578;
     margin: 50px 15px 15px;
-}
-h1{
-    color: black;
     text-align: center;
+}
+
+h1, button, p{
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2.5px;
+    font-weight: bold;
+    transition: all 0.3s ease 0s;
+    text-align: center;
+    color: var(--black);
+    text-shadow: 2px 4px 3px rgb(0 0 0 / 30%);
+}
+
+h1{
+    font-size: 1.5em;
+    padding-bottom: 0.7em;
+}
+
+.areaInvio{
+    display: flex;
+    border-style: dashed;
+    height: auto;
+    width: 230px;
+    margin: auto;
+}
+
+.areaInvio > label{
+    width: 100%;
+    margin: auto;
+    padding: 20%;
 }
 
 button{
-    margin-left: 43%;
+    color: #000000;
+    font-weight: bold;
+    background-color: #2EE59D;
+    border: 2px solid;
+    font-size: 1em;
+    width: 15em;
+    margin-top: 1em;
+    padding: 0.5em;
+    border-radius: 5px;
 }
 
-#areaInvio{
-    flex: auto;
-    margin: 5% 15%;
-    text-align: center;
-    border-style: dashed;
+button:hover{
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    transition: all 0.3s ease 0s;
+    width: 15.02em;
+    font-size: 1.1em;
 }
 
+#file-chosen{
+    display: block;
+    margin: auto;
+    padding-top: 1.5em;
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 4px 3px rgb(0 0 0 / 30%);
+    font-weight: bold;
+    letter-spacing: 2.5px;
+}
+
+@media screen and (min-width: 420px){
+    .areaInvio{
+        width: 19em;
+    }
+
+    button{
+        width: 19em;
+    }
+
+    button:hover{
+        width: 19.02em;
+    }
+    .image{
+        width: 19em !important;
+    }
+}
+
+
+/**********************
+* InvioEffettuato.jsp *
+***********************/
+.image {
+    padding-top: 2em;
+    margin: auto;
+    width: 85%;
+}

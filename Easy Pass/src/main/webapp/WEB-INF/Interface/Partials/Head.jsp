@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: albmo
-  Date: 22/12/2021
-  Time: 11:15
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -42,7 +35,13 @@
 
 <c:if test="${not empty param.errorStyles}">
     <c:forTokens items="${param.errorStyles}" delims="," var="errorStyle">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/errors/${errorStyle}.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Errori/${errorStyle}.css">
+    </c:forTokens>
+</c:if>
+
+<c:if test="${not empty param.studenteStyles}">
+    <c:forTokens items="${param.studenteStyles}" delims="," var="studenteStyle">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Studente/${studenteStyle}.css">
     </c:forTokens>
 </c:if>
 
@@ -65,5 +64,11 @@
 <c:if test="${not empty param.autenticazioneScripts}">
     <c:forTokens items="${param.autenticazioneScripts}" delims="," var="autenticazioneScript">
         <script src="${pageContext.request.contextPath}/js/Autenticazione/${autenticazioneScript}.js" defer></script>
+    </c:forTokens>
+</c:if>
+
+<c:if test="${not empty param.studenteScripts}">
+    <c:forTokens items="${param.studenteScripts}" delims="," var="studenteScript">
+        <script src="${pageContext.request.contextPath}/js/Studente/${studenteScript}.js" defer></script>
     </c:forTokens>
 </c:if>
