@@ -20,6 +20,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "ReportController", value = "/reportServlet/*")
 public class ReportController extends RequestValidator {
@@ -48,7 +49,7 @@ public class ReportController extends RequestValidator {
                     DirettoreDiDipartimento direttore=dirDao.doRetrieveByKeyWithRelations("username");
                     session.setAttribute("direttoreSession",direttore);*/
 
-                    DirettoreDiDipartimento direttore=null;
+                    //DirettoreDiDipartimento direttore=null;
                     direttore= (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
                     if(direttore!=null) {
                         Formato formato = direttore.getDipartimento().getFormato();
