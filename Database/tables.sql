@@ -3,7 +3,7 @@ CREATE DATABASE easypass;
 USE easypass;
 
 CREATE TABLE Formato(
-	ID_formato VARCHAR(5) PRIMARY KEY,
+	ID_formato VARCHAR(10) PRIMARY KEY,
     N_studenti BOOLEAN NOT NULL default false,
     GP_validi BOOLEAN NOT NULL default false,
     GP_nonValidi BOOLEAN NOT NULL default false,
@@ -12,9 +12,9 @@ CREATE TABLE Formato(
 );
 
 CREATE TABLE Dipartimento (
-	Codice_Dip VARCHAR(5) PRIMARY KEY,
-    Nome VARCHAR(50) NOT NULL,
-    ID_formato VARCHAR(5) NOT NULL,
+	Codice_Dip VARCHAR(10) PRIMARY KEY,
+    Nome VARCHAR(150) NOT NULL,
+    ID_formato VARCHAR(10) NOT NULL,
     foreign key (ID_formato) references Formato (ID_formato)
     ON UPDATE CASCADE
     ON DELETE CASCADE
@@ -25,7 +25,7 @@ CREATE TABLE Docente (
     Nome_Doc VARCHAR(20) NOT NULL,
     Cognome_Doc VARCHAR(20) NOT NULL,
     Password_Doc VARCHAR(80) NOT NULL,
-	Codice_Dip VARCHAR(20) NOT NULL,
+	Codice_Dip VARCHAR(10) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
     ON DELETE CASCADE
@@ -36,7 +36,7 @@ CREATE TABLE Direttore (
     Nome_Dir VARCHAR(20) NOT NULL,
     Cognome_Dir VARCHAR(20) NOT NULL,
     Password_Dir VARCHAR(80) NOT NULL,
-	Codice_Dip VARCHAR(20) NOT NULL,
+	Codice_Dip VARCHAR(10) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
     ON DELETE CASCADE
@@ -56,7 +56,7 @@ CREATE TABLE Report (
     Orario TIME NOT NULL,
     Data_report DATE NOT NULL,
     PathFile VARCHAR(100) NOT NULL,
-    Codice_Dip VARCHAR(20) NOT NULL,
+    Codice_Dip VARCHAR(10) NOT NULL,
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
