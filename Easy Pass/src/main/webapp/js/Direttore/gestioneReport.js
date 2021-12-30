@@ -32,9 +32,13 @@ $(document).ready(function() {
             url: '../report/delete',
             success: function (response) {
                 var arr = JSON.parse(response);
-                console.log(arr);
+                console.log(arr.listReports)
+                console.log(arr.listReports.length)
                 if (arr.listReports !== "empty"){
-
+                    for (let i = 0; i < arr.listReports.length; i++) {
+                        console.log('#report' + arr.listReports[i].report)
+                        $('#report' + arr.listReports[i].report).remove().fadeOut(400);
+                    }
                 }
             }
         });

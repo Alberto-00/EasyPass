@@ -2,6 +2,7 @@ package Storage.PersonaleUnisa.Docente;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.Dipartimento;
+import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 import org.apache.commons.lang3.StringUtils;
@@ -64,6 +65,21 @@ public class DocenteDAO {
                 docenti.add(DocenteMapper.extract(rs));
             }
             return docenti;
+        }
+    }
+
+    public boolean checkUserAndPassw(Docente docente) throws SQLException {
+        if(docente == null){
+            throw new IllegalArgumentException("The docente must not be null");
+        } else {
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT * FROM docente doc WHERE doc.Username_Doc = ? and doc.Password_Doc = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, docente.getUsername());
+                ps.setString(2, docente.getPassword());
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
+            }
         }
     }
 

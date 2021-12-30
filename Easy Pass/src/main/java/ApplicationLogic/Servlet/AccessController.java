@@ -11,6 +11,7 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import ApplicationLogic.Utils.Validator.DocenteValidator;
 
+import javax.print.Doc;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -43,14 +44,20 @@ public class AccessController extends ServletLogic {
 
                     DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
                     DocenteDAO docenteDAO = new DocenteDAO();
-                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKeyWithRelations(request.getParameter("email"));
-                    Docente docente = docenteDAO.doRetrieveByKey(request.getParameter("email"));
 
-                    if (direttore != null) {
-                        session.setAttribute("direttoreSession", direttore);
+                    DirettoreDiDipartimento direttore = new DirettoreDiDipartimento();
+                    direttore.setUsername(request.getParameter("email"));
+                    direttore.setPassword(request.getParameter("password"));
+
+                    Docente docente = new Docente();
+                    docente.setUsername(request.getParameter("email"));
+                    docente.setPassword(request.getParameter("password"));
+
+                    if (direttoreDAO.checkUserAndPassw(direttore)) {
+                        session.setAttribute("direttoreSession", direttoreDAO.doRetrieveByKeyWithRelations(direttore.getUsername()));
                         response.sendRedirect("../reportServlet/HomePage");
-                    } else if (docente != null){
-                        session.setAttribute("docenteSession", docente);
+                    } else if (docenteDAO.checkUserAndPassw(docente)){
+                        session.setAttribute("docenteSession", docenteDAO.doRetrieveByKeyWithRelations(docente.getUsername()));
                         response.sendRedirect("../sessioneServlet/AvvioSessione");
                     } else {
                         request.setAttribute("msg", "Credenziali errate.");

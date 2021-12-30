@@ -66,7 +66,7 @@
                             <%TreeMap<Report, Docente> treeMap = (TreeMap<Report, Docente>) request.getAttribute("treeMap");
                             if (!treeMap.isEmpty()) {
                                 for (Report report : treeMap.keySet()) {%>
-                            <tr>
+                            <tr id="report<%=report.getId()%>">
                                 <td>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" name="idReport" value="<%=report.getId()%>"

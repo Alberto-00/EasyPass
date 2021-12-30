@@ -58,27 +58,17 @@ public class AjaxServlet extends ServletLogic {
                         EsitoDAO esitoDAO = new EsitoDAO();
                         String[] idReport = str.split(",");
 
+                        JSONArray arrRep = new JSONArray();
+                        root.put("listReports", arrRep);
+
                         for (String id : idReport) {
                             for (Esito esito : esitoDAO.doRetrieveWithRelations(Integer.parseInt(id))) {
-                                System.out.println(esito.getId());
                                 esitoDAO.doDelete(esito);
                             }
-                            reportDAO.doDelete(reportDAO.doRetrieveById(Integer.parseInt(id)));
-                        }
-
-                        JSONArray arrRep = new JSONArray();
-                        JSONArray arrDoc = new JSONArray();
-                        root.put("listReports", arrRep);
-                        root.put("listDoc", arrDoc);
-
-                        TreeMap<Report, Docente> treeMap = reportDAO.doRetrieveDocByReport(direttore.getDipartimento().getCodice());
-                        for (Report report : treeMap.keySet()){
                             JSONObject obj = new JSONObject();
-                            JSONObject obj2 = new JSONObject();
-                            obj.put("report", report.toJson());
-                            obj2.put("docenti", treeMap.get(report).toJson());
+                            obj.put("report", id);
                             arrRep.add(obj);
-                            arrDoc.add(obj2);
+                            reportDAO.doDelete(reportDAO.doRetrieveById(Integer.parseInt(id)));
                         }
                     } else root.put("listReports", "empty");
                     sendJson(response, root);
