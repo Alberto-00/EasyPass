@@ -44,6 +44,8 @@
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
     </div>
+
+    <button class="termina-sessione-button">Termina</button>
 </div>
 
 </body>
