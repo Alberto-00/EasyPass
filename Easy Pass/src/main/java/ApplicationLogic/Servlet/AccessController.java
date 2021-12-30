@@ -43,7 +43,7 @@ public class AccessController extends ServletLogic {
 
                     DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
                     DocenteDAO docenteDAO = new DocenteDAO();
-                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKey(request.getParameter("email"));
+                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKeyWithRelations(request.getParameter("email"));
                     Docente docente = docenteDAO.doRetrieveByKey(request.getParameter("email"));
 
                     if (direttore != null) {

@@ -19,7 +19,7 @@
         }
     </style>
 </head>
-<body onload="setCheckedParameters()">
+<body>
     <%@include file="../Partials/Direttore/Navbar.jsp"%>
     <div class="coll-2">
         <jsp:include page="/WEB-INF/Interface/Partials/Direttore/Header.jsp">
