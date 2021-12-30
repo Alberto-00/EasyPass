@@ -1,13 +1,17 @@
 package ApplicationLogic.Servlet;
 
 import ApplicationLogic.Utils.InvalidRequestException;
-import ApplicationLogic.Utils.RequestValidator;
+
+import ApplicationLogic.Utils.ServletLogic;
+import ApplicationLogic.Utils.Validator.DirettoreValidator;
 import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
+
+import ApplicationLogic.Utils.ServletLogic;
+
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoDAO;
-import Storage.PersonaleUnisa.Direttore.DirettoreValidator;
 import Storage.Report.ReportDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import org.json.simple.JSONObject;
@@ -23,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ReportController", value = "/reportServlet/*")
-public class ReportController extends RequestValidator {
+public class ReportController extends ServletLogic {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,8 +35,7 @@ public class ReportController extends RequestValidator {
 
         String path = getPath(request);
         SessioneDiValidazione s = new SessioneDiValidazione(true, null);
-        HttpSession session = request.getSession();
-        DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
+        DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
 
         try {
             switch (path){
@@ -50,7 +53,6 @@ public class ReportController extends RequestValidator {
                     session.setAttribute("direttoreSession",direttore);*/
 
                     //DirettoreDiDipartimento direttore=null;
-                    direttore= (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
                     if(direttore!=null) {
                         Formato formato = direttore.getDipartimento().getFormato();
                         String value = "";
@@ -80,7 +82,7 @@ public class ReportController extends RequestValidator {
                 case "/GestioneReport":{
                     if (direttore != null){
                         ReportDAO reportDAO = new ReportDAO();
-                        request.setAttribute("hashMap", reportDAO.doRetrieveDocByReport(direttore.getDipartimento().getCodice()));
+                        request.setAttribute("treeMap", reportDAO.doRetrieveDocByReport(direttore.getDipartimento().getCodice()));
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);

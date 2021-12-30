@@ -1,37 +1,32 @@
 package ApplicationLogic.Servlet;
 
 import ApplicationLogic.Utils.InvalidRequestException;
-import ApplicationLogic.Utils.RequestValidator;
+import ApplicationLogic.Utils.ServletLogic;
 import Storage.Dipartimento.Dipartimento;
 import Storage.Dipartimento.DipartimentoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoDAO;
-import Storage.PersonaleUnisa.Direttore.DirettoreValidator;
+import ApplicationLogic.Utils.Validator.DirettoreValidator;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
-import Storage.PersonaleUnisa.Docente.DocenteValidator;
+import ApplicationLogic.Utils.Validator.DocenteValidator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
-@WebServlet(name = "AccessController", value = "/accessServlet/*")
-public class AccessController extends RequestValidator {
+@WebServlet(name = "AccessController", value = "/autenticazione/*", loadOnStartup = 0)
+public class AccessController extends ServletLogic {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String path = getPath(request);
-        if ("/Autenticazione".equals(path)) {
-            try {
-                AccessController.riempiDipartimento(request);
-                request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if ("/".equals(path)) {
+            request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
         }
     }
 
@@ -42,7 +37,7 @@ public class AccessController extends RequestValidator {
         String path = getPath(request);
         try {
             switch (path) {
-                case "/Autenticazione": {
+                case "/": {
                     validate(DirettoreValidator.validateSigin(request));
                     validate(DocenteValidator.validateSigin(request));
 
@@ -58,43 +53,44 @@ public class AccessController extends RequestValidator {
                         session.setAttribute("docenteSession", docente);
                         response.sendRedirect("../sessioneServlet/AvvioSessione");
                     } else {
-                        AccessController.riempiDipartimento(request);
                         request.setAttribute("msg", "Credenziali errate.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
                     break;
                 }
 
-                case "/Registrazione": {
+                case "/registrazione": {
                     validate(DocenteValidator.validateSigup(request));
-                    Dipartimento dipartimento = new Dipartimento();
-                    dipartimento.setCodice(request.getParameter("dipartimento"));
+
                     Docente docente = new Docente(request.getParameter("nome"), request.getParameter("cognome"),
-                            request.getParameter("email2"), request.getParameter("password2"), dipartimento, null);
+                            request.getParameter("email2"), request.getParameter("password2"), new Dipartimento());
+
+                    docente.getDipartimento().setCodice(request.getParameter("dipartimento"));
                     DocenteDAO docenteDAO = new DocenteDAO();
+
                     if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null){
                         docenteDAO.doCreate(docente);
                         request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
                     } else {
-                        request.setAttribute("msg2", "Utente già registrato.");
+                        request.setAttribute("msg2", "Docente già registrato.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
                     break;
                 }
 
-                case "/Logout":{
+                case "/logout":{
                     DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
                     Docente docente = (Docente) session.getAttribute("docenteSession");
 
                     if (direttoreSession != null) {
                         session.removeAttribute("direttoreSession");
                         session.invalidate();
-                        response.sendRedirect("./Autenticazione");
+                        response.sendRedirect("./");
                     }
                     else if (docente != null){
                         session.removeAttribute("docenteSession");
                         session.invalidate();
-                        response.sendRedirect("./Autenticazione");
+                        response.sendRedirect("./");
                     }
                     break;
                 }
@@ -107,9 +103,14 @@ public class AccessController extends RequestValidator {
         }
     }
 
-    private static void riempiDipartimento(HttpServletRequest request) throws SQLException {
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
         DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
-        List<Dipartimento> dipartimenti = dipartimentoDAO.doRetrieveAll();
-        request.setAttribute("dipartimenti", dipartimenti);
+        try {
+            getServletContext().setAttribute("dipartimenti", dipartimentoDAO.doRetrieveAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

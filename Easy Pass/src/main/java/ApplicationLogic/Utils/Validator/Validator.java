@@ -1,4 +1,4 @@
-package ApplicationLogic.Utils;
+package ApplicationLogic.Utils.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;

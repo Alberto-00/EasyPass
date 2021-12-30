@@ -2,6 +2,7 @@ package Storage.PersonaleUnisa.Direttore;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.DipartimentoDAO;
+import Storage.Dipartimento.Dipartimento;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoMapper;
 
@@ -22,6 +23,9 @@ public class DirettoreDiDipartimentoDAO {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     DirettoreDiDipartimento direttore = DirettoreDiDipartimentoMapper.extract(rs);
+                    Dipartimento dipartimento = new Dipartimento();
+                    dipartimento.setCodice(rs.getString("dir.Codice_Dip"));
+                    direttore.setDipartimento(dipartimento);
                     return direttore;
                 }
                 return null;
@@ -76,7 +80,7 @@ public class DirettoreDiDipartimentoDAO {
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setString(1, direttore.getUsername());
                 ps.setString(2, direttore.getNome());
-                ps.setString(3, direttore.getCognome());
+                ps.setString(3, direttore.getCognome().toUpperCase());
                 ps.setString(4, direttore.getPassword());
                 ps.setString(5, direttore.getDipartimento().getCodice());
                 if (ps.executeUpdate() == 1)

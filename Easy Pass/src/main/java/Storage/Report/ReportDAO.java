@@ -1,15 +1,12 @@
 package Storage.Report;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
-import Storage.Esito.Esito;
-import Storage.Esito.EsitoMapper;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.TreeMap;
 
 public class ReportDAO {
 
@@ -27,6 +24,22 @@ public class ReportDAO {
             }
         }
         return null;
+    }
+
+    public TreeMap<Report, Docente> doRetrieveDocByReport(String idDip) throws SQLException {
+        try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+            String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
+                    "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                    "and rep.Codice_Dip = ? ORDER BY rep.ID_report";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, idDip);
+            TreeMap<Report, Docente> reportDocenteHashMap = new TreeMap<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+                reportDocenteHashMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
+
+            return reportDocenteHashMap;
+        }
     }
 
     public ArrayList<Report> doRetrieveAll() throws SQLException {
@@ -126,21 +139,4 @@ public class ReportDAO {
             }
         }
     }
-
-    public Map<Docente, Report> doRetrieveDocByReport(String idDip) throws SQLException {
-        try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
-            String query="SELECT * FROM sessione ses, docente doc, report rep " +
-                    "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
-                    "and rep.Codice_Dip = ? ORDER BY rep.ID_report";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, idDip);
-            Map<Docente, Report> reportDocenteHashMap = new HashMap<>();
-            ResultSet rs = ps.executeQuery();
-            while (rs.next())
-                reportDocenteHashMap.put(DocenteMapper.extract(rs), ReportMapper.extract(rs));
-
-            return reportDocenteHashMap;
-        }
-    }
-
 }

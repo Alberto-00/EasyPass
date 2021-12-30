@@ -1,16 +1,14 @@
 package ApplicationLogic.Servlet;
-import ApplicationLogic.Utils.RequestValidator;
+import ApplicationLogic.Utils.ServletLogic;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
-import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-
 @WebServlet(name = "SessionController", value = "/sessioneServlet/*")
-public class SessionController extends RequestValidator {
+public class SessionController extends ServletLogic {
     /*SessioneDiValidazione s;
     {
         try {

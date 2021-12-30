@@ -1,10 +1,10 @@
 package Storage.PersonaleUnisa.Docente;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
-import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
-import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoMapper;
+import Storage.Dipartimento.Dipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,11 +13,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DocenteDAO {
+
     public Docente doRetrieveByKey(String username) throws SQLException {
-        if(username==null){
+        if(username == null){
             throw new IllegalArgumentException("The username must not be null");
-        }
-        else{
+        } else{
             ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
             try(Connection connection = connectionSingleton.getConnection()) {
                 String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
@@ -25,15 +25,33 @@ public class DocenteDAO {
                 ps.setString(1, username);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    Docente docente = DocenteMapper.extract(rs);
-                    return docente;
+                    return DocenteMapper.extract(rs);
                 }
                 return null;
             }
         }
     }
 
-    //Implementare doRetrieveWithRelations oppure fare il retrieve delle relazioni nel metodo doRetrieveById?
+    public Docente doRetrieveByKeyWithRelations(String username) throws SQLException {
+        if(username == null){
+            throw new IllegalArgumentException("The username must not be null");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, username);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    Docente docente = DocenteMapper.extract(rs);
+                    docente.setDipartimento(new Dipartimento());
+                    docente.getDipartimento().setCodice(rs.getString("doc.Codice_Dip"));
+                    //Mancano le sessioni
+                    return docente;
+                }
+                return null;
+            }
+        }
+    }
 
     public ArrayList<Docente> doRetrieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
@@ -50,26 +68,26 @@ public class DocenteDAO {
     }
 
     public boolean doCreate(Docente docente) throws SQLException {
-        if(docente==null){
+        if(docente == null){
             throw new IllegalArgumentException("Cannot save a null object");
         }
         else {
             ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
             try(Connection connection = connectionSingleton.getConnection()) {
-                String query = "INSERT INTO direttore VALUES (?,?,?,?,?)";
+                String query = "INSERT INTO docente VALUES (?,?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, docente.getUsername());
-                ps.setString(2, docente.getNome());
-                ps.setString(3, docente.getCognome());
+                ps.setString(1, docente.getUsername().toLowerCase());
+                ps.setString(2, StringUtils.capitalize(docente.getNome()));
+                ps.setString(3, docente.getCognome().toUpperCase());
                 ps.setString(4, docente.getPassword());
                 ps.setString(5, docente.getDipartimento().getCodice());
-                SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();
-                for (SessioneDiValidazione sessione : docente.getSessioni()) {
-                    sessioneDao.doCreate(sessione);
+                if (docente.getSessioni() != null){
+                    SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();
+                    for (SessioneDiValidazione sessione : docente.getSessioni()) {
+                        sessioneDao.doCreate(sessione);
+                    }
                 }
-                if (ps.executeUpdate() == 1)
-                    return true;
-                else return false;
+                return ps.executeUpdate() == 1;
             }
         }
     }
@@ -85,7 +103,7 @@ public class DocenteDAO {
                 String query = "UPDATE docente SET Nome_Doc=?, Cognome_Doc=?, Password_Doc=?, Codice_Dip=? WHERE Username_Doc=?";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setString(1, docente.getNome());
-                ps.setString(2, docente.getCognome());
+                ps.setString(2, docente.getCognome().toUpperCase());
                 ps.setString(3, docente.getPassword());
                 ps.setString(4, docente.getDipartimento().getCodice());
                 SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();

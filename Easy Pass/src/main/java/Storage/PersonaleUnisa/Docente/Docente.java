@@ -1,15 +1,18 @@
 package Storage.PersonaleUnisa.Docente;
 
+import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
+import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Docente extends PersonaleUnisa {
+public class Docente extends PersonaleUnisa implements JSONSerializable {
+
     private ArrayList<SessioneDiValidazione> sessioni;
 
     public Docente() {
@@ -21,13 +24,23 @@ public class Docente extends PersonaleUnisa {
         this.sessioni=new ArrayList<>();
     }
 
-    public Docente(String nome, String cognome, String username, String password, Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni){
+    public Docente(String nome, String cognome, String username, String password,
+                   Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni){
         this.setNome(nome);
         this.setCognome(cognome);
         this.setUsername(username);
         this.setPassword(password);
         this.setDipartimento(dipartimento);
-        this.sessioni=sessioni;
+        this.sessioni = sessioni;
+    }
+
+    public Docente(String nome, String cognome, String username, String password,
+                   Dipartimento dipartimento){
+        this.setNome(nome);
+        this.setCognome(cognome);
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setDipartimento(dipartimento);
     }
 
     public ArrayList<SessioneDiValidazione> getSessioni() {
@@ -38,17 +51,14 @@ public class Docente extends PersonaleUnisa {
         this.sessioni = sessioni;
     }
 
-
-
     public SessioneDiValidazione avviaSessione() throws IOException {
-        SessioneDiValidazione sessione=new SessioneDiValidazione(true,this);
-        return sessione;
+        return new SessioneDiValidazione(true, this);
     }
 
     public SessioneDiValidazione terminaSessione(SessioneDiValidazione sessione) throws SQLException {
-        if(sessione==null){
+        if(sessione == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
-        }
+
         else{
             sessione.setInCorso(false);
             this.sessioni.add(sessione);
@@ -63,7 +73,14 @@ public class Docente extends PersonaleUnisa {
     @Override
     public String toString() {
         return super.toString()+"{" +
-                "sessioni=" + sessioni +
-                '}';
+                "sessioni=" + sessioni + '}';
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        object.put("nome", this.getNome());
+        object.put("cognome", this.getCognome());
+        return object;
     }
 }

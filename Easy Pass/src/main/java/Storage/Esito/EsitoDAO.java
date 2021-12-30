@@ -1,9 +1,11 @@
 package Storage.Esito;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Report.Report;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EsitoDAO {
 
@@ -27,7 +29,26 @@ public class EsitoDAO {
         }
     }
 
-    //Implementare doRetrieveWithRelations
+    public List<Esito> doRetrieveWithRelations(int idReport) throws SQLException {
+        if(idReport < 0){
+            throw new IllegalArgumentException("The ID must not be a negative number");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT esi.* FROM esito esi, report rep " +
+                        "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, idReport);
+                ResultSet rs = ps.executeQuery();
+                List<Esito> esiti = new ArrayList<>();
+
+                while (rs.next())
+                    esiti.add(EsitoMapper.extract(rs));
+
+                return esiti;
+            }
+        }
+    }
 
     public ArrayList<Esito> doRetrieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();

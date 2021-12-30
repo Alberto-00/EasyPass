@@ -1,6 +1,6 @@
 <%@ page import="Storage.Report.Report" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="Storage.PersonaleUnisa.Docente.Docente" %>
+<%@ page import="java.util.TreeMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="my-row3">
                     <div class="coll-3">
-                        <a href="#">
+                        <a href="#" id="callAjax">
                             <img class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
                         </a>
                     </div>
@@ -63,19 +63,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%Map<Docente, Report> hashMap = (Map<Docente, Report>) request.getAttribute("hashMap");
-                            if (!hashMap.isEmpty()) {
-                                for (Docente docente : hashMap.keySet()) {%>
+                            <%TreeMap<Report, Docente> treeMap = (TreeMap<Report, Docente>) request.getAttribute("treeMap");
+                            if (!treeMap.isEmpty()) {
+                                for (Report report : treeMap.keySet()) {%>
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="<%=hashMap.get(docente).getId()%>">
-                                        <label class="custom-control-label" for="<%=hashMap.get(docente).getId()%>"><%=hashMap.get(docente).getId()%></label>
+                                        <input type="checkbox" class="custom-control-input" name="idReport" value="<%=report.getId()%>"
+                                               id="<%=report.getId()%>">
+                                        <label class="custom-control-label" for="<%=report.getId()%>"><%=report.getId()%></label>
                                     </div>
                                 </td>
-                                <td><%=docente.getNome() + " " + docente.getCognome()%></td>
-                                <td><%=rep.getData().toString()%></td>
-                                <td><%=rep.getOrario().toString()%></td>
+                                <td><%=treeMap.get(report).getCognome() + " " + treeMap.get(report).getNome()%></td>
+                                <td><%=report.getData().toString()%></td>
+                                <td><%=report.getOrario().toString()%></td>
                                 <td class="td-angle">
                                     <a href="#" class="angle-right">
                                         <img src="${pageContext.request.contextPath}/icons/angle-right.svg" alt="angle-right">

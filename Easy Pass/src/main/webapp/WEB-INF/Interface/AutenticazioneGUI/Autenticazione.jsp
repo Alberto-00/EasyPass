@@ -14,7 +14,7 @@
 <body>
 
 <!--LOGIN-->
-<form name="admin-login" id="login-in" class="login-form" action="${pageContext.request.contextPath}/accessServlet/Autenticazione" method="post">
+<form name="admin-login" id="login-in" class="login-form" action="${pageContext.request.contextPath}/autenticazione/" method="post">
     <div class="login-form-logo-container">
         <img class="login-form-logo" src="${pageContext.request.contextPath}/icons/logo.svg" alt="logo">
     </div>
@@ -27,6 +27,9 @@
         <c:if test="${not empty msg}">
             <label class="error">${msg}</label>
         </c:if>
+        <c:if test="${not empty msg2}">
+            <label class="error">${msg2}</label>
+        </c:if>
         <button class="login-form-button" type="submit">Accedi</button>
         <span class="registrati">Sei un Docente e non hai le credenziali?</span>
         <button class="login-form-button" type="button" id="sign-in">Registrati</button>
@@ -35,7 +38,7 @@
 
 <!--REGISTRAZIONE-->
 <div class="register">
-    <form name="admin-registry" id="login-up" class="login-form none" action="${pageContext.request.contextPath}/accessServlet/Registrazione" method="post">
+    <form name="admin-registry" id="login-up" class="login-form none" action="${pageContext.request.contextPath}/autenticazione/registrazione" method="post">
         <div class="login-form-logo-container">
             <img class="login-form-logo" src="${pageContext.request.contextPath}/icons/logo.svg" alt="logo">
         </div>
@@ -47,7 +50,7 @@
             <input class="login-form-input" type='text' name="cognome" id="cognome" placeholder="Cognome" required autocomplete="off">
             <select id="dipartimento" name="dipartimento" class="login-form-input form-select form-select-lg" aria-label=".form-select-lg" required>
                 <option disabled selected value="">Dipartimento</option>
-                <%List<Dipartimento> dipartimenti = (List<Dipartimento>) request.getAttribute("dipartimenti");
+                <%List<Dipartimento> dipartimenti = (List<Dipartimento>) request.getServletContext().getAttribute("dipartimenti");
                     for (Dipartimento dipartimento : dipartimenti) {%>
                 <option value="<%=dipartimento.getCodice()%>">Dipartimento di <%=dipartimento.getNome()%>
                 </option>
@@ -55,9 +58,6 @@
             </select>
             <input class="login-form-input" type='email' name="email2" id="email2" placeholder="Email Universitaria" required autocomplete="off">
             <input class="login-form-input" type="password" name="password2" id="password2" placeholder="Password" required autocomplete="off">
-            <c:if test="${not empty msg2}">
-                <label class="error">${msg2}</label>
-            </c:if>
             <button class="login-form-button" type="submit">Registrati</button>
             <span class="formato_passw">Formato della password:</span>
             <ul>

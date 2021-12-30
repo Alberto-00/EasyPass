@@ -1,6 +1,4 @@
-package Storage.PersonaleUnisa.Docente;
-
-import ApplicationLogic.Utils.Validator;
+package ApplicationLogic.Utils.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;

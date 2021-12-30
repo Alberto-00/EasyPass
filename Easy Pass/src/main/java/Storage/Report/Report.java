@@ -1,12 +1,15 @@
 package Storage.Report;
 
+import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Dipartimento.Dipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
+import org.json.simple.JSONObject;
 
 import java.sql.Time;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Report {
+public class Report implements Comparable<Report>, JSONSerializable {
 
     private int id;
     private Date data;
@@ -79,6 +82,20 @@ public class Report {
 
     public void setSessione(SessioneDiValidazione sessione) {
         this.sessione = sessione;
+    }
+
+    @Override
+    public int compareTo(Report o) {
+        return this.id - o.getId();
+    }
+
+    @Override
+    public JSONObject toJson(){
+        JSONObject object = new JSONObject();
+        object.put("id", this.id);
+        object.put("data", this.data.toString());
+        object.put("orario", this.orario.toString());
+        return object;
     }
 
     @Override
