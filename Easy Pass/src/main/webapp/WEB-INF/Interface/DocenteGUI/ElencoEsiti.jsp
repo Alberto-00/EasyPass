@@ -16,36 +16,51 @@
 </head>
 <body>
 <div class="coll-2">
+    <h1 style="text-align: center; color: white; padding-top: 15px">QR Code</h1>
+    <img src="${pageContext.request.contextPath}/icons/covid.png" id="qrcode" class="qrCode">
+    <hr class="rounded">
     <div class="grid-container">
         <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nome" value="Gennaro"/>
-            <jsp:param name="cognome" value="Spina"/>
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
 
         <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nome" value="Gennaro"/>
-            <jsp:param name="cognome" value="Spina"/>
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
         <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nome" value="Gennaro"/>
-            <jsp:param name="cognome" value="Spina"/>
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
         <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nome" value="Gennaro"/>
-            <jsp:param name="cognome" value="Spina"/>
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
         <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nome" value="Gennaro"/>
-            <jsp:param name="cognome" value="Spina"/>
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
             <jsp:param name="esito" value="Valido"/>
         </jsp:include>
+        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
+            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
+            <jsp:param name="ddn" value="06/09/1998"/>
+            <jsp:param name="esito" value="Valido"/>
+        </jsp:include>
+
+    </div>
+    <div style="display: flex; justify-content: space-between">
+        <jsp:include page="../Partials/Docente/esitoCounter.jsp">
+            <jsp:param name="esitiArrived" value="6"/>
+            <jsp:param name="esitiRequired" value="10"/>
+        </jsp:include>
+        <button class="termina-sessione-button">Termina</button>
     </div>
 
-    <button class="termina-sessione-button">Termina</button>
 </div>
 
 </body>

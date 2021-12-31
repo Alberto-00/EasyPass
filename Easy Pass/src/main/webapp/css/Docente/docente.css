@@ -494,13 +494,15 @@ footer > span{
     color: var(--black);
 }
 
-.termina-sessione-button{
+.termina-sessione-button {
     padding: 10px;
     color: #ffffff;
     font-weight: bold;
     background: #ab0000;
-    width: 100%;
+    width: 15%;
     border: none;
+    align-self: flex-end;
+    margin: 15px;
     outline: none;
     border-radius: 5px;
     cursor: pointer;
@@ -544,6 +546,30 @@ ul{
 
 .none{
     display: none;
+}
+
+/* Rounded border */
+hr.rounded {
+    border-top: 5px solid;
+    border-radius: 5px;
+    width: 95%;
+    margin: auto;
+    margin-top: 15px;
+    color: white;
+}
+
+/* QRcode style*/
+.qrCode {
+    width: 33%;
+    margin: auto;
+    object-fit: contain;
+}
+
+.esitoCounter{
+    font-size: 250%;
+    font-weight: bold;
+    margin: 10px;
+    align-self: flex-start;
 }
 
 @-webkit-keyframes fadeInUp {

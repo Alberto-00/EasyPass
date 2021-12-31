@@ -18,6 +18,7 @@
     justify-content: center;
     align-items: center;
     flex-flow: column wrap;
+    background-color: #006f56;
 }
 
 .shadow{
@@ -27,9 +28,8 @@
 
 .grid-data {
     color:var(--white);
-    font-size: 200%;
-    padding-left: 10px;
-    bottom: 15px;
+    text-align: center;
+    font-size: 170%;
     font-weight: normal;
     position: relative;
     display: flex;
