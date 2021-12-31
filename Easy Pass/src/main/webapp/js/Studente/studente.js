@@ -11,7 +11,7 @@ $(document).ready(function () {
 $(function(){
     $("#myButton").click(function () {
         const str = document.getElementById('file-chosen').innerText;
-        if(str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".png") || str.endsWith(".svg") || str.endsWith(".pdf")) {
+        if(str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".png") || str.endsWith(".svg")) {
             document.getElementById("myButton").setAttribute('type', 'submit');
         }
         else {

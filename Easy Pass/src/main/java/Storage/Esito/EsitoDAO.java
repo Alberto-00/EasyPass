@@ -1,8 +1,14 @@
 package Storage.Esito;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Formato.Formato;
 import Storage.Report.Report;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +67,161 @@ public class EsitoDAO {
                 esiti.add(EsitoMapper.extract(rs));
             }
             return esiti;
+        }
+    }
+
+    //Bisogna passare un report
+    //Tutti i riferimenti all'id report sono settati a 1
+    public Document esitiReport() throws SQLException {
+        if(1 < 0){
+            throw new IllegalArgumentException("The ID must not be a negative number");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT esi.ID_Esito, esi.Valido, esi.Nome_Studente, " +
+                        "esi.Cognome_Studente, esi.Ddn_Studente FROM esito esi, report rep " +
+                        "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                //ps.setInt(1, report.getId());
+                ResultSet rs = ps.executeQuery();
+                //Formato formato = report.getDip().getFormato();
+                Formato formato = new Formato("6", true, true, true, true, true);
+
+                Document document = new Document();
+                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\Reports\\Report"+1+".pdf"));
+                    document.open();
+
+                    document.add(new Paragraph("Report")); //aggiustare grafica
+                    //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_LEFT);
+                    //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_RIGHT);
+                if(formato.isNumGPValidi()) {
+                    document.add(new Paragraph("Il numero di Green Pass Validi è: " + contaValidi(1, true)));
+                }
+
+                if(formato.isNumGPNonValidi()) {
+                    document.add(new Paragraph("Il numero di Green Pass non Validi è: " + contaValidi(1, false)));
+                }
+
+                if(formato.isNumStudenti()) {
+                    document.add(new Paragraph("Il numero di Studenti controllati è: " + numEsiti(1)));
+                }
+
+
+                if(formato.isNomeCognome() && formato.isData()) {
+                    PdfPTable table = new PdfPTable(5);
+                    table.setSpacingBefore(10f);
+                    table.addCell((new Paragraph("Esito")));
+                    table.addCell((new Paragraph("Validità")));
+                    table.addCell((new Paragraph("Nome")));
+                    table.addCell((new Paragraph("Cognome")));
+                    table.addCell(new Paragraph("Data di Nascita"));
+                    table.setWidths(new float[] {1f, 2f, 3f, 3f, 2f});
+                    while(rs.next()) {
+                        table.addCell(new Paragraph(rs.getString("ID_Esito")));
+                        table.addCell(new Paragraph(rs.getString("Valido")));
+                        table.addCell(new Paragraph(rs.getString("Nome_Studente")));
+                        table.addCell(new Paragraph(rs.getString("Cognome_Studente")));
+                        table.addCell(new Paragraph((rs.getDate("Ddn_Studente").toString())));
+                    }
+
+                    document.add(table);
+                }
+
+                else
+                    if(formato.isNomeCognome() && !formato.isData()) {
+                        PdfPTable table = new PdfPTable(4);
+                        table.setWidths(new float[] {1f, 2f, 3f, 3f});
+                        table.setSpacingBefore(10f);
+                        table.addCell((new Paragraph("Esito")));
+                        table.addCell((new Paragraph("Validità")));
+                        table.addCell((new Paragraph("Nome")));
+                        table.addCell((new Paragraph("Cognome")));
+                        while(rs.next()){
+                            table.addCell(new Paragraph(rs.getString("ID_Esito")));
+                            table.addCell(new Paragraph(rs.getString("Valido")));
+                            table.addCell(new Paragraph(rs.getString("Nome_Studente")));
+                            table.addCell(new Paragraph(rs.getString("Cognome_Studente")));
+                        }
+                        document.add(table);
+                    }
+
+
+                else
+                    if(!formato.isNomeCognome() && formato.isData()) {
+                        PdfPTable table = new PdfPTable(3);
+                        table.setSpacingBefore(10f);
+                        table.addCell((new Paragraph("Esito")));
+                        table.addCell((new Paragraph("Validità")));
+                        table.addCell(new Paragraph("Data di Nascita"));
+                        while(rs.next()){
+                            table.addCell(new Paragraph(rs.getString("ID_Esito")));
+                            table.addCell(new Paragraph(rs.getString("Valido")));
+                            //table.addCell(new Paragraph((rs.getDate("Ddn").toString())));
+                            table.addCell(new Paragraph("HEççP"));
+                        }
+                        document.add(table);
+
+                }
+                    else {
+                        PdfPTable table = new PdfPTable(2);
+                        table.setSpacingBefore(10f);
+                        table.addCell((new Paragraph("Esito")));
+                        table.addCell((new Paragraph("Validità")));
+                        while(rs.next()){
+                            table.addCell(new Paragraph(rs.getString("ID_Esito")));
+                            table.addCell(new Paragraph(rs.getString("Valido")));
+                        }
+                        document.add(table);
+                    }
+
+                document.close();
+                writer.close();
+                return document;
+
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public int contaValidi(int idReport, boolean v) throws SQLException {
+        if(idReport < 0){
+            throw new IllegalArgumentException("The ID must not be a negative number");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT COUNT(*) as Count FROM esito esi, report rep " +
+                        "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ? AND Valido=?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, idReport);
+                ps.setBoolean(2, v);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next())
+                    return rs.getInt("Count");
+            }
+            return 0;
+        }
+    }
+
+    public int numEsiti (int idReport) throws SQLException {
+        if(idReport < 0){
+            throw new IllegalArgumentException("The ID must not be a negative number");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT COUNT(*) as Count FROM esito esi, report rep " +
+                        "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, idReport);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next())
+                    return rs.getInt("Count");
+
+                return 0;
+            }
         }
     }
 
