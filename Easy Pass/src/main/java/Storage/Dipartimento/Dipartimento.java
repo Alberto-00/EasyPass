@@ -1,14 +1,18 @@
 package Storage.Dipartimento;
 
+import ApplicationLogic.Utils.RangeDateException;
+import Storage.Esito.Esito;
+import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
+import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 
 import java.sql.SQLException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TreeMap;
 
 public class Dipartimento {
 
@@ -89,28 +93,53 @@ public class Dipartimento {
         }
     }
 
-    public Report eliminaReport(Report report) throws SQLException {
-        if(report==null){
+    public void eliminaReport(Report report) throws SQLException {
+        if(report == null){
             throw new IllegalArgumentException("Cannot delete a null object");
-        }
-        else{
+        } else{
             this.reports.remove(report);
-            ReportDAO reportDAO=new ReportDAO();
+            ReportDAO reportDAO = new ReportDAO();
+            EsitoDAO esitoDAO = new EsitoDAO();
+
+            for (Esito esito : esitoDAO.doRetrieveWithRelations(report.getId())) {
+                esitoDAO.doDelete(esito);
+            }
             reportDAO.doDelete(report);
-            return report;
         }
     }
 
-    public ArrayList<Report> ricercaReport(String docente, Date primaData, Date secondaData) throws SQLException {
-        if(docente!=null || primaData!=null){
-            ReportDAO reportDAO=new ReportDAO();
-            ArrayList<Report> reports=reportDAO.doSearch(docente,(java.sql.Date) primaData, (java.sql.Date) secondaData);
-            return reports;
+    public ArrayList<Report> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, RangeDateException {
+        if(docente != null && primaData != null && secondaData != null){
+            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
+                ReportDAO reportDAO=new ReportDAO();
+                return reportDAO.doSearch(docente,(java.sql.Date) primaData, (java.sql.Date) secondaData);
+            } else
+                throw new RangeDateException("The first date must be lower that second date.");
+        } else
+            throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
+    }
+
+    public TreeMap<Report, Docente> ricercaReportSoloDocente(String codDip) throws SQLException {
+        if(codDip != null && codDip.compareTo("") != 0){
+            ReportDAO reportDAO = new ReportDAO();
+            return  reportDAO.doRetrieveDocByReport(codDip);
         }
         else{
-            throw new IllegalArgumentException("The arguments 'docente' and 'primaData' cannot be both null ");
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null or empty.");
         }
     }
+
+    /*public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException, RangeDateException {
+        if(date1 != null && date2 != null){
+            if (date1.before(date2) || date1.compareTo(date2) == 0){
+
+            }
+            else
+                throw new RangeDateException("The first date must be lower that second date.");
+        } else
+            throw new IllegalArgumentException("The arguments 'date1' and 'date' cannot be null.");
+
+    }*/
 
     @Override
     public String toString() {

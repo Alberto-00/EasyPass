@@ -113,8 +113,7 @@ public class ReportDAO {
         }
     }
 
-    //Testare il funzionamento della query
-    public ArrayList<Report> doSearch(String docente, Date primaData, Date secondaData) throws SQLException {
+    public ArrayList<Report> doSearch(Docente docente, Date primaData, Date secondaData) throws SQLException {
         if(primaData==null && secondaData!=null){
             throw new IllegalArgumentException("If the argument 'primaData' is null, the argument 'secondaData' cannot be not null");
         }
@@ -126,12 +125,13 @@ public class ReportDAO {
                         "and (doc.Nome_Doc like ?) and (doc.Cognome_Doc like ?) " +
                         "and (rep.Data_report between ? and ?) ";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1,"%"+docente+"%");
-                ps.setString(2,"%"+docente+"%");
+                ps.setString(1,"%"+docente.getNome()+"%");
+                ps.setString(2,"%"+docente.getCognome()+"%");
                 ps.setDate(3,primaData);
                 ps.setDate(4,secondaData);
-                ArrayList<Report> reports=new ArrayList<>();
+                ArrayList<Report> reports = new ArrayList<>();
                 ResultSet rs = ps.executeQuery();
+
                 while(rs.next()) {
                     reports.add(ReportMapper.extract(rs));
                 }
