@@ -1,6 +1,6 @@
 package Storage.Dipartimento;
 
-import ApplicationLogic.Utils.RangeDateException;
+import ApplicationLogic.Utils.InvalidRequestException;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
@@ -9,9 +9,11 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Dipartimento {
@@ -79,7 +81,7 @@ public class Dipartimento {
 
     //Il formato di un dipartimento non si cambia ma si aggiorna sempre lo stesso
     public Formato impostaFormato(Formato formato) throws SQLException {
-        if(formato==null){
+        if(formato == null){
             throw new IllegalArgumentException("The argument cannot be a null object");
         }
         else{
@@ -108,38 +110,46 @@ public class Dipartimento {
         }
     }
 
-    public ArrayList<Report> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, RangeDateException {
+    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
         if(docente != null && primaData != null && secondaData != null){
             if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
                 ReportDAO reportDAO=new ReportDAO();
-                return reportDAO.doSearch(docente,(java.sql.Date) primaData, (java.sql.Date) secondaData);
+                return reportDAO.doSearch(docente, primaData, secondaData);
             } else
-                throw new RangeDateException("The first date must be lower that second date.");
+                throw new InvalidRequestException("La prima data è minore della seconda data.", List.of("La prima data è minore della seconda data."), HttpServletResponse.SC_BAD_REQUEST);
         } else
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReportSoloDocente(String codDip) throws SQLException {
-        if(codDip != null && codDip.compareTo("") != 0){
+    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) throws SQLException {
+        if(docente != null){
             ReportDAO reportDAO = new ReportDAO();
-            return  reportDAO.doRetrieveDocByReport(codDip);
+            return reportDAO.doSearchByDocName(docente);
         }
         else{
-            throw new IllegalArgumentException("The arguments 'codDip' cannot be null or empty.");
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
         }
     }
 
-    /*public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException, RangeDateException {
-        if(date1 != null && date2 != null){
-            if (date1.before(date2) || date1.compareTo(date2) == 0){
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException {
+        if(date1.before(date2) || date1.compareTo(date2) == 0){
+            ReportDAO reportDAO = new ReportDAO();
+            return reportDAO.doSearchByDate(date1, date2);
+        }
+        else{
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
+        }
+    }
 
-            }
-            else
-                throw new RangeDateException("The first date must be lower that second date.");
-        } else
-            throw new IllegalArgumentException("The arguments 'date1' and 'date' cannot be null.");
-
-    }*/
+    public TreeMap<Report, Docente> ricercaReport(String id) throws SQLException {
+        if(id != null && id.compareTo("") != 0){
+            ReportDAO reportDAO = new ReportDAO();
+            return reportDAO.doRetrieveDocByReport(id);
+        }
+        else{
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null and empty.");
+        }
+    }
 
     @Override
     public String toString() {

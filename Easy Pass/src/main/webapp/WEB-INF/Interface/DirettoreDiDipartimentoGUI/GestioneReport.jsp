@@ -34,7 +34,7 @@
                             <img class="search" src="${pageContext.request.contextPath}/icons/search.svg" alt="search">
                         </button>
                     </div>
-                    <span class="warning"></span>
+                    <span id="textMsg" class="warning"></span>
                     <div id="filter-records"></div>
                     <div class="input-date">
                         <div class="input-group input">
@@ -45,6 +45,7 @@
                             <label for="secondaData"></label>
                         </div>
                     </div>
+                    <span id="dateMsg" class="warning"></span>
                 </div>
             </div>
             <div class="row">
@@ -59,7 +60,7 @@
                             <th scope="col">Anteprima</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="searchRep">
                         <%TreeMap<Report, Docente> treeMap = (TreeMap<Report, Docente>) request.getAttribute("treeMap");
                             if (!treeMap.isEmpty()) {
                                 for (Report report : treeMap.keySet()) {%>

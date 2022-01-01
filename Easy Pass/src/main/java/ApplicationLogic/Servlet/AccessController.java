@@ -69,17 +69,20 @@ public class AccessController extends ServletLogic {
                 case "/registrazione": {
                     validate(DocenteValidator.validateSigup(request));
 
-                    Docente docente = new Docente(request.getParameter("nome"), request.getParameter("cognome"),
-                            request.getParameter("email2"), request.getParameter("password2"), new Dipartimento());
+                    Docente docente = new Docente(stringBuilder(request.getParameter("nome")),
+                            stringBuilder(request.getParameter("cognome")), stringBuilder(request.getParameter("email2")),
+                            request.getParameter("password2"), new Dipartimento());
 
                     docente.getDipartimento().setCodice(request.getParameter("dipartimento"));
                     DocenteDAO docenteDAO = new DocenteDAO();
+                    DirettoreDiDipartimentoDAO dirDAO = new DirettoreDiDipartimentoDAO();
 
-                    if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null){
+                    if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null &&
+                            dirDAO.doRetrieveByKey(request.getParameter("email2")) == null){
                         docenteDAO.doCreate(docente);
                         request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
                     } else {
-                        request.setAttribute("msg2", "Docente già registrato.");
+                        request.setAttribute("msg2", "Email già registrata.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
                     break;
@@ -119,5 +122,14 @@ public class AccessController extends ServletLogic {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private String stringBuilder(String str){
+        StringBuilder out = new StringBuilder();
+        String[] token = str.split(" ");
+
+        for (String s : token)
+            out.append(s);
+        return out.toString();
     }
 }

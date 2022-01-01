@@ -1,12 +1,9 @@
 package ApplicationLogic.Ajax;
 
 import ApplicationLogic.Utils.InvalidRequestException;
-import ApplicationLogic.Utils.RangeDateException;
 import ApplicationLogic.Utils.ServletLogic;
 import Storage.Dipartimento.Dipartimento;
 import Storage.Dipartimento.DipartimentoDAO;
-import Storage.Esito.Esito;
-import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
@@ -58,7 +55,7 @@ public class AjaxServlet extends ServletLogic {
 
                 case "/search_report": {
                     String firstDate = request.getParameter("firstDate");
-                    String secondDate = request.getParameter("SecondDate");
+                    String secondDate = request.getParameter("secondDate");
                     String nameDoc = request.getParameter("nameDoc");
 
                     DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
@@ -68,51 +65,36 @@ public class AjaxServlet extends ServletLogic {
                     JSONArray arrRep  = new JSONArray();
                     JSONArray arrDoc = new JSONArray();
 
-                    if (firstDate != null && secondDate != null){
-                        Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(firstDate);
-                        Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(secondDate);
+                    if (firstDate.compareTo("") != 0 && secondDate.compareTo("") != 0){
+                        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+                        Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
+                        boolean checkDate = date1.compareTo(date2) < 0 || date1.compareTo(date2) == 0;
 
-                        if (date1.before(date2) || date1.compareTo(date2) == 0){
-                            if (nameDoc != null && nameDoc.compareTo("") != 0){
-                                Docente docente = new Docente();
-                                docente.setCognome(cognome(nameDoc));
-                                docente.setNome(nome(nameDoc));
-                                if (tmpDip.ricercaCompletaReport(docente, date1, date2) != null)
-                                    root.put("empty", "empty");
-                                else {
-                                    root.put("listDoc", arrDoc);
-                                    root.put("listRep", arrRep);
-                                    for (Report r : tmpDip.ricercaCompletaReport(docente, date1, date2)){
-                                        JSONObject obj = new JSONObject();
-                                        obj.put("report", r);
-                                        arrRep.add(obj);
+                        if (checkDate){
+                            search(date1, date2, nameDoc, tmpDip, root, arrRep, arrDoc, response);
+                            break;
+                        } else {
+                            root.put("dateError", "La prima data deve essere minore della seconda data.");
+                            sendJson(response, root);
+                            break;
+                        }
+                    } else if (firstDate.compareTo("") != 0 && secondDate.compareTo("") == 0){
+                        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+                        search(date1, date1, nameDoc, tmpDip, root, arrRep, arrDoc, response);
+                        break;
+                    } else if (firstDate.compareTo("") == 0 && secondDate.compareTo("") != 0){
+                        root.put("dateError", "Inserire la prima data.");
+                        sendJson(response, root);
+                        break;
+                    }
+                    if (nameDoc != null && nameDoc.compareTo("") != 0){
+                        Docente docente = new Docente();
+                        docente.setCognome(cognome(nameDoc));
+                        docente.setNome(nome(nameDoc));
 
-                                        for (Report rep : tmpDip.ricercaReportSoloDocente(tmpDip.getCodice()).keySet()){
-                                            JSONObject obj2 = new JSONObject();
-                                            obj2.put("docenti", tmpDip.ricercaReportSoloDocente(tmpDip.getCodice()).get(rep));
-                                            arrDoc.add(obj2);
-                                        }
-                                    }
-                                }
-                            } else {
-                                //Si procede solo per data
-                            }
-                        } else throw new RangeDateException("The first date must be lower that second date.");
-                    } else if (nameDoc != null && nameDoc.compareTo("") != 0){
-                        if (!tmpDip.ricercaReportSoloDocente(tmpDip.getCodice()).isEmpty()){
-                            root.put("listDoc", arrDoc);
-                            root.put("listRep", arrRep);
-                            for (Report rep : tmpDip.ricercaReportSoloDocente(tmpDip.getCodice()).keySet()){
-                                JSONObject obj = new JSONObject();
-                                JSONObject obj2 = new JSONObject();
-                                obj.put("docenti", tmpDip.ricercaReportSoloDocente(tmpDip.getCodice()).get(rep));
-                                obj2.put("report", rep);
-                                arrDoc.add(obj);
-                                arrRep.add(obj2);
-                            }
-                        } else
-                            root.put("empty", "empty");
-                    } root.put("empty", "empty");
+                        TreeMap<Report, Docente> treeMap = tmpDip.ricercaReportSoloDocente(docente);
+                        searchReport(root, arrRep, arrDoc, treeMap);
+                    } else root.put("emptyy", "empty");
                     sendJson(response, root);
                     break;
                 }
@@ -142,27 +124,77 @@ public class AjaxServlet extends ServletLogic {
             }
         } catch(SQLException ex){
             log(ex.getMessage());
-        } catch (ParseException | RangeDateException e) {
+        } catch (ParseException e){
             e.printStackTrace();
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+            e.handle(request, response);
+        }
+    }
+
+    private void search(Date date1, Date date2, String nameDoc, Dipartimento tmpDip,
+                        JSONObject root, JSONArray arrRep, JSONArray arrDoc, HttpServletResponse response)
+            throws SQLException, InvalidRequestException, IOException {
+
+        if (nameDoc != null && nameDoc.compareTo("") != 0){
+            Docente docente = new Docente();
+            docente.setCognome(cognome(nameDoc));
+            docente.setNome(nome(nameDoc));
+
+            TreeMap<Report, Docente> treeMap = tmpDip.ricercaCompletaReport(docente, date1, date2);
+            searchReport(root, arrRep, arrDoc, treeMap);
+        } else {
+            TreeMap<Report, Docente> treeMap = tmpDip.ricercaReportSoloData(date1, date2);
+            searchReport(root, arrRep, arrDoc, treeMap);
+        }
+        sendJson(response, root);
+    }
+
+    private void searchReport(JSONObject root, JSONArray arrRep, JSONArray arrDoc,
+                              TreeMap<Report, Docente> treeMap) {
+        if (treeMap.isEmpty())
+            root.put("emptyy", "empty");
+        else {
+            root.put("listDoc", arrDoc);
+            root.put("listRep", arrRep);
+
+            for (Report r : treeMap.keySet()){
+                JSONObject obj = new JSONObject();
+                JSONObject obj2 = new JSONObject();
+                obj.put("report", r.toJson());
+                arrRep.add(obj);
+                obj2.put("docenti", treeMap.get(r).toJson());
+                arrDoc.add(obj2);
+            }
         }
     }
 
     private String nome(String str){
         String[] token = str.split(" ");
-        for (int i = 0; i < token.length; i++)
-            if (checkUppercase(token[i]))
-                return token[i];
-        return null;
+        StringBuilder out = new StringBuilder();
+
+        for (int i = 0; i < token.length; i++) {
+            if (!checkUppercase(token[i])) {
+                out.append(token[i]);
+                if ((i + 1) < token.length)
+                    if (!checkUppercase(token[i + 1]))
+                        out.append(" ");
+            }
+        }
+        return out.toString();
     }
 
     private String cognome(String str){
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
+
         for (int i = 0; i < token.length; i++) {
-            if (!checkUppercase(token[i]))
+            if (checkUppercase(token[i])) {
                 out.append(token[i]);
-            if ((i + 1) < token.length)
-                out.append(" ");
+                if ((i + 1) < token.length)
+                    if (checkUppercase(token[i + 1]))
+                        out.append(" ");
+            }
         }
         return out.toString();
     }

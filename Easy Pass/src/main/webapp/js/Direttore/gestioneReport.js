@@ -35,11 +35,9 @@ $(document).ready(function() {
             url: '../report/delete',
             success: function (response) {
                 var arr = JSON.parse(response);
-                console.log(arr.listReports)
-                console.log(arr.listReports.length)
+
                 if (arr.listReports !== "empty"){
                     for (let i = 0; i < arr.listReports.length; i++) {
-                        console.log('#report' + arr.listReports[i].report)
                         $('#report' + arr.listReports[i].report).remove();
                     }
                 }
@@ -103,7 +101,7 @@ $(document).ready(function() {
      */
     $("#btnSearch").click(function (){
 
-        var firstDate = $('#primaData').val();
+        const firstDate = $('#primaData').val();
         const secondDate = $('#secondaData').val();
         const nameDoc = $('#searchBar').val();
 
@@ -122,9 +120,34 @@ $(document).ready(function() {
             url: '../report/search_report',
             success: function (response) {
                 var arr = JSON.parse(response);
-                console.log(arr);
-                if (arr.empty === "empty"){
-                    $('span.warning').text("Non ci sono report generati da questo Docente.").hide().fadeIn(500).delay(3600).fadeOut(500)
+                console.log(arr)
+                if (arr.emptyy === "empty"){
+                    $('#textMsg').text("Non ci sono report generati da questo Docente.").hide().fadeIn(500).delay(1600).fadeOut(500)
+                } else if (arr.dateError != null){
+                    $('#dateMsg').text(arr.dateError).hide().fadeIn(500).delay(1600).fadeOut(500)
+                } else {
+                    $('tbody#searchRep').empty();
+                    for (let i = 0; i < arr.listRep.length; i++){
+                        $('#searchRep').append(
+                            "<tr id='report"+ arr.listRep[i].report.id +"'> " +
+                                "<td>" +
+                                    "<div class='custom-control custom-checkbox'>" +
+                                        "<input type='checkbox' class='custom-control-input' name='idReport' value='"+ arr.listRep[i].report.id +"' " +
+                                            "id='"+ arr.listRep[i].report.id + "'>" +
+                                            "<label class='custom-control-label' for='"+ arr.listRep[i].report.id + "'>" + arr.listRep[i].report.id + "</label>" +
+                                    "</div>" +
+                                "</td>" +
+                                "<td>" + arr.listDoc[i].docenti.cognome + " " + arr.listDoc[i].docenti.nome + "</td>" +
+                                "<td>" + arr.listRep[i].report.data + "</td>" +
+                                "<td>" + arr.listRep[i].report.orario + "</td>" +
+                                "<td class='td-angle'>" +
+                                    "<a href='#' class='angle-right'>" +
+                                        "<img src='../icons/angle-right.svg\' alt='angle-right'>" +
+                                    "</a>" +
+                                "</td>" +
+                            "</tr>"
+                        )
+                    }
                 }
             }
         });
