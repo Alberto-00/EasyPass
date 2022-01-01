@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -34,5 +35,13 @@ public class ServletLogic extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.print(object.toString());
         writer.flush();
+    }
+
+    public static String getUploadPath(){
+        return System.getenv("CATALINA_HOME") + File.separator + "Progetto_EasyPass\\Report" + File.separator;
+    }
+
+    public static String getDownloadPath(){
+        return System.getProperty("user.home") + File.separator + "Download" + File.separator;
     }
 }

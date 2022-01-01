@@ -9,6 +9,7 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
+import com.itextpdf.text.DocumentException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -121,10 +122,23 @@ public class AjaxServlet extends ServletLogic {
                     sendJson(response, root);
                     break;
                 }
+
+                case "/download_report": {
+                    String str = request.getParameter("report");
+
+                    if (str.compareTo("") != 0) {
+                        ReportDAO reportDAO = new ReportDAO();
+                        DirettoreDiDipartimento direttoreDiDipartimento = new DirettoreDiDipartimento();
+                        String[] idReport = str.split(",");
+                        for (String id : idReport)
+                            direttoreDiDipartimento.downloadReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
+                    }
+                    break;
+                }
             }
         } catch(SQLException ex){
             log(ex.getMessage());
-        } catch (ParseException e){
+        } catch (ParseException | DocumentException e){
             e.printStackTrace();
         } catch (InvalidRequestException e) {
             e.printStackTrace();

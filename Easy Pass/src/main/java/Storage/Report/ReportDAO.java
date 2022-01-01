@@ -182,6 +182,24 @@ public class ReportDAO {
         }
     }
 
+    public Report doDownload(int idReport) throws SQLException {
+        if(idReport < 0){
+            throw new IllegalArgumentException("The argument 'idReport' cannot be negative.");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+                String query="SELECT rep.* FROM report rep " +
+                        "WHERE rep.ID_report = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, idReport);
+                ResultSet rs = ps.executeQuery();
+
+                if(rs.next())
+                    return ReportMapper.extract(rs);
+            }
+        } return null;
+    }
+
     private String convertToString(java.util.Date date){
         String pattern = "yyyy-MM-dd";
         DateFormat df = new SimpleDateFormat(pattern);

@@ -10,7 +10,7 @@ $(document).ready(function() {
     /**
      * Ajax per eliminazione report
      */
-    $("#callAjax").click(function (){
+    $("#delete").click(function (){
         var report = [];
 
         // Initializing array with Checkbox checked values
@@ -100,7 +100,6 @@ $(document).ready(function() {
      * Ajax per la ricerca per docente e/o data
      */
     $("#btnSearch").click(function (){
-
         const firstDate = $('#primaData').val();
         const secondDate = $('#secondaData').val();
         const nameDoc = $('#searchBar').val();
@@ -149,6 +148,39 @@ $(document).ready(function() {
                         )
                     }
                 }
+            }
+        });
+    })
+
+
+    /**
+     * Ajax per il download del report in .pdf
+     */
+    $('#download').click(function (){
+        const report = [];
+
+        $("div.custom-checkbox input[type=checkbox]").each(function(){
+            if ($(this).is(":checked")) {
+                report.push($(this).val());
+            }
+        });
+
+        const dataString = "" + report;
+
+        $.ajax({
+            method: 'GET',
+            accepts: {
+                json: 'application/json',
+            },
+            data: {
+                report: dataString,
+            },
+            dataType: 'text',
+            contentType: "application/json; charset=utf-8",
+            url: '../report/download_report',
+            success: function (response) {
+                var arr = JSON.parse(response);
+                console.log(arr)
             }
         });
     })

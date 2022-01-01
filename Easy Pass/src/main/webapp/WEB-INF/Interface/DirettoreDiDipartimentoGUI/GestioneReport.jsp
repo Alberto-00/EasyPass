@@ -21,10 +21,10 @@
         <div class="container">
             <div class="my-row3">
                 <div class="coll-3">
-                    <img id="callAjax" class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
+                    <img id="delete" class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
                 </div>
                 <div class="coll-3">
-                    <img class="download" src="${pageContext.request.contextPath}/icons/download.svg" alt="download">
+                    <img id="download" class="download" src="${pageContext.request.contextPath}/icons/download.svg" alt="download">
                 </div>
                 <div class="coll-5">
                     <div class="input-group">
