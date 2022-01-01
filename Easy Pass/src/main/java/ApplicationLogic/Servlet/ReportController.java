@@ -26,7 +26,11 @@ public class ReportController extends ServletLogic {
             throws ServletException, IOException {
 
         String path = getPath(request);
-        SessioneDiValidazione s = new SessioneDiValidazione(true, null);
+        try {
+            SessioneDiValidazione s = new SessioneDiValidazione(true, null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
 
         try {

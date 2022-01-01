@@ -51,7 +51,7 @@ public class Docente extends PersonaleUnisa implements JSONSerializable {
         this.sessioni = sessioni;
     }
 
-    public SessioneDiValidazione avviaSessione() throws IOException {
+    public SessioneDiValidazione avviaSessione() throws IOException, SQLException {
         return new SessioneDiValidazione(true, this);
     }
 

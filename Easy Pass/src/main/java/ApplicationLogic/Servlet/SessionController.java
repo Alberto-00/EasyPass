@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "SessionController", value = "/sessioneServlet/*")
 public class SessionController extends ServletLogic {
@@ -37,6 +38,12 @@ public class SessionController extends ServletLogic {
                 break;
             }
             case "/ElencoEsiti":{
+                try {
+                    SessioneDiValidazione s = new SessioneDiValidazione(true, null);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
                 break;
             }

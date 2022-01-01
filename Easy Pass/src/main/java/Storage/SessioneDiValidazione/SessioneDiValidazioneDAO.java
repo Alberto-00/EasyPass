@@ -20,9 +20,9 @@ public class SessioneDiValidazioneDAO {
     public SessioneDiValidazione doRetrieveById(int codice) throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
         try (Connection connection = connectionSingleton.getConnection()) {
-            String query = "SELECT * FROM sessione ses WHERE ses.QRcode=?";
+            String query = "SELECT * FROM sessione ses WHERE ses.QRcode LIKE ?";
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, codice);
+            ps.setString(1, "%"+codice+"%");
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
