@@ -56,7 +56,7 @@
     <div style="display: flex; justify-content: space-between">
         <jsp:include page="../Partials/Docente/esitoCounter.jsp">
             <jsp:param name="esitiArrived" value="6"/>
-            <jsp:param name="esitiRequired" value="10"/>
+            <jsp:param name="esitiRequired" value="${param.nStudents}"/>
         </jsp:include>
         <button class="termina-sessione-button">Termina</button>
     </div>
