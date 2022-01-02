@@ -125,14 +125,20 @@ public class AjaxServlet extends ServletLogic {
 
                 case "/download_report": {
                     String str = request.getParameter("report");
+                    JSONObject root = new JSONObject();
 
                     if (str.compareTo("") != 0) {
+                        boolean flag = false;
                         ReportDAO reportDAO = new ReportDAO();
                         DirettoreDiDipartimento direttoreDiDipartimento = new DirettoreDiDipartimento();
                         String[] idReport = str.split(",");
                         for (String id : idReport)
-                            direttoreDiDipartimento.downloadReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
-                    }
+                            flag = direttoreDiDipartimento.downloadReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
+                        if (flag)
+                            root.put("success", ServletLogic.getDownloadPath());
+                        else root.put("fail", "Download fallito.");
+                    } else root.put("noFile", "Selezionare almeno un report.");
+                    sendJson(response, root);
                     break;
                 }
             }

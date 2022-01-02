@@ -13,6 +13,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ApplicationLogic.Utils.ServletLogic.getUploadPath;
+
 public class EsitoDAO {
 
     public Esito doRetrieveByKey(int id) throws SQLException {
@@ -70,10 +72,8 @@ public class EsitoDAO {
         }
     }
 
-    //Bisogna passare un report
-    //Tutti i riferimenti all'id report sono settati a 1
-    public Document esitiReport() throws SQLException {
-        if(1 < 0){
+    public void esitiReport(Report report) throws SQLException {
+        if(report.getId() < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
         } else{
             try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
@@ -82,30 +82,27 @@ public class EsitoDAO {
                         "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
 
                 PreparedStatement ps = connection.prepareStatement(query);
-                //ps.setInt(1, report.getId());
+                ps.setInt(1, report.getId());
                 ResultSet rs = ps.executeQuery();
-                //Formato formato = report.getDip().getFormato();
-                Formato formato = new Formato("6", true, true, true, true, true);
+                Formato formato = report.getDip().getFormato();
 
                 Document document = new Document();
-                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\Reports\\Report"+1+".pdf"));
-                    document.open();
+                String reportFile = getUploadPath() + report.getPathFile() + ".pdf";
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportFile));
+                document.open();
 
-                    document.add(new Paragraph("Report")); //aggiustare grafica
-                    //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_LEFT);
-                    //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_RIGHT);
-                if(formato.isNumGPValidi()) {
-                    document.add(new Paragraph("Il numero di Green Pass Validi è: " + contaValidi(1, true)));
-                }
+                document.add(new Paragraph("Report")); //aggiustare grafica
+                //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_LEFT);
+                //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_RIGHT);
 
-                if(formato.isNumGPNonValidi()) {
-                    document.add(new Paragraph("Il numero di Green Pass non Validi è: " + contaValidi(1, false)));
-                }
+                if(formato.isNumGPValidi())
+                    document.add(new Paragraph("Il numero di Green Pass Validi è: " + contaValidi(report.getId(), true)));
 
-                if(formato.isNumStudenti()) {
-                    document.add(new Paragraph("Il numero di Studenti controllati è: " + numEsiti(1)));
-                }
+                if(formato.isNumGPNonValidi())
+                    document.add(new Paragraph("Il numero di Green Pass non Validi è: " + contaValidi(report.getId(), false)));
 
+                if(formato.isNumStudenti())
+                    document.add(new Paragraph("Il numero di Studenti controllati è: " + numEsiti(report.getId())));
 
                 if(formato.isNomeCognome() && formato.isData()) {
                     PdfPTable table = new PdfPTable(5);
@@ -123,7 +120,6 @@ public class EsitoDAO {
                         table.addCell(new Paragraph(rs.getString("Cognome_Studente")));
                         table.addCell(new Paragraph((rs.getDate("Ddn_Studente").toString())));
                     }
-
                     document.add(table);
                 }
 
@@ -145,7 +141,6 @@ public class EsitoDAO {
                         document.add(table);
                     }
 
-
                 else
                     if(!formato.isNomeCognome() && formato.isData()) {
                         PdfPTable table = new PdfPTable(3);
@@ -156,8 +151,7 @@ public class EsitoDAO {
                         while(rs.next()){
                             table.addCell(new Paragraph(rs.getString("ID_Esito")));
                             table.addCell(new Paragraph(rs.getString("Valido")));
-                            //table.addCell(new Paragraph((rs.getDate("Ddn").toString())));
-                            table.addCell(new Paragraph("HEççP"));
+                            table.addCell(new Paragraph((rs.getDate("Ddn").toString())));
                         }
                         document.add(table);
 
@@ -176,18 +170,13 @@ public class EsitoDAO {
 
                 document.close();
                 writer.close();
-                return document;
-
-            } catch (DocumentException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
+            } catch (DocumentException | FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        return null;
     }
 
-    public int contaValidi(int idReport, boolean v) throws SQLException {
+    private int contaValidi(int idReport, boolean v) throws SQLException {
         if(idReport < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
         } else{
@@ -206,7 +195,7 @@ public class EsitoDAO {
         }
     }
 
-    public int numEsiti (int idReport) throws SQLException {
+    private int numEsiti (int idReport) throws SQLException {
         if(idReport < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
         } else{
@@ -217,9 +206,8 @@ public class EsitoDAO {
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, idReport);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next())
+                if (rs.next())
                     return rs.getInt("Count");
-
                 return 0;
             }
         }

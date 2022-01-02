@@ -42,6 +42,6 @@ public class ServletLogic extends HttpServlet {
     }
 
     public static String getDownloadPath(){
-        return System.getProperty("user.home") + File.separator + "Download" + File.separator;
+        return System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
     }
 }

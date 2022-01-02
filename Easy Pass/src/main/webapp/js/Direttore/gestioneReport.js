@@ -180,7 +180,14 @@ $(document).ready(function() {
             url: '../report/download_report',
             success: function (response) {
                 var arr = JSON.parse(response);
-                console.log(arr)
+
+                if (arr.success != null) {
+                    $("#downloadMsg").text("Download avvenuto con successo!").hide().fadeIn(500).delay(2200).fadeOut(500);
+                    $("#directoryMsg").text("La directory selezionata è: " + arr.success).hide().fadeIn(500).delay(2200).fadeOut(500);
+                } else if (arr.fail != null)
+                    $("#downloadMsg").text(arr.fail).hide().fadeIn(500).delay(1600).fadeOut(500);
+                else if (arr.noFile != null)
+                    $("#downloadMsg").text(arr.noFile).hide().fadeIn(500).delay(1600).fadeOut(500);
             }
         });
     })

@@ -1,4 +1,3 @@
-<%@ page import="Storage.Esito.EsitoDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -17,7 +16,6 @@
 </head>
 <body>
     <h1>Sei connesso alla sessione: 123456</h1>
-    <%EsitoDAO esiti = new EsitoDAO(); esiti.esitiReport();%>
     <form id="myForm" action="${pageContext.request.contextPath}/sessioneServlet/InvioGP" method="post">
         <div class="areaInvio">
             <label for="actual-btn">
