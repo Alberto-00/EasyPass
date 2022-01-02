@@ -79,13 +79,13 @@ public class Dipartimento {
             throw new IllegalArgumentException("The argument cannot be a null object");
         }
         else{
-            if(formato.getId()==this.formato.getId()){
+            if(formato.getId().compareTo(this.codice)==0){
                 this.formato=formato;
                 FormatoDAO formatoDAO=new FormatoDAO();
                 formatoDAO.doUpdate(formato);
                 return formato;
             }
-            else return null;
+            else throw new IllegalArgumentException("The id of the argument is different from the attribute 'codice' of 'Dipartimento'");
         }
     }
 

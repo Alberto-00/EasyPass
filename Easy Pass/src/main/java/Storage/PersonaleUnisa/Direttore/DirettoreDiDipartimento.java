@@ -35,12 +35,12 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
     }
     //public ArrayList<Report> ricercaReport(String docente, Date primaData, Date secondaData){}
 
-    public Formato impostaFormato(Formato formato){
+    public Formato impostaFormato(Formato formato) throws SQLException {
         if(formato==null){
             throw new IllegalArgumentException("The argument cannot be a null object");
         }
         else{
-            this.getDipartimento().setFormato(formato);
+            this.getDipartimento().impostaFormato(formato);
             return formato;
         }
     }

@@ -140,7 +140,8 @@ public class ReportController extends ServletLogic {
                                 formato.setNumStudenti(numValidazioni!=null);
                                 formato.setNumGPValidi(gpValidi!=null);
                                 formato.setNumGPNonValidi(gpNonValidi!=null);
-                                formatoDAO.doUpdate(formato);
+                                direttore.impostaFormato(formato);
+                                //formatoDAO.doUpdate(formato);
                                 messaggi="Il formato è stato salvato correttamente";
 
                                 String value="";
