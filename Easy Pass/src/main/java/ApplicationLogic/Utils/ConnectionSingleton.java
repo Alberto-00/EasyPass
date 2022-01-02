@@ -12,7 +12,7 @@ public class ConnectionSingleton {
     private volatile static ConnectionSingleton conPool = null;
     private static DataSource datasource;
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "Martina2000";
+    private static final String PASSWORD = "alberto";
     private static final String URL = "jdbc:mysql://localhost:3306/easypass?serverTimezone=";
     private static final String CLASSNAME = "com.mysql.cj.jdbc.Driver";
 

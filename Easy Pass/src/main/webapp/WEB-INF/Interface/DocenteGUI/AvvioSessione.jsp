@@ -19,7 +19,7 @@
     <div class="login-form-content" hidden>
         <h1>Inserisci il numero di Studenti</h1>
         <form class="login-form" id="NumberOfStudentsForm" name="NumberOfStudentsForm"
-              action="${pageContext.request.contextPath}/sessioneServlet/ElencoEsiti" method="get">
+              action="${pageContext.request.contextPath}/sessioneServlet/CreaNuovaSessione" method="get">
             <input class="login-form-input" type="text" id="nStudents" name="nStudents"
                    placeholder="Numero di Studenti">
             <input class="login-form-button" type="submit">

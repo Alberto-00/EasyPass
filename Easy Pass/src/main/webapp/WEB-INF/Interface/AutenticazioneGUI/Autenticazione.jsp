@@ -22,7 +22,7 @@
         <div class="login-form-header">
             <label>Accedi al tuo account</label>
         </div>
-        <input class="login-form-input" type='email' name="email" id="email" placeholder="Email Universitaria" required autocomplete="off">
+        <input class="login-form-input" type='email' name="email" id="email" placeholder="Email Universitaria / Username" required autocomplete="off">
         <input class="login-form-input" type="password" name="password" id="password" placeholder="Password" required autocomplete="off">
         <c:if test="${not empty msg}">
             <label class="error">${msg}</label>

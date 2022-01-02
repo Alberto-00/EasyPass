@@ -1,14 +1,20 @@
 package Storage.Dipartimento;
 
+import ApplicationLogic.Utils.InvalidRequestException;
+import Storage.Esito.Esito;
+import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
+import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.TreeMap;
 
 public class Dipartimento {
 
@@ -75,7 +81,7 @@ public class Dipartimento {
 
     //Il formato di un dipartimento non si cambia ma si aggiorna sempre lo stesso
     public Formato impostaFormato(Formato formato) throws SQLException {
-        if(formato==null){
+        if(formato == null){
             throw new IllegalArgumentException("The argument cannot be a null object");
         }
         else{
@@ -89,26 +95,59 @@ public class Dipartimento {
         }
     }
 
-    public Report eliminaReport(Report report) throws SQLException {
-        if(report==null){
+    public void eliminaReport(Report report) throws SQLException {
+        if(report == null){
             throw new IllegalArgumentException("Cannot delete a null object");
-        }
-        else{
+        } else{
             this.reports.remove(report);
-            ReportDAO reportDAO=new ReportDAO();
+            ReportDAO reportDAO = new ReportDAO();
+            EsitoDAO esitoDAO = new EsitoDAO();
+
+            for (Esito esito : esitoDAO.doRetrieveWithRelations(report.getId())) {
+                esitoDAO.doDelete(esito);
+            }
             reportDAO.doDelete(report);
-            return report;
         }
     }
 
-    public ArrayList<Report> ricercaReport(String docente, Date primaData, Date secondaData) throws SQLException {
-        if(docente!=null || primaData!=null){
-            ReportDAO reportDAO=new ReportDAO();
-            ArrayList<Report> reports=reportDAO.doSearch(docente,(java.sql.Date) primaData, (java.sql.Date) secondaData);
-            return reports;
+    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
+        if(docente != null && primaData != null && secondaData != null){
+            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
+                ReportDAO reportDAO=new ReportDAO();
+                return reportDAO.doSearch(docente, primaData, secondaData);
+            } else
+                throw new InvalidRequestException("La prima data è minore della seconda data.", List.of("La prima data è minore della seconda data."), HttpServletResponse.SC_BAD_REQUEST);
+        } else
+            throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
+    }
+
+    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) throws SQLException {
+        if(docente != null){
+            ReportDAO reportDAO = new ReportDAO();
+            return reportDAO.doSearchByDocName(docente);
         }
         else{
-            throw new IllegalArgumentException("The arguments 'docente' and 'primaData' cannot be both null ");
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
+        }
+    }
+
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException {
+        if(date1.before(date2) || date1.compareTo(date2) == 0){
+            ReportDAO reportDAO = new ReportDAO();
+            return reportDAO.doSearchByDate(date1, date2);
+        }
+        else{
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
+        }
+    }
+
+    public TreeMap<Report, Docente> ricercaReport(String id) throws SQLException {
+        if(id != null && id.compareTo("") != 0){
+            ReportDAO reportDAO = new ReportDAO();
+            return reportDAO.doRetrieveDocByReport(id);
+        }
+        else{
+            throw new IllegalArgumentException("The arguments 'codDip' cannot be null and empty.");
         }
     }
 

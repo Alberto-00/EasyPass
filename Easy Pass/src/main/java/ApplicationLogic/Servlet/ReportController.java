@@ -3,19 +3,12 @@ package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.InvalidRequestException;
 
 import ApplicationLogic.Utils.ServletLogic;
-import ApplicationLogic.Utils.Validator.DirettoreValidator;
-import Storage.Dipartimento.DipartimentoDAO;
+import Storage.Dipartimento.Dipartimento;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
 
-import ApplicationLogic.Utils.ServletLogic;
-
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
-import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimentoDAO;
-import Storage.Report.ReportDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
-import org.json.simple.JSONObject;
-
 
 
 import javax.servlet.*;
@@ -23,7 +16,6 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ReportController", value = "/reportServlet/*")
@@ -34,7 +26,11 @@ public class ReportController extends ServletLogic {
             throws ServletException, IOException {
 
         String path = getPath(request);
-        SessioneDiValidazione s = new SessioneDiValidazione(true, null);
+        try {
+            SessioneDiValidazione s = new SessioneDiValidazione(true, null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
 
         try {
@@ -81,8 +77,8 @@ public class ReportController extends ServletLogic {
                 }
                 case "/GestioneReport":{
                     if (direttore != null){
-                        ReportDAO reportDAO = new ReportDAO();
-                        request.setAttribute("treeMap", reportDAO.doRetrieveDocByReport(direttore.getDipartimento().getCodice()));
+                        Dipartimento tmpDip = direttore.getDipartimento();
+                        request.setAttribute("treeMap", tmpDip.ricercaReport(tmpDip.getCodice()));
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);

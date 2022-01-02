@@ -1,13 +1,19 @@
 package Storage.SessioneDiValidazione;
 
+import ApplicationLogic.Utils.ServletLogic;
 import Storage.PersonaleUnisa.Docente.Docente;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
+import javax.swing.*;
+
 import io.nayuki.qrcodegen.QrCode;
 
 public class SessioneDiValidazione {
@@ -17,16 +23,34 @@ public class SessioneDiValidazione {
     private Docente docente;
     private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/showQRCode?sessionId=";
 
-    public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException {
+    public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException, SQLException {
         Random r = new Random();
-        int sessionId = r.nextInt(100000);
-        //Query al db che non esista già
-        //fare un while
+        int sessionId = 0;
+        SessioneDiValidazione foundSession = null;
+        SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
+        File file;
+        do {
+            sessionId = r.nextInt(100000);
+            foundSession = sessioneDAO.doRetrieveById(sessionId);
+        }while (foundSession != null);
 
-        createqRCode(url+sessionId);
+        BufferedImage qrImg = createqRCode(url+sessionId);
+        String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(qrImg, "jpg", os);
+        try(InputStream is = new ByteArrayInputStream(os.toByteArray())){
+            file = new File(uploadPath + sessionId + ".jpg");
+            System.out.println("Ho creato il file: "+ file.toPath());
+            Files.copy(is, file.toPath());
+        }
+
+
         System.out.println("SessionID = " + sessionId);
         this.isInCorso = isInCorso;
         this.docente = docente;
+        this.qRCode = sessionId + ".jpg";
+        System.out.println(this.qRCode);
     }
 
     public SessioneDiValidazione() {
@@ -36,13 +60,16 @@ public class SessioneDiValidazione {
         this.docente=null;
     }
 
-    private void createqRCode(String url) throws IOException {
+    public SessioneDiValidazione(String qRCode, boolean isInCorso, Docente docente) {
+        this.qRCode = qRCode;
+        this.isInCorso = isInCorso;
+        this.docente = docente;
+    }
+
+    private BufferedImage createqRCode(String url) throws IOException {
         QrCode qr0 = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
         BufferedImage img = toImage(qr0, 4, 10);  // See QrCodeGeneratorDemo
-        System.out.println("Ho creato l'immagine " + img);
-        ImageIO.write(img, "png", new File("qr-code.png"));
-        System.out.println("Ho salvato l'immagine");
-
+        return img;
     }
 
     public String getqRCode() {

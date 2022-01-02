@@ -11,6 +11,7 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import ApplicationLogic.Utils.Validator.DocenteValidator;
 
+import javax.print.Doc;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -43,14 +44,20 @@ public class AccessController extends ServletLogic {
 
                     DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
                     DocenteDAO docenteDAO = new DocenteDAO();
-                    DirettoreDiDipartimento direttore = direttoreDAO.doRetrieveByKeyWithRelations(request.getParameter("email"));
-                    Docente docente = docenteDAO.doRetrieveByKey(request.getParameter("email"));
 
-                    if (direttore != null) {
-                        session.setAttribute("direttoreSession", direttore);
+                    DirettoreDiDipartimento direttore = new DirettoreDiDipartimento();
+                    direttore.setUsername(request.getParameter("email"));
+                    direttore.setPassword(request.getParameter("password"));
+
+                    Docente docente = new Docente();
+                    docente.setUsername(request.getParameter("email"));
+                    docente.setPassword(request.getParameter("password"));
+
+                    if (direttoreDAO.checkUserAndPassw(direttore)) {
+                        session.setAttribute("direttoreSession", direttoreDAO.doRetrieveByKeyWithRelations(direttore.getUsername()));
                         response.sendRedirect("../reportServlet/HomePage");
-                    } else if (docente != null){
-                        session.setAttribute("docenteSession", docente);
+                    } else if (docenteDAO.checkUserAndPassw(docente)){
+                        session.setAttribute("docenteSession", docenteDAO.doRetrieveByKeyWithRelations(docente.getUsername()));
                         response.sendRedirect("../sessioneServlet/AvvioSessione");
                     } else {
                         request.setAttribute("msg", "Credenziali errate.");
@@ -62,17 +69,20 @@ public class AccessController extends ServletLogic {
                 case "/registrazione": {
                     validate(DocenteValidator.validateSigup(request));
 
-                    Docente docente = new Docente(request.getParameter("nome"), request.getParameter("cognome"),
-                            request.getParameter("email2"), request.getParameter("password2"), new Dipartimento());
+                    Docente docente = new Docente(stringBuilder(request.getParameter("nome")),
+                            stringBuilder(request.getParameter("cognome")), stringBuilder(request.getParameter("email2")),
+                            request.getParameter("password2"), new Dipartimento());
 
                     docente.getDipartimento().setCodice(request.getParameter("dipartimento"));
                     DocenteDAO docenteDAO = new DocenteDAO();
+                    DirettoreDiDipartimentoDAO dirDAO = new DirettoreDiDipartimentoDAO();
 
-                    if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null){
+                    if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null &&
+                            dirDAO.doRetrieveByKey(request.getParameter("email2")) == null){
                         docenteDAO.doCreate(docente);
                         request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
                     } else {
-                        request.setAttribute("msg2", "Docente già registrato.");
+                        request.setAttribute("msg2", "Email già registrata.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
                     break;
@@ -112,5 +122,14 @@ public class AccessController extends ServletLogic {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private String stringBuilder(String str){
+        StringBuilder out = new StringBuilder();
+        String[] token = str.split(" ");
+
+        for (String s : token)
+            out.append(s);
+        return out.toString();
     }
 }

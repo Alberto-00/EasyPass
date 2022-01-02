@@ -40,7 +40,11 @@
 
 .input-group{
     align-items: end;
-    width: 100%;
+    width: 80%;
+}
+
+input#searchBar{
+    border-radius: 5px 0 0 5px;
 }
 
 .input-group-text{
@@ -71,7 +75,6 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 
 .input-date > .input-group{
     padding-top: 0.7em;
-    width: 100%;
     float: right;
 }
 
@@ -99,6 +102,63 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     font-size: 22px;
 }
 
+.container-search{
+    z-index: 1;
+    background-color: var(--white);
+    box-shadow: 0 3px 9px 0 rgba(12,18,18,0.4);
+    border-radius: 6px;
+    overflow: auto;
+    height: auto;
+    max-height: 233px;
+    position: relative;
+    color: var(--black);
+    width: 100%
+}
+
+#filter-records{
+    width: 80%;
+    height: 0;
+}
+
+.columnAjax{
+    padding-left: 18px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.container-search p{
+    font-size: 15px;
+    cursor: pointer;
+    transition: .3s;
+    color: var(--black);
+}
+
+.columnAjax > p {
+    margin-bottom: 0;
+    padding: 9px 3px 9px 5px;
+    border-radius: 10px;
+}
+
+.columnAjax p:hover{
+    background-color: rgba(206, 212, 218,0.55);
+}
+
+.rowAjax {
+    /*display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;*/
+    color: var(--black);
+}
+
+span.warning{
+    font-size: 15px;
+    color: var(--bs-warning);
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
+.hide{
+    display: none;
+}
 
 /*********************
 * INIZIO Table di   *

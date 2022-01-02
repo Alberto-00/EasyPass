@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DirettoreDiDipartimentoDAO {
+
     public DirettoreDiDipartimento doRetrieveByKey(String username) throws SQLException {
         if(username==null){
             throw new IllegalArgumentException("The username must not be null");
@@ -29,6 +30,21 @@ public class DirettoreDiDipartimentoDAO {
                     return direttore;
                 }
                 return null;
+            }
+        }
+    }
+
+    public boolean checkUserAndPassw(DirettoreDiDipartimento direttore) throws SQLException {
+        if(direttore == null){
+            throw new IllegalArgumentException("The direttore must not be null");
+        } else {
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT * FROM direttore dir WHERE dir.Username_Dir = ? and dir.Password_Dir = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, direttore.getUsername());
+                ps.setString(2, direttore.getPassword());
+                ResultSet rs = ps.executeQuery();
+                return rs.next();
             }
         }
     }

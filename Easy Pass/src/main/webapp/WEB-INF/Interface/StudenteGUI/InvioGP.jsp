@@ -22,11 +22,13 @@
                 <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file">
             </label>
         </div>
-        <input class="file_added" id="actual-btn" type="file" accept="application/pdf,image/*" hidden>
+        <input class="file_added" id="actual-btn" type="file" accept="image/*" hidden>
         <span id="file-chosen"></span>
         <button type="button" id="myButton">
             Invia Green Pass
         </button>
     </form>
+
+
 </body>
 </html>

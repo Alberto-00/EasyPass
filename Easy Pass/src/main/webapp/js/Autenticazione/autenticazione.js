@@ -10,8 +10,12 @@ $(document).ready(function (){
     });
 
     $.validator.addMethod("email_unisa", function (value){
-        return /^[a-zA-Z0-9_.]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(unisa)\.it$/.test(value);
-    }, "Inserisci l'e-mail di ateneo.");
+        return /^[a-zA-Z0-9_.]{3,}@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(unisa)\.it$/.test(value);
+    }, "Email di ateneo errata.");
+
+    $.validator.addMethod("username_email", function (value){
+        return /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$/.test(value) | /^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(unisa)\.it$/.test(value);
+    }, "Email o Username errata.");
 
     $.validator.addMethod("strong_password", function (value) {
         return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$/.test(value)
@@ -41,8 +45,8 @@ $(document).ready(function (){
         rules: {
             email: {
                 required: true,
-                email: true,
-                email_unisa: true
+                email: false,
+                username_email: true,
             },
             password: {
                 required: true,
@@ -54,8 +58,7 @@ $(document).ready(function (){
                 required: "Inserire la password.",
             },
             email: {
-                required: "Inserire l'e-mail.",
-                email: "Inserire un'e-mail valida.",
+                required: "Inserire l'Email o l'Username.",
             }
         },
         submitHandler: function(form) {
@@ -98,8 +101,8 @@ $(document).ready(function (){
                 maxlength: "La password deve essere almeno di 20 caratteri."
             },
             email2: {
-                required: "Inserire l'e-mail.",
-                email: "Inserire un'e-mail valida.",
+                required: "Inserire l'Email di ateneo.",
+                email: "Email di ateneo errata."
             },
             nome: {
                 required: "Inserire il nome.",

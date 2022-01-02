@@ -5,6 +5,8 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteMapper;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -91,9 +93,7 @@ public class ReportDAO {
             ps.setString(5, report.getSessione().getqRCode());
             ps.setInt(6, report.getId());
 
-            if (ps.executeUpdate() == 1)
-                return true;
-            else return false;
+            return ps.executeUpdate() == 1;
         }
     }
 
@@ -107,36 +107,102 @@ public class ReportDAO {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, report.getId());
 
-            if (ps.executeUpdate() == 1)
-                return true;
-            else return false;
+            return ps.executeUpdate() == 1;
         }
     }
 
-    //Testare il funzionamento della query
-    public ArrayList<Report> doSearch(String docente, Date primaData, Date secondaData) throws SQLException {
-        if(primaData==null && secondaData!=null){
-            throw new IllegalArgumentException("If the argument 'primaData' is null, the argument 'secondaData' cannot be not null");
-        }
-        else{
-            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-            try(Connection connection = connectionSingleton.getConnection()){
-                String query="SELECT * FROM docente doc, report rep, dipartimento dip " +
-                        "WHERE rep.Codice_Dip=dip.Codice_Dip and doc.Codice_Dip=dip.Codice_Dip " +
-                        "and (doc.Nome_Doc like ?) and (doc.Cognome_Doc like ?) " +
-                        "and (rep.Data_report between ? and ?) ";
+    public TreeMap<Report, Docente> doSearch(Docente docente, java.util.Date primaData, java.util.Date secondaData) throws SQLException {
+        if(docente != null && primaData != null && secondaData != null){
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
+                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                        "and (rep.Data_report between ? and ?) " +
+                        "and doc.Nome_Doc = ? and doc.Cognome_Doc = ?";
+
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1,"%"+docente+"%");
-                ps.setString(2,"%"+docente+"%");
-                ps.setDate(3,primaData);
-                ps.setDate(4,secondaData);
-                ArrayList<Report> reports=new ArrayList<>();
+                ps.setString(1, convertToString(primaData));
+                ps.setString(2, convertToString(secondaData));
+                ps.setString(3, docente.getNome());
+                ps.setString(4, docente.getCognome());
+
+                TreeMap<Report, Docente> treeMap = new TreeMap<>();
                 ResultSet rs = ps.executeQuery();
-                while(rs.next()) {
-                    reports.add(ReportMapper.extract(rs));
-                }
-                return reports;
+                while(rs.next())
+                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
+                return treeMap;
             }
         }
+        else
+            throw new IllegalArgumentException("The argument 'primaData', 'secondaData' and 'docente' cannot be null");
+    }
+
+    public TreeMap<Report, Docente> doSearchByDocName(Docente docente) throws SQLException {
+        if(docente == null){
+            throw new IllegalArgumentException("The argument 'docente' cannot be null");
+        }
+        else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
+                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                        "and doc.Nome_Doc = ? and doc.Cognome_Doc = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1,docente.getNome());
+                ps.setString(2,docente.getCognome());
+                TreeMap<Report, Docente> treeMap = new TreeMap<>();
+                ResultSet rs = ps.executeQuery();
+
+                while(rs.next())
+                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
+                return treeMap;
+            }
+        }
+    }
+
+    public TreeMap<Report, Docente> doSearchByDate(java.util.Date primaData, java.util.Date secondaData) throws SQLException {
+        if(primaData == null && secondaData == null){
+            throw new IllegalArgumentException("The argument 'primaData' and 'secondaData' cannot be null.");
+        }
+        else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
+                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                        "and (rep.Data_report between ? and ?)";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, convertToString(primaData));
+                ps.setString(2, convertToString(secondaData));
+                TreeMap<Report, Docente> treeMap = new TreeMap<>();
+                ResultSet rs = ps.executeQuery();
+
+                while(rs.next())
+                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
+                return treeMap;
+            }
+        }
+    }
+
+    public Report doDownload(int idReport) throws SQLException {
+        if(idReport < 0){
+            throw new IllegalArgumentException("The argument 'idReport' cannot be negative.");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
+                String query="SELECT rep.* FROM report rep " +
+                        "WHERE rep.ID_report = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, idReport);
+                ResultSet rs = ps.executeQuery();
+
+                if(rs.next())
+                    return ReportMapper.extract(rs);
+            }
+        } return null;
+    }
+
+    private String convertToString(java.util.Date date){
+        String pattern = "yyyy-MM-dd";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(date);
     }
 }
