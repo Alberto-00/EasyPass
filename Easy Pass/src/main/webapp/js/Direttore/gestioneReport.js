@@ -36,11 +36,12 @@ $(document).ready(function() {
             success: function (response) {
                 var arr = JSON.parse(response);
 
-                if (arr.listReports !== "empty"){
+                if (arr.listReports != null){
                     for (let i = 0; i < arr.listReports.length; i++) {
                         $('#report' + arr.listReports[i].report).remove();
                     }
-                }
+                } else
+                    $('#deleteMsg').text("Non ci sono report da eliminare.").hide().fadeIn(500).delay(1600).fadeOut(500)
             }
         });
     })

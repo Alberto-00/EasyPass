@@ -2,8 +2,6 @@ package ApplicationLogic.Ajax;
 
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
-import Storage.Dipartimento.Dipartimento;
-import Storage.Dipartimento.DipartimentoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
@@ -38,15 +36,15 @@ public class AjaxServlet extends ServletLogic {
             switch (path) {
                 case "/search": {
                     DocenteDAO docenteDAO = new DocenteDAO();
-                    List<Docente> docenti = docenteDAO.doRetrieveAllWithRelations();
+                    List<Docente> docenti = docenteDAO.doRetrieveAllWithRelations(direttore.getDipartimento().getCodice());
                     JSONObject root = new JSONObject();
                     JSONArray arr = new JSONArray();
                     root.put("listName", arr);
 
-                    for (int i = 1; i < docenti.size(); i++) {
-                        if(docenti.get(i).getNome() != null){
+                    for (Docente docente : docenti) {
+                        if (docente.getNome() != null) {
                             JSONObject obj = new JSONObject();
-                            obj.put("name", docenti.get(i).getNome() + " " + docenti.get(i).getCognome());
+                            obj.put("name", docente.getNome() + " " + docente.getCognome());
                             arr.add(obj);
                         }
                     }
@@ -59,9 +57,6 @@ public class AjaxServlet extends ServletLogic {
                     String secondDate = request.getParameter("secondDate");
                     String nameDoc = request.getParameter("nameDoc");
 
-                    DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
-                    Dipartimento tmpDip = dipartimentoDAO.doRetrieveById(direttore.getDipartimento().getCodice());
-
                     JSONObject root = new JSONObject();
                     JSONArray arrRep  = new JSONArray();
                     JSONArray arrDoc = new JSONArray();
@@ -71,17 +66,15 @@ public class AjaxServlet extends ServletLogic {
                         Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
                         boolean checkDate = date1.compareTo(date2) < 0 || date1.compareTo(date2) == 0;
 
-                        if (checkDate){
-                            search(date1, date2, nameDoc, tmpDip, root, arrRep, arrDoc, response);
-                            break;
-                        } else {
+                        if (checkDate)
+                            search(direttore, date1, date2, nameDoc, root, arrRep, arrDoc, response);
+                        else {
                             root.put("dateError", "La prima data deve essere minore della seconda data.");
                             sendJson(response, root);
-                            break;
-                        }
+                        } break;
                     } else if (firstDate.compareTo("") != 0 && secondDate.compareTo("") == 0){
                         Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
-                        search(date1, date1, nameDoc, tmpDip, root, arrRep, arrDoc, response);
+                        search(direttore, date1, date1, nameDoc, root, arrRep, arrDoc, response);
                         break;
                     } else if (firstDate.compareTo("") == 0 && secondDate.compareTo("") != 0){
                         root.put("dateError", "Inserire la prima data.");
@@ -93,7 +86,7 @@ public class AjaxServlet extends ServletLogic {
                         docente.setCognome(cognome(nameDoc));
                         docente.setNome(nome(nameDoc));
 
-                        TreeMap<Report, Docente> treeMap = tmpDip.ricercaReportSoloDocente(docente);
+                        TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloDocente(docente);
                         searchReport(root, arrRep, arrDoc, treeMap);
                     } else root.put("emptyy", "empty");
                     sendJson(response, root);
@@ -106,19 +99,17 @@ public class AjaxServlet extends ServletLogic {
 
                     if (str.compareTo("") != 0){
                         ReportDAO reportDAO = new ReportDAO();
-                        DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
                         String[] idReport = str.split(",");
-                        Dipartimento tmpDip = dipartimentoDAO.doRetrieveById(direttore.getDipartimento().getCodice());
                         JSONArray arrRep = new JSONArray();
                         root.put("listReports", arrRep);
 
                         for (String id : idReport) {
-                            tmpDip.eliminaReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
+                            direttore.eliminaReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
                             JSONObject obj = new JSONObject();
                             obj.put("report", id);
                             arrRep.add(obj);
                         }
-                    }else root.put("listReports", "empty");
+                    }else root.put("listReports", null);
                     sendJson(response, root);
                     break;
                 }
@@ -152,7 +143,7 @@ public class AjaxServlet extends ServletLogic {
         }
     }
 
-    private void search(Date date1, Date date2, String nameDoc, Dipartimento tmpDip,
+    private void search(DirettoreDiDipartimento direttore, Date date1, Date date2, String nameDoc,
                         JSONObject root, JSONArray arrRep, JSONArray arrDoc, HttpServletResponse response)
             throws SQLException, InvalidRequestException, IOException {
 
@@ -161,10 +152,10 @@ public class AjaxServlet extends ServletLogic {
             docente.setCognome(cognome(nameDoc));
             docente.setNome(nome(nameDoc));
 
-            TreeMap<Report, Docente> treeMap = tmpDip.ricercaCompletaReport(docente, date1, date2);
+            TreeMap<Report, Docente> treeMap = direttore.ricercaCompletaReport(docente, date1, date2);
             searchReport(root, arrRep, arrDoc, treeMap);
         } else {
-            TreeMap<Report, Docente> treeMap = tmpDip.ricercaReportSoloData(date1, date2);
+            TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloData(date1, date2);
             searchReport(root, arrRep, arrDoc, treeMap);
         }
         sendJson(response, root);

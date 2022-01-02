@@ -48,6 +48,7 @@
                     <span id="dateMsg" class="warning"></span>
                     <span id="downloadMsg" class="warning"></span>
                     <span id="directoryMsg" class="warning"></span>
+                    <span id="deleteMsg" class="warning"></span>
                 </div>
             </div>
             <div class="row">
