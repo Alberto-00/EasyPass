@@ -38,7 +38,8 @@ public class ServletLogic extends HttpServlet {
     }
 
     public static String getUploadPath(){
-        return System.getenv("CATALINA_HOME") + File.separator + "Progetto_EasyPass" + File.separator;
+        return System.getenv("CATALINA_HOME") + File.separator + "webapps" + File.separator+ "ROOT" +
+                File.separator + "Progetto_EasyPass" + File.separator;
     }
 
     public static String getDownloadPath(){

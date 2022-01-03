@@ -56,7 +56,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
         }
     }
 
-    public boolean downloadReport(Report report) throws SQLException, IOException, DocumentException {
+    /*public boolean downloadReport(Report report) throws SQLException, IOException, DocumentException {
         ReportDAO reportDAO = new ReportDAO();
         String namePDF = reportDAO.doDownload(report.getId()).getPathFile();
         String inPath = getUploadPath() + "Report" + File.separator + namePDF + ".pdf";
@@ -69,7 +69,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
        }
        else
            return false;
-    }
+    }*/
 
 
     public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {

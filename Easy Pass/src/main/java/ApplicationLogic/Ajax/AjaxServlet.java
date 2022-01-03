@@ -7,7 +7,6 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
-import com.itextpdf.text.DocumentException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -117,17 +116,18 @@ public class AjaxServlet extends ServletLogic {
                 case "/download_report": {
                     String str = request.getParameter("report");
                     JSONObject root = new JSONObject();
+                    ReportDAO reportDAO = new ReportDAO();
 
                     if (str.compareTo("") != 0) {
-                        boolean flag = false;
-                        ReportDAO reportDAO = new ReportDAO();
-                        DirettoreDiDipartimento direttoreDiDipartimento = new DirettoreDiDipartimento();
                         String[] idReport = str.split(",");
-                        for (String id : idReport)
-                            flag = direttoreDiDipartimento.downloadReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
-                        if (flag)
-                            root.put("success", ServletLogic.getDownloadPath());
-                        else root.put("fail", "Download fallito.");
+                        JSONArray arr = new JSONArray();
+                        root.put("listDownload", arr);
+
+                        for (String id : idReport) {
+                            JSONObject obj = new JSONObject();
+                            obj.put("report", (reportDAO.doRetrieveById(Integer.parseInt(id))).getPathFile());
+                            arr.add(obj);
+                        }
                     } else root.put("noFile", "Selezionare almeno un report.");
                     sendJson(response, root);
                     break;
@@ -135,7 +135,7 @@ public class AjaxServlet extends ServletLogic {
             }
         } catch(SQLException ex){
             log(ex.getMessage());
-        } catch (ParseException | DocumentException e){
+        } catch (ParseException e){
             e.printStackTrace();
         } catch (InvalidRequestException e) {
             e.printStackTrace();
