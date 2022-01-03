@@ -59,7 +59,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
     public boolean downloadReport(Report report) throws SQLException, IOException, DocumentException {
         ReportDAO reportDAO = new ReportDAO();
         String namePDF = reportDAO.doDownload(report.getId()).getPathFile();
-        String inPath = getUploadPath() + namePDF + ".pdf";
+        String inPath = getUploadPath() + "Report" + File.separator + namePDF + ".pdf";
         String outPath = ServletLogic.getDownloadPath();
 
        File srcFile = new File(inPath);

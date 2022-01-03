@@ -24,6 +24,7 @@
                     <img id="delete" class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
                 </div>
                 <div class="coll-3">
+                    <!--<a href="http://localhost:8080/Progetto_EasyPass/Report/convenzioni-per-tirocini.pdf" download="prova.pdf">prrrr</a>-->
                     <img id="download" class="download" src="${pageContext.request.contextPath}/icons/download.svg" alt="download">
                 </div>
                 <div class="coll-5">
