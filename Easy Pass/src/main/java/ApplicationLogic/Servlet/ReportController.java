@@ -3,7 +3,6 @@ package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.InvalidRequestException;
 
 import ApplicationLogic.Utils.ServletLogic;
-import Storage.Dipartimento.Dipartimento;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
 
@@ -77,8 +76,7 @@ public class ReportController extends ServletLogic {
                 }
                 case "/GestioneReport":{
                     if (direttore != null){
-                        Dipartimento tmpDip = direttore.getDipartimento();
-                        request.setAttribute("treeMap", tmpDip.ricercaReport(tmpDip.getCodice()));
+                        request.setAttribute("treeMap", direttore.ricercaReport(direttore.getDipartimento().getCodice()));
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);

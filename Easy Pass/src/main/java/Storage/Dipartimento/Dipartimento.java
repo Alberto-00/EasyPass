@@ -80,7 +80,7 @@ public class Dipartimento {
     }
 
     //Il formato di un dipartimento non si cambia ma si aggiorna sempre lo stesso
-    public Formato impostaFormato(Formato formato) throws SQLException {
+    public void impostaFormato(Formato formato) throws SQLException {
         if(formato == null){
             throw new IllegalArgumentException("The argument cannot be a null object");
         }
@@ -89,7 +89,6 @@ public class Dipartimento {
                 this.formato=formato;
                 FormatoDAO formatoDAO=new FormatoDAO();
                 formatoDAO.doUpdate(formato);
-                return formato;
             }
             else throw new IllegalArgumentException("The id of the argument is different from the attribute 'codice' of 'Dipartimento'");
         }

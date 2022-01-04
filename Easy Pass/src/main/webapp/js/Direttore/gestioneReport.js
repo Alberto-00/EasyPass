@@ -36,11 +36,12 @@ $(document).ready(function() {
             success: function (response) {
                 var arr = JSON.parse(response);
 
-                if (arr.listReports !== "empty"){
+                if (arr.listReports != null){
                     for (let i = 0; i < arr.listReports.length; i++) {
                         $('#report' + arr.listReports[i].report).remove();
                     }
-                }
+                } else
+                    $('#deleteMsg').text("Non ci sono report da eliminare.").hide().fadeIn(500).delay(1600).fadeOut(500)
             }
         });
     })
@@ -181,14 +182,25 @@ $(document).ready(function() {
             success: function (response) {
                 var arr = JSON.parse(response);
 
-                if (arr.success != null) {
+                if (arr.listDownload != null) {
+                    for (let i = 0; i < arr.listDownload.length; i++)
+                        download(arr.listDownload[i].report + ".pdf")
                     $("#downloadMsg").text("Download avvenuto con successo!").hide().fadeIn(500).delay(2200).fadeOut(500);
-                    $("#directoryMsg").text("La directory selezionata è: " + arr.success).hide().fadeIn(500).delay(2200).fadeOut(500);
-                } else if (arr.fail != null)
-                    $("#downloadMsg").text(arr.fail).hide().fadeIn(500).delay(1600).fadeOut(500);
-                else if (arr.noFile != null)
+                } else if (arr.noFile != null)
                     $("#downloadMsg").text(arr.noFile).hide().fadeIn(500).delay(1600).fadeOut(500);
             }
         });
     })
+    function download(path) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'http://localhost:8080/Progetto_EasyPass/Report/' + path );
+        element.setAttribute('download', path);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
 });

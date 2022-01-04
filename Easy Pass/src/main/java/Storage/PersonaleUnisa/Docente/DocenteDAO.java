@@ -54,18 +54,17 @@ public class DocenteDAO {
         }
     }
 
-    public ArrayList<Docente> doRetrieveAllWithRelations() throws SQLException {
+    public ArrayList<Docente> doRetrieveAllWithRelations(String codDip) throws SQLException {
         try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
-            String query = "SELECT * FROM docente doc";
+            String query = "SELECT * FROM docente doc WHERE doc.Codice_Dip = ?";
             PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, codDip);
             ResultSet rs = ps.executeQuery();
             ArrayList<Docente> docenti = new ArrayList<>();
-            int i = 0;
-            while (rs.next()) {
+            for (int i = 0; rs.next(); i++) {
                 docenti.add(DocenteMapper.extract(rs));
                 docenti.get(i).setDipartimento(new Dipartimento());
-                docenti.get(i).getDipartimento().setCodice(rs.getString("doc.Codice_Dip"));
-                i++;
+                docenti.get(i).getDipartimento().setCodice(codDip);
             }
             return docenti;
         }
