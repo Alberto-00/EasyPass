@@ -53,7 +53,7 @@ public class DipartimentoDAO {
                     Dipartimento dipartimento = DipartimentoMapper.extract(rs);
                     String idFormato=rs.getString("dip.ID_Formato");
                     dipartimento.setFormato(new FormatoDAO().doRetrieveById(idFormato));
-                    //Riempire anche il riferimento alla collezione di oggetti report
+                    //TODO: settare anhe l'array di report facendo il retrieve dal db
                     return dipartimento;
                 }
                 return null;

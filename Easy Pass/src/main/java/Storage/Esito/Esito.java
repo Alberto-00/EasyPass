@@ -1,11 +1,13 @@
 package Storage.Esito;
 
+import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Report.Report;
+import org.json.simple.JSONObject;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Esito {
+public class Esito implements JSONSerializable {
 
     private int id;
     private String nomeStudente;
@@ -102,5 +104,19 @@ public class Esito {
                 ", validita=" + validita +
                 ", reportId=" + report +
                 '}';
+    }
+
+    @Override
+    public JSONObject toJson(){
+        JSONObject object = new JSONObject();
+        object.put("id", ""+this.id);
+        object.put("nomeStudente", this.nomeStudente);
+        object.put("cognomeStudente", this.cognomeStudente);
+        object.put("dataDiNascitaStudente",this.dataDiNascitaStudente.toString());
+        String validitaStringa="";
+        if(this.validita) validitaStringa="Valido";
+        else validitaStringa="Non  valido";
+        object.put("validita",""+validitaStringa);
+        return object;
     }
 }

@@ -2,6 +2,11 @@ package ApplicationLogic.Ajax;
 
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
+
+import Storage.Dipartimento.Dipartimento;
+import Storage.Dipartimento.DipartimentoDAO;
+import Storage.Esito.Esito;
+import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
@@ -17,6 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -130,6 +136,20 @@ public class AjaxServlet extends ServletLogic {
                         }
                     } else root.put("noFile", "Selezionare almeno un report.");
                     sendJson(response, root);
+                    break;
+
+                }
+                case "/aggiornaElencoEsiti":{
+                    JSONArray esitiJson=new JSONArray();
+                    JSONObject jsonToSend=new JSONObject();
+                    ArrayList<Esito> esiti= new EsitoDAO().doRetrieveAll();
+                    for(Esito e: esiti){
+                        JSONObject esitoJson=new JSONObject();
+                        esitoJson.put("esitoJson",e.toJson());
+                        esitiJson.add(esitoJson);
+                    }
+                    jsonToSend.put("listaEsiti",esitiJson);
+                    sendJson(response,jsonToSend);
                     break;
                 }
             }

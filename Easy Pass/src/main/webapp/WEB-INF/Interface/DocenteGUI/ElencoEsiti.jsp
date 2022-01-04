@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: gennarospina
@@ -13,45 +14,22 @@
         <jsp:param name="docenteScripts" value=""/>
         <jsp:param name="title" value="Easy Pass | Docente"/>
     </jsp:include>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/Docente/ajaxElencoEsiti.js"></script>
+
 </head>
 <body>
 <div class="coll-2">
     <h1 style="text-align: center; color: white; padding-top: 15px">QR Code</h1>
     <img src="${pageContext.request.contextPath}/icons/covid.png" id="qrcode" class="qrCode">
     <hr class="rounded">
-    <div class="grid-container">
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-        <jsp:include page="../Partials/Docente/grid-card-esito.jsp">
-            <jsp:param name="nomeCompleto" value="Gennaro Spina"/>
-            <jsp:param name="ddn" value="06/09/1998"/>
-            <jsp:param name="esito" value="Valido"/>
-        </jsp:include>
-
+    <div class="grid-container" id="elencoEsitiDiv">
+        <c:forEach var="esito" items="${esiti}">
+            <div class="grid-cell shadow">
+                <span class="grid-data" name="nomeCompleto" id="nomeCompleto">${esito.nomeStudente} ${esito.cognomeStudente}</span>
+                <span class="grid-data" name="ddn" id="ddn">${esito.dataDiNascitaStudente}</span>
+                <span class="grid-data" name="esito" id="esito">${esito.validita}</span>
+            </div>
+        </c:forEach>
     </div>
     <div style="display: flex; justify-content: space-between">
         <jsp:include page="../Partials/Docente/esitoCounter.jsp">
@@ -64,4 +42,7 @@
 </div>
 
 </body>
+<script>
+    var setInterval=setInterval(ajaxUpdate,2000);
+</script>
 </html>

@@ -52,7 +52,6 @@ public class EsitoDAO {
 
                 while (rs.next())
                     esiti.add(EsitoMapper.extract(rs));
-
                 return esiti;
             }
         }

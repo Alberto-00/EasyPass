@@ -35,6 +35,7 @@ public class ReportController extends ServletLogic {
         try {
             switch (path){
                 case "/HomePage":{
+                    System.out.println("Sono nella reportServlet/HomePage");
                     if (direttore != null)
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/HomePage")).forward(request, response);
                     else
@@ -43,11 +44,6 @@ public class ReportController extends ServletLogic {
                 }
                 case "/GestioneFormato":{
 
-                    /*DirettoreDiDipartimentoDAO dirDao=new DirettoreDiDipartimentoDAO();
-                    DirettoreDiDipartimento direttore=dirDao.doRetrieveByKeyWithRelations("username");
-                    session.setAttribute("direttoreSession",direttore);*/
-
-                    //DirettoreDiDipartimento direttore=null;
                     if(direttore!=null) {
                         Formato formato = direttore.getDipartimento().getFormato();
                         String value = "";
@@ -108,9 +104,6 @@ public class ReportController extends ServletLogic {
                     String messaggi="";
 
                     DirettoreDiDipartimento direttore;
-                    /*DirettoreDiDipartimentoDAO dirDao=new DirettoreDiDipartimentoDAO();
-                    DirettoreDiDipartimento direttore=dirDao.doRetrieveByKeyWithRelations("username");
-                    session.setAttribute("direttoreSession",direttore);*/
 
                     if(session!=null){
                         direttore= (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
@@ -135,7 +128,6 @@ public class ReportController extends ServletLogic {
                                 formato.setNumGPValidi(gpValidi!=null);
                                 formato.setNumGPNonValidi(gpNonValidi!=null);
                                 direttore.impostaFormato(formato);
-                                //formatoDAO.doUpdate(formato);
                                 messaggi="Il formato è stato salvato correttamente";
 
                                 String value="";

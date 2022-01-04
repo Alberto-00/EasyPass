@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/AutenticazioneGUI/Autenticazione.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/AutenticazioneGUI" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/DirettoreDiDipartimentoGUI/GestioneReport.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/DirettoreDiDipartimentoGUI" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/DocenteGUI/ElencoEsiti.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/DocenteGUI" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore/Navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore/Popup-Pass.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Head.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials" />
