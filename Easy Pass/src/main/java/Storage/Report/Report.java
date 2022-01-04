@@ -2,11 +2,10 @@ package Storage.Report;
 
 import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Dipartimento.Dipartimento;
-import Storage.SessioneDiValidazione.SessioneDiValidazione;
+import Storage.PersonaleUnisa.Docente.Docente;
 import org.json.simple.JSONObject;
 
 import java.sql.Time;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Report implements Comparable<Report>, JSONSerializable {
@@ -16,15 +15,16 @@ public class Report implements Comparable<Report>, JSONSerializable {
     private Time orario;
     private String pathFile;
     private Dipartimento dip;
-    private SessioneDiValidazione sessione;
+    private Docente docente;
 
-    public Report(int id, Date data, Time orario, String pathFile, Dipartimento dip, SessioneDiValidazione sessione) {
+    public Report(int id, Date data, Time orario,
+                  String pathFile, Dipartimento dip, Docente docente) {
         this.id = id;
         this.data = data;
         this.orario = orario;
         this.pathFile = pathFile;
         this.dip = dip;
-        this.sessione = sessione;
+        this.docente = docente;
     }
 
     public Report() {
@@ -33,7 +33,15 @@ public class Report implements Comparable<Report>, JSONSerializable {
         orario=null;
         pathFile="";
         dip=null;
-        sessione=null;
+        docente = null;
+    }
+
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
     }
 
     public int getId() {
@@ -76,14 +84,6 @@ public class Report implements Comparable<Report>, JSONSerializable {
         this.dip = dip;
     }
 
-    public SessioneDiValidazione getSessione() {
-        return sessione;
-    }
-
-    public void setSessione(SessioneDiValidazione sessione) {
-        this.sessione = sessione;
-    }
-
     @Override
     public int compareTo(Report o) {
         return this.id - o.getId();
@@ -106,7 +106,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
                 ", orario=" + orario +
                 ", pathFile='" + pathFile + '\'' +
                 ", dip=" + dip +
-                ", sessione=" + sessione +
+                ", docente=" + docente +
                 '}';
     }
 }

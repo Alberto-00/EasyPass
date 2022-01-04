@@ -60,8 +60,8 @@ CREATE TABLE Report (
     foreign key (Codice_Dip) references Dipartimento (Codice_Dip)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-    QRcode_session VARCHAR(50) NOT NULL,
-	foreign key (QRcode_session) references Sessione (QRcode)
+    Username_Doc VARCHAR(50) NOT NULL,
+	foreign key (Username_Doc) references Docente (Username_Doc)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
@@ -69,11 +69,15 @@ CREATE TABLE Report (
 CREATE TABLE Esito (
 	ID_Esito INT auto_increment PRIMARY KEY,
     Valido BOOLEAN NOT NULL,
-    ID_Report INT NOT NULL,
+    ID_Report INT,
     Nome_Studente VARCHAR(20) NOT NULL,
     Cognome_Studente VARCHAR(20) NOT NULL,
     Ddn_Studente date NOT NULL,
+    QRcodeSession VARCHAR(50) NOT NULL,
     foreign key (ID_report) references Report (ID_report)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    foreign key (QRcodeSession) references Sessione (QRcode)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
