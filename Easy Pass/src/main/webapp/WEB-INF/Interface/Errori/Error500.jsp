@@ -21,7 +21,7 @@
     <hr>
     <div class='_1'>ERROR</div>
     <div class='_2'>Internal Server Error.</div>
-    <a class='btn' href='${pageContext.request.contextPath}/sessioneServlet/AvvioSessione'>BACK TO HOME-PAGE</a>
+    <a class='btn' href='${pageContext.request.contextPath}/autenticazione/'>BACK TO HOME-PAGE</a>
 </div>
 </body>
 </html>

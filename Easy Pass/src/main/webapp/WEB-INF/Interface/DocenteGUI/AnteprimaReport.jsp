@@ -14,7 +14,7 @@
     <form id="myForm" action="${pageContext.request.contextPath}/sessioneServlet/AvvioSessione" method="get">
         <div class="areaPDF">
             <iframe src="http://localhost:8080/Progetto_EasyPass/Report/<%=path%>.pdf#toolbar=0&navpanes=0&scrollbar=0"></iframe>
-            <a id="hrefPDF" href="http://localhost:8080/Progetto_EasyPass/Report/<%=path%>.pdf" download="<%=path%>.pdf"></a>
+            <a id="hrefPDF" href="../Progetto_EasyPass/Report/<%=path%>.pdf" download="<%=path%>.pdf"></a>
         </div>
         <div class="areaButton">
             <button style="margin-right: 3em" type="submit">Torna all'HomePage</button>

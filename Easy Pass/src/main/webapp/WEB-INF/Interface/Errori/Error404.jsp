@@ -21,7 +21,7 @@
     <hr>
     <div class='_1'>THE PAGE</div>
     <div class='_2'>WAS NOT FOUND</div>
-    <a class='btn' href='${pageContext.request.contextPath}/sessioneServlet/AvvioSessione'>BACK TO HOME-PAGE</a>
+    <a class='btn' href='${pageContext.request.contextPath}/autenticazione/'>BACK TO HOME-PAGE</a>
 </div>
 </body>
 </html>
