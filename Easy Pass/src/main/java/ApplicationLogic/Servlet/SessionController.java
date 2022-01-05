@@ -2,6 +2,7 @@ package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.ServletLogic;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
+import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
@@ -34,6 +35,7 @@ public class SessionController extends ServletLogic {
             throws ServletException, IOException {
         String path = getPath(request);
         SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
+        HttpSession session=request.getSession();
         switch (path){
             case "/showQRCode":{
                 System.out.println(request.getParameter("sessionId"));
@@ -48,34 +50,64 @@ public class SessionController extends ServletLogic {
                 break;
             }
             case "/CreaNuovaSessione":{
-
-                //TODO: da impostare con il docente connesso alla sessione
-                SessioneDiValidazione s = null;
-                try {
-                    s = new SessioneDiValidazione(true, null);
-                    s.setDocente(new DocenteDAO().doRetrieveByKey("aavella@unisa.it"));
-                    sessioneDAO.doCreate(s);
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if(session!=null){
+                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
+                    if(docenteLoggato!=null){
+                        SessioneDiValidazione s = null;
+                        try {
+                            s = docenteLoggato.avviaSessione();
+                            sessioneDAO.doCreate(s);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        session.setAttribute("sessioneDiValidazione",s);
+                        response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
+                    }
+                    else{
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
+                    }
                 }
-                response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
+                else{
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
+                }
                 break;
             }
 
             case "/ElencoEsiti":{
-                EsitoDAO esitoDAO=new EsitoDAO();
-                ArrayList<Esito> esiti=null;
-                try {
-                    esiti=esitoDAO.doRetrieveAll();
-                    System.out.println("Esiti="+esiti);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if(session!=null) {
+                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
+                    if(docenteLoggato!=null) {
+                        EsitoDAO esitoDAO = new EsitoDAO();
+                        ArrayList<Esito> esiti = null;
+                        SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+                        if(s!=null){
+                            try {
+                                esiti = esitoDAO.doRetrieveAllBySession(s);
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+                            request.setAttribute("esiti", esiti);
+                            request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
+
+                        }
+                        else{
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Errore. Riprovare.");
+                        }
+                    }
+                    else{
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
+                    }
                 }
-                request.setAttribute("esiti",esiti);
-                request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
+                else{
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
+                }
                 break;
             }
             case "/AnteprimaReport":{
+                /*per prendere gli esiti bisogna prendere la sessioneDiValidazione dalla sessioneHttp
+                  con nome "sessioneDiValidazione". Fatto ciò bisogna chiamare il metodo doRetrieveAllBySession
+                  dell'EsitoDao, che ritorna un arrayList di esiti
+                 */
                 request.setAttribute("path", "report");
                 request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
                 break;

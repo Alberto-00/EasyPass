@@ -1,4 +1,6 @@
-function ajaxUpdate(paramValue) {
+
+
+function ajaxUpdate(paramValue,setInterval) {
     $.ajax({
         method: 'GET',
         accepts: {
@@ -22,8 +24,10 @@ function ajaxUpdate(paramValue) {
             $("#esitoCounter").empty();
             $("#esitoCounter").append(''+argument.listaEsiti.length+'/'+paramValue);
 
-            if(argument.listaEsiti.length==paramValue){
-                alert("Cambiare pagina");
+            if(argument.listaEsiti.length>=paramValue){
+                clearInterval(setInterval);
+                var path='AnteprimaReport'
+                window.location.href=path;
             }
         }
     });

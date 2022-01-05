@@ -71,7 +71,7 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
-    public ArrayList<DirettoreDiDipartimento> doRetieveAll() throws SQLException {
+    public ArrayList<DirettoreDiDipartimento> doRetrieveAll() throws SQLException {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
         try(Connection connection = connectionSingleton.getConnection()) {
             String query = "SELECT * FROM direttore dir";
