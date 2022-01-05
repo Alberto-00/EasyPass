@@ -2,6 +2,7 @@ package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ServletLogic;
 import Storage.Esito.Esito;
+import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
 
 import java.awt.image.BufferedImage;
@@ -133,7 +134,6 @@ public class SessioneDiValidazione {
 
         String inputLine;
         inputLine = in.readLine();
-        System.out.println(inputLine);
 
         Scanner s = new Scanner(inputLine).useDelimiter(";");
         Esito esitoValidazione = new Esito();
@@ -159,6 +159,7 @@ public class SessioneDiValidazione {
                     break;
             }
         }
+        esitoValidazione.setSessione(this);
         in.close();
         System.out.println(esitoValidazione);
         return esitoValidazione;

@@ -91,10 +91,24 @@ public class SessionController extends ServletLogic {
 
             switch (path) {
                 case "/InvioGP": {
+                    //TODO: Prendere la vera sessione a cui è collegato lo studente dal DB
                     SessioneDiValidazione s = new SessioneDiValidazione();
+                    s.setqRCode("12345.jpg");
+                    DocenteDAO docenteDAO= new DocenteDAO();
                     try {
-                        s.validaGreenPass(request.getParameter("dgc"));
-                    } catch (ParseException e) {
+                        s.setDocente(docenteDAO.doRetrieveByKey("aavella@unisa.it"));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    s.setInCorso(true);
+                    Esito esitoValidazione = null;
+                    try {
+                        esitoValidazione = s.validaGreenPass(request.getParameter("dgc"));
+                        esitoValidazione.setStringaGP("KTM");
+                        System.out.println(esitoValidazione);
+                        EsitoDAO edDao = new EsitoDAO();
+                        edDao.doCreateWithoutReport(esitoValidazione);
+                    } catch (ParseException | SQLException e) {
                         e.printStackTrace();
                     }
                     request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
