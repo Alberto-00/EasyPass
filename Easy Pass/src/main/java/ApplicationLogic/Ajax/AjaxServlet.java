@@ -12,6 +12,7 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -142,7 +143,16 @@ public class AjaxServlet extends ServletLogic {
                 case "/aggiornaElencoEsiti":{
                     JSONArray esitiJson=new JSONArray();
                     JSONObject jsonToSend=new JSONObject();
-                    ArrayList<Esito> esiti= new EsitoDAO().doRetrieveAll();
+                    HttpSession session=request.getSession();
+                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
+                    EsitoDAO esitoDAO = new EsitoDAO();
+                    ArrayList<Esito> esiti = null;
+                    SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+                    try {
+                        esiti = esitoDAO.doRetrieveAllBySession(s);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                     for(Esito e: esiti){
                         JSONObject esitoJson=new JSONObject();
                         esitoJson.put("esitoJson",e.toJson());

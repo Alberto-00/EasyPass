@@ -2,6 +2,7 @@ package Storage.Esito;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Report.Report;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,6 +40,26 @@ public class EsitoDAO {
 
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, report.getId());
+                ResultSet rs = ps.executeQuery();
+                ArrayList<Esito> esiti = new ArrayList<>();
+
+                while (rs.next())
+                    esiti.add(EsitoMapper.extract(rs));
+                return esiti;
+            }
+        }
+    }
+
+    public ArrayList<Esito> doRetrieveAllBySession(SessioneDiValidazione sessione) throws SQLException {
+        if(sessione == null){
+            throw new IllegalArgumentException("The parameter 'sessione' must not be null.");
+        } else{
+            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+                String query = "SELECT esi.* FROM esito esi, sessione ses " +
+                        "WHERE esi.QRcodeSession = ses.QRcode and ses.QRcode = ?";
+
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, sessione.getqRCode());
                 ResultSet rs = ps.executeQuery();
                 ArrayList<Esito> esiti = new ArrayList<>();
 

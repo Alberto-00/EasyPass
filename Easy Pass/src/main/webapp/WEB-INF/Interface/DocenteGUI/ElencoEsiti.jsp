@@ -1,3 +1,4 @@
+<%@ page import="Storage.SessioneDiValidazione.SessioneDiValidazione" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,7 +21,9 @@
 <body>
 <div class="coll-2">
     <h1 style="text-align: center; color: white; padding-top: 15px">QR Code</h1>
-    <img src="${pageContext.request.contextPath}/icons/covid.png" id="qrcode" class="qrCode">
+    <%  SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+        String path=s.getqRCode();%>
+    <img src='http://localhost:8080/Progetto_EasyPass/QRcodes/<%=path%>' id="qrcode" class="qrCode">
     <hr class="rounded">
     <div class="grid-container" id="elencoEsitiDiv">
         <c:forEach var="esito" items="${esiti}">
@@ -45,6 +48,6 @@
     var url_string = window.location.href;
     var url = new URL(url_string);
     var paramValue = url.searchParams.get("nStudents");
-    var setInterval=setInterval(function (){ ajaxUpdate(paramValue)},2000);
+    var setInterval=setInterval(function (){ ajaxUpdate(paramValue,setInterval)},1000);
 </script>
 </html>
