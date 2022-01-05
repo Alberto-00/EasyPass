@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     $("#myButton").click(function () {
         const str = document.getElementById('file-chosen').innerText;
-        if(str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".png")) {
+        if(str.endsWith(".jpg") || str.endsWith(".jpeg") || str.endsWith(".png") || str.endsWith(".JPG") || str.endsWith(".JPEG") || str.endsWith(".PNG")) {
             document.getElementById("myButton").setAttribute('type', 'submit');
         }
         else {

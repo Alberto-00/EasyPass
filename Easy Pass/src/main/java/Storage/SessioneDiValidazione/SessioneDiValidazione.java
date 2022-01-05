@@ -121,7 +121,7 @@ public class SessioneDiValidazione {
     }
 
     public Esito validaGreenPass(String GP) throws IOException, ParseException {
-        String encodedDGC = GP;//URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
+        String encodedDGC = URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
         URL urldemo = new URL("http://localhost:3000/?dgc=" + encodedDGC);
         URLConnection yc = urldemo.openConnection();
         BufferedReader in = null;
