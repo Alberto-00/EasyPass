@@ -11,7 +11,6 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import ApplicationLogic.Utils.Validator.DocenteValidator;
 
-import javax.print.Doc;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -82,7 +81,7 @@ public class AccessController extends ServletLogic {
                         docenteDAO.doCreate(docente);
                         request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
                     } else {
-                        request.setAttribute("msg2", "Email già registrata.");
+                        request.setAttribute("msg", "Email già registrata.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
                     break;

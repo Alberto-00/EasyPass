@@ -29,13 +29,13 @@
                 <div class="coll-5">
                     <div class="input-group">
                         <label for="searchBar"></label>
-                        <input type="text" class="form-control form-control-lg" id="searchBar" placeholder="Cerca qui">
+                        <input type="text" class="form-control form-control-lg" id="searchBar" placeholder="Cerca qui" autocomplete="off">
                         <button id="btnSearch" type="button" class="input-group-text">
                             <img class="search" src="${pageContext.request.contextPath}/icons/search.svg" alt="search">
                         </button>
                     </div>
-                    <span id="textMsg" class="warning"></span>
                     <div id="filter-records"></div>
+                    <span id="textMsg" class="warning"></span>
                     <div class="input-date">
                         <div class="input-group input">
                             <input type="date" id="primaData" class="input-sm form-control" name="primaData" placeholder="gg / mm / yyyy"/>
@@ -53,7 +53,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <table id="example" class="table table-bordered">
+                    <table id="example" class="table table-bordered table-responsive table-striped">
                         <thead>
                         <tr>
                             <th scope="col">ID Report</th>
@@ -78,10 +78,11 @@
                             <td><%=treeMap.get(report).getCognome() + " " + treeMap.get(report).getNome()%></td>
                             <td><%=report.getData().toString()%></td>
                             <td><%=report.getOrario().toString()%></td>
-                            <td class="td-angle">
-                                <a href="#" class="angle-right">
+                            <td>
+                                <button onclick="insertDataPreview(this)" value="<%=report.getPathFile()%>"
+                                        class="btn btn-primary angle-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <img src="${pageContext.request.contextPath}/icons/angle-right.svg" alt="angle-right">
-                                </a>
+                                </button>
                             </td>
                         </tr>
                         <%}%>
@@ -92,6 +93,14 @@
             </div>
         </div>
     </div>
+    <script>
+        function insertDataPreview(element){
+            const $path = $(element).attr("value");
+            $('#exampleModalLabel').text($path + ".pdf");
+            $('#pdf').attr('src', 'http://localhost:8080/Progetto_EasyPass/Report/' + $path + '.pdf#toolbar=0&navpanes=0&scrollbar=0')
+        }
+    </script>
+    <%@include file="../Partials/Direttore/AnteprimaReport.jsp"%>
     <%@include file="../Partials/Direttore/Footer.jsp"%>
 </div>
 <%@include file="../Partials/Direttore/Logout.jsp"%>

@@ -72,7 +72,7 @@ public class ReportController extends ServletLogic {
                 }
                 case "/GestioneReport":{
                     if (direttore != null){
-                        request.setAttribute("treeMap", direttore.ricercaReport(direttore.getDipartimento().getCodice()));
+                        request.setAttribute("treeMap", direttore.ricercaReport());
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);

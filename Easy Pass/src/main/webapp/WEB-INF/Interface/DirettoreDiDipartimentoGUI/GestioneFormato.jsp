@@ -7,17 +7,9 @@
 <head>
     <jsp:include page="/WEB-INF/Interface/Partials/Head.jsp">
         <jsp:param name="direttoreStyles" value="direttore,gestioneFormato"/>
-        <jsp:param name="direttoreScripts" value="direttore"/>
+        <jsp:param name="direttoreScripts" value="direttore,gestioneFormato"/>
         <jsp:param name="title" value="Easy Pass | Admin"/>
     </jsp:include>
-
-    <style>
-        p#messaggiUtente{
-            color: red;
-            font-weight: bold;
-            font-size: 16px;
-        }
-    </style>
 </head>
 <body>
     <%@include file="../Partials/Direttore/Navbar.jsp"%>
@@ -34,7 +26,7 @@
             <span class="fst-italic font-monospace">"<u>Nome e cognome</u>")</span>
 
             <c:if test="${not empty messaggiUtente}">
-                <p id="messaggiUtente">${messaggiUtente}</p>
+                <br><span class="warning" id="messaggiUtente">${messaggiUtente}</span>
             </c:if>
 
             <form action="${pageContext.request.contextPath}/reportServlet/salvaFormato" method="post" name="gestioneFormato" id="gestioneFormato">

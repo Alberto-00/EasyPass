@@ -25,10 +25,7 @@
         <input class="login-form-input" type='email' name="email" id="email" placeholder="Email Universitaria / Username" required autocomplete="off">
         <input class="login-form-input" type="password" name="password" id="password" placeholder="Password" required autocomplete="off">
         <c:if test="${not empty msg}">
-            <label class="error">${msg}</label>
-        </c:if>
-        <c:if test="${not empty msg2}">
-            <label class="error">${msg2}</label>
+            <label id="errorLog" class="error">${msg}</label>
         </c:if>
         <button class="login-form-button" type="submit">Accedi</button>
         <span class="registrati">Sei un Docente e non hai le credenziali?</span>

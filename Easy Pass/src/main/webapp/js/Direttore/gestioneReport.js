@@ -41,7 +41,7 @@ $(document).ready(function() {
                         $('#report' + arr.listReports[i].report).remove();
                     }
                 } else
-                    $('#deleteMsg').text("Non ci sono report da eliminare.").hide().fadeIn(500).delay(1600).fadeOut(500)
+                    $('#deleteMsg').text("Seleziona almeno un report da eliminare.").hide().fadeIn(500).delay(1600).fadeOut(500)
             }
         });
     })
@@ -120,7 +120,7 @@ $(document).ready(function() {
             url: '../report/search_report',
             success: function (response) {
                 var arr = JSON.parse(response);
-                console.log(arr)
+
                 if (arr.emptyy === "empty"){
                     $('#textMsg').text("Non ci sono report generati da questo Docente.").hide().fadeIn(500).delay(1600).fadeOut(500)
                 } else if (arr.dateError != null){
@@ -140,10 +140,12 @@ $(document).ready(function() {
                                 "<td>" + arr.listDoc[i].docenti.cognome + " " + arr.listDoc[i].docenti.nome + "</td>" +
                                 "<td>" + arr.listRep[i].report.data + "</td>" +
                                 "<td>" + arr.listRep[i].report.orario + "</td>" +
-                                "<td class='td-angle'>" +
-                                    "<a href='#' class='angle-right'>" +
-                                        "<img src='../icons/angle-right.svg\' alt='angle-right'>" +
-                                    "</a>" +
+                                "<td>" +
+                                    "<button value='" + arr.listRep[i].report.path + "' onclick='insertDataPreview(this)' " +
+                                        "class='btn btn-primary angle-right' " +
+                                        "data-bs-toggle='modal' data-bs-toggle='modal' data-bs-target='#exampleModal'>" +
+                                        "<img src='../icons/angle-right.svg' alt='angle-right'>" +
+                                    "</button>" +
                                 "</td>" +
                             "</tr>"
                         )

@@ -3,6 +3,7 @@ package Storage.PersonaleUnisa.Docente;
 import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.PersonaleUnisa;
+import Storage.Report.Report;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 import org.json.simple.JSONObject;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class Docente extends PersonaleUnisa implements JSONSerializable {
 
     private ArrayList<SessioneDiValidazione> sessioni;
+    private ArrayList<Report> listaReport;
 
     public Docente() {
         this.setNome("");
@@ -22,16 +24,19 @@ public class Docente extends PersonaleUnisa implements JSONSerializable {
         this.setPassword("");
         this.setDipartimento(null);
         this.sessioni=new ArrayList<>();
+        this.listaReport = new ArrayList<>();
     }
 
     public Docente(String nome, String cognome, String username, String password,
-                   Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni){
+                   Dipartimento dipartimento, ArrayList<SessioneDiValidazione> sessioni,
+                   ArrayList<Report> reports){
         this.setNome(nome);
         this.setCognome(cognome);
         this.setUsername(username);
         this.setPassword(password);
         this.setDipartimento(dipartimento);
         this.sessioni = sessioni;
+        this.listaReport = reports;
     }
 
     public Docente(String nome, String cognome, String username, String password,
@@ -41,6 +46,14 @@ public class Docente extends PersonaleUnisa implements JSONSerializable {
         this.setUsername(username);
         this.setPassword(password);
         this.setDipartimento(dipartimento);
+    }
+
+    public ArrayList<Report> getListaReport() {
+        return listaReport;
+    }
+
+    public void setListaReport(ArrayList<Report> listaReport) {
+        this.listaReport = listaReport;
     }
 
     public ArrayList<SessioneDiValidazione> getSessioni() {
@@ -70,10 +83,13 @@ public class Docente extends PersonaleUnisa implements JSONSerializable {
 
     //public boolean downloadReport(Report report){}
 
+
     @Override
     public String toString() {
-        return super.toString()+"{" +
-                "sessioni=" + sessioni + '}';
+        return "Docente{" +
+                "sessioni=" + sessioni +
+                ", listaReport=" + listaReport +
+                '}';
     }
 
     @Override

@@ -134,7 +134,7 @@ public class AjaxServlet extends ServletLogic {
                             obj.put("report", (reportDAO.doRetrieveById(Integer.parseInt(id))).getPathFile());
                             arr.add(obj);
                         }
-                    } else root.put("noFile", "Selezionare almeno un report.");
+                    } else root.put("noFile", "Selezionare almeno un report da scaricare.");
                     sendJson(response, root);
                     break;
 

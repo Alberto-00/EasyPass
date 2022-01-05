@@ -1,6 +1,7 @@
 package Storage.Esito;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Report.Report;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,18 +29,18 @@ public class EsitoDAO {
         }
     }
 
-    public List<Esito> doRetrieveWithRelations(int idReport) throws SQLException {
-        if(idReport < 0){
-            throw new IllegalArgumentException("The ID must not be a negative number");
+    public ArrayList<Esito> doRetrieveAllByReport(Report report) throws SQLException {
+        if(report == null){
+            throw new IllegalArgumentException("The 'report' must not be null.");
         } else{
             try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
                 String query = "SELECT esi.* FROM esito esi, report rep " +
                         "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
 
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, idReport);
+                ps.setInt(1, report.getId());
                 ResultSet rs = ps.executeQuery();
-                List<Esito> esiti = new ArrayList<>();
+                ArrayList<Esito> esiti = new ArrayList<>();
 
                 while (rs.next())
                     esiti.add(EsitoMapper.extract(rs));
@@ -62,7 +63,7 @@ public class EsitoDAO {
         }
     }
 
-    public int contaValidi(int idReport, boolean v) throws SQLException {
+    public int contaEsitiValidi(int idReport, boolean flag) throws SQLException {
         if(idReport < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
         } else{
@@ -72,7 +73,7 @@ public class EsitoDAO {
 
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, idReport);
-                ps.setBoolean(2, v);
+                ps.setBoolean(2, flag);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next())
                     return rs.getInt("Count");
