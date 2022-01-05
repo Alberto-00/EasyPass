@@ -4,7 +4,6 @@ import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Report.Report;
 import org.json.simple.JSONObject;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Esito implements JSONSerializable {

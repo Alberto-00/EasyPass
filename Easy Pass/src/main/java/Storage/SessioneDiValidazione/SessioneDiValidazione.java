@@ -1,16 +1,27 @@
 package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ServletLogic;
+import Storage.Esito.Esito;
 import Storage.PersonaleUnisa.Docente.Docente;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -32,16 +43,16 @@ public class SessioneDiValidazione {
         do {
             sessionId = r.nextInt(100000);
             foundSession = sessioneDAO.doRetrieveById(sessionId);
-        }while (foundSession != null);
+        } while (foundSession != null);
 
-        BufferedImage qrImg = createqRCode(url+sessionId);
+        BufferedImage qrImg = createqRCode(url + sessionId);
         String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ImageIO.write(qrImg, "jpg", os);
-        try(InputStream is = new ByteArrayInputStream(os.toByteArray())){
+        try (InputStream is = new ByteArrayInputStream(os.toByteArray())) {
             file = new File(uploadPath + sessionId + ".jpg");
-            System.out.println("Ho creato il file: "+ file.toPath());
+            System.out.println("Ho creato il file: " + file.toPath());
             Files.copy(is, file.toPath());
         }
 
@@ -55,9 +66,9 @@ public class SessioneDiValidazione {
 
     public SessioneDiValidazione() {
 
-        this.qRCode="";
-        this.isInCorso=false;
-        this.docente=null;
+        this.qRCode = "";
+        this.isInCorso = false;
+        this.docente = null;
     }
 
     public SessioneDiValidazione(String qRCode, boolean isInCorso, Docente docente) {
@@ -94,6 +105,50 @@ public class SessioneDiValidazione {
 
     public void setDocente(Docente docente) {
         this.docente = docente;
+    }
+
+    public Esito validaGreenPass(String GP) throws IOException, ParseException {
+        String encodedDGC = GP;//URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
+        URL urldemo = new URL("http://localhost:3000/?dgc=" + encodedDGC);
+        URLConnection yc = urldemo.openConnection();
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+        } catch (IOException e) {
+            System.out.println("Not validdd");
+        }
+
+        String inputLine;
+        inputLine = in.readLine();
+        System.out.println(inputLine);
+
+        Scanner s = new Scanner(inputLine).useDelimiter(";");
+        Esito esitoValidazione = new Esito();
+        for (int i = 0; i < 4; i++) {
+            switch (i){
+                case 0:
+                    if (s.next().compareTo("Valid") == 0){
+                        esitoValidazione.setValidita(true);
+                    } else {
+                        esitoValidazione.setValidita(false);
+                    }
+                    break;
+                case 1:
+                    esitoValidazione.setCognomeStudente(s.next());
+                    break;
+                case 2:
+                    esitoValidazione.setNomeStudente(s.next());
+                    break;
+                case 3:
+                    esitoValidazione.setDataDiNascitaStudente(new SimpleDateFormat("yyyy-MM-dd").parse(s.next()));
+                    break;
+                default:
+                    break;
+            }
+        }
+        in.close();
+        System.out.println(esitoValidazione);
+        return esitoValidazione;
     }
 
     private static BufferedImage toImage(QrCode qr, int scale, int border, int lightColor, int darkColor) {
