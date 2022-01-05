@@ -6,11 +6,10 @@ import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import org.json.simple.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -101,17 +100,27 @@ public class Report implements Comparable<Report>, JSONSerializable {
     public void creaFile() throws SQLException, FileNotFoundException, DocumentException {
         EsitoDAO esitoDAO = new EsitoDAO();
         ArrayList<Esito> esiti = esitoDAO.doRetrieveAllByReport(this);
-
         Formato formato = this.getDip().getFormato();
         Document document = new Document();
-        
+
         String reportFile = getUploadPath() + getPathFile() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportFile));
         document.open();
 
-        document.add(new Paragraph("Report")); //aggiustare grafica
-        //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_LEFT);
-        //document.add(new Paragraph("Data: "+ report.getData()).ALIGN_RIGHT);
+        Font f = new Font();
+        f.setSize(20f);
+        Paragraph p = new Paragraph("Report", f);
+        p.setAlignment(Element.ALIGN_CENTER);
+        p.setSpacingAfter(20f);
+        document.add(p);
+        Chunk glue = new Chunk(new VerticalPositionMark());
+        Paragraph p1 = new Paragraph("Docente: "+ this.getDocente().getCognome());
+        p1.add(new Chunk(glue));
+        p1.add("Data: "+ this.getData());
+        Paragraph p2 = new Paragraph("Orario: " + this.getOrario());
+        p2.setAlignment(Element.ALIGN_RIGHT);
+        document.add(p1);
+        document.add(p2);
 
         if(formato.isNumGPValidi())
             document.add(new Paragraph("Il numero di Green Pass Validi è: " + esitoDAO.contaEsitiValidi(getId(), true)));
@@ -125,7 +134,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
 
         if(formato.isNomeCognome() && formato.isData()) {
             PdfPTable table = new PdfPTable(5);
-            table.setSpacingBefore(10f);
+            table.setSpacingBefore(20f);
             table.addCell((new Paragraph("Esito")));
             table.addCell((new Paragraph("Validità")));
             table.addCell((new Paragraph("Nome")));
@@ -134,7 +143,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
             table.setWidths(new float[] {1f, 2f, 3f, 3f, 2f});
             
             for (Esito esito : esiti) {
-                table.addCell(new Paragraph(esito.getId()));
+                table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
                 table.addCell(new Paragraph(esito.getNomeStudente()));
                 table.addCell(new Paragraph(esito.getCognomeStudente()));
@@ -145,13 +154,13 @@ public class Report implements Comparable<Report>, JSONSerializable {
         else if(formato.isNomeCognome() && !formato.isData()) {
             PdfPTable table = new PdfPTable(4);
             table.setWidths(new float[] {1f, 2f, 3f, 3f});
-            table.setSpacingBefore(10f);
+            table.setSpacingBefore(20f);
             table.addCell((new Paragraph("Esito")));
             table.addCell((new Paragraph("Validità")));
             table.addCell((new Paragraph("Nome")));
             table.addCell((new Paragraph("Cognome")));
             for (Esito esito : esiti) {
-                table.addCell(new Paragraph(esito.getId()));
+                table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
                 table.addCell(new Paragraph(esito.getNomeStudente()));
                 table.addCell(new Paragraph(esito.getCognomeStudente()));
@@ -160,12 +169,12 @@ public class Report implements Comparable<Report>, JSONSerializable {
         }
         else if(!formato.isNomeCognome() && formato.isData()) {
             PdfPTable table = new PdfPTable(3);
-            table.setSpacingBefore(10f);
+            table.setSpacingBefore(20f);
             table.addCell((new Paragraph("Esito")));
             table.addCell((new Paragraph("Validità")));
             table.addCell(new Paragraph("Data di Nascita"));
             for (Esito esito : esiti) {
-                table.addCell(new Paragraph(esito.getId()));
+                table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
                 table.addCell(new Paragraph(String.valueOf((esito.getDataDiNascitaStudente()))));
             }
@@ -173,11 +182,11 @@ public class Report implements Comparable<Report>, JSONSerializable {
         }
         else {
             PdfPTable table = new PdfPTable(2);
-            table.setSpacingBefore(10f);
+            table.setSpacingBefore(20f);
             table.addCell((new Paragraph("Esito")));
             table.addCell((new Paragraph("Validità")));
             for (Esito esito : esiti) {
-                table.addCell(new Paragraph(esito.getId()));
+                table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
             }
             document.add(table);
