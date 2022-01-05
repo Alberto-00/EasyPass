@@ -32,10 +32,9 @@
         </c:forEach>
     </div>
     <div style="display: flex; justify-content: space-between">
-        <jsp:include page="../Partials/Docente/esitoCounter.jsp">
-            <jsp:param name="esitiArrived" value="6"/>
-            <jsp:param name="esitiRequired" value="${param.nStudents}"/>
-        </jsp:include>
+        <span class="esitoCounter" id="esitoCounter">
+            0/${param.nStudents}
+        </span>
         <button class="termina-sessione-button">Termina</button>
     </div>
 
@@ -43,6 +42,9 @@
 
 </body>
 <script>
-    var setInterval=setInterval(ajaxUpdate,2000);
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var paramValue = url.searchParams.get("nStudents");
+    var setInterval=setInterval(function (){ ajaxUpdate(paramValue)},2000);
 </script>
 </html>

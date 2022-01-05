@@ -1,4 +1,4 @@
-function ajaxUpdate() {
+function ajaxUpdate(paramValue) {
     $.ajax({
         method: 'GET',
         accepts: {
@@ -17,6 +17,13 @@ function ajaxUpdate() {
                     "     <span class='grid-data' name='ddn' id='ddn'>"+ argument.listaEsiti[i].esitoJson.dataDiNascitaStudente +"</span>\n" +
                     "     <span class='grid-data' name='esito' id='esito'>"+ argument.listaEsiti[i].esitoJson.validita+"</span>\n" +
                     "</div>")
+            }
+
+            $("#esitoCounter").empty();
+            $("#esitoCounter").append(''+argument.listaEsiti.length+'/'+paramValue);
+
+            if(argument.listaEsiti.length==paramValue){
+                alert("Cambiare pagina");
             }
         }
     });

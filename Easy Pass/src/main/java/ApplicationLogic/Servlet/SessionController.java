@@ -58,8 +58,6 @@ public class SessionController extends ServletLogic {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
-                System.out.println("nStudents="+request.getParameter("nStudents"));
                 response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
                 break;
             }
