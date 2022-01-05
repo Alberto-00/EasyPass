@@ -28,7 +28,7 @@
     <div class='_1'>No authorization found.</div>
     <div class='_2'>This page is not publically avaible.</div>
     <div class='_2'>To access it please login first.</div>
-    <a class='btn' href='${pageContext.request.contextPath}/sessioneServlet/AvvioSessione'>BACK TO HOME-PAGE</a>
+    <a class='btn' href='${pageContext.request.contextPath}/autenticazione/'>BACK TO HOME-PAGE</a>
 </div>
 </body>
 </html>
