@@ -3,8 +3,9 @@ package Storage.Esito;
 import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Report.Report;
 import org.json.simple.JSONObject;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
-import java.time.LocalDate;
+
 import java.util.Date;
 
 public class Esito implements JSONSerializable {
@@ -16,6 +17,7 @@ public class Esito implements JSONSerializable {
     private String stringaGP;
     private boolean validita;
     private Report report;
+    private SessioneDiValidazione sessione;
 
     public Esito(){
         this.id = 0;
@@ -25,9 +27,12 @@ public class Esito implements JSONSerializable {
         this.stringaGP = "";
         this.validita = false;
         this.report = null;
+        this.sessione = null;
     }
 
-    public Esito(int id, String nomeStudente, String cognomeStudente, Date dataDiNascitaStudente, String stringaGP, boolean validita, Report report) {
+    public Esito(int id, String nomeStudente, String cognomeStudente,
+                 Date dataDiNascitaStudente, String stringaGP,
+                 boolean validita, Report report, SessioneDiValidazione sessione) {
         this.id = id;
         this.nomeStudente = nomeStudente;
         this.cognomeStudente = cognomeStudente;
@@ -35,6 +40,15 @@ public class Esito implements JSONSerializable {
         this.stringaGP = stringaGP;
         this.validita = validita;
         this.report = report;
+        this.sessione = sessione;
+    }
+
+    public SessioneDiValidazione getSessione() {
+        return sessione;
+    }
+
+    public void setSessione(SessioneDiValidazione sessione) {
+        this.sessione = sessione;
     }
 
     public int getId() {
@@ -99,10 +113,11 @@ public class Esito implements JSONSerializable {
                 "id=" + id +
                 ", nomeStudente='" + nomeStudente + '\'' +
                 ", cognomeStudente='" + cognomeStudente + '\'' +
-                ", dataDiNascitaStudente='" + dataDiNascitaStudente + '\'' +
+                ", dataDiNascitaStudente=" + dataDiNascitaStudente +
                 ", stringaGP='" + stringaGP + '\'' +
                 ", validita=" + validita +
-                ", reportId=" + report +
+                ", report=" + report +
+                ", sessione=" + sessione +
                 '}';
     }
 

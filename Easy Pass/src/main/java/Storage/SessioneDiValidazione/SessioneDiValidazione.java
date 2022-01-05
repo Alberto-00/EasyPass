@@ -1,6 +1,7 @@
 package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ServletLogic;
+import Storage.Esito.Esito;
 import Storage.PersonaleUnisa.Docente.Docente;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -21,6 +23,7 @@ public class SessioneDiValidazione {
     private String qRCode;
     private boolean isInCorso;
     private Docente docente;
+    private ArrayList<Esito> listaEsiti;
     private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/showQRCode?sessionId=";
 
     public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException, SQLException {
@@ -54,22 +57,32 @@ public class SessioneDiValidazione {
     }
 
     public SessioneDiValidazione() {
-
         this.qRCode="";
         this.isInCorso=false;
         this.docente=null;
+        listaEsiti = new ArrayList<>();
     }
 
-    public SessioneDiValidazione(String qRCode, boolean isInCorso, Docente docente) {
+    public SessioneDiValidazione(String qRCode, boolean isInCorso,
+                                 Docente docente, ArrayList<Esito> esiti) {
         this.qRCode = qRCode;
         this.isInCorso = isInCorso;
         this.docente = docente;
+        this.listaEsiti = esiti;
     }
 
     private BufferedImage createqRCode(String url) throws IOException {
         QrCode qr0 = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
         BufferedImage img = toImage(qr0, 4, 10);  // See QrCodeGeneratorDemo
         return img;
+    }
+
+    public ArrayList<Esito> getListaEsiti() {
+        return listaEsiti;
+    }
+
+    public void setListaEsiti(ArrayList<Esito> listaEsiti) {
+        this.listaEsiti = listaEsiti;
     }
 
     public String getqRCode() {
@@ -123,6 +136,7 @@ public class SessioneDiValidazione {
                 "qRCode='" + qRCode + '\'' +
                 ", isInCorso=" + isInCorso +
                 ", docente=" + docente +
+                ", listaEsiti=" + listaEsiti +
                 '}';
     }
 }

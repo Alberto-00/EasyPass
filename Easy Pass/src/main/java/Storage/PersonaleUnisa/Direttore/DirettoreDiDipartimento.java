@@ -1,24 +1,17 @@
 package Storage.PersonaleUnisa.Direttore;
 
 import ApplicationLogic.Utils.InvalidRequestException;
-import ApplicationLogic.Utils.ServletLogic;
 import Storage.Dipartimento.Dipartimento;
 import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.Report.Report;
-import Storage.Report.ReportDAO;
-import com.itextpdf.text.DocumentException;
-import org.apache.commons.io.FileUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
-
-import static ApplicationLogic.Utils.ServletLogic.getUploadPath;
 
 public class DirettoreDiDipartimento extends PersonaleUnisa {
 
@@ -39,21 +32,17 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
     }
 
     public void eliminaReport(Report report) throws SQLException {
-        if(report==null){
+        if(report == null)
             throw new IllegalArgumentException("Cannot delete a null object");
-        }
-        else{
+        else
             this.getDipartimento().eliminaReport(report);
-        }
     }
 
     public void impostaFormato(Formato formato) throws SQLException {
-        if(formato==null){
+        if(formato == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
-        }
-        else{
+        else
             this.getDipartimento().impostaFormato(formato);
-        }
     }
 
     /*public boolean downloadReport(Report report) throws SQLException, IOException, DocumentException {
@@ -74,9 +63,9 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
 
     public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
         if(docente != null && primaData != null && secondaData != null){
-            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
+            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)
                return this.getDipartimento().ricercaCompletaReport(docente, primaData, secondaData);
-            } else
+            else
                 throw new InvalidRequestException("La prima data è minore della seconda data.", List.of("La prima data è minore della seconda data."), HttpServletResponse.SC_BAD_REQUEST);
         } else
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
@@ -96,10 +85,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReport(String id) throws SQLException {
-        if(id != null && id.compareTo("") != 0)
-            return this.getDipartimento().ricercaReport(id);
-        else
-            throw new IllegalArgumentException("The arguments 'codDip' cannot be null and empty.");
+    public TreeMap<Report, Docente> ricercaReport() throws SQLException {
+        return this.getDipartimento().ricercaReport();
     }
 }

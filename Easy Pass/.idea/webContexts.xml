@@ -9,6 +9,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore/Navbar.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore/Popup-Pass.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Direttore" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials/Head.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/Partials" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/StudenteGUI/InvioGP.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/Interface/StudenteGUI" />
       </map>
     </option>
   </component>

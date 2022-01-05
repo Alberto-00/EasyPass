@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -13,7 +14,6 @@
     </jsp:include>
 
 </head>
-</head>
 <body>
     <h1>Sei connesso alla sessione: 123456</h1>
     <form id="myForm" action="${pageContext.request.contextPath}/sessioneServlet/InvioGP" method="post">
@@ -22,13 +22,8 @@
                 <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file">
             </label>
         </div>
-        <input class="file_added" id="actual-btn" type="file" accept="image/*" hidden>
-        <span id="file-chosen"></span>
-        <button type="button" id="myButton">
-            Invia Green Pass
-        </button>
+        <input class="file_added" id="actual-btn" type="file" name="file" accept="image/*" hidden>
+        <button type="button" id="myButton">Invia Green Pass</button>
     </form>
-
-
 </body>
 </html>

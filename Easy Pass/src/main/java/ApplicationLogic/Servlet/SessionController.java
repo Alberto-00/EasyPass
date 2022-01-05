@@ -61,6 +61,7 @@ public class SessionController extends ServletLogic {
                 response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
                 break;
             }
+
             case "/ElencoEsiti":{
                 EsitoDAO esitoDAO=new EsitoDAO();
                 ArrayList<Esito> esiti=null;
@@ -74,12 +75,18 @@ public class SessionController extends ServletLogic {
                 request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
                 break;
             }
+            case "/AnteprimaReport":{
+                request.setAttribute("path", "report");
+                request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
+                break;
+            }
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
             String path = getPath(request);
 
             switch (path) {

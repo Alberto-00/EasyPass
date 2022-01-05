@@ -30,8 +30,8 @@ public class ReportDAO {
 
     public TreeMap<Report, Docente> doRetrieveDocByReport(String idDip) throws SQLException {
         try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
-            String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
-                    "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+            String query="SELECT doc.*, rep.* FROM docente doc, report rep " +
+                    "WHERE doc.Username_Doc = rep.Username_Doc " +
                     "and rep.Codice_Dip = ? ORDER BY rep.ID_report";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, idDip);
@@ -63,13 +63,13 @@ public class ReportDAO {
             throw new IllegalArgumentException("Cannot save a null object");
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
         try (Connection connection = connectionSingleton.getConnection()) {
-            String query = "INSERT INTO report (Orario, Data_report, PathFile, Codice_Dip, QRcode_session) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO report (Orario, Data_report, PathFile, Codice_Dip, Username_Doc) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setTime(1, report.getOrario());
             ps.setDate(2, (Date) report.getData());
             ps.setString(3, report.getPathFile());
             ps.setString(4, report.getDip().getCodice());
-            ps.setString(5, report.getSessione().getqRCode());
+            ps.setString(5, report.getDocente().getUsername());
             if (ps.executeUpdate() == 1)
                 return true;
             else return false;
@@ -84,13 +84,13 @@ public class ReportDAO {
         ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
         try (Connection connection = connectionSingleton.getConnection()) {
             String query = "UPDATE report rep SET rep.Orario=?, rep.Data_report=?, " +
-                    "rep.PathFile=?, rep.Codice_Dip=?, rep.QRcode_session=? WHERE rep.ID_report=?";
+                    "rep.PathFile=?, rep.Codice_Dip=?, rep.Username_Doc=? WHERE rep.ID_report=?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setTime(1, report.getOrario());
             ps.setDate(2, (Date) report.getData());
             ps.setString(3, report.getPathFile());
             ps.setString(4, report.getDip().getCodice());
-            ps.setString(5, report.getSessione().getqRCode());
+            ps.setString(5, report.getDocente().getUsername());
             ps.setInt(6, report.getId());
 
             return ps.executeUpdate() == 1;
@@ -114,8 +114,8 @@ public class ReportDAO {
     public TreeMap<Report, Docente> doSearch(Docente docente, java.util.Date primaData, java.util.Date secondaData) throws SQLException {
         if(docente != null && primaData != null && secondaData != null){
             try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
-                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
-                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                String query="SELECT doc.*, rep.* FROM docente doc, report rep " +
+                        "WHERE doc.Username_Doc = rep.Username_Doc " +
                         "and (rep.Data_report between ? and ?) " +
                         "and doc.Nome_Doc = ? and doc.Cognome_Doc = ?";
 
@@ -142,8 +142,8 @@ public class ReportDAO {
         }
         else{
             try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
-                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
-                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                String query="SELECT doc.*, rep.* FROM docente doc, report rep " +
+                        "WHERE doc.Username_Doc = rep.Username_Doc " +
                         "and doc.Nome_Doc = ? and doc.Cognome_Doc = ?";
 
                 PreparedStatement ps = connection.prepareStatement(query);
@@ -165,8 +165,8 @@ public class ReportDAO {
         }
         else{
             try(Connection connection = ConnectionSingleton.getInstance().getConnection()){
-                String query="SELECT doc.*, rep.* FROM sessione ses, docente doc, report rep " +
-                        "WHERE doc.Username_Doc = ses.Username_Doc and rep.QRcode_session = ses.QRcode " +
+                String query="SELECT doc.*, rep.* FROM docente doc, report rep " +
+                        "WHERE doc.Username_Doc = rep.Username_Doc " +
                         "and (rep.Data_report between ? and ?)";
 
                 PreparedStatement ps = connection.prepareStatement(query);

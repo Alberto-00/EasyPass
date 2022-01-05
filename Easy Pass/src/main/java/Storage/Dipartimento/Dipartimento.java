@@ -1,6 +1,7 @@
 package Storage.Dipartimento;
 
 import ApplicationLogic.Utils.InvalidRequestException;
+import ApplicationLogic.Utils.ServletLogic;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
@@ -10,6 +11,7 @@ import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,19 +96,22 @@ public class Dipartimento {
         }
     }
 
-    public void eliminaReport(Report report) throws SQLException {
+    public boolean eliminaReport(Report report) throws SQLException {
         if(report == null){
             throw new IllegalArgumentException("Cannot delete a null object");
         } else{
             this.reports.remove(report);
             ReportDAO reportDAO = new ReportDAO();
-            EsitoDAO esitoDAO = new EsitoDAO();
-
-            for (Esito esito : esitoDAO.doRetrieveWithRelations(report.getId())) {
-                esitoDAO.doDelete(esito);
-            }
             reportDAO.doDelete(report);
+            try {
+                File file = new File(ServletLogic.getUploadPath() + "Report" + File.separator +  report.getPathFile() + ".pdf");
+                if (file.exists())
+                    return file.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 
     public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
@@ -140,14 +145,9 @@ public class Dipartimento {
         }
     }
 
-    public TreeMap<Report, Docente> ricercaReport(String id) throws SQLException {
-        if(id != null && id.compareTo("") != 0){
-            ReportDAO reportDAO = new ReportDAO();
-            return reportDAO.doRetrieveDocByReport(id);
-        }
-        else{
-            throw new IllegalArgumentException("The arguments 'codDip' cannot be null and empty.");
-        }
+    public TreeMap<Report, Docente> ricercaReport() throws SQLException {
+        ReportDAO reportDAO = new ReportDAO();
+        return reportDAO.doRetrieveDocByReport(this.getCodice());
     }
 
     @Override

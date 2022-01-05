@@ -118,4 +118,6 @@ $(document).ready(function (){
             form.submit();
         }
     });
+
+    $('#errorLog').fadeIn(500).delay(2600).fadeOut(500);
 })

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
     <jsp:include page="/WEB-INF/Interface/Partials/Head.jsp">
         <jsp:param name="studenteStyles" value="studente"/>

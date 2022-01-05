@@ -2,7 +2,6 @@ package Storage.PersonaleUnisa.Docente;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.Dipartimento;
-import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 import org.apache.commons.lang3.StringUtils;
