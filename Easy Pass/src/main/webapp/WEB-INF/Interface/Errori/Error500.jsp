@@ -4,7 +4,7 @@
 <head>
     <jsp:include page="/WEB-INF/Interface/Partials/Head.jsp">
         <jsp:param name="errorStyles" value="errors"/>
-        <jsp:param name="title" value="Easy Pass | Error 404"/>
+        <jsp:param name="title" value="Easy Pass | Error 500"/>
     </jsp:include>
 </head>
 <body>
