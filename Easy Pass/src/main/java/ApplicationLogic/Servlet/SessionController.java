@@ -7,15 +7,21 @@ import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
+import Storage.Report.Report;
+import Storage.Report.ReportDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
+import com.itextpdf.text.DocumentException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "SessionController", value = "/sessioneServlet/*")
@@ -29,6 +35,7 @@ public class SessionController extends ServletLogic {
         Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
         SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
         HttpSession session = request.getSession();
+
         try {
             switch (path) {
 
@@ -85,17 +92,37 @@ public class SessionController extends ServletLogic {
                 }
 
                 case "/AnteprimaReport" -> {
-                /*per prendere gli esiti bisogna prendere la sessioneDiValidazione dalla sessioneHttp
-                  con nome "sessioneDiValidazione". Fatto ciò bisogna chiamare il metodo doRetrieveAllBySession
-                  dell'EsitoDao, che ritorna un arrayList di esiti
-                 */
-                    request.setAttribute("path", "report");
-                    request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
+                    if (docente != null){
+                        SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione)
+                                request.getSession().getAttribute("sessioneDiValidazione");
+                        if (sessioneDiValidazione != null){
+                            Report report = new Report(new Date(System.currentTimeMillis()),
+                                    new Date(System.currentTimeMillis()), "",
+                                    docente.getDipartimento(), docente);
+                            report.setPathFile("Report_" + builderPathReport(docente) + "_" + report.getId() + ".pdf");
+                            ReportDAO reportDAO = new ReportDAO();
+                            reportDAO.doCreate(report);
+
+                            EsitoDAO esitoDAO = new EsitoDAO();
+                            ArrayList<Esito> esiti = esitoDAO.doRetrieveAllBySession(sessioneDiValidazione);
+                            for (Esito esi : esiti){
+                                esi.setReport(report);
+                                esitoDAO.doUpdateOnlyReport(esi);
+                            }
+                            report.creaFile(esiti);
+                            request.setAttribute("report", report);
+                            request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
+                        } else
+                            throw new InvalidRequestException("Sessione non trovata", List.of("Sessione non trovata"), HttpServletResponse.SC_NOT_FOUND);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
             }
         } catch (InvalidRequestException e) {
             e.printStackTrace();
-            e.handle(request, response);
+            e.handle(request,response);
+        } catch (DocumentException e) {
+            e.printStackTrace();
         }
     }
 
@@ -121,6 +148,18 @@ public class SessionController extends ServletLogic {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private String builderPathReport(Docente doc){
+        String[] str = (doc.getNome() + " " + doc.getCognome()).split(" ");
+        StringBuilder out = new StringBuilder();
+
+        for (int i = 0; i < str.length; i++){
+            if (i < str.length - 1)
+                out.append(str[i]).append("_");
+            else out.append(str[i]);
+        }
+        return out.toString();
     }
 }
 

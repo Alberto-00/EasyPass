@@ -13,8 +13,7 @@
 <body>
 <div class="coll-2">
     <h1 class="titleQR titleStudent">QR Code</h1>
-    <%  SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
-        String path=s.getqRCode();%>
+    <%  SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");%>
     <hr class="rounded">
     <div class="grid-container" id="elencoEsitiDiv">
         <c:forEach var="esito" items="${esiti}">
@@ -29,7 +28,7 @@
         <span class="esitoCounter" id="esitoCounter">
             0/${param.nStudents}
         </span>
-        <button class="termina-sessione-button">Termina</button>
+        <button onclick="startAnteprimaReport()" class="termina-sessione-button">Termina</button>
     </div>
 </div>
 </body>

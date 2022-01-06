@@ -9,7 +9,7 @@
     </jsp:include>
 </head>
 <body>
-<%String path = (String) request.getAttribute("path");%>
+<%String path = (String) request.getAttribute("report");%>
     <h1>Anteprima di <span class="fst-italic font-monospace">"<%=path%>.pdf"</span></h1>
     <form id="myForm" action="${pageContext.request.contextPath}/sessioneServlet/AvvioSessione" method="get">
         <div class="areaPDF">

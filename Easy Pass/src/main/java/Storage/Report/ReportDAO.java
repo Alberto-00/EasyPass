@@ -130,7 +130,7 @@ public class ReportDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO report (Orario, Data_report, PathFile, Codice_Dip, Username_Doc) VALUES (?, ?, ?, ?, ?)";
                 ps = conn.prepareStatement(query);
-                ps.setTime(1, report.getOrario());
+                ps.setTime(1, (Time) report.getOrario());
                 ps.setDate(2, (Date) report.getData());
                 ps.setString(3, report.getPathFile());
                 ps.setString(4, report.getDip().getCodice());
@@ -156,7 +156,7 @@ public class ReportDAO {
                 String query = "UPDATE report rep SET rep.Orario=?, rep.Data_report=?, " +
                         "rep.PathFile=?, rep.Codice_Dip=?, rep.Username_Doc=? WHERE rep.ID_report=?";
                 ps = conn.prepareStatement(query);
-                ps.setTime(1, report.getOrario());
+                ps.setTime(1, (Time) report.getOrario());
                 ps.setDate(2, (Date) report.getData());
                 ps.setString(3, report.getPathFile());
                 ps.setString(4, report.getDip().getCodice());

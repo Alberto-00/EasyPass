@@ -1,5 +1,6 @@
-
-
+/**
+ * Aggiornamento live degli esiti
+ */
 function ajaxUpdate(paramValue,setInterval) {
     $.ajax({
         method: 'GET',
@@ -35,4 +36,13 @@ function ajaxUpdate(paramValue,setInterval) {
             }
         }
     });
+}
+
+
+/**
+ * viene chiamata la jsp AnteprimaReport
+ * passando prima per la rispettiva servlet in "SessionController"
+ */
+function startAnteprimaReport(){
+    document.location.href = '../sessioneServlet/AnteprimaReport';
 }

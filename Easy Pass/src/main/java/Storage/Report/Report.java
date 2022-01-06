@@ -12,10 +12,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,14 +24,13 @@ public class Report implements Comparable<Report>, JSONSerializable {
 
     private int id;
     private Date data;
-    private Time orario;
+    private Date orario;
     private String pathFile;
     private Dipartimento dip;
     private Docente docente;
 
-    public Report(int id, Date data, Time orario,
+    public Report(Date data, Date orario,
                   String pathFile, Dipartimento dip, Docente docente) {
-        this.id = id;
         this.data = data;
         this.orario = orario;
         this.pathFile = pathFile;
@@ -41,11 +39,11 @@ public class Report implements Comparable<Report>, JSONSerializable {
     }
 
     public Report() {
-        id=0;
-        data=null;
-        orario=null;
-        pathFile="";
-        dip=null;
+        id = 0;
+        data = null;
+        orario = null;
+        pathFile = "";
+        dip = null;
         docente = null;
     }
 
@@ -73,11 +71,11 @@ public class Report implements Comparable<Report>, JSONSerializable {
         this.data = data;
     }
 
-    public Time getOrario() {
+    public Date getOrario() {
         return orario;
     }
 
-    public void setOrario(Time orario) {
+    public void setOrario(Date orario) {
         this.orario = orario;
     }
 
@@ -97,19 +95,19 @@ public class Report implements Comparable<Report>, JSONSerializable {
         this.dip = dip;
     }
 
-    public void creaFile() throws SQLException, FileNotFoundException, DocumentException {
+    public void creaFile(ArrayList<Esito> esiti) throws FileNotFoundException, DocumentException {
         EsitoDAO esitoDAO = new EsitoDAO();
-        ArrayList<Esito> esiti = esitoDAO.doRetrieveAllByReport(this);
         Formato formato = this.getDip().getFormato();
         Document document = new Document();
 
-        String reportFile = getUploadPath() + getPathFile() + ".pdf";
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(reportFile));
+        //String reportFile = getUploadPath() + getPathFile() + ".pdf";
+        PdfWriter writer = PdfWriter.getInstance(document,
+                new FileOutputStream(getUploadPath() + "Report" + File.separator + this.pathFile));
         document.open();
 
-        Font f = new Font();
-        f.setSize(20f);
-        Paragraph p = new Paragraph("Report", f);
+        Font font = new Font();
+        font.setSize(20f);
+        Paragraph p = new Paragraph("Report", font);
         p.setAlignment(Element.ALIGN_CENTER);
         p.setSpacingAfter(20f);
         document.add(p);
@@ -123,10 +121,10 @@ public class Report implements Comparable<Report>, JSONSerializable {
         document.add(p2);
 
         if(formato.isNumGPValidi())
-            document.add(new Paragraph("Il numero di Green Pass Validi è: " + esitoDAO.contaEsitiValidi(getId(), true)));
+            document.add(new Paragraph("Il numero di Green Pass validi è: " + esitoDAO.contaEsitiValidi(getId(), true)));
 
         if(formato.isNumGPNonValidi())
-            document.add(new Paragraph("Il numero di Green Pass non Validi è: " + esitoDAO.contaEsitiValidi(getId(), false)));
+            document.add(new Paragraph("Il numero di Green Pass non validi è: " + esitoDAO.contaEsitiValidi(getId(), false)));
 
         if(formato.isNumStudenti())
             document.add(new Paragraph("Il numero di Studenti controllati è: " + esitoDAO.numEsiti(getId())));

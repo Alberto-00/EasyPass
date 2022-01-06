@@ -239,6 +239,26 @@ public class EsitoDAO {
         }
     }
 
+    public boolean doUpdateOnlyReport(Esito esito) {
+        if(esito == null)
+            throw new IllegalArgumentException("Cannot update a null object");
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = "UPDATE esito SET ID_Report=? WHERE ID_Esito=?";
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, esito.getReport().getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
     public boolean doDelete(Esito esito) {
         if(esito==null)
             throw new IllegalArgumentException("Cannot delete a null object");
