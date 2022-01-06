@@ -38,6 +38,7 @@ public class AccessController extends ServletLogic {
         try {
             switch (path) {
                 case "/" -> {
+
                     validate(DirettoreValidator.validateSigin(request));
                     validate(DocenteValidator.validateSigin(request));
 
@@ -102,7 +103,7 @@ public class AccessController extends ServletLogic {
             }
         } catch (InvalidRequestException e) {
             e.printStackTrace();
-            e.handle(request,response);
+            e.handle(request, response);
         }
     }
 
@@ -113,7 +114,7 @@ public class AccessController extends ServletLogic {
         getServletContext().setAttribute("dipartimenti", dipartimentoDAO.doRetrieveAll());
     }
 
-    private String stringBuilder(String str){
+    private String stringBuilder(String str) {
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
 

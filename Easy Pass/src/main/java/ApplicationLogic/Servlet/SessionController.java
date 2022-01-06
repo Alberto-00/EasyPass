@@ -1,4 +1,5 @@
 package ApplicationLogic.Servlet;
+
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
 import ApplicationLogic.Utils.Validator.NumeroStudenti;
@@ -27,21 +28,27 @@ public class SessionController extends ServletLogic {
         String path = getPath(request);
         Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
         SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         try {
             switch (path) {
-                case "/showQRCode" -> {
-                    if (docente != null)
-                        System.out.println(request.getParameter("sessionId"));
-                    else
-                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
-                }
 
                 case "/InvioGP" -> {
-                    if (docente != null)
+                    Integer sessionId;
+                    if (request.getParameter("sessionId") != null && request.getParameter("sessionId").length() == 5) {
+                        sessionId = Integer.parseInt(request.getParameter("sessionId"));
+                    } else {
+                        throw new InvalidRequestException("Inserisci una sessione", List.of("Inserisci una sessione"), HttpServletResponse.SC_FORBIDDEN);
+                    }
+
+                    SessioneDiValidazioneDAO seDAO = new SessioneDiValidazioneDAO();
+                    SessioneDiValidazione s = seDAO.doRetrieveById(sessionId);
+                    if (s != null) {
+                        session.setAttribute("sessioneDiValidazione", s);
                         request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
-                    else
-                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                    } else {
+                        throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_FORBIDDEN);
+                    }
+
                 }
 
                 case "/AvvioSessione" -> {
@@ -88,7 +95,7 @@ public class SessionController extends ServletLogic {
             }
         } catch (InvalidRequestException e) {
             e.printStackTrace();
-            e.handle(request,response);
+            e.handle(request, response);
         }
     }
 
@@ -97,29 +104,20 @@ public class SessionController extends ServletLogic {
             throws ServletException, IOException {
 
         String path = getPath(request);
+        HttpSession session = request.getSession();
         Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
 
         try {
             if ("/InvioGP".equals(path)) {
-                if (docente != null) {
-                    //TODO: Prendere la vera sessione a cui è collegato lo studente dal DB
-                    SessioneDiValidazione sessioneDiValidazione = new SessioneDiValidazione();
-                    sessioneDiValidazione.setqRCode("12345.jpg");
+                SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+                Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
+                esitoValidazione.setStringaGP("KTM");
+                EsitoDAO edDao = new EsitoDAO();
+                edDao.doCreateWithoutReport(esitoValidazione);
+                request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
+                request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
 
-                    DocenteDAO docenteDAO = new DocenteDAO();
-                    sessioneDiValidazione.setDocente(docenteDAO.doRetrieveByKey("aavella@unisa.it"));
-                    sessioneDiValidazione.setInCorso(true);
-                    Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
-                    esitoValidazione.setStringaGP("KTM");
-                    EsitoDAO edDao = new EsitoDAO();
-                    edDao.doCreateWithoutReport(esitoValidazione);
-                    request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
-                } else
-                    throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
             }
-        } catch (InvalidRequestException e) {
-            e.printStackTrace();
-            e.handle(request, response);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -21,7 +21,7 @@ public class SessioneDiValidazioneDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "SELECT * FROM sessione ses WHERE ses.QRcode LIKE ?";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, "%" + codice + "%");
+                ps.setString(1, "%" + codice + "."+"%");
                 rs = ps.executeQuery();
 
                 if (rs.next())

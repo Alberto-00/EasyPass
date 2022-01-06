@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Esito implements JSONSerializable {
 
@@ -72,6 +73,19 @@ public class Esito implements JSONSerializable {
 
     public void setCognomeStudente(String cognomeStudente) {
         this.cognomeStudente = cognomeStudente;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Esito esito = (Esito) o;
+        return validita == esito.validita && nomeStudente.equals(esito.nomeStudente) && cognomeStudente.equals(esito.cognomeStudente) && dataDiNascitaStudente.equals(esito.dataDiNascitaStudente) && sessione.equals(esito.sessione);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nomeStudente, cognomeStudente, dataDiNascitaStudente, validita, sessione);
     }
 
     public Date getDataDiNascitaStudente() {

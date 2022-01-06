@@ -201,9 +201,7 @@ public class EsitoDAO {
                 ps.setBoolean(1, esito.isValidita());
                 ps.setString(2, esito.getNomeStudente());
                 ps.setString(3, esito.getCognomeStudente());
-                System.out.println("arrivo qui");
                 ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
-                System.out.println("arrivo qui");
                 ps.setString(5, esito.getSessione().getqRCode());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e){

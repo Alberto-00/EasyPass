@@ -29,7 +29,7 @@ public class SessioneDiValidazione {
     private boolean isInCorso;
     private Docente docente;
     private ArrayList<Esito> listaEsiti;
-    private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/showQRCode?sessionId=";
+    private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/InvioGP?sessionId=";
 
     public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException {
         Random r = new Random();
@@ -42,6 +42,7 @@ public class SessioneDiValidazione {
             foundSession = sessioneDAO.doRetrieveById(sessionId);
         } while (foundSession != null);
 
+
         BufferedImage qrImg = createqRCode(url + sessionId);
         String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
 
@@ -53,11 +54,16 @@ public class SessioneDiValidazione {
         }
 
 
-        System.out.println("SessionID = " + sessionId);
         this.isInCorso = isInCorso;
         this.docente = docente;
-        this.qRCode = sessionId + ".jpg";
-        System.out.println(this.qRCode);
+        int numberOfDigits = 5 - String.valueOf(sessionId).length();
+        String parsedSessionId = String.valueOf(sessionId);
+        if (numberOfDigits > 0) {
+            for (int i = 0; i < numberOfDigits; i++) {
+                parsedSessionId = 0 + parsedSessionId;
+            }
+        }
+        this.qRCode = parsedSessionId + ".jpg";
     }
 
     public SessioneDiValidazione() {
@@ -154,7 +160,6 @@ public class SessioneDiValidazione {
         }
         esitoValidazione.setSessione(this);
         in.close();
-        System.out.println(esitoValidazione);
         return esitoValidazione;
     }
 

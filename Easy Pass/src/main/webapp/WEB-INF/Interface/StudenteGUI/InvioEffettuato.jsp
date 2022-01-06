@@ -8,7 +8,7 @@
     </jsp:include>
 </head>
 <body>
-    <h1>Sei connesso alla sessione: 123456</h1>
+    <h1>Sei connesso alla sessione: ${sessionId}</h1>
     <p>Green Pass inviato correttamente</p>
     <div class="image">
         <img src="${pageContext.request.contextPath}/icons/successGP.svg" alt="success">

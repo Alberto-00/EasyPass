@@ -21,7 +21,7 @@
 
 </head>
 <body>
-<h1>Sei connesso alla sessione: 123456</h1>
+<h1>Sei connesso alla sessione: ${param.sessionId}</h1>
 <div class="areaInvio">
     <label for="actual-btn">
         <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file" id="preview-img" style="height: 580px; width: 220px; object-fit: contain">
