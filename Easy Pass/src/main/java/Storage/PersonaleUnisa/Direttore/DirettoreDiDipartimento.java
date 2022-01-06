@@ -23,7 +23,8 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
         this.setDipartimento(null);
     }
 
-    public DirettoreDiDipartimento(String nome, String cognome, String username, String password,Dipartimento dipartimento){
+    public DirettoreDiDipartimento(String nome, String cognome,
+                                   String username, String password,Dipartimento dipartimento){
         this.setNome(nome);
         this.setCognome(cognome);
         this.setUsername(username);
@@ -31,14 +32,14 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
         this.setDipartimento(dipartimento);
     }
 
-    public void eliminaReport(Report report) throws SQLException {
+    public void eliminaReport(Report report) {
         if(report == null)
             throw new IllegalArgumentException("Cannot delete a null object");
         else
             this.getDipartimento().eliminaReport(report);
     }
 
-    public void impostaFormato(Formato formato) throws SQLException {
+    public void impostaFormato(Formato formato) {
         if(formato == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
         else
@@ -61,7 +62,7 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
     }*/
 
 
-    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
+    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws InvalidRequestException {
         if(docente != null && primaData != null && secondaData != null){
             if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)
                return this.getDipartimento().ricercaCompletaReport(docente, primaData, secondaData);
@@ -71,21 +72,21 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) throws SQLException {
+    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) {
         if(docente != null)
             return this.getDipartimento().ricercaReportSoloDocente(docente);
         else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException {
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
         if(date1.before(date2) || date1.compareTo(date2) == 0)
            return this.getDipartimento().ricercaReportSoloData(date1, date2);
         else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReport() throws SQLException {
+    public TreeMap<Report, Docente> ricercaReport() {
         return this.getDipartimento().ricercaReport();
     }
 }

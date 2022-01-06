@@ -11,6 +11,4 @@ public class DipartimentoMapper {
         dip.setNome(rs.getString("dip.Nome"));
         return dip;
     }
-
-
 }

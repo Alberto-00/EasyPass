@@ -1,117 +1,94 @@
 package ApplicationLogic.Servlet;
+import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
+import ApplicationLogic.Utils.Validator.NumeroStudenti;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.JDBCType;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.text.ParseException;
-
+import java.util.List;
 
 @WebServlet(name = "SessionController", value = "/sessioneServlet/*")
 public class SessionController extends ServletLogic {
-    /*SessioneDiValidazione s;
-    {
-        try {
-            s = new SessioneDiValidazione(true, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String path = getPath(request);
+        Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
         SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
         HttpSession session=request.getSession();
-        switch (path){
-            case "/showQRCode":{
-                System.out.println(request.getParameter("sessionId"));
-                break;
-            }
-            case "/InvioGP":{
-                request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
-                break;
-            }
-            case "/AvvioSessione":{
-                request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
-                break;
-            }
-            case "/CreaNuovaSessione":{
-                if(session!=null){
-                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
-                    if(docenteLoggato!=null){
-                        SessioneDiValidazione s = null;
-                        try {
-                            s = docenteLoggato.avviaSessione();
-                            sessioneDAO.doCreate(s);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        session.setAttribute("sessioneDiValidazione",s);
-                        response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
-                    }
-                    else{
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                    }
+        try {
+            switch (path) {
+                case "/showQRCode" -> {
+                    if (docente != null)
+                        System.out.println(request.getParameter("sessionId"));
+                    else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
-                else{
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                }
-                break;
-            }
 
-            case "/ElencoEsiti":{
-                if(session!=null) {
-                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
-                    if(docenteLoggato!=null) {
+                case "/InvioGP" -> {
+                    if (docente != null)
+                        request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
+                    else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/AvvioSessione" -> {
+                    if (docente != null)
+                        request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
+                    else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/CreaNuovaSessione" -> {
+                    if (docente != null) {
+                        validate(NumeroStudenti.validateNumberOfStudents(request));
+                        SessioneDiValidazione sessioneDiValidazione = docente.avviaSessione();
+                        sessioneDAO.doCreate(sessioneDiValidazione);
+                        session.setAttribute("sessioneDiValidazione", sessioneDiValidazione);
+                        response.sendRedirect("ElencoEsiti?nStudents=" + request.getParameter("nStudents"));
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/ElencoEsiti" -> {
+                    if (docente != null) {
                         EsitoDAO esitoDAO = new EsitoDAO();
-                        ArrayList<Esito> esiti = null;
-                        SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
-                        if(s!=null){
-                            try {
-                                esiti = esitoDAO.doRetrieveAllBySession(s);
-                            } catch (SQLException throwables) {
-                                throwables.printStackTrace();
-                            }
+                        SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+                        if (sessioneDiValidazione != null) {
+                            ArrayList<Esito> esiti = esitoDAO.doRetrieveAllBySession(sessioneDiValidazione);
                             request.setAttribute("esiti", esiti);
                             request.getRequestDispatcher(view("DocenteGUI/ElencoEsiti")).forward(request, response);
+                        } else {
+                            throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                        }
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
 
-                        }
-                        else{
-                            response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Errore. Riprovare.");
-                        }
-                    }
-                    else{
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                    }
-                }
-                else{
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                }
-                break;
-            }
-            case "/AnteprimaReport":{
+                case "/AnteprimaReport" -> {
                 /*per prendere gli esiti bisogna prendere la sessioneDiValidazione dalla sessioneHttp
                   con nome "sessioneDiValidazione". Fatto ciò bisogna chiamare il metodo doRetrieveAllBySession
                   dell'EsitoDao, che ritorna un arrayList di esiti
                  */
-                request.setAttribute("path", "report");
-                request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
-                break;
+                    request.setAttribute("path", "report");
+                    request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
+                }
             }
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+            e.handle(request,response);
         }
     }
 
@@ -119,34 +96,33 @@ public class SessionController extends ServletLogic {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-            String path = getPath(request);
+        String path = getPath(request);
+        Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
 
-            switch (path) {
-                case "/InvioGP": {
+        try {
+            if ("/InvioGP".equals(path)) {
+                if (docente != null) {
                     //TODO: Prendere la vera sessione a cui è collegato lo studente dal DB
-                    SessioneDiValidazione s = new SessioneDiValidazione();
-                    s.setqRCode("12345.jpg");
-                    DocenteDAO docenteDAO= new DocenteDAO();
-                    try {
-                        s.setDocente(docenteDAO.doRetrieveByKey("aavella@unisa.it"));
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    s.setInCorso(true);
-                    Esito esitoValidazione = null;
-                    try {
-                        esitoValidazione = s.validaGreenPass(request.getParameter("dgc"));
-                        esitoValidazione.setStringaGP("KTM");
-                        System.out.println(esitoValidazione);
-                        EsitoDAO edDao = new EsitoDAO();
-                        edDao.doCreateWithoutReport(esitoValidazione);
-                    } catch (ParseException | SQLException e) {
-                        e.printStackTrace();
-                    }
+                    SessioneDiValidazione sessioneDiValidazione = new SessioneDiValidazione();
+                    sessioneDiValidazione.setqRCode("12345.jpg");
+
+                    DocenteDAO docenteDAO = new DocenteDAO();
+                    sessioneDiValidazione.setDocente(docenteDAO.doRetrieveByKey("aavella@unisa.it"));
+                    sessioneDiValidazione.setInCorso(true);
+                    Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
+                    esitoValidazione.setStringaGP("KTM");
+                    EsitoDAO edDao = new EsitoDAO();
+                    edDao.doCreateWithoutReport(esitoValidazione);
                     request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
-                    break;
-                }
+                } else
+                    throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
             }
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+            e.handle(request, response);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+    }
 }
 

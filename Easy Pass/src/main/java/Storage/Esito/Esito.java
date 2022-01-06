@@ -5,7 +5,6 @@ import Storage.Report.Report;
 import org.json.simple.JSONObject;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
-
 import java.util.Date;
 
 public class Esito implements JSONSerializable {
@@ -128,10 +127,11 @@ public class Esito implements JSONSerializable {
         object.put("nomeStudente", this.nomeStudente);
         object.put("cognomeStudente", this.cognomeStudente);
         object.put("dataDiNascitaStudente",this.dataDiNascitaStudente.toString());
-        String validitaStringa="";
-        if(this.validita) validitaStringa="Valido";
-        else validitaStringa="Non  valido";
-        object.put("validita",""+validitaStringa);
+
+        if(this.validita)
+            object.put("validita", "Valido");
+        else
+            object.put("validita","Non valido");
         return object;
     }
 }

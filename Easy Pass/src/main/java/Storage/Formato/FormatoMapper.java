@@ -15,5 +15,4 @@ public class FormatoMapper {
         formato.setData(rs.getBoolean("form.Ddn"));
         return formato;
     }
-
 }

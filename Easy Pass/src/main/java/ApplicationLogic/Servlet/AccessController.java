@@ -37,7 +37,7 @@ public class AccessController extends ServletLogic {
         String path = getPath(request);
         try {
             switch (path) {
-                case "/": {
+                case "/" -> {
                     validate(DirettoreValidator.validateSigin(request));
                     validate(DocenteValidator.validateSigin(request));
 
@@ -55,17 +55,16 @@ public class AccessController extends ServletLogic {
                     if (direttoreDAO.checkUserAndPassw(direttore)) {
                         session.setAttribute("direttoreSession", direttoreDAO.doRetrieveByKeyWithRelations(direttore.getUsername()));
                         response.sendRedirect("../reportServlet/HomePage");
-                    } else if (docenteDAO.checkUserAndPassw(docente)){
+                    } else if (docenteDAO.checkUserAndPassw(docente)) {
                         session.setAttribute("docenteSession", docenteDAO.doRetrieveByKeyWithRelations(docente.getUsername()));
                         response.sendRedirect("../sessioneServlet/AvvioSessione");
                     } else {
                         request.setAttribute("msg", "Credenziali errate.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
-                    break;
                 }
 
-                case "/registrazione": {
+                case "/registrazione" -> {
                     validate(DocenteValidator.validateSigup(request));
 
                     Docente docente = new Docente(stringBuilder(request.getParameter("nome")),
@@ -77,17 +76,16 @@ public class AccessController extends ServletLogic {
                     DirettoreDiDipartimentoDAO dirDAO = new DirettoreDiDipartimentoDAO();
 
                     if (docenteDAO.doRetrieveByKey(docente.getUsername()) == null &&
-                            dirDAO.doRetrieveByKey(request.getParameter("email2")) == null){
+                            dirDAO.doRetrieveByKey(request.getParameter("email2")) == null) {
                         docenteDAO.doCreate(docente);
                         request.getRequestDispatcher(view("DocenteGUI/AvvioSessione")).forward(request, response);
                     } else {
                         request.setAttribute("msg", "Email già registrata.");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                     }
-                    break;
                 }
 
-                case "/logout":{
+                case "/logout" -> {
                     DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
                     Docente docente = (Docente) session.getAttribute("docenteSession");
 
@@ -95,20 +93,16 @@ public class AccessController extends ServletLogic {
                         session.removeAttribute("direttoreSession");
                         session.invalidate();
                         response.sendRedirect("./");
-                    }
-                    else if (docente != null){
+                    } else if (docente != null) {
                         session.removeAttribute("docenteSession");
                         session.invalidate();
                         response.sendRedirect("./");
                     }
-                    break;
                 }
             }
         } catch (InvalidRequestException e) {
             e.printStackTrace();
             e.handle(request,response);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -116,11 +110,7 @@ public class AccessController extends ServletLogic {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
-        try {
-            getServletContext().setAttribute("dipartimenti", dipartimentoDAO.doRetrieveAll());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        getServletContext().setAttribute("dipartimenti", dipartimentoDAO.doRetrieveAll());
     }
 
     private String stringBuilder(String str){

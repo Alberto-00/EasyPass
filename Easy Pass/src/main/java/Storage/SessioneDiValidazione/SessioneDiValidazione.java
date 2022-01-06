@@ -7,25 +7,19 @@ import Storage.PersonaleUnisa.Docente.Docente;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 import io.nayuki.qrcodegen.QrCode;
 
@@ -37,7 +31,7 @@ public class SessioneDiValidazione {
     private ArrayList<Esito> listaEsiti;
     private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/showQRCode?sessionId=";
 
-    public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException, SQLException {
+    public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException {
         Random r = new Random();
         int sessionId = 0;
         SessioneDiValidazione foundSession = null;
@@ -55,7 +49,6 @@ public class SessioneDiValidazione {
         ImageIO.write(qrImg, "jpg", os);
         try (InputStream is = new ByteArrayInputStream(os.toByteArray())) {
             file = new File(uploadPath + sessionId + ".jpg");
-            System.out.println("Ho creato il file: " + file.toPath());
             Files.copy(is, file.toPath());
         }
 

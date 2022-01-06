@@ -3,8 +3,6 @@ package ApplicationLogic.Ajax;
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
 
-import Storage.Dipartimento.Dipartimento;
-import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
@@ -40,136 +38,140 @@ public class AjaxServlet extends ServletLogic {
 
         try {
             switch (path) {
-                case "/search": {
-                    DocenteDAO docenteDAO = new DocenteDAO();
-                    List<Docente> docenti = docenteDAO.doRetrieveAllWithRelations(direttore.getDipartimento().getCodice());
-                    JSONObject root = new JSONObject();
-                    JSONArray arr = new JSONArray();
-                    root.put("listName", arr);
-
-                    for (Docente docente : docenti) {
-                        if (docente.getNome() != null) {
-                            JSONObject obj = new JSONObject();
-                            obj.put("name", docente.getNome() + " " + docente.getCognome());
-                            arr.add(obj);
-                        }
-                    }
-                    sendJson(response, root);
-                    break;
-                }
-
-                case "/search_report": {
-                    String firstDate = request.getParameter("firstDate");
-                    String secondDate = request.getParameter("secondDate");
-                    String nameDoc = request.getParameter("nameDoc");
-
-                    JSONObject root = new JSONObject();
-                    JSONArray arrRep  = new JSONArray();
-                    JSONArray arrDoc = new JSONArray();
-
-                    if (firstDate.compareTo("") != 0 && secondDate.compareTo("") != 0){
-                        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
-                        Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
-                        boolean checkDate = date1.compareTo(date2) < 0 || date1.compareTo(date2) == 0;
-
-                        if (checkDate)
-                            search(direttore, date1, date2, nameDoc, root, arrRep, arrDoc, response);
-                        else {
-                            root.put("dateError", "La prima data deve essere minore della seconda data.");
-                            sendJson(response, root);
-                        } break;
-                    } else if (firstDate.compareTo("") != 0 && secondDate.compareTo("") == 0){
-                        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
-                        search(direttore, date1, date1, nameDoc, root, arrRep, arrDoc, response);
-                        break;
-                    } else if (firstDate.compareTo("") == 0 && secondDate.compareTo("") != 0){
-                        root.put("dateError", "Inserire la prima data.");
-                        sendJson(response, root);
-                        break;
-                    }
-                    if (nameDoc != null && nameDoc.compareTo("") != 0){
-                        Docente docente = new Docente();
-                        docente.setCognome(cognome(nameDoc));
-                        docente.setNome(nome(nameDoc));
-
-                        TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloDocente(docente);
-                        searchReport(root, arrRep, arrDoc, treeMap);
-                    } else root.put("emptyy", "empty");
-                    sendJson(response, root);
-                    break;
-                }
-
-                case "/delete": {
-                    String str = request.getParameter("report");
-                    JSONObject root = new JSONObject();
-
-                    if (str.compareTo("") != 0){
-                        ReportDAO reportDAO = new ReportDAO();
-                        String[] idReport = str.split(",");
-                        JSONArray arrRep = new JSONArray();
-                        root.put("listReports", arrRep);
-
-                        for (String id : idReport) {
-                            direttore.eliminaReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
-                            JSONObject obj = new JSONObject();
-                            obj.put("report", id);
-                            arrRep.add(obj);
-                        }
-                    }else root.put("listReports", null);
-                    sendJson(response, root);
-                    break;
-                }
-
-                case "/download_report": {
-                    String str = request.getParameter("report");
-                    JSONObject root = new JSONObject();
-                    ReportDAO reportDAO = new ReportDAO();
-
-                    if (str.compareTo("") != 0) {
-                        String[] idReport = str.split(",");
+                case "/search" -> {
+                    if (direttore != null){
+                        DocenteDAO docenteDAO = new DocenteDAO();
+                        List<Docente> docenti = docenteDAO.doRetrieveAllWithRelations(direttore.getDipartimento().getCodice());
+                        JSONObject root = new JSONObject();
                         JSONArray arr = new JSONArray();
-                        root.put("listDownload", arr);
+                        root.put("listName", arr);
 
-                        for (String id : idReport) {
-                            JSONObject obj = new JSONObject();
-                            obj.put("report", (reportDAO.doRetrieveById(Integer.parseInt(id))).getPathFile());
-                            arr.add(obj);
+                        for (Docente docente : docenti) {
+                            if (docente.getNome() != null) {
+                                JSONObject obj = new JSONObject();
+                                obj.put("name", docente.getNome() + " " + docente.getCognome());
+                                arr.add(obj);
+                            }
                         }
-                    } else root.put("noFile", "Selezionare almeno un report da scaricare.");
-                    sendJson(response, root);
-                    break;
-
+                        sendJson(response, root);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
-                case "/aggiornaElencoEsiti":{
-                    JSONArray esitiJson=new JSONArray();
-                    JSONObject jsonToSend=new JSONObject();
-                    HttpSession session=request.getSession();
-                    Docente docenteLoggato = (Docente) session.getAttribute("docenteSession");
-                    EsitoDAO esitoDAO = new EsitoDAO();
-                    ArrayList<Esito> esiti = null;
-                    SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
-                    try {
-                        esiti = esitoDAO.doRetrieveAllBySession(s);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                    for(Esito e: esiti){
-                        JSONObject esitoJson=new JSONObject();
-                        esitoJson.put("esitoJson",e.toJson());
-                        esitiJson.add(esitoJson);
-                    }
-                    jsonToSend.put("listaEsiti",esitiJson);
-                    sendJson(response,jsonToSend);
-                    break;
+
+                case "/search_report" -> {
+                    if (direttore != null){
+                        String firstDate = request.getParameter("firstDate");
+                        String secondDate = request.getParameter("secondDate");
+                        String nameDoc = request.getParameter("nameDoc");
+
+                        JSONObject root = new JSONObject();
+                        JSONArray arrRep = new JSONArray();
+                        JSONArray arrDoc = new JSONArray();
+
+                        if (firstDate.compareTo("") != 0 && secondDate.compareTo("") != 0) {
+                            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+                            Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
+                            boolean checkDate = date1.compareTo(date2) < 0 || date1.compareTo(date2) == 0;
+
+                            if (checkDate)
+                                search(direttore, date1, date2, nameDoc, root, arrRep, arrDoc, response);
+                            else {
+                                root.put("dateError", "La prima data deve essere minore della seconda data.");
+                                sendJson(response, root);
+                            }
+                            break;
+                        } else if (firstDate.compareTo("") != 0 && secondDate.compareTo("") == 0) {
+                            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+                            search(direttore, date1, date1, nameDoc, root, arrRep, arrDoc, response);
+                            break;
+                        } else if (firstDate.compareTo("") == 0 && secondDate.compareTo("") != 0) {
+                            root.put("dateError", "Inserire la prima data.");
+                            sendJson(response, root);
+                            break;
+                        }
+                        if (nameDoc != null && nameDoc.compareTo("") != 0) {
+                            Docente docente = new Docente();
+                            docente.setCognome(cognome(nameDoc));
+                            docente.setNome(nome(nameDoc));
+
+                            TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloDocente(docente);
+                            searchReport(root, arrRep, arrDoc, treeMap);
+                        } else root.put("emptyy", "empty");
+                        sendJson(response, root);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/delete" -> {
+                    if (direttore != null){
+                        String str = request.getParameter("report");
+                        JSONObject root = new JSONObject();
+
+                        if (str.compareTo("") != 0) {
+                            ReportDAO reportDAO = new ReportDAO();
+                            String[] idReport = str.split(",");
+                            JSONArray arrRep = new JSONArray();
+                            root.put("listReports", arrRep);
+
+                            for (String id : idReport) {
+                                direttore.eliminaReport(reportDAO.doRetrieveById(Integer.parseInt(id)));
+                                JSONObject obj = new JSONObject();
+                                obj.put("report", id);
+                                arrRep.add(obj);
+                            }
+                        } else root.put("listReports", null);
+                        sendJson(response, root);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/download_report" -> {
+                    if (direttore != null){
+                        String str = request.getParameter("report");
+                        JSONObject root = new JSONObject();
+                        ReportDAO reportDAO = new ReportDAO();
+
+                        if (str.compareTo("") != 0) {
+                            String[] idReport = str.split(",");
+                            JSONArray arr = new JSONArray();
+                            root.put("listDownload", arr);
+
+                            for (String id : idReport) {
+                                JSONObject obj = new JSONObject();
+                                obj.put("report", (reportDAO.doRetrieveById(Integer.parseInt(id))).getPathFile());
+                                arr.add(obj);
+                            }
+                        } else root.put("noFile", "Selezionare almeno un report da scaricare.");
+                        sendJson(response, root);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
+                }
+
+                case "/aggiornaElencoEsiti" -> {
+                    if (direttore != null){
+                        JSONArray arr = new JSONArray();
+                        JSONObject root = new JSONObject();
+                        HttpSession session = request.getSession();
+                        EsitoDAO esitoDAO = new EsitoDAO();
+                        SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+                        ArrayList<Esito> esiti = esitoDAO.doRetrieveAllBySession(s);
+
+                        for(Esito e: esiti){
+                            JSONObject esitoJson = new JSONObject();
+                            esitoJson.put("esitoJson",e.toJson());
+                            arr.add(esitoJson);
+                        }
+                        root.put("listaEsiti", arr);
+                        sendJson(response,root);
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
             }
-        } catch(SQLException ex){
-            log(ex.getMessage());
-        } catch (ParseException e){
-            e.printStackTrace();
-        } catch (InvalidRequestException e) {
-            e.printStackTrace();
-            e.handle(request, response);
+        } catch (SQLException | ParseException exception) {
+                exception.printStackTrace();
+        } catch (InvalidRequestException exception) {
+            exception.printStackTrace();
+            exception.handle(request, response);
         }
     }
 

@@ -14,33 +14,44 @@ import java.util.ArrayList;
 
 public class DocenteDAO {
 
-    public Docente doRetrieveByKey(String username) throws SQLException {
-        if(username == null){
+    public Docente doRetrieveByKey(String username) {
+        if(username == null)
             throw new IllegalArgumentException("The username must not be null");
-        } else{
-            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-            try(Connection connection = connectionSingleton.getConnection()) {
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, username);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
+                rs = ps.executeQuery();
+
+                if (rs.next())
                     return DocenteMapper.extract(rs);
-                }
-                return null;
-            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return null;
         }
     }
 
-    public Docente doRetrieveByKeyWithRelations(String username) throws SQLException {
-        if(username == null){
+    public Docente doRetrieveByKeyWithRelations(String username) {
+        if(username == null)
             throw new IllegalArgumentException("The username must not be null");
-        } else{
-            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, username);
-                ResultSet rs = ps.executeQuery();
+                rs = ps.executeQuery();
+
                 if (rs.next()) {
                     Docente docente = DocenteMapper.extract(rs);
                     docente.setDipartimento(new Dipartimento());
@@ -48,65 +59,97 @@ public class DocenteDAO {
                     //TODO: Mancano le sessioni
                     return docente;
                 }
-                return null;
-            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return null;
         }
     }
 
-    public ArrayList<Docente> doRetrieveAllWithRelations(String codDip) throws SQLException {
-        try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
-            String query = "SELECT * FROM docente doc WHERE doc.Codice_Dip = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, codDip);
-            ResultSet rs = ps.executeQuery();
-            ArrayList<Docente> docenti = new ArrayList<>();
-            for (int i = 0; rs.next(); i++) {
-                docenti.add(DocenteMapper.extract(rs));
-                docenti.get(i).setDipartimento(new Dipartimento());
-                docenti.get(i).getDipartimento().setCodice(codDip);
-            }
-            return docenti;
+    public ArrayList<Docente> doRetrieveAllWithRelations(String codDip) {
+        if(codDip == null)
+            throw new IllegalArgumentException("The 'codDip' must not be null");
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = "SELECT * FROM docente doc WHERE doc.Codice_Dip = ?";
+                ps = conn.prepareStatement(query);
+                ps.setString(1, codDip);
+                rs = ps.executeQuery();
+                ArrayList<Docente> docenti = new ArrayList<>();
+
+                for (int i = 0; rs.next(); i++) {
+                    docenti.add(DocenteMapper.extract(rs));
+                    docenti.get(i).setDipartimento(new Dipartimento());
+                    docenti.get(i).getDipartimento().setCodice(codDip);
+                }
+                return docenti;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return null;
         }
     }
 
-    public ArrayList<Docente> doRetrieveAll() throws SQLException {
-        ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-        try(Connection connection = connectionSingleton.getConnection()) {
+    public ArrayList<Docente> doRetrieveAll() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionSingleton.getInstance().getConnection();
             String query = "SELECT * FROM docente doc";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
             ArrayList<Docente> docenti = new ArrayList<>();
-            while (rs.next()) {
+
+            while (rs.next())
                 docenti.add(DocenteMapper.extract(rs));
-            }
             return docenti;
-        }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionSingleton.closeConnection(conn, ps, rs);
+        } return null;
     }
 
-    public boolean checkUserAndPassw(Docente docente) throws SQLException {
+    public boolean checkUserAndPassw(Docente docente) {
         if(docente == null){
             throw new IllegalArgumentException("The docente must not be null");
         } else {
-            try(Connection connection = ConnectionSingleton.getInstance().getConnection()) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "SELECT * FROM docente doc WHERE doc.Username_Doc = ? and doc.Password_Doc = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, docente.getUsername());
                 ps.setString(2, docente.getPassword());
-                ResultSet rs = ps.executeQuery();
+                rs = ps.executeQuery();
                 return rs.next();
-            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return false;
         }
     }
 
-    public boolean doCreate(Docente docente) throws SQLException {
-        if(docente == null){
+    public boolean doCreate(Docente docente) {
+        if(docente == null)
             throw new IllegalArgumentException("Cannot save a null object");
-        }
         else {
-            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-            try(Connection connection = connectionSingleton.getConnection()) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO docente VALUES (?,?,?,?,?)";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, docente.getUsername().toLowerCase());
                 ps.setString(2, StringUtils.capitalize(docente.getNome()));
                 ps.setString(3, docente.getCognome().toUpperCase());
@@ -119,20 +162,24 @@ public class DocenteDAO {
                     }
                 }
                 return ps.executeUpdate() == 1;
-            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
         }
     }
 
-    //Per fare l'update di tutte le sessioni del docente usare il codice commentato
-   public boolean doUpdate(Docente docente) throws SQLException{
-        if(docente==null){
+    public boolean doUpdate(Docente docente) {
+        if(docente == null)
             throw new IllegalArgumentException("Cannot update a null object");
-        }
         else{
-            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-            try(Connection connection = connectionSingleton.getConnection()) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "UPDATE docente SET Nome_Doc=?, Cognome_Doc=?, Password_Doc=?, Codice_Dip=? WHERE Username_Doc=?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, docente.getNome());
                 ps.setString(2, docente.getCognome().toUpperCase());
                 ps.setString(3, docente.getPassword());
@@ -142,27 +189,34 @@ public class DocenteDAO {
                     sessioneDao.doUpdate(sessione);
                 }
                 */
-                if (ps.executeUpdate() == 1)
-                    return true;
-                else return false;
-            }
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
         }
     }
 
-    public boolean doDelete(Docente docente) throws SQLException{
-        if(docente==null){
+    public boolean doDelete(Docente docente) {
+        if(docente == null){
             throw new IllegalArgumentException("Cannot delete a null object");
         }
         else{
-            ConnectionSingleton connectionSingleton = ConnectionSingleton.getInstance();
-            try(Connection connection = connectionSingleton.getConnection()) {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "DELETE FROM docente WHERE Username_Doc=?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                ps = conn.prepareStatement(query);
                 ps.setString(1, docente.getUsername());
                 if (ps.executeUpdate() == 1)
                     return true;
-                else return false;
-            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
         }
     }
 }

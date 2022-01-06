@@ -7,8 +7,6 @@ import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
 
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
-import Storage.SessioneDiValidazione.SessioneDiValidazione;
-
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,141 +23,113 @@ public class ReportController extends ServletLogic {
             throws ServletException, IOException {
 
         String path = getPath(request);
-        try {
-            SessioneDiValidazione s = new SessioneDiValidazione(true, null);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
 
         try {
-            switch (path){
-                case "/HomePage":{
-                    System.out.println("Sono nella reportServlet/HomePage");
+            switch (path) {
+                case "/HomePage" -> {
                     if (direttore != null)
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/HomePage")).forward(request, response);
                     else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
-                    break;
                 }
-                case "/GestioneFormato":{
 
-                    if(direttore!=null) {
+                case "/GestioneFormato" -> {
+                    if (direttore != null) {
                         Formato formato = direttore.getDipartimento().getFormato();
-                        String value = "";
-                        if (formato.isNomeCognome()) value = "checked";
-                        else value = "";
-                        request.setAttribute("actualNomeCognome", value);
-                        if (formato.isNumStudenti()) value = "checked";
-                        else value = "";
-                        request.setAttribute("actualNumStudenti", value);
-                        if (formato.isData()) value = "checked";
-                        else value = "";
-                        request.setAttribute("actualDataDiNascita", value);
-                        if (formato.isNumGPValidi()) value = "checked";
-                        else value = "";
-                        request.setAttribute("actualGPValidi", value);
-                        if (formato.isNumGPNonValidi()) value = "checked";
-                        else value = "";
-                        request.setAttribute("actualGPNonValidi", value);
-
+                        gestioneFormato(request, formato);
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneFormato")).forward(request, response);
-                    }
-                    else{
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                    }
-                    break;
+                    } else
+                        throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
-                case "/GestioneReport":{
-                    if (direttore != null){
+
+                case "/GestioneReport" -> {
+                    if (direttore != null) {
                         request.setAttribute("treeMap", direttore.ricercaReport());
                         request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneReport")).forward(request, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
-                    break;
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (InvalidRequestException e) {
             e.printStackTrace();
             e.handle(request,response);
         }
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String path = getPath(request);
+        DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
+
         try {
-            HttpSession session = request.getSession();
-            String path = getPath(request);
-            switch (path) {
-                case "/salvaFormato": {
-                    String anagrafica=request.getParameter("anagrafica");
-                    String ddn=request.getParameter("ddn");
-                    String numValidazioni=request.getParameter("numValidazioni");
-                    String gpValidi=request.getParameter("gpValidi");
-                    String gpNonValidi=request.getParameter("gpNonValidi");
+            if ("/salvaFormato".equals(path)) {
+                String anagrafica = request.getParameter("anagrafica");
+                String ddn = request.getParameter("ddn");
+                String numValidazioni = request.getParameter("numValidazioni");
+                String gpValidi = request.getParameter("gpValidi");
+                String gpNonValidi = request.getParameter("gpNonValidi");
+                String messaggi = "";
 
-                    String messaggi="";
+                if (direttore != null) {
+                    if (anagrafica == null && ddn == null && numValidazioni == null
+                            && gpValidi == null && gpNonValidi == null) {
+                        messaggi = messaggi + "Selezionare almeno un campo\n";
+                    } else if (ddn != null && anagrafica == null) {
+                        messaggi = messaggi + "Impossibile salvare il formato! Se è selezionata la data deve " +
+                                "essere selezionata anche l'anagrafica\n";
+                    } else {
+                        FormatoDAO formatoDAO = new FormatoDAO();
+                        Formato formato = formatoDAO.doRetrieveById(direttore.getDipartimento().getFormato().getId());
 
-                    DirettoreDiDipartimento direttore;
-
-                    if(session!=null){
-                        direttore= (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
-                        if(direttore!=null){
-                            if(anagrafica==null && ddn==null && numValidazioni==null && gpValidi==null && gpNonValidi==null){
-                                messaggi=messaggi+"Selezionare almeno un campo\n";
-                            }
-                            else if(ddn!=null && anagrafica==null){
-                                messaggi=messaggi+"Impossibile salvare il formato! Se è selezionata la data deve essere selezionata anche l'anagrafica\n";
-                            }
-                            else{
-                                FormatoDAO formatoDAO=new FormatoDAO();
-                                Formato formato=formatoDAO.doRetrieveById(direttore.getDipartimento().getFormato().getId());
-                                if(formato==null){
-                                    formato=new Formato();
-                                    formato.setId(direttore.getDipartimento().getCodice());
-                                }
-
-                                formato.setNomeCognome(anagrafica!=null);
-                                formato.setData(ddn!=null);
-                                formato.setNumStudenti(numValidazioni!=null);
-                                formato.setNumGPValidi(gpValidi!=null);
-                                formato.setNumGPNonValidi(gpNonValidi!=null);
-                                direttore.impostaFormato(formato);
-                                messaggi="Il formato è stato salvato correttamente";
-
-                                String value="";
-                                if(formato.isNomeCognome()) value="checked"; else value="";
-                                request.setAttribute("actualNomeCognome", value);
-                                if(formato.isNumStudenti()) value="checked"; else value="";
-                                request.setAttribute("actualNumStudenti", value);
-                                if(formato.isData()) value="checked"; else value="";
-                                request.setAttribute("actualDataDiNascita", value);
-                                if(formato.isNumGPValidi()) value="checked"; else value="";
-                                request.setAttribute("actualGPValidi", value);
-                                if(formato.isNumGPNonValidi()) value="checked"; else value="";
-                                request.setAttribute("actualGPNonValidi", value);
-
-                            }
-
-                            request.setAttribute("messaggiUtente",messaggi);
-                            request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneFormato")).forward(request, response);
+                        if (formato == null) {
+                            formato = new Formato();
+                            formato.setId(direttore.getDipartimento().getCodice());
                         }
-                        else{
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                        }
+                        formato.setNomeCognome(anagrafica != null);
+                        formato.setData(ddn != null);
+                        formato.setNumStudenti(numValidazioni != null);
+                        formato.setNumGPValidi(gpValidi != null);
+                        formato.setNumGPNonValidi(gpNonValidi != null);
+                        direttore.impostaFormato(formato);
+                        messaggi = "Il formato è stato salvato correttamente";
+                        gestioneFormato(request, formato);
                     }
-                    else{
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Accesso negato.");
-                    }
-
-                    break;
-                }
+                    request.setAttribute("messaggiUtente", messaggi);
+                    request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneFormato")).forward(request, response);
+                } else
+                    throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
             }
-        } catch (SQLException e) {
+        } catch (InvalidRequestException e) {
             e.printStackTrace();
+            e.handle(request,response);
         }
+    }
+
+    private void gestioneFormato(HttpServletRequest request, Formato formato) {
+        String value;
+
+        if (formato.isNomeCognome()) value = "checked";
+        else value = "";
+        request.setAttribute("actualNomeCognome", value);
+
+        if (formato.isNumStudenti()) value = "checked";
+        else value = "";
+        request.setAttribute("actualNumStudenti", value);
+
+        if (formato.isData()) value = "checked";
+        else value = "";
+        request.setAttribute("actualDataDiNascita", value);
+
+        if (formato.isNumGPValidi()) value = "checked";
+        else value = "";
+        request.setAttribute("actualGPValidi", value);
+
+        if (formato.isNumGPNonValidi()) value = "checked";
+        else value = "";
+        request.setAttribute("actualGPNonValidi", value);
     }
 }

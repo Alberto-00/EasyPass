@@ -4,6 +4,8 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.TimeZone;
 
@@ -45,5 +47,11 @@ public class ConnectionSingleton {
             datasource.setPoolProperties(p);
         }
         return datasource.getConnection();
+    }
+
+    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet rs) {
+        try { if (rs != null) rs.close(); } catch (SQLException e) {e.printStackTrace();}
+        try { if (ps != null) ps.close(); } catch (SQLException e) {e.printStackTrace();}
+        try { if (conn != null) conn.close(); } catch (SQLException e) {e.printStackTrace();}
     }
 }

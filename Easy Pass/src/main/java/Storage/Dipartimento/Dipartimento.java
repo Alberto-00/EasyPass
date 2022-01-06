@@ -2,8 +2,6 @@ package Storage.Dipartimento;
 
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
-import Storage.Esito.Esito;
-import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
@@ -13,28 +11,22 @@ import Storage.Report.ReportDAO;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Dipartimento {
 
     private String nome;
     private String codice;
-    private Formato formato; //L'id del formato deve essere uguale all'id del dipartimento a cui appartiene
+
+    /* L'id del formato deve essere uguale all'id del dipartimento a cui appartiene */
+    private Formato formato;
     ArrayList<Report> reports;
 
     public Dipartimento(String nome, String codice, Formato formato, ArrayList<Report> reports) {
         this.nome = nome;
         this.codice = codice;
         this.formato = formato;
-        if(reports==null){
-            this.reports=new ArrayList<>();
-        }
-        else{
-            this.reports=reports;
-        }
+        this.reports = Objects.requireNonNullElseGet(reports, ArrayList::new);
     }
 
     public Dipartimento() {
@@ -65,12 +57,10 @@ public class Dipartimento {
     }
 
     public void setFormato(Formato formato) {
-        if(formato.getId().compareTo(this.codice)==0) {
+        if(formato.getId().compareTo(this.codice)==0)
             this.formato = formato;
-        }
-        else{
-            throw new IllegalArgumentException("The id of the object 'formato' must be the same of the id of this instance of Dipartimento");
-        }
+        else
+            throw new IllegalArgumentException("The id of the object 'formato' must be the same of the id of this instance of Dipartimento.");
     }
 
     public ArrayList<Report> getReports() {
@@ -81,22 +71,22 @@ public class Dipartimento {
         this.reports = reports;
     }
 
-    //Il formato di un dipartimento non si cambia ma si aggiorna sempre lo stesso
-    public void impostaFormato(Formato formato) throws SQLException {
-        if(formato == null){
+    //Il formato di un dipartimento non cambia ma si aggiorna
+    public void impostaFormato(Formato formato) {
+        if(formato == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
-        }
         else{
             if(formato.getId().compareTo(this.codice)==0){
                 this.formato=formato;
                 FormatoDAO formatoDAO=new FormatoDAO();
                 formatoDAO.doUpdate(formato);
             }
-            else throw new IllegalArgumentException("The id of the argument is different from the attribute 'codice' of 'Dipartimento'");
+            else
+                throw new IllegalArgumentException("The id of the argument is different from the attribute 'codice' of 'Dipartimento'");
         }
     }
 
-    public boolean eliminaReport(Report report) throws SQLException {
+    public void eliminaReport(Report report) {
         if(report == null){
             throw new IllegalArgumentException("Cannot delete a null object");
         } else{
@@ -105,16 +95,18 @@ public class Dipartimento {
             reportDAO.doDelete(report);
             try {
                 File file = new File(ServletLogic.getUploadPath() + "Report" + File.separator +  report.getPathFile() + ".pdf");
-                if (file.exists())
-                    return file.delete();
+                if (file.exists()) {
+                    file.delete();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return false;
     }
 
-    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws SQLException, InvalidRequestException {
+    public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData)
+            throws InvalidRequestException {
+
         if(docente != null && primaData != null && secondaData != null){
             if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
                 ReportDAO reportDAO=new ReportDAO();
@@ -125,27 +117,25 @@ public class Dipartimento {
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
     }
 
-    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) throws SQLException {
+    public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) {
         if(docente != null){
             ReportDAO reportDAO = new ReportDAO();
             return reportDAO.doSearchByDocName(docente);
         }
-        else{
+        else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
-        }
     }
 
-    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) throws SQLException {
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
         if(date1.before(date2) || date1.compareTo(date2) == 0){
             ReportDAO reportDAO = new ReportDAO();
             return reportDAO.doSearchByDate(date1, date2);
         }
-        else{
+        else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
-        }
     }
 
-    public TreeMap<Report, Docente> ricercaReport() throws SQLException {
+    public TreeMap<Report, Docente> ricercaReport() {
         ReportDAO reportDAO = new ReportDAO();
         return reportDAO.doRetrieveDocByReport(this.getCodice());
     }

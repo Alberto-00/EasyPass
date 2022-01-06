@@ -22,7 +22,7 @@ body{
     display: block;
     text-align: center;
     line-height: 150%;
-    font-size: .85em;
+    font-size: .6em;
 }
 
 /*Logo*/
@@ -67,6 +67,7 @@ body{
     background: #ffffff;
     outline: none;
     transition: border-color 0.5s;
+    font-size: 18px;
 }
 
 .login-form-input:focus{
@@ -86,7 +87,7 @@ body{
     border: none;
     outline: none;
     border-radius: 5px;
-    cursor: pointer;
+    font-size: 18px;
 }
 
 .login-form-button:active{

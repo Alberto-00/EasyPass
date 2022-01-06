@@ -11,5 +11,4 @@ public class SessioneDiValidazioneMapper {
         sessione.setInCorso(rs.getBoolean("ses.isInCorso"));
         return sessione;
     }
-
 }
