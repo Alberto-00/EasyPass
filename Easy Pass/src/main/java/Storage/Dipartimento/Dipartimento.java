@@ -10,7 +10,6 @@ import Storage.Report.ReportDAO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.sql.SQLException;
 import java.util.*;
 
 public class Dipartimento {
@@ -94,7 +93,7 @@ public class Dipartimento {
             ReportDAO reportDAO = new ReportDAO();
             reportDAO.doDelete(report);
             try {
-                File file = new File(ServletLogic.getUploadPath() + "Report" + File.separator +  report.getPathFile() + ".pdf");
+                File file = new File(ServletLogic.getUploadPath() + "Report" + File.separator +  report.getPathFile());
                 if (file.exists()) {
                     file.delete();
                 }

@@ -148,7 +148,8 @@ body {
     padding: 10px;
     color: #ffffff;
     font-weight: bold;
-    background: #ab0000;
+    background-color: var(--bs-danger);
+    border-color: var(--bs-danger);
     border: none;
     align-self: flex-end;
     margin: 15px;
@@ -158,20 +159,10 @@ body {
 }
 
 .termina-sessione-button:hover{
-    background-color: #b60000;
-    box-shadow: 0 15px 20px rgb(148, 0, 0);
+    background-color: var(--error);
+    box-shadow: 0 15px 20px rgba(204, 0, 0, 0.4);
     transition: all 0.3s ease 0s;
     color: var(--black);
-}
-
-/* Rounded border */
-hr.rounded {
-    border-top: 5px solid;
-    border-radius: 5px;
-    width: 95%;
-    margin: auto;
-    margin-top: 15px;
-    color: white;
 }
 
 /* QRcode style*/

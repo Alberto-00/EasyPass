@@ -250,6 +250,7 @@ public class EsitoDAO {
                 String query = "UPDATE esito SET ID_Report=? WHERE ID_Esito=?";
                 ps = conn.prepareStatement(query);
                 ps.setInt(1, esito.getReport().getId());
+                ps.setInt(2, esito.getId());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e){
                 e.printStackTrace();

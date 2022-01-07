@@ -12,8 +12,10 @@
 </head>
 <body>
 <div class="coll-2">
-    <h1 class="titleQR titleStudent">QR Code</h1>
-    <%  SessioneDiValidazione s= (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");%>
+    <!--<h1 class="titleQR titleStudent">QR Code</h1>-->
+    <%  SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
+        String path = sessioneDiValidazione.getqRCode();%>
+    <img src='http://localhost:8080/Progetto_EasyPass/QRCodes/<%=path%>' alt="QRcode" id="qrcode" class="qrCode">
     <hr class="rounded">
     <div class="grid-container" id="elencoEsitiDiv">
         <c:forEach var="esito" items="${esiti}">
@@ -36,7 +38,7 @@
     const url_string = window.location.href;
     const url = new URL(url_string);
     const paramValue = url.searchParams.get("nStudents");
-    const setInterval = setInterval(function (){
+    setInterval(function (){
         ajaxUpdate(paramValue)
     },2000);
 </script>

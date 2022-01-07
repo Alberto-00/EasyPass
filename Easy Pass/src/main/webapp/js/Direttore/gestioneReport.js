@@ -195,7 +195,7 @@ $(document).ready(function() {
     })
     function download(path) {
         var element = document.createElement('a');
-        element.setAttribute('href', '../Progetto_EasyPass/Report/' + path );
+        element.setAttribute('href', 'http://localhost:8080/Progetto_EasyPass/Report/' + path );
         element.setAttribute('download', path);
 
         element.style.display = 'none';

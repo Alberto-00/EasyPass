@@ -30,9 +30,6 @@ function ajaxUpdate(paramValue,setInterval) {
             if (argument.listaEsiti.length >= paramValue) {
                 clearInterval(setInterval);
                 window.location.href = 'AnteprimaReport'
-                if (argument.listaEsiti.length === paramValue) {
-                    alert("Cambiare pagina");
-                }
             }
         }
     });

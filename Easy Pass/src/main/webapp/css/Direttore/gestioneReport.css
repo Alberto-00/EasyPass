@@ -200,7 +200,7 @@ th:nth-child(3){
 }
 
 .angle-right > img{
-    width: 60%;
+    width: 49%;
 }
 
 .angle-right > img:hover{
@@ -222,6 +222,10 @@ td a{
 .pagination{
     margin: 0;
     justify-content: center;
+}
+
+.btn{
+    padding: 0;
 }
 
 @media screen and (max-width: 768px){
@@ -257,5 +261,7 @@ h5{
     font-family: var(--bs-font-monospace) !important;
     letter-spacing: 2.5px;
     font-weight: bold;
+    padding: 11px 20px 11px 0;
+    font-size: 21px;
     text-shadow: 2px 4px 3px rgb(0 0 0 / 30%);
 }

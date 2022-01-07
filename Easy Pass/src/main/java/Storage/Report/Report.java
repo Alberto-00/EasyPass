@@ -7,6 +7,7 @@ import Storage.Esito.EsitoDAO;
 import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
@@ -15,6 +16,7 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -99,24 +101,27 @@ public class Report implements Comparable<Report>, JSONSerializable {
         EsitoDAO esitoDAO = new EsitoDAO();
         Formato formato = this.getDip().getFormato();
         Document document = new Document();
+        SimpleDateFormat formatData = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatOrario = new SimpleDateFormat("HH:mm:ss");
 
-        //String reportFile = getUploadPath() + getPathFile() + ".pdf";
         PdfWriter writer = PdfWriter.getInstance(document,
                 new FileOutputStream(getUploadPath() + "Report" + File.separator + this.pathFile));
         document.open();
 
         Font font = new Font();
-        font.setSize(20f);
-        Paragraph p = new Paragraph("Report", font);
+        font.setSize(18f);
+        Paragraph p = new Paragraph(this.pathFile.replace(".pdf", "").
+                replaceAll("\\s+", " "), font);
         p.setAlignment(Element.ALIGN_CENTER);
         p.setSpacingAfter(20f);
         document.add(p);
         Chunk glue = new Chunk(new VerticalPositionMark());
-        Paragraph p1 = new Paragraph("Docente: "+ this.getDocente().getCognome());
+        Paragraph p1 = new Paragraph("Docente: "+ this.getDocente().getNome() + " " + this.getDocente().getCognome());
         p1.add(new Chunk(glue));
-        p1.add("Data: "+ this.getData());
-        Paragraph p2 = new Paragraph("Orario: " + this.getOrario());
+        p1.add("Data: "+ formatData.format(this.getData()));
+        Paragraph p2 = new Paragraph("Orario: " + formatOrario.format(this.getOrario()));
         p2.setAlignment(Element.ALIGN_RIGHT);
+        p2.setSpacingAfter(10f);
         document.add(p1);
         document.add(p2);
 
@@ -129,34 +134,69 @@ public class Report implements Comparable<Report>, JSONSerializable {
         if(formato.isNumStudenti())
             document.add(new Paragraph("Il numero di Studenti controllati è: " + esitoDAO.numEsiti(getId())));
 
+        Font fontTable = new Font();
+        fontTable.setSize(13f); fontTable.setColor(BaseColor.WHITE); fontTable.setStyle(Font.BOLD);
+
+        Font fontCell = new Font();
+        fontCell.setSize(10f);
+
+        PdfPCell cell1 = new PdfPCell(new Paragraph("Esito", fontTable));
+        cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell1.setBackgroundColor(new BaseColor(62, 118, 42));
+        cell1.setFixedHeight(24f);
+
+        PdfPCell cell2 = new PdfPCell(new Paragraph("Validità", fontTable));
+        cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell2.setBackgroundColor(new BaseColor(62, 118, 42));
+        cell2.setFixedHeight(24f);
+
+        PdfPCell cell3 = new PdfPCell(new Paragraph("Nome", fontTable));
+        cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell3.setBackgroundColor(new BaseColor(62, 118, 42));
+        cell3.setFixedHeight(24f);
+
+        PdfPCell cell4 = new PdfPCell(new Paragraph("Cognome", fontTable));
+        cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell4.setBackgroundColor(new BaseColor(62, 118, 42));
+        cell4.setFixedHeight(24f);
+
+        PdfPCell cell5 = new PdfPCell(new Paragraph("Data di Nascita", fontTable));
+        cell5.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell5.setBackgroundColor(new BaseColor(62, 118, 42));
+        cell5.setFixedHeight(24f);
 
         if(formato.isNomeCognome() && formato.isData()) {
             PdfPTable table = new PdfPTable(5);
-            table.setSpacingBefore(20f);
-            table.addCell((new Paragraph("Esito")));
-            table.addCell((new Paragraph("Validità")));
-            table.addCell((new Paragraph("Nome")));
-            table.addCell((new Paragraph("Cognome")));
-            table.addCell(new Paragraph("Data di Nascita"));
-            table.setWidths(new float[] {1f, 2f, 3f, 3f, 2f});
+            table.setSpacingBefore(23f);
+            table.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.setWidthPercentage(100);
+            table.addCell(cell1); table.addCell(cell2); table.addCell(cell3); table.addCell(cell4); table.addCell(cell5);
             
             for (Esito esito : esiti) {
-                table.addCell(new Paragraph(String.valueOf(esito.getId())));
-                table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
-                table.addCell(new Paragraph(esito.getNomeStudente()));
-                table.addCell(new Paragraph(esito.getCognomeStudente()));
-                table.addCell(new Paragraph(String.valueOf((esito.getDataDiNascitaStudente()))));
+                table.addCell(new Paragraph(String.valueOf(esito.getId()), fontCell));
+                table.addCell(new Paragraph(String.valueOf(esito.isValidita()), fontCell));
+                table.addCell(new Paragraph(esito.getNomeStudente(), fontCell));
+                table.addCell(new Paragraph(esito.getCognomeStudente(), fontCell));
+                table.addCell(new Paragraph(String.valueOf(esito.getDataDiNascitaStudente()), fontCell));
+            }
+            boolean b = true;
+            for (int i = 1; i < table.getRows().size(); i++){
+                for(PdfPCell c: table.getRows().get(i).getCells()) {
+                    c.setBackgroundColor(b ? new BaseColor(218, 239, 211) :
+                            new BaseColor(183, 223, 168));
+                    c.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    c.setFixedHeight(21f);
+                }
+                b = !b;
             }
             document.add(table);
         } 
         else if(formato.isNomeCognome() && !formato.isData()) {
             PdfPTable table = new PdfPTable(4);
             table.setWidths(new float[] {1f, 2f, 3f, 3f});
-            table.setSpacingBefore(20f);
-            table.addCell((new Paragraph("Esito")));
-            table.addCell((new Paragraph("Validità")));
-            table.addCell((new Paragraph("Nome")));
-            table.addCell((new Paragraph("Cognome")));
+            table.setSpacingBefore(21f);
+            table.addCell(cell1); table.addCell(cell2); table.addCell(cell3); table.addCell(cell4);
+
             for (Esito esito : esiti) {
                 table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
@@ -165,24 +205,11 @@ public class Report implements Comparable<Report>, JSONSerializable {
             }
             document.add(table);
         }
-        else if(!formato.isNomeCognome() && formato.isData()) {
-            PdfPTable table = new PdfPTable(3);
-            table.setSpacingBefore(20f);
-            table.addCell((new Paragraph("Esito")));
-            table.addCell((new Paragraph("Validità")));
-            table.addCell(new Paragraph("Data di Nascita"));
-            for (Esito esito : esiti) {
-                table.addCell(new Paragraph(String.valueOf(esito.getId())));
-                table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
-                table.addCell(new Paragraph(String.valueOf((esito.getDataDiNascitaStudente()))));
-            }
-            document.add(table);
-        }
-        else {
+        else if (!formato.isNomeCognome() && !formato.isData()){
             PdfPTable table = new PdfPTable(2);
-            table.setSpacingBefore(20f);
-            table.addCell((new Paragraph("Esito")));
-            table.addCell((new Paragraph("Validità")));
+            table.setSpacingBefore(21f);
+            table.addCell(cell1); table.addCell(cell2);
+
             for (Esito esito : esiti) {
                 table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));

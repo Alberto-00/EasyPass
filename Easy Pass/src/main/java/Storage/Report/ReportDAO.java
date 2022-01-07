@@ -120,27 +120,31 @@ public class ReportDAO {
     }
 
 
-    public boolean doCreate (Report report) {
+    public int doCreate (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot save a null object");
         else {
             Connection conn = null;
             PreparedStatement ps = null;
+            ResultSet rs = null;
             try {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO report (Orario, Data_report, PathFile, Codice_Dip, Username_Doc) VALUES (?, ?, ?, ?, ?)";
-                ps = conn.prepareStatement(query);
-                ps.setTime(1, (Time) report.getOrario());
-                ps.setDate(2, (Date) report.getData());
+                ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps.setTime(1, new java.sql.Time(report.getOrario().getTime()));
+                ps.setDate(2, new java.sql.Date(report.getData().getTime()));
                 ps.setString(3, report.getPathFile());
                 ps.setString(4, report.getDip().getCodice());
                 ps.setString(5, report.getDocente().getUsername());
-                return ps.executeUpdate() == 1;
+                ps.executeUpdate();
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                return rs.getInt(1);
             } catch(SQLException e) {
                 e.printStackTrace();
             } finally {
-                ConnectionSingleton.closeConnection(conn, ps, null);
-            } return false;
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return 0;
         }
     }
 
@@ -162,6 +166,27 @@ public class ReportDAO {
                 ps.setString(4, report.getDip().getCodice());
                 ps.setString(5, report.getDocente().getUsername());
                 ps.setInt(6, report.getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            }
+        } return false;
+    }
+
+    public boolean doUpdatePath (Report report) {
+        if (report == null)
+            throw new IllegalArgumentException("Cannot update a null object");
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = "UPDATE report rep SET rep.PathFile=? WHERE rep.ID_report=?";
+                ps = conn.prepareStatement(query);
+                ps.setString(1, report.getPathFile());
+                ps.setInt(2, report.getId());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();

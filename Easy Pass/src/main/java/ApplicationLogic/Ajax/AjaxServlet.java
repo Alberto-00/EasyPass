@@ -35,6 +35,7 @@ public class AjaxServlet extends ServletLogic {
 
         String path = getPath(request);
         DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
+        Docente docenteSession = (Docente) request.getSession().getAttribute("docenteSession");
 
         try {
             switch (path) {
@@ -148,7 +149,7 @@ public class AjaxServlet extends ServletLogic {
                 }
 
                 case "/aggiornaElencoEsiti" -> {
-                    if (direttore != null){
+                    if (docenteSession != null){
                         JSONArray arr = new JSONArray();
                         JSONObject root = new JSONObject();
                         HttpSession session = request.getSession();

@@ -96,8 +96,8 @@
     <script>
         function insertDataPreview(element){
             const $path = $(element).attr("value");
-            $('#exampleModalLabel').text($path + ".pdf");
-            $('#pdf').attr('src', '../Progetto_EasyPass/Report/' + $path + '.pdf#toolbar=0&navpanes=0&scrollbar=0')
+            $('#exampleModalLabel').text($path);
+            $('#pdf').attr('src', 'http://localhost:8080/Progetto_EasyPass/Report/' + $path + '#toolbar=0&navpanes=0&scrollbar=0')
         }
     </script>
     <%@include file="../Partials/Direttore/AnteprimaReport.jsp"%>

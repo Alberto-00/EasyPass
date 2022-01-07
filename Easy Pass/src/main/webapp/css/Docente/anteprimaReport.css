@@ -64,6 +64,12 @@ a{
     }
 }
 
+@media screen and (max-width: 420px){
+    h5 span{
+        font-size: 60%;
+    }
+}
+
 
 /********************
 * Popup di Conferma *
@@ -74,6 +80,26 @@ a{
 
 .btn{
     font-size: 15px!important;
+}
+
+.btn-primary{
+    background-color: var(--bs-green);
+    border-color: var(--bs-green);
+}
+
+.btn-primary:hover{
+    background-color: var(--greenS);
+    box-shadow: 0 15px 20px rgba(0, 128, 103, 0.4);
+}
+
+.btn-secondary{
+    background-color: var(--bs-danger);
+    border-color: var(--bs-danger);
+}
+
+.btn-secondary:hover{
+    background-color: var(--error);
+    box-shadow: 0 15px 20px rgba(204, 0, 0, 0.4);
 }
 
 .modal-footer{

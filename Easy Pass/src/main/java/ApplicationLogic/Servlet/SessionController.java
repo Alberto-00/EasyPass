@@ -3,10 +3,10 @@ package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
 import ApplicationLogic.Utils.Validator.NumeroStudenti;
+import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
-import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
@@ -17,8 +17,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.util.Date;
@@ -38,24 +36,20 @@ public class SessionController extends ServletLogic {
 
         try {
             switch (path) {
-
                 case "/InvioGP" -> {
-                    Integer sessionId;
+                    int sessionId;
                     if (request.getParameter("sessionId") != null && request.getParameter("sessionId").length() == 5) {
                         sessionId = Integer.parseInt(request.getParameter("sessionId"));
-                    } else {
-                        throw new InvalidRequestException("Inserisci una sessione", List.of("Inserisci una sessione"), HttpServletResponse.SC_FORBIDDEN);
-                    }
+                    } else
+                        throw new InvalidRequestException("Inserisci una sessione", List.of("Inserisci una sessione"), HttpServletResponse.SC_NOT_FOUND);
 
                     SessioneDiValidazioneDAO seDAO = new SessioneDiValidazioneDAO();
-                    SessioneDiValidazione s = seDAO.doRetrieveById(sessionId);
-                    if (s != null) {
-                        session.setAttribute("sessioneDiValidazione", s);
+                    SessioneDiValidazione sessioneDiValidazione = seDAO.doRetrieveById(sessionId);
+                    if (sessioneDiValidazione != null && sessioneDiValidazione.isInCorso()) {
+                        session.setAttribute("sessioneSenzaRelazioni", sessioneDiValidazione);
                         request.getRequestDispatcher(view("StudenteGUI/InvioGP")).forward(request, response);
-                    } else {
-                        throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_FORBIDDEN);
-                    }
-
+                    } else
+                        throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_NOT_FOUND);
                 }
 
                 case "/AvvioSessione" -> {
@@ -99,9 +93,15 @@ public class SessionController extends ServletLogic {
                             Report report = new Report(new Date(System.currentTimeMillis()),
                                     new Date(System.currentTimeMillis()), "",
                                     docente.getDipartimento(), docente);
-                            report.setPathFile("Report_" + builderPathReport(docente) + "_" + report.getId() + ".pdf");
+
+                            DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
+                            report.setDip(dipartimentoDAO.doRetrieveByKeyWithRelations(report.getDip().getCodice()));
+                            report.setPathFile("");
+
                             ReportDAO reportDAO = new ReportDAO();
-                            reportDAO.doCreate(report);
+                            report.setId(reportDAO.doCreate(report));
+                            report.setPathFile( "Report_" + builderPathReport(docente) + "_" + report.getId() + ".pdf");
+                            reportDAO.doUpdatePath(report);
 
                             EsitoDAO esitoDAO = new EsitoDAO();
                             ArrayList<Esito> esiti = esitoDAO.doRetrieveAllBySession(sessioneDiValidazione);
@@ -109,6 +109,11 @@ public class SessionController extends ServletLogic {
                                 esi.setReport(report);
                                 esitoDAO.doUpdateOnlyReport(esi);
                             }
+                            SessioneDiValidazioneDAO sessionDAO = new SessioneDiValidazioneDAO();
+                            sessioneDiValidazione.setInCorso(false);
+                            sessionDAO.doUpdate(sessioneDiValidazione);
+                            session.removeAttribute("sessioneDiValidazione");
+
                             report.creaFile(esiti);
                             request.setAttribute("report", report);
                             request.getRequestDispatcher(view("DocenteGUI/AnteprimaReport")).forward(request, response);
@@ -132,21 +137,25 @@ public class SessionController extends ServletLogic {
 
         String path = getPath(request);
         HttpSession session = request.getSession();
-        Docente docente = (Docente) request.getSession().getAttribute("docenteSession");
 
         try {
             if ("/InvioGP".equals(path)) {
-                SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
-                Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
-                esitoValidazione.setStringaGP("KTM");
-                EsitoDAO edDao = new EsitoDAO();
-                edDao.doCreateWithoutReport(esitoValidazione);
-                request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
-                request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
-
+                SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneSenzaRelazioni");
+                if (sessioneDiValidazione != null){
+                    Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
+                    esitoValidazione.setStringaGP("");
+                    EsitoDAO edDao = new EsitoDAO();
+                    edDao.doCreateWithoutReport(esitoValidazione);
+                    request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
+                    request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                } else
+                    throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_NOT_FOUND);
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (InvalidRequestException e) {
+            e.printStackTrace();
+            e.handle(request, response);
         }
     }
 
