@@ -29,7 +29,7 @@ public class SessioneDiValidazione {
     private boolean isInCorso;
     private Docente docente;
     private ArrayList<Esito> listaEsiti;
-    private static final String url = "http://localhost:8080/EasyPass_war_exploded/sessioneServlet/InvioGP?sessionId=";
+    private static final String url = "http://localhost:8080/EasyPass/sessioneServlet/InvioGP?sessionId=";
 
     public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException {
         Random r = new Random();
@@ -67,7 +67,6 @@ public class SessioneDiValidazione {
     }
 
     public SessioneDiValidazione() {
-
         this.qRCode="";
         this.isInCorso=false;
         this.docente=null;

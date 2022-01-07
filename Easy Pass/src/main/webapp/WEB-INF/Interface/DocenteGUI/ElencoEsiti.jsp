@@ -38,8 +38,8 @@
     const url_string = window.location.href;
     const url = new URL(url_string);
     const paramValue = url.searchParams.get("nStudents");
-    setInterval(function (){
-        ajaxUpdate(paramValue)
-    },2000);
+    var setInterval = setInterval(function (){
+        ajaxUpdate(paramValue,setInterval)},
+        1000);
 </script>
 </html>
