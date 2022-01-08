@@ -142,7 +142,7 @@ $(document).ready(function() {
                                 "<td>" + arr.listRep[i].report.orario + "</td>" +
                                 "<td>" +
                                     "<button value='" + arr.listRep[i].report.path + "' onclick='insertDataPreview(this)' " +
-                                        "class='btn btn-primary angle-right' " +
+                                        "class='btn angle-right' " +
                                         "data-bs-toggle='modal' data-bs-toggle='modal' data-bs-target='#exampleModal'>" +
                                         "<img src='../icons/angle-right.svg' alt='angle-right'>" +
                                     "</button>" +

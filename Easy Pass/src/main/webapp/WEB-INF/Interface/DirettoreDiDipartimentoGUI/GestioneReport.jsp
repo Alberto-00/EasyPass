@@ -21,7 +21,9 @@
         <div class="container">
             <div class="my-row3">
                 <div class="coll-3">
-                    <img id="delete" class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
+                    <button style="display: contents" type="button" data-bs-toggle="modal" data-bs-target="#deleteReport">
+                        <img class="trash" src="${pageContext.request.contextPath}/icons/trash.svg" alt="trash">
+                    </button>
                 </div>
                 <div class="coll-3">
                     <img id="download" class="download" src="${pageContext.request.contextPath}/icons/download.svg" alt="download">
@@ -80,7 +82,7 @@
                             <td><%=report.getOrario().toString()%></td>
                             <td>
                                 <button onclick="insertDataPreview(this)" value="<%=report.getPathFile()%>"
-                                        class="btn btn-primary angle-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        class="btn angle-right" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <img src="${pageContext.request.contextPath}/icons/angle-right.svg" alt="angle-right">
                                 </button>
                             </td>
@@ -89,6 +91,25 @@
                         <%}%>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Popup "Delete"-->
+    <div class="modal fade" id="deleteReport" tabindex="-1" aria-labelledby="eliminaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eliminaLabel">Elimina Report</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Sei sicuro di voler eliminare i Report selezionati?</p>
+                </div>
+                <div class="modal-footer padding">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ESCI</button>
+                    <button data-bs-dismiss="modal"
+                            type="button" id="delete" class="btn btn-primary">CONFERMA</button>
                 </div>
             </div>
         </div>

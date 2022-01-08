@@ -36,7 +36,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ESCI</button>
-                        <button type="submit" id="downloadAnteprima" class="btn btn-primary">CONFERMA</button>
+                        <button type="submit" id="downloadAnteprima" data-bs-dismiss="modal" class="btn btn-primary">CONFERMA</button>
                     </div>
                 </div>
             </div>
