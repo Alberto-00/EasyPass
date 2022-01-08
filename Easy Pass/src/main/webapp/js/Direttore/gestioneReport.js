@@ -186,7 +186,7 @@ $(document).ready(function() {
 
                 if (arr.listDownload != null) {
                     for (let i = 0; i < arr.listDownload.length; i++)
-                        download(arr.listDownload[i].report + ".pdf")
+                        download(arr.listDownload[i].report)
                     $("#downloadMsg").text("Download avvenuto con successo!").hide().fadeIn(500).delay(2200).fadeOut(500);
                 } else if (arr.noFile != null)
                     $("#downloadMsg").text(arr.noFile).hide().fadeIn(500).delay(1600).fadeOut(500);

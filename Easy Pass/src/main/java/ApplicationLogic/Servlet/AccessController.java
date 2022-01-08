@@ -37,7 +37,6 @@ public class AccessController extends ServletLogic {
         try {
             switch (path) {
                 case "/" -> {
-
                     validate(DirettoreValidator.validateSigin(request));
                     validate(DocenteValidator.validateSigin(request));
 

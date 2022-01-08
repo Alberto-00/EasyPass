@@ -42,10 +42,6 @@ hr.rounded {
 }
 
 @media screen and (min-width: 769px) {
-    /*.grid-container{
-        flex-flow: row wrap;
-    }*/
-
     .container{
         flex-flow: row wrap;
         display: block;

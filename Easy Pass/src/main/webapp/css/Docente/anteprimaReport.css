@@ -58,9 +58,15 @@ a{
     display: none;
 }
 
-@media screen and (min-width: 420px){
+@media screen and (min-width: 421px){
     .areaPDF{
         width: 19em;
+    }
+}
+
+@media screen and (max-width: 500px){
+    span.responsive{
+        font-size: 62%;
     }
 }
 
@@ -69,6 +75,7 @@ a{
         font-size: 60%;
     }
 }
+
 
 
 /********************
@@ -104,5 +111,12 @@ a{
 
 .modal-footer{
     padding: 0.5rem!important;
+}
+
+.modal-title{
+    font-size: 25px;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-weight: 900;
 }
 

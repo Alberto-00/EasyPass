@@ -179,17 +179,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
                 table.addCell(new Paragraph(esito.getCognomeStudente(), fontCell));
                 table.addCell(new Paragraph(String.valueOf(esito.getDataDiNascitaStudente()), fontCell));
             }
-            boolean b = true;
-            for (int i = 1; i < table.getRows().size(); i++){
-                for(PdfPCell c: table.getRows().get(i).getCells()) {
-                    c.setBackgroundColor(b ? new BaseColor(218, 239, 211) :
-                            new BaseColor(183, 223, 168));
-                    c.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    c.setFixedHeight(21f);
-                }
-                b = !b;
-            }
-            document.add(table);
+            zebraRow(document, table);
         } 
         else if(formato.isNomeCognome() && !formato.isData()) {
             PdfPTable table = new PdfPTable(4);
@@ -203,7 +193,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
                 table.addCell(new Paragraph(esito.getNomeStudente()));
                 table.addCell(new Paragraph(esito.getCognomeStudente()));
             }
-            document.add(table);
+            zebraRow(document, table);
         }
         else if (!formato.isNomeCognome() && !formato.isData()){
             PdfPTable table = new PdfPTable(2);
@@ -214,12 +204,26 @@ public class Report implements Comparable<Report>, JSONSerializable {
                 table.addCell(new Paragraph(String.valueOf(esito.getId())));
                 table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
             }
-            document.add(table);
+            zebraRow(document, table);
         }
         document.close();
         writer.close();
     }
-    
+
+    private void zebraRow(Document document, PdfPTable table) throws DocumentException {
+        boolean b = true;
+        for (int i = 1; i < table.getRows().size(); i++){
+            for(PdfPCell c: table.getRows().get(i).getCells()) {
+                c.setBackgroundColor(b ? new BaseColor(218, 239, 211) :
+                        new BaseColor(183, 223, 168));
+                c.setHorizontalAlignment(Element.ALIGN_CENTER);
+                c.setFixedHeight(21f);
+            }
+            b = !b;
+        }
+        document.add(table);
+    }
+
     @Override
     public int compareTo(Report o) {
         return this.id - o.getId();

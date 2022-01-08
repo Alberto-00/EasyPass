@@ -11,7 +11,7 @@
 </head>
 <body>
 <%Report path = (Report) request.getAttribute("report");%>
-    <h1>Anteprima di <span class="fst-italic font-monospace">"<%=path.getPathFile()%>"</span></h1>
+    <h1>Anteprima di <span class="fst-italic font-monospace responsive">"<%=path.getPathFile()%>"</span></h1>
     <form id="myForm" action="${pageContext.request.contextPath}/sessioneServlet/AvvioSessione" method="get">
         <div class="areaPDF">
             <iframe src="http://localhost:8080/Progetto_EasyPass/Report/<%=path.getPathFile()%>#toolbar=0&navpanes=0&scrollbar=0"></iframe>
@@ -30,7 +30,6 @@
                         <h5 class="modal-title" id="exampleModalLabel">Download di
                             <span class="fst-italic font-monospace">"<%=path.getPathFile()%>"</span>
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p>Vuoi effettuare il download del report sul tuo computer?</p>

@@ -2,7 +2,6 @@ package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ServletLogic;
 import Storage.Esito.Esito;
-import Storage.Esito.EsitoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
 
 import java.awt.image.BufferedImage;
@@ -12,7 +11,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,20 +40,6 @@ public class SessioneDiValidazione {
             foundSession = sessioneDAO.doRetrieveById(sessionId);
         } while (foundSession != null);
 
-
-        BufferedImage qrImg = createqRCode(url + sessionId);
-        String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
-
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(qrImg, "jpg", os);
-        try (InputStream is = new ByteArrayInputStream(os.toByteArray())) {
-            file = new File(uploadPath + sessionId + ".jpg");
-            Files.copy(is, file.toPath());
-        }
-
-
-        this.isInCorso = isInCorso;
-        this.docente = docente;
         int numberOfDigits = 5 - String.valueOf(sessionId).length();
         String parsedSessionId = String.valueOf(sessionId);
         if (numberOfDigits > 0) {
@@ -63,6 +47,18 @@ public class SessioneDiValidazione {
                 parsedSessionId = 0 + parsedSessionId;
             }
         }
+        BufferedImage qrImg = createqRCode(url + parsedSessionId);
+        String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(qrImg, "jpg", os);
+        try (InputStream is = new ByteArrayInputStream(os.toByteArray())) {
+            file = new File(uploadPath + parsedSessionId + ".jpg");
+            Files.copy(is, file.toPath());
+        }
+
+        this.isInCorso = isInCorso;
+        this.docente = docente;
         this.qRCode = parsedSessionId + ".jpg";
     }
 
@@ -136,25 +132,13 @@ public class SessioneDiValidazione {
         Scanner s = new Scanner(inputLine).useDelimiter(";");
         Esito esitoValidazione = new Esito();
         for (int i = 0; i < 4; i++) {
-            switch (i){
-                case 0:
-                    if (s.next().compareTo("Valid") == 0){
-                        esitoValidazione.setValidita(true);
-                    } else {
-                        esitoValidazione.setValidita(false);
-                    }
-                    break;
-                case 1:
-                    esitoValidazione.setCognomeStudente(s.next());
-                    break;
-                case 2:
-                    esitoValidazione.setNomeStudente(s.next());
-                    break;
-                case 3:
-                    esitoValidazione.setDataDiNascitaStudente(new SimpleDateFormat("yyyy-MM-dd").parse(s.next()));
-                    break;
-                default:
-                    break;
+            switch (i) {
+                case 0 -> esitoValidazione.setValidita(s.next().compareTo("Valid") == 0);
+                case 1 -> esitoValidazione.setCognomeStudente(s.next());
+                case 2 -> esitoValidazione.setNomeStudente(s.next());
+                case 3 -> esitoValidazione.setDataDiNascitaStudente(new SimpleDateFormat("yyyy-MM-dd").parse(s.next()));
+                default -> {
+                }
             }
         }
         esitoValidazione.setSessione(this);
