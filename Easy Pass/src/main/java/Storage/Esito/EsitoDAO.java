@@ -88,6 +88,39 @@ public class EsitoDAO {
     }
 
 
+    public ArrayList<Esito> doRetrieveAllByPersonalData(Esito esito) {
+        if(esito == null)
+            throw new IllegalArgumentException("The parameter 'esito' must not be null.");
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = "SELECT esi.* FROM esito esi, sessione ses " +
+                        "WHERE esi.QRcodeSession = ses.QRcode and ses.QRcode = ?" +
+                        "AND esi.Cognome_Studente = ?" +
+                        "AND esi.Nome_Studente = ?" +
+                        "AND esi.Ddn_Studente = ?";
+                ps = conn.prepareStatement(query);
+                ps.setString(1, esito.getSessione().getqRCode());
+                ps.setString(2, esito.getCognomeStudente());
+                ps.setString(3, esito.getNomeStudente());
+                ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
+                rs = ps.executeQuery();
+                ArrayList<Esito> esiti = new ArrayList<>();
+
+                while (rs.next())
+                    esiti.add(EsitoMapper.extract(rs));
+                return esiti;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return null;
+        }
+    }
+
     public ArrayList<Esito> doRetrieveAll() {
         Connection conn = null;
         PreparedStatement ps = null;

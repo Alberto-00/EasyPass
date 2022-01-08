@@ -145,9 +145,14 @@ public class SessionController extends ServletLogic {
                     Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
                     esitoValidazione.setStringaGP("");
                     EsitoDAO edDao = new EsitoDAO();
-                    edDao.doCreateWithoutReport(esitoValidazione);
-                    request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
-                    request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                    if (edDao.doRetrieveAllByPersonalData(esitoValidazione).isEmpty()){
+                        edDao.doCreateWithoutReport(esitoValidazione);
+                        request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
+                        request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                    } else {
+                        throw new InvalidRequestException("Esito già inviato", List.of("Esito già inviato"), HttpServletResponse.SC_FORBIDDEN);
+                    }
+
                 } else
                     throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_NOT_FOUND);
             }
