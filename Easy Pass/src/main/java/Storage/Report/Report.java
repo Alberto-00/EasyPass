@@ -22,6 +22,10 @@ import java.util.Date;
 
 import static ApplicationLogic.Utils.ServletLogic.getUploadPath;
 
+/**
+ * La classe crea degli oggetti {@code Report} e permette di creare nuovi
+ * Report salvandoli nella cartella apposita di Tomcat.
+ */
 public class Report implements Comparable<Report>, JSONSerializable {
 
     private int id;
@@ -31,6 +35,15 @@ public class Report implements Comparable<Report>, JSONSerializable {
     private Dipartimento dip;
     private Docente docente;
 
+    /**
+     * * Crea un oggetto {@code Report} con le relative foreign key.
+     *
+     * @param data data generazione {@code Report}
+     * @param orario orario generazione {@code Report}
+     * @param pathFile path della cartella in cui si trova il {@code Report}
+     * @param dip Dipartimento che gestisce il {@code Report}
+     * @param docente Docente che ha generato il {@code Report}
+     */
     public Report(Date data, Date orario,
                   String pathFile, Dipartimento dip, Docente docente) {
         this.data = data;
@@ -40,6 +53,9 @@ public class Report implements Comparable<Report>, JSONSerializable {
         this.docente = docente;
     }
 
+    /**
+     * Costruttore vuoto.
+     */
     public Report() {
         id = 0;
         data = null;
@@ -97,6 +113,11 @@ public class Report implements Comparable<Report>, JSONSerializable {
         this.dip = dip;
     }
 
+    /**
+     * Creazione di un {@code Report} in formato PDF.
+     *
+     * @param esiti Esiti associati al {@code Report}
+     */
     public void creaFile(ArrayList<Esito> esiti) throws FileNotFoundException, DocumentException {
         EsitoDAO esitoDAO = new EsitoDAO();
         Formato formato = this.getDip().getFormato();

@@ -12,9 +12,17 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * La classe si occupa di avviare le pagine {@code jsp} di {@code HomePage}, {@code GestioneReport} e
+ * {@code GestioneFormato}; in particolare, viene gestita la logica dietro la gestione del Formato:
+ * si può modificare e, quindi, salvare un Formato appartenente a un Dipartimento solo con le informazioni
+ * desiderate dal Direttore di Dipartimento.
+ *
+ * @author Alberto Montefusco, Martina Mulino
+ * @version 0.1
+ */
 @WebServlet(name = "ReportController", value = "/reportServlet/*")
 public class ReportController extends ServletLogic {
 
@@ -65,6 +73,7 @@ public class ReportController extends ServletLogic {
         String path = getPath(request);
         DirettoreDiDipartimento direttore = (DirettoreDiDipartimento) request.getSession().getAttribute("direttoreSession");
 
+        /* Viene modificato e salvato un Formato secondo le esigenze del Direttore di Dipartimento. */
         try {
             if ("/salvaFormato".equals(path)) {
                 String anagrafica = request.getParameter("anagrafica");
@@ -109,6 +118,9 @@ public class ReportController extends ServletLogic {
         }
     }
 
+    /* Il metodo permette di riempire la request con le informazioni che
+     * contiene l'oggetto Formato passato in input.
+     * */
     private void gestioneFormato(HttpServletRequest request, Formato formato) {
         String value;
 

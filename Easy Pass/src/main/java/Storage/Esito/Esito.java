@@ -8,6 +8,11 @@ import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * La classe crea degli oggetti {@code Esito} che contengono come informazione, oltre
+ * alle informazioni proprie dell'{@code Esito}, anche il {@code Report} e la {@code Sessione di validazione}
+ * associata.
+ */
 public class Esito implements JSONSerializable {
 
     private int id;
@@ -19,6 +24,9 @@ public class Esito implements JSONSerializable {
     private Report report;
     private SessioneDiValidazione sessione;
 
+    /**
+     * Costruttore vuoto.
+     */
     public Esito(){
         this.id = 0;
         this.nomeStudente = "";
@@ -30,6 +38,19 @@ public class Esito implements JSONSerializable {
         this.sessione = null;
     }
 
+
+    /**
+     * Crea un oggetto {@code Esito} con tutte le informazioni passate in input.
+     *
+     * @param id identificativo dell'{@code Esito}
+     * @param nomeStudente nome dello Studente che ha inviato il Green Pass
+     * @param cognomeStudente cognome dello Studente che ha inviato il Green Pass
+     * @param dataDiNascitaStudente data di nascita dello Studente che ha inviato il Green Pass
+     * @param stringaGP codice Green Pass inviato dallo Studente
+     * @param validita booleano che indica la validit&agrave; del Green Pass
+     * @param report Report che contiene tale {@code Esito}
+     * @param sessione Sessione di validazione a cui appartiene l'{@code Esito}
+     */
     public Esito(int id, String nomeStudente, String cognomeStudente,
                  Date dataDiNascitaStudente, String stringaGP,
                  boolean validita, Report report, SessioneDiValidazione sessione) {
@@ -134,6 +155,11 @@ public class Esito implements JSONSerializable {
                 '}';
     }
 
+    /**
+     * Converte l'oggetto {@code Esito} in un JSON
+     *
+     * @return JSON dell'Esito
+     */
     @Override
     public JSONObject toJson(){
         JSONObject object = new JSONObject();

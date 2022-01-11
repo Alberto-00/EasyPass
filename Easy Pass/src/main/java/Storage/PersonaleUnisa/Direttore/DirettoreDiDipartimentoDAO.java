@@ -5,10 +5,20 @@ import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Dipartimento.Dipartimento;
 
 import java.sql.*;
-import java.util.ArrayList;
 
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code direttore}, e di verifica
+ * delle credenziali inserite dal Direttore di Dipartimento.
+ */
 public class DirettoreDiDipartimentoDAO {
 
+    /**
+     * Effettua una query al database restituendo il {@code DirettoreDiDipartimento}
+     * con un determinato {@code username}.
+     *
+     * @param username username del Direttore di Dipartimento
+     * @return {@code DirettoreDiDipartimento}
+     */
     public DirettoreDiDipartimento doRetrieveByKey(String username) {
         if(username == null)
             throw new IllegalArgumentException("The username must not be null");
@@ -38,6 +48,14 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
+    /**
+     * Si verifica nel database se esiste un Direttore registrato con una
+     * determinata email e password.
+     *
+     * @param direttore Direttore da controllare
+     * @return {@code true} se esiste un {@code DirettoreDiDipartimento} con
+     * quelle credenziali, altrimenti {@code false}
+     */
     public boolean checkUserAndPassw(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("The direttore must not be null");
@@ -61,6 +79,13 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
+    /**
+     * Effettua una query al database restituendo un oggetto
+     * {@code DirettoreDiDipartimento} con le foreign key associate.
+     *
+     * @param username username del Direttore da cercare
+     * @return {@code DirettoreDiDipartimento} con le foreign key associate.
+     */
     public DirettoreDiDipartimento doRetrieveByKeyWithRelations(String username) {
         if(username==null)
             throw new IllegalArgumentException("The username must not be null");
@@ -89,28 +114,13 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
-
-    public ArrayList<DirettoreDiDipartimento> doRetieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM direttore dir";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<DirettoreDiDipartimento> direttori = new ArrayList<>();
-
-            while (rs.next())
-                direttori.add(DirettoreDiDipartimentoMapper.extract(rs));
-            return direttori;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
+    /**
+     * Salva nel database un nuovo {@code DirettoreDiDipartimento}.
+     *
+     * @param direttore nuovo {@code DirettoreDiDipartimento} da salvare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public boolean doCreate(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -135,6 +145,13 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
+    /**
+     * Aggiorna nel database un {@code DirettoreDiDipartimento} esistente.
+     *
+     * @param direttore {@code DirettoreDiDipartimento} da aggiornare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -158,6 +175,13 @@ public class DirettoreDiDipartimentoDAO {
         }
     }
 
+    /**
+     * Elimina nel database un {@code DirettoreDiDipartimento} esistente.
+     *
+     * @param direttore {@code DirettoreDiDipartimento} da eliminare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
     public boolean doDelete(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot delete a null object");

@@ -1,14 +1,24 @@
 package Storage.Esito;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
-import Storage.Report.Report;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * La classe effettua operazioni {@literal CRUD} sulla tabella {@code esito}
+ */
 public class EsitoDAO {
 
+    /**
+     * Effettua una query al database restituendo l'{@code Esito}
+     * con un determinato {@code ID}: l'{@code Esito} non &egrave; riempito
+     * con le foreign key a cui &egrave; associato.
+     *
+     * @param id identificativo dell'{@code Esito}
+     * @return {@code Esito}
+     */
     public Esito doRetrieveByKey(int id) {
         if(id < 0)
             throw new IllegalArgumentException("The ID must not be a negative number");
@@ -33,33 +43,13 @@ public class EsitoDAO {
         }
     }
 
-    public ArrayList<Esito> doRetrieveAllByReport(Report report) {
-        if(report == null)
-            throw new IllegalArgumentException("The 'report' must not be null.");
-        else{
-            Connection conn = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                conn = ConnectionSingleton.getInstance().getConnection();
-                String query = "SELECT esi.* FROM esito esi, report rep " +
-                        "WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?";
-                ps = conn.prepareStatement(query);
-                ps.setInt(1, report.getId());
-                rs = ps.executeQuery();
-                ArrayList<Esito> esiti = new ArrayList<>();
-
-                while (rs.next())
-                    esiti.add(EsitoMapper.extract(rs));
-                return esiti;
-            } catch (SQLException e){
-                e.printStackTrace();
-            } finally {
-                ConnectionSingleton.closeConnection(conn, ps, rs);
-            } return null;
-        }
-    }
-
+    /**
+     * Effettua una query al database restituendo gli {@code Esiti}
+     * appartenenti a una determinata {@code Sessione di Validazione}.
+     *
+     * @param sessione Sessione di Validazione a cui &egrave; associato l'{@code Esito}
+     * @return lista di {@code Esiti} appartenenti a quella Sessione di Validaizione
+     */
     public ArrayList<Esito> doRetrieveAllBySession(SessioneDiValidazione sessione) {
         if(sessione == null)
             throw new IllegalArgumentException("The parameter 'sessione' must not be null.");
@@ -87,7 +77,14 @@ public class EsitoDAO {
         }
     }
 
-
+    /**
+     * Effettua una query al database restituendo gli {@code Esiti}
+     * appartenenti a una determinata {@code Sessione di Validazione}
+     * e a un determinato {@code Studente}.
+     *
+     * @param esito {@code Esito} da ricercare
+     * @return lista di {@code Esiti} di un determinato {@code Studente}
+     */
     public ArrayList<Esito> doRetrieveAllByPersonalData(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("The parameter 'esito' must not be null.");
@@ -121,27 +118,15 @@ public class EsitoDAO {
         }
     }
 
-    public ArrayList<Esito> doRetrieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM esito esi";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<Esito> esiti = new ArrayList<>();
-
-            while (rs.next())
-                esiti.add(EsitoMapper.extract(rs));
-            return esiti;
-        } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
+    /**
+     * Effettua una query al database ritornando il numero di {@code Esiti}
+     * validi o non validi
+     *
+     * @param idReport identificativo del {@code Report} contenente gli {@code Esiti}
+     * @param flag booleano impostato su {@code true} per ritornare il numero di {@code Esiti validi},
+     *             altrimenti impostato su {@code false} per ritornare il numero di {@code Esiti non validi},
+     * @return numero di {@code Esiti} validi o non validi
+     */
     public int contaEsitiValidi(int idReport, boolean flag) {
         if(idReport < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
@@ -168,6 +153,12 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Ritorna il numero di {@code Esiti} che contiene un {@code Report}
+     *
+     * @param idReport Report da analizzare
+     * @return numero di {@code Esiti}
+     */
     public int numEsiti (int idReport) {
         if(idReport < 0){
             throw new IllegalArgumentException("The ID must not be a negative number");
@@ -193,6 +184,13 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Salva nel database un nuovo {@code Esito}.
+     *
+     * @param esito nuovo {@code Esito} da salvare
+     * @return {@code true} se l'{@code Esito} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public boolean doCreate(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -219,6 +217,14 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Salva nel database un nuovo {@code Esito} senza la foreign key
+     * del {@code Report}.
+     *
+     * @param esito nuovo {@code Esito} da salvare
+     * @return {@code true} se l'{@code Esito} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public boolean doCreateWithoutReport(Esito esito) {
         if(esito == null){
             throw new IllegalArgumentException("Cannot save a null object");
@@ -245,6 +251,14 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Viene modificato un {@code Esito} già presente nel
+     * database.
+     *
+     * @param esito {@code Esito} da modificare
+     * @return {@code true} se l'{@code Esito} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -272,6 +286,13 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Viene modificata solo la foreign key {@code Report} associata all'{@code Esito}.
+     *
+     * @param esito {@code Esito} da modificare
+     * @return {@code true} se l'{@code Esito} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdateOnlyReport(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -293,6 +314,13 @@ public class EsitoDAO {
         }
     }
 
+    /**
+     * Viene eliminato un {@code Esito} dal database.
+     *
+     * @param esito {@code Esito} da eliminare
+     * @return {@code true} se l'{@code Esito} &egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
     public boolean doDelete(Esito esito) {
         if(esito==null)
             throw new IllegalArgumentException("Cannot delete a null object");

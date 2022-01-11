@@ -4,7 +4,6 @@ import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.Dipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +11,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code docente}, e di verifica
+ * delle credenziali inserite dal Docente.
+ */
 public class DocenteDAO {
 
+    /**
+     * Effettua una query al database restituendo il {@code Docente}
+     * con un determinato {@code username}.
+     *
+     * @param username username del Docente
+     * @return {@code Docente}
+     */
     public Docente doRetrieveByKey(String username) {
         if(username == null)
             throw new IllegalArgumentException("The username must not be null");
@@ -38,6 +48,13 @@ public class DocenteDAO {
         }
     }
 
+    /**
+     * Effettua una query al database restituendo un oggetto
+     * {@code Docente} senza la foreign key della Sessione di validazione associata.
+     *
+     * @param username username del Docente da cercare
+     * @return {@code Docente}
+     */
     public Docente doRetrieveByKeyWithRelations(String username) {
         if(username == null)
             throw new IllegalArgumentException("The username must not be null");
@@ -56,7 +73,6 @@ public class DocenteDAO {
                     Docente docente = DocenteMapper.extract(rs);
                     docente.setDipartimento(new Dipartimento());
                     docente.getDipartimento().setCodice(rs.getString("doc.Codice_Dip"));
-                    //TODO: Mancano le sessioni
                     return docente;
                 }
             } catch (SQLException e) {
@@ -67,6 +83,13 @@ public class DocenteDAO {
         }
     }
 
+    /**
+     * Effettua una query al database restituendo una lista di
+     * {@code Docenti} appartenenti a un determinato Dipartimento.
+     *
+     * @param codDip codice di Dipartimento dei Docenti da cercare
+     * @return lista di {@code Docenti}
+     */
     public ArrayList<Docente> doRetrieveAllWithRelations(String codDip) {
         if(codDip == null)
             throw new IllegalArgumentException("The 'codDip' must not be null");
@@ -96,27 +119,14 @@ public class DocenteDAO {
         }
     }
 
-    public ArrayList<Docente> doRetrieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM docente doc";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<Docente> docenti = new ArrayList<>();
-
-            while (rs.next())
-                docenti.add(DocenteMapper.extract(rs));
-            return docenti;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
+    /**
+     * Si verifica nel database se esiste un Docente registrato con una
+     * determinata email e password.
+     *
+     * @param docente Docente
+     * @return {@code true} se esiste un {@code Docente} con
+     * quelle credenziali, altrimenti {@code false}
+     */
     public boolean checkUserAndPassw(Docente docente) {
         if(docente == null){
             throw new IllegalArgumentException("The docente must not be null");
@@ -140,6 +150,13 @@ public class DocenteDAO {
         }
     }
 
+    /**
+     * Salva nel database un nuovo {@code Docente}.
+     *
+     * @param docente nuovo {@code Docente} da salvare
+     * @return {@code true} se il {@code Docente} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public boolean doCreate(Docente docente) {
         if(docente == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -150,8 +167,8 @@ public class DocenteDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO docente VALUES (?,?,?,?,?)";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, docente.getUsername().toLowerCase());
-                ps.setString(2, StringUtils.capitalize(docente.getNome()));
+                ps.setString(1, docente.getUsername());
+                ps.setString(2, docente.getNome());
                 ps.setString(3, docente.getCognome().toUpperCase());
                 ps.setString(4, docente.getPassword());
                 ps.setString(5, docente.getDipartimento().getCodice());
@@ -170,6 +187,13 @@ public class DocenteDAO {
         }
     }
 
+    /**
+     * Aggiorna nel database un {@code Docente} esistente.
+     *
+     * @param docente {@code Docente} da aggiornare
+     * @return {@code true} se il {@code Docente} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate(Docente docente) {
         if(docente == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -185,10 +209,10 @@ public class DocenteDAO {
                 ps.setString(3, docente.getPassword());
                 ps.setString(4, docente.getDipartimento().getCodice());
                 SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();
-                /*for(SessioneDiValidazione sessione: docente.getSessioni()){
+
+                for(SessioneDiValidazione sessione: docente.getSessioni())
                     sessioneDao.doUpdate(sessione);
-                }
-                */
+
                 return ps.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -198,6 +222,13 @@ public class DocenteDAO {
         }
     }
 
+    /**
+     * Elimina nel database un {@code Docente} esistente.
+     *
+     * @param docente {@code Docente} da eliminare
+     * @return {@code true} se il {@code Docente} &egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
     public boolean doDelete(Docente docente) {
         if(docente == null){
             throw new IllegalArgumentException("Cannot delete a null object");

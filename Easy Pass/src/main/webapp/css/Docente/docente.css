@@ -162,7 +162,6 @@ body {
     background-color: var(--error);
     box-shadow: 0 15px 20px rgba(204, 0, 0, 0.4);
     transition: all 0.3s ease 0s;
-    color: var(--black);
 }
 
 /* QRcode style*/

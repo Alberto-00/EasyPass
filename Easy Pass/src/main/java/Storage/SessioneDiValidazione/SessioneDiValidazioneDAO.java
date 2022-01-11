@@ -6,10 +6,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code sessione}.
+ */
 public class SessioneDiValidazioneDAO {
 
+    /**
+     * Effettua una query al database restituendo la {@code SessioneDiValidazione}
+     * con un determinato {@code codice}.
+     *
+     * @param codice codice della {@code SessioneDiValidazione}
+     * @return {@code SessioneDiValidazione}
+     */
     public SessioneDiValidazione doRetrieveById(int codice) {
         if(codice < 0)
             throw new IllegalArgumentException("The 'codice' must not be null");
@@ -34,27 +43,13 @@ public class SessioneDiValidazioneDAO {
         }
     }
 
-    public ArrayList<SessioneDiValidazione> doRetrieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM sessione ses";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<SessioneDiValidazione> sessioni = new ArrayList<>();
-
-            while (rs.next())
-                sessioni.add(SessioneDiValidazioneMapper.extract(rs));
-            return sessioni;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
+    /**
+     * Salva nel database una nuova {@code SessioneDiValidazione}.
+     *
+     * @param sessione nuovo {@code SessioneDiValidazione} da salvare
+     * @return {@code true} se la {@code SessioneDiValidazione} &egrave; stata creata,
+     * {@code false} altrimenti
+     */
     public boolean doCreate (SessioneDiValidazione sessione) {
         if (sessione == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -77,6 +72,13 @@ public class SessioneDiValidazioneDAO {
         }
     }
 
+    /**
+     * Aggiorna nel database una {@code SessioneDiValidazione} esistente
+     *
+     * @param sessione {@code SessioneDiValidazione} da aggiornare
+     * @return {@code true} se la {@code SessioneDiValidazione} &egrave; stata aggiornata,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate (SessioneDiValidazione sessione) {
         if (sessione == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -101,8 +103,13 @@ public class SessioneDiValidazioneDAO {
         }
     }
 
-    //doDelete serve? dove si usa?
-
+    /**
+     * Elimina nel database una {@code SessioneDiValidazione} esistente
+     *
+     * @param sessione {@code SessioneDiValidazione} da eliminare
+     * @return {@code true} se la {@code SessioneDiValidazione} &egrave; stata eliminata,
+     * {@code false} altrimenti
+     */
     public boolean doDelete (SessioneDiValidazione sessione) {
         if (sessione == null)
             throw new IllegalArgumentException("Cannot delete a null object");

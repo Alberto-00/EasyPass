@@ -3,7 +3,15 @@ package Storage.PersonaleUnisa;
 import Storage.Dipartimento.Dipartimento;
 import org.apache.commons.codec.digest.DigestUtils;
 
+/**
+ * Superclasse astratta che modella un persona che fa parte del personale dell'Università
+ * degli Studi di Salerno.
+ *
+ * @see Storage.PersonaleUnisa.Docente.Docente
+ * @see Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento
+ */
 public abstract class PersonaleUnisa {
+
     private String nome;
     private String cognome;
     private String username;
@@ -52,7 +60,7 @@ public abstract class PersonaleUnisa {
 
     @Override
     public String toString() {
-        return getClass().getName()+"{" +
+        return getClass().getName() + "{" +
                 "nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", username='" + username + '\'' +

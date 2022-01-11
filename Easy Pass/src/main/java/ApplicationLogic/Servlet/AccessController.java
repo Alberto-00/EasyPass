@@ -16,6 +16,15 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
+/**
+ * La classe si occupa di gestire la logica per eseguire le funzioni di Login, Registrazione e Logout
+ * da parte di un Direttore di Dipartimento o di un Docente. La classe permette le funzionalit&agrave; di Registrazione,
+ * di Login e di Logout a un Docente, mentre, il Direttore può eseguire solo le funzionalità di Login
+ * e di Logout. Per garantire la sicurezza tutti gli input sono validati.
+ *
+ * @author Alberto Montefusco
+ * @version 0.1
+ */
 @WebServlet(name = "AccessController", value = "/autenticazione/*", loadOnStartup = 0)
 public class AccessController extends ServletLogic {
 
@@ -36,6 +45,10 @@ public class AccessController extends ServletLogic {
         String path = getPath(request);
         try {
             switch (path) {
+                /* Vengono prima validati gli input della funzione di Login: in caso di successo il
+                * Direttore o il Docente viene rimandato alla rispettiva pagina iniziale,
+                * altrimenti verrà inviato un messaggio di errore.
+                * */
                 case "/" -> {
                     validate(DirettoreValidator.validateSigin(request));
                     validate(DocenteValidator.validateSigin(request));
@@ -63,11 +76,15 @@ public class AccessController extends ServletLogic {
                     }
                 }
 
+                /* Vengono prima validati gli input della funzione di Registrazione: in caso di
+                 * successo le informazioni del Docente saranno memorizzate nel database e il Docente
+                 * verrà rimandato alla sua pagina iniziale, altrimenti verrà inviato un messaggio di errore.
+                 * */
                 case "/registrazione" -> {
                     validate(DocenteValidator.validateSigup(request));
 
-                    Docente docente = new Docente(stringBuilder(request.getParameter("nome")),
-                            stringBuilder(request.getParameter("cognome")), stringBuilder(request.getParameter("email2")),
+                    Docente docente = new Docente(upperCaseFirstLetter(request.getParameter("nome")),
+                            request.getParameter("cognome"), request.getParameter("email2"),
                             request.getParameter("password2"), new Dipartimento());
 
                     docente.getDipartimento().setCodice(request.getParameter("dipartimento"));
@@ -84,6 +101,9 @@ public class AccessController extends ServletLogic {
                     }
                 }
 
+                /* Il Docente o il Direttore di Dipartimento effettuano il Logout e vengono rimossi
+                * dalla sessione HTTP.
+                * */
                 case "/logout" -> {
                     DirettoreDiDipartimento direttoreSession = (DirettoreDiDipartimento) session.getAttribute("direttoreSession");
                     Docente docente = (Docente) session.getAttribute("docenteSession");
@@ -105,6 +125,10 @@ public class AccessController extends ServletLogic {
         }
     }
 
+    /**
+     * Permette di salvare nel Servlet Context la lista di {@code Dipartimenti}
+     * presi dal database.
+     */
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -112,12 +136,20 @@ public class AccessController extends ServletLogic {
         getServletContext().setAttribute("dipartimenti", dipartimentoDAO.doRetrieveAll());
     }
 
-    private String stringBuilder(String str) {
+
+    /* Il metodo verifica se la stringa passata possiede delle sottostringhe
+     * separate da uno spazio bianco e, per ognuna di loro, il primo carattere
+     * è impostato in maiuscolo.
+     * */
+    private String upperCaseFirstLetter(String str) {
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
 
-        for (String s : token)
-            out.append(s);
+        for (int i = 0; i < token.length; i++){
+            if (i + 1 < token.length)
+                out.append(token[i].substring(0, 1).toUpperCase()).append(token[i].substring(1)).append(" ");
+            else out.append(token[i].substring(0, 1).toUpperCase()).append(token[i].substring(1));
+        }
         return out.toString();
     }
 }

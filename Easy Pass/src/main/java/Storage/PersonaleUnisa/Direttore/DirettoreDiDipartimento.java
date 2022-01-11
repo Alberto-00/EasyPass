@@ -1,20 +1,30 @@
 package Storage.PersonaleUnisa.Direttore;
 
 import ApplicationLogic.Utils.InvalidRequestException;
-import Storage.Dipartimento.Dipartimento;
 import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.Report.Report;
 
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
+/**
+ * La classe crea degli oggetti {@code DirettoreDiDipartimento} estendendo la classe astratta
+ * {@code PersonaleUnisa}, inoltre, tale classe funge da wrapper per alcuni metodi della classe
+ * {@code Dipartimento}. I metodi forniti da questa classe consentono agli oggetti {@code DirettoreDiDipartimento}
+ * di effettuare operazioni relative alla gestione dei Report e del Formato.
+ *
+ * @see PersonaleUnisa
+ * @see Storage.Dipartimento.Dipartimento
+ */
 public class DirettoreDiDipartimento extends PersonaleUnisa {
 
+    /**
+     * Costruttore vuoto.
+     */
     public DirettoreDiDipartimento() {
         this.setNome("");
         this.setCognome("");
@@ -23,15 +33,11 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
         this.setDipartimento(null);
     }
 
-    public DirettoreDiDipartimento(String nome, String cognome,
-                                   String username, String password,Dipartimento dipartimento){
-        this.setNome(nome);
-        this.setCognome(cognome);
-        this.setUsername(username);
-        this.setPassword(password);
-        this.setDipartimento(dipartimento);
-    }
-
+    /**
+     * Elimina un Report dal database e dalla cartella dei Report di Tomcat.
+     *
+     * @param report {@code Report} da eliminare
+     */
     public void eliminaReport(Report report) {
         if(report == null)
             throw new IllegalArgumentException("Cannot delete a null object");
@@ -39,6 +45,12 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             this.getDipartimento().eliminaReport(report);
     }
 
+    /**
+     * Aggiorna il {@code Formato} del Dipartimento in cui risiede
+     * il Direttore.
+     *
+     * @param formato {@code Formato} da aggiornare
+     */
     public void impostaFormato(Formato formato) {
         if(formato == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
@@ -46,22 +58,18 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             this.getDipartimento().impostaFormato(formato);
     }
 
-    /*public boolean downloadReport(Report report) throws SQLException, IOException, DocumentException {
-        ReportDAO reportDAO = new ReportDAO();
-        String namePDF = reportDAO.doDownload(report.getId()).getPathFile();
-        String inPath = getUploadPath() + "Report" + File.separator + namePDF + ".pdf";
-        String outPath = ServletLogic.getDownloadPath();
-
-       File srcFile = new File(inPath);
-       if (srcFile.exists()) {
-           FileUtils.copyFileToDirectory(srcFile, new File(outPath));
-           return true;
-       }
-       else
-           return false;
-    }*/
-
-
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera sul nome e sul cognome del Docente e su un range di
+     * date per i quali sono stati generati i Report.
+     *
+     * @param docente {@code Docente} che ha generato un sottoinsieme di {@code Report}
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws InvalidRequestException {
         if(docente != null && primaData != null && secondaData != null){
             if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)
@@ -72,6 +80,15 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
     }
 
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera sul nome e sul cognome del Docente.
+     *
+     * @param docente {@code Docente} che ha generato un sottoinsieme di {@code Report}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) {
         if(docente != null)
             return this.getDipartimento().ricercaReportSoloDocente(docente);
@@ -79,6 +96,17 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera su un intervallo di tempo per i quali sono
+     * stati generati i Report.
+     *
+     * @param date1 prima data dell'intervallo di tempo
+     * @param date2 seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
         if(date1.before(date2) || date1.compareTo(date2) == 0)
            return this.getDipartimento().ricercaReportSoloData(date1, date2);
@@ -86,6 +114,10 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
+    /**
+     * Cerca tutti Report generati dai Docenti del Dipartimento del {@code DirettoreDiDipartimento}.
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> ricercaReport() {
         return this.getDipartimento().ricercaReport();
     }

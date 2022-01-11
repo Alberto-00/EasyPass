@@ -6,10 +6,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
+/**
+ * La classe effettua operazioni {@literal CRUD} sulla tabella {@code formato}
+ */
 public class FormatoDAO {
 
+    /**
+     * Effettua una query al database restituendo il {@code Formato}
+     * con un determinato {@code ID}.
+     *
+     * @param id identificativo del {@code Formato}
+     * @return {@code Formato}
+     */
     public Formato doRetrieveById(String id) {
         if(id == null)
             throw new IllegalArgumentException("The id must not be null");
@@ -34,29 +43,14 @@ public class FormatoDAO {
         }
     }
 
-    public ArrayList<Formato> doRetrieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM formato form";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<Formato> formati = new ArrayList<>();
-
-            while (rs.next())
-                formati.add(FormatoMapper.extract(rs));
-            return formati;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
-
-    public boolean doCreate (Formato formato) {
+    /**
+     * Salva nel database un nuovo {@code Formato}.
+     *
+     * @param formato nuovo {@code Formato} da salvare
+     * @return {@code true} se il {@code Formato} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
+     public boolean doCreate (Formato formato) {
         if (formato == null)
             throw new IllegalArgumentException("Cannot save a null object");
         else {
@@ -81,6 +75,13 @@ public class FormatoDAO {
         }
     }
 
+    /**
+     * Salva nel database un nuovo {@code Formato}.
+     *
+     * @param formato nuovo {@code Formato} da salvare
+     * @return {@code true} se il {@code Formato} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate (Formato formato) {
         if (formato == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -108,6 +109,13 @@ public class FormatoDAO {
         }
     }
 
+    /**
+     * Viene eliminato un {@code Formato} dal database.
+     *
+     * @param formato {@code Formato} da eliminare
+     * @return {@code true} se il {@code Formato} &egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
     public boolean doDelete (Formato formato) {
         if (formato == null)
             throw new IllegalArgumentException("Cannot delete a null object");

@@ -12,15 +12,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.*;
 
+/**
+ * La classe crea degli oggetti {@code Dipartimento} che contengono come informazione, oltre
+ * al nome e al codice del Dipartimento, anche il {@code Formato} e la lista dei {@code Report} associata.
+ * Le operazioni svolte da questi oggetti riguardano la gestione dei Report, in particolare:
+ * <ul>
+ *     <li>eliminazione dei {@code Report};</li>
+ *     <li>impostare il {@code Formato} degli Esiti;</li>
+ *     <li>ricerca dei {@code Report} secondo dei filtri.</li>
+ * </ul>
+ */
 public class Dipartimento {
 
     private String nome;
     private String codice;
-
-    /* L'id del formato deve essere uguale all'id del dipartimento a cui appartiene */
     private Formato formato;
     ArrayList<Report> reports;
 
+    /**
+     * Crea un ogetto {@code Dipartimento} con tutte le informazioni
+     * passate in input.
+     *
+     * @param nome nome del Dipartimento
+     * @param codice codice di Dipartimento
+     * @param formato Formato degli Esiti del Dipartimento
+     * @param reports lista di Report generata dai Docenti di quel Dipartimento
+     */
     public Dipartimento(String nome, String codice, Formato formato, ArrayList<Report> reports) {
         this.nome = nome;
         this.codice = codice;
@@ -28,6 +45,9 @@ public class Dipartimento {
         this.reports = Objects.requireNonNullElseGet(reports, ArrayList::new);
     }
 
+    /**
+     * Costruttore vuoto.
+     */
     public Dipartimento() {
         this.nome = "";
         this.codice = "";
@@ -70,7 +90,13 @@ public class Dipartimento {
         this.reports = reports;
     }
 
-    //Il formato di un dipartimento non cambia ma si aggiorna
+
+    /**
+     * Aggiorna il {@code Formato} corrispondente all'oggetto
+     * {@code Dipartimento} in questione.
+     *
+     * @param formato Formato da agggiornare
+     */
     public void impostaFormato(Formato formato) {
         if(formato == null)
             throw new IllegalArgumentException("The argument cannot be a null object");
@@ -85,6 +111,13 @@ public class Dipartimento {
         }
     }
 
+
+    /**
+     * Elimina il Report, passato in input, sia dal Database
+     * che dalla cartella di Tomcat.
+     *
+     * @param report Report da eliminare
+     */
     public void eliminaReport(Report report) {
         if(report == null){
             throw new IllegalArgumentException("Cannot delete a null object");
@@ -103,6 +136,18 @@ public class Dipartimento {
         }
     }
 
+
+    /**
+     * Crea un TreeMap avente come key i Report generati da un
+     * Docente e come value le informazioni sul Docente: la ricerca avviene
+     * mediante il nome e il cognome del Docente che ha generato i Report
+     * in un certo periodo di tempo.
+     *
+     * @param docente docente che ha generato un insieme di Report
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
     public TreeMap<Report, Docente> ricercaCompletaReport(Docente docente, Date primaData, Date secondaData)
             throws InvalidRequestException {
 
@@ -116,6 +161,15 @@ public class Dipartimento {
             throw new IllegalArgumentException("The arguments 'docente', 'primaData' and 'secondaData' cannot be null.");
     }
 
+
+    /**
+     * Crea un TreeMap avente come key i Report generati da un Docente
+     * e come value le informazioni sul Docente: la ricerca avviene mediante il
+     * nome e il cognome del Docente.
+     *
+     * @param docente docente che ha generato un insieme di Report
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
     public TreeMap<Report, Docente> ricercaReportSoloDocente(Docente docente) {
         if(docente != null){
             ReportDAO reportDAO = new ReportDAO();
@@ -125,6 +179,16 @@ public class Dipartimento {
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
 
+
+    /**
+     * Crea un TreeMap avente come key i Report generati
+     * da un Docente e come value le informazioni sul Docente:
+     * la ricerca avviene specificando un certo intervallo di tempo.
+     *
+     * @param date1 prima data dell'intervallo di tempo
+     * @param date2 seconda data dell'intervallo di tempo
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
     public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
         if(date1.before(date2) || date1.compareTo(date2) == 0){
             ReportDAO reportDAO = new ReportDAO();

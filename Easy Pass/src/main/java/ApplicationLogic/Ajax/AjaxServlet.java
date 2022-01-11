@@ -26,6 +26,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
+/**
+ * La classe si occupa della gestione dei Report e degli Esiti laddove \u00E8
+ * stata utilizzata la tecnica Ajax, in particolare sono implementate le
+ * funzionalit&agrave; di:
+ * <ul>
+ *     <li>ricerca Report, applicando i seguenti filtri:<br>
+ *      1) nome e cognome Docente<br>
+ *      2) range di date<br>
+ *      3) nome e cognome Docente + range di date
+ *     </li>
+ *     <li>cancellazione di uno/pi&ugrave; Report;</li>
+ *     <li>download di uno/pi&ugrave; Report;</li>
+ *     <li>aggiornamento run-time degli Esiti.</li>
+ * </ul>
+ *
+ * @version 0.1
+ * @author Alberto Montefusco, Martina Mulino
+ */
 @WebServlet(name = "AjaxServlet", value = "/report/*")
 public class AjaxServlet extends ServletLogic {
 
@@ -39,6 +57,9 @@ public class AjaxServlet extends ServletLogic {
 
         try {
             switch (path) {
+                /* Vengono cercati tutti i Report generati dai Docenti appartenenti
+                 * al Dipartimento del Direttore registrato nella sessione HTTP.
+                 * */
                 case "/search" -> {
                     if (direttore != null){
                         DocenteDAO docenteDAO = new DocenteDAO();
@@ -59,6 +80,10 @@ public class AjaxServlet extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Vengono cercati tutti i Report generati dai Docenti appartenenti
+                 * al Dipartimento del Direttore registrato nella sessione HTTP,
+                 * secondo dei filtri.
+                 * */
                 case "/search_report" -> {
                     if (direttore != null){
                         String firstDate = request.getParameter("firstDate");
@@ -103,6 +128,7 @@ public class AjaxServlet extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Vengono eliminati i Report selezionati dal Direttore. */
                 case "/delete" -> {
                     if (direttore != null){
                         String str = request.getParameter("report");
@@ -126,6 +152,7 @@ public class AjaxServlet extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Viene effettuato il download dei Report selezionati dal Direttore. */
                 case "/download_report" -> {
                     if (direttore != null){
                         String str = request.getParameter("report");
@@ -148,6 +175,9 @@ public class AjaxServlet extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Viene effettuato l'aggiornamento degli Esiti nella pagina Docente dopo che
+                 * lo Studente ha inviato il suo Green Pass e questo è stato validato.
+                 **/
                 case "/aggiornaElencoEsiti" -> {
                     if (docenteSession != null){
                         JSONArray arr = new JSONArray();
@@ -176,6 +206,13 @@ public class AjaxServlet extends ServletLogic {
         }
     }
 
+
+    /* Il metodo permette di cercare tutti i Report generati da un Docente
+     * (appartenente al Dipartimento del Direttore che esegue tale ricerca)
+     * e inviarli al client tramite un JSON; in particolare, se il nome e il
+     * cognome non corrispondono al Docente in questione, il JSON invierà la
+     * lista dei Report generata dai Docenti nel periodo di tempo indicato.
+     * */
     private void search(DirettoreDiDipartimento direttore, Date date1, Date date2, String nameDoc,
                         JSONObject root, JSONArray arrRep, JSONArray arrDoc, HttpServletResponse response)
             throws SQLException, InvalidRequestException, IOException {
@@ -194,6 +231,13 @@ public class AjaxServlet extends ServletLogic {
         sendJson(response, root);
     }
 
+
+    /* Il metodo permette di memorizzare all'interno di un JSON due liste, tramite
+     * l'aiuto di un TreeMap. Il TreeMap contiene come chiave gli ID dei Report
+     * e come valore i Docenti che hanno generato tali Report, di conseguenza, la prima
+     * lista del JSON conterrà gli oggetti Report interessati, analogamente, la seconda lista
+     * conterrà gli oggetti Docente.
+     * */
     private void searchReport(JSONObject root, JSONArray arrRep, JSONArray arrDoc,
                               TreeMap<Report, Docente> treeMap) {
         if (treeMap.isEmpty())
@@ -213,6 +257,10 @@ public class AjaxServlet extends ServletLogic {
         }
     }
 
+
+    /* Il metodo estrapola dalla stringa, una sottostringa formata solo
+     * dal nome (o dai nomi) che possiede il Docente.
+     * */
     private String nome(String str){
         String[] token = str.split(" ");
         StringBuilder out = new StringBuilder();
@@ -228,6 +276,10 @@ public class AjaxServlet extends ServletLogic {
         return out.toString();
     }
 
+
+    /* Il metodo estrapola dalla stringa, una sottostringa formata solo
+     * dal cognome che possiede il Docente.
+     * */
     private String cognome(String str){
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
@@ -243,6 +295,10 @@ public class AjaxServlet extends ServletLogic {
         return out.toString();
     }
 
+
+    /* Il metodo verifica se la stringa, passata in input,
+     * è formata solo da caratteri UpperCase o meno.
+     * */
     private boolean checkUppercase(String str){
         char[] charArray = str.toCharArray();
         for (char c : charArray) {

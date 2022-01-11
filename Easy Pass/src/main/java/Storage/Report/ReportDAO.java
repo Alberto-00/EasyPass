@@ -1,19 +1,27 @@
 package Storage.Report;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
-import Storage.Dipartimento.DipartimentoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
-import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.PersonaleUnisa.Docente.DocenteMapper;
 
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code report}, e di ricerca
+ * applicando alcuni filtri.
+ */
 public class ReportDAO {
 
+    /**
+     * Effettua una query al database restituendo il {@code Report}
+     * con un determinato {@code id}.
+     *
+     * @param id id del {@code Report}
+     * @return {@code Report}
+     */
     public Report doRetrieveById(int id) {
         if(id < 0)
             throw new IllegalArgumentException("The id must not be negative");
@@ -39,37 +47,14 @@ public class ReportDAO {
         } return null;
     }
 
-    public Report doRetrieveByIdWithRelations(int id) {
-        if(id < 0)
-            throw new IllegalArgumentException("The id must not be negative");
-        else {
-            Connection conn = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                conn = ConnectionSingleton.getInstance().getConnection();
-                String query = "SELECT rep.* FROM report rep, dipartimento dip, docente doc " +
-                        "WHERE rep.ID_report=? AND rep.Codice_Dip=dip.Codice_Dip AND doc.Username_Doc=rep.Username_Doc";
-                ps = conn.prepareStatement(query);
-                ps.setInt(1, id);
-                rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    Report report = ReportMapper.extract(rs);
-                    String idDip = rs.getString("Codice_dip");
-                    report.setDip(new DipartimentoDAO().doRetrieveByKeyWithRelations(idDip));
-                    String doc = rs.getString("Username_Doc");
-                    report.setDocente(new DocenteDAO().doRetrieveByKeyWithRelations(doc));
-                    return report;
-                }
-            } catch(SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnectionSingleton.closeConnection(conn, ps, rs);
-            } return null;
-        }
-    }
-
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento
+     * con un determinato {@code id}.
+     *
+     * @param idDip id del {@code Dipartimento}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> doRetrieveDocByReport(String idDip) {
         if(idDip == null)
             throw new IllegalArgumentException("The id must not be null");
@@ -98,28 +83,13 @@ public class ReportDAO {
         }
     }
 
-    public ArrayList<Report> doRetrieveAll() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionSingleton.getInstance().getConnection();
-            String query = "SELECT * FROM report rep";
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<Report> reports=new ArrayList<>();
-            while(rs.next()) {
-                reports.add(ReportMapper.extract(rs));
-            }
-            return reports;
-        } catch(SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionSingleton.closeConnection(conn, ps, rs);
-        } return null;
-    }
-
-
+     /**
+     * Salva nel database un nuovo {@code Report}.
+     *
+     * @param report nuovo {@code Report} da salvare
+     * @return {@code true} se il {@code Report} &egrave; stato creato,
+     * {@code false} altrimenti
+     */
     public int doCreate (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -148,7 +118,13 @@ public class ReportDAO {
         }
     }
 
-
+    /**
+     * Aggiorna nel database un {@code Report} esistente
+     *
+     * @param report {@code Report} da aggiornare
+     * @return {@code true} se il {@code Report} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdate (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -175,6 +151,13 @@ public class ReportDAO {
         } return false;
     }
 
+    /**
+     * Aggiorna nel database solo il path di un {@code Report} esistente
+     *
+     * @param report {@code Report} da aggiornare
+     * @return {@code true} se il {@code Report} &egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
     public boolean doUpdatePath (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -196,6 +179,13 @@ public class ReportDAO {
         } return false;
     }
 
+    /**
+     * Elimina nel database un {@code Report} esistente
+     *
+     * @param report {@code Report} da eliminare
+     * @return {@code true} se il {@code Report} &egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
     public boolean doDelete (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -217,6 +207,16 @@ public class ReportDAO {
         } return false;
     }
 
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento
+     * con un determinato nome e cognome e generati in un certo periodo di tempo.
+     *
+     * @param docente Docente che ha generato i {@code Report}
+     * @param primaData la prima data dell'intervallo di tempo
+     * @param secondaData la seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> doSearch(Docente docente, java.util.Date primaData, java.util.Date secondaData) {
         if(docente != null && primaData != null && secondaData != null){
             Connection conn = null;
@@ -252,6 +252,14 @@ public class ReportDAO {
         return null;
     }
 
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento
+     * con un determinato nome e cognome.
+     *
+     * @param docente Docente che ha generato i {@code Report}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> doSearchByDocName(Docente docente) {
         if(docente == null)
             throw new IllegalArgumentException("The argument 'docente' cannot be null");
@@ -282,6 +290,15 @@ public class ReportDAO {
         }
     }
 
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento generati in un certo
+     * periodo di tempo.
+     *
+     * @param primaData la prima data dell'intervallo di tempo
+     * @param secondaData la seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
     public TreeMap<Report, Docente> doSearchByDate(java.util.Date primaData, java.util.Date secondaData) {
         if(primaData == null && secondaData == null){
             throw new IllegalArgumentException("The argument 'primaData' and 'secondaData' cannot be null.");
@@ -305,32 +322,6 @@ public class ReportDAO {
                 while(rs.next())
                     treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));
                 return treeMap;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                ConnectionSingleton.closeConnection(conn, ps, rs);
-            } return null;
-        }
-    }
-
-    public Report doDownload(int idReport) {
-        if(idReport < 0){
-            throw new IllegalArgumentException("The argument 'idReport' cannot be negative.");
-        } else{
-            Connection conn = null;
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-            try {
-                conn = ConnectionSingleton.getInstance().getConnection();
-                String query="SELECT rep.* FROM report rep " +
-                        "WHERE rep.ID_report = ?";
-
-                ps = conn.prepareStatement(query);
-                ps.setInt(1, idReport);
-                rs = ps.executeQuery();
-
-                if(rs.next())
-                    return ReportMapper.extract(rs);
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {

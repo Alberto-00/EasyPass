@@ -21,6 +21,13 @@ import javax.imageio.ImageIO;
 
 import io.nayuki.qrcodegen.QrCode;
 
+/**
+ * La classe crea delle Sessioni di Validazione e i QR Code che lo Studente
+ * può scansionare, inoltre, sono previste operazioni per validare i Green Pass
+ * e di conseguenza salvare gli esiti di tale validazione.
+ *
+ * @see io.nayuki.qrcodegen.QrCode
+ */
 public class SessioneDiValidazione {
 
     private String qRCode;
@@ -29,10 +36,18 @@ public class SessioneDiValidazione {
     private ArrayList<Esito> listaEsiti;
     private static final String url = "http://localhost:8080/EasyPass/sessioneServlet/InvioGP?sessionId=";
 
+    /**
+     * Viene creata una {@code SessioneDiValidazione} assegnandola a un Docente e creato
+     * il QR code che si trover&agrave; nella cartella apposita di Tomcat.
+     *
+     * @param isInCorso stabilisce se una {@code SessioneDiValidazione} &egrave; in corso
+     *                  o &egrave; terminata
+     * @param docente Docente che ha avviato la {@code SessioneDiValidazione}
+     */
     public SessioneDiValidazione(boolean isInCorso, Docente docente) throws IOException {
         Random r = new Random();
-        int sessionId = 0;
-        SessioneDiValidazione foundSession = null;
+        int sessionId;
+        SessioneDiValidazione foundSession;
         SessioneDiValidazioneDAO sessioneDAO = new SessioneDiValidazioneDAO();
         File file;
         do {
@@ -62,6 +77,9 @@ public class SessioneDiValidazione {
         this.qRCode = parsedSessionId + ".jpg";
     }
 
+    /**
+     * Costruttore vuoto.
+     */
     public SessioneDiValidazione() {
         this.qRCode="";
         this.isInCorso=false;
@@ -69,18 +87,9 @@ public class SessioneDiValidazione {
         listaEsiti = new ArrayList<>();
     }
 
-    public SessioneDiValidazione(String qRCode, boolean isInCorso,
-                                 Docente docente, ArrayList<Esito> esiti) {
-        this.qRCode = qRCode;
-        this.isInCorso = isInCorso;
-        this.docente = docente;
-        this.listaEsiti = esiti;
-    }
-
-    private BufferedImage createqRCode(String url) throws IOException {
+    private BufferedImage createqRCode(String url) {
         QrCode qr0 = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
-        BufferedImage img = toImage(qr0, 4, 10);  // See QrCodeGeneratorDemo
-        return img;
+        return toImage(qr0, 4, 10); // See QrCodeGeneratorDemo
     }
 
     public ArrayList<Esito> getListaEsiti() {
@@ -115,6 +124,12 @@ public class SessioneDiValidazione {
         this.docente = docente;
     }
 
+    /**
+     * Viene validata la stringa del Green Pass.
+     *
+     * @param GP Green Pass
+     * @return {@code Esito}
+     */
     public Esito validaGreenPass(String GP) throws IOException, ParseException {
         String encodedDGC = URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
         URL urldemo = new URL("http://localhost:3000/?dgc=" + encodedDGC);
@@ -123,6 +138,7 @@ public class SessioneDiValidazione {
         try {
             in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Not validdd");
         }
 

@@ -2,7 +2,7 @@ package ApplicationLogic.Servlet;
 
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
-import ApplicationLogic.Utils.Validator.NumeroStudenti;
+import ApplicationLogic.Utils.Validator.DocenteValidator;
 import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
@@ -22,6 +22,19 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * La classe si occupa della gestione della Sessione di validazione e delle funzionalità
+ * dello Studente come l'invio e la validazione dei Green Pass.
+ *
+ * La gestione della Sessione riguarda la creazione di una nuova Sessione di Validazione,
+ * la visualizzazione a run-time e il salvataggio nel database degli esiti generati dopo
+ * l'invio e la validazione del Green Pass, la terminazione della Sessione di Validazione
+ * e, infine, l'anteprima del Report che il Docente può visualizzare e scaricare sulla
+ * sua macchina.
+ *
+ * @version 0.1
+ * @author Viviana Rinaldi, Alberto Montefusco, Gennaro Spina, Martina Mulino
+ */
 @WebServlet(name = "SessionController", value = "/sessioneServlet/*")
 public class SessionController extends ServletLogic {
 
@@ -36,6 +49,9 @@ public class SessionController extends ServletLogic {
 
         try {
             switch (path) {
+                /* Lo Studente viene portato alla pagina per l'invio del Green Pass specificando la
+                 * Sessione di Validazione a cui è connesso.
+                 * */
                 case "/InvioGP" -> {
                     int sessionId;
                     if (request.getParameter("sessionId") != null && request.getParameter("sessionId").length() == 5) {
@@ -59,9 +75,12 @@ public class SessionController extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Viene creata una nuova Sessione di validazione e viene controllato l'input sul numero di Studenti
+                * inviato dal Docente.
+                * */
                 case "/CreaNuovaSessione" -> {
                     if (docente != null) {
-                        validate(NumeroStudenti.validateNumberOfStudents(request));
+                        validate(DocenteValidator.validateNumberOfStudents(request));
                         SessioneDiValidazione sessioneDiValidazione = docente.avviaSessione();
                         sessioneDAO.doCreate(sessioneDiValidazione);
                         session.setAttribute("sessioneDiValidazione", sessioneDiValidazione);
@@ -70,6 +89,7 @@ public class SessionController extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Vengono presi gli esiti collegati alla Sessione di validazione dal database e mostrati al Docente. */
                 case "/ElencoEsiti" -> {
                     if (docente != null) {
                         EsitoDAO esitoDAO = new EsitoDAO();
@@ -85,6 +105,10 @@ public class SessionController extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
 
+                /* Viene creato il Report con la lista degli Esiti associata in formato PDF,
+                 * successivamente, tale Report creato è mostrato al Docente tramite un'anteprima
+                 * e la Sessione di validazione viene invalidata.
+                 * */
                 case "/AnteprimaReport" -> {
                     if (docente != null){
                         SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione)
@@ -109,9 +133,7 @@ public class SessionController extends ServletLogic {
                                 esi.setReport(report);
                                 esitoDAO.doUpdateOnlyReport(esi);
                             }
-                            SessioneDiValidazioneDAO sessionDAO = new SessioneDiValidazioneDAO();
-                            sessioneDiValidazione.setInCorso(false);
-                            sessionDAO.doUpdate(sessioneDiValidazione);
+                            docente.terminaSessione(sessioneDiValidazione);
                             session.removeAttribute("sessioneDiValidazione");
 
                             report.creaFile(esiti);
@@ -138,6 +160,11 @@ public class SessionController extends ServletLogic {
         String path = getPath(request);
         HttpSession session = request.getSession();
 
+        /* Si prende dalla Sessione HTTP la Sessione di validazione e, se quest'ultima esiste, allora
+         * si passa alla validazione del Green Pass dello Studente, creando e salvando l'esito
+         * nel database solo nel caso in cui non sia stato già creato in precedenza nella stessa Sessione
+         * di Validazione. In caso di errore vengono mostrati i rispettivi error message.
+         * */
         try {
             if ("/InvioGP".equals(path)) {
                 SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneSenzaRelazioni");
@@ -164,6 +191,11 @@ public class SessionController extends ServletLogic {
         }
     }
 
+
+    /* Il metodo permette di costruire il nome del Report combinando
+     * il nome e il cognome del Docente che lo ha generato, con l'ID
+     * del Report stesso (es: "Report_NomeCognomeDocente_IDReport").
+     * */
     private String builderPathReport(Docente doc){
         String[] str = (doc.getNome() + " " + doc.getCognome()).split(" ");
         StringBuilder out = new StringBuilder();
