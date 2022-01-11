@@ -14,6 +14,7 @@
 <meta name="theme-color" content="#93D07C">
 <link href="${pageContext.request.contextPath}/css/reset.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/library.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/logout.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/frontend-lib/bootstrap-5.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <c:if test="${not empty param.direttoreStyles}">

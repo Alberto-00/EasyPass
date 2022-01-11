@@ -124,6 +124,6 @@
     <%@include file="../Partials/Direttore/AnteprimaReport.jsp"%>
     <%@include file="../Partials/Direttore/Footer.jsp"%>
 </div>
-<%@include file="../Partials/Direttore/Logout.jsp"%>
+<%@include file="../Partials/Logout.jsp"%>
 </body>
 </html>

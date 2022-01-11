@@ -10,7 +10,9 @@
 </head>
 <body>
 <div class="coll-2">
- <a class="btnn" id="logout" href="javascript:void(0)" style="width: 10%; height: 5%; margin-left: 10px; margin-top: 10px; text-decoration: none; text-align-all: center"></a>
+    <div class="center">
+        <a class="btnn" id="logout" href="javascript:void(0)">LOGOUT</a>
+    </div>
     <div class="student-form-content" hidden>
         <h1 class="titleStudent">Inserisci il numero di Studenti</h1>
         <form class="student-form" id="NumberOfStudentsForm" name="NumberOfStudentsForm"
@@ -30,6 +32,6 @@
        document.getElementsByClassName("avvia-sessione-button").item(0).toggleAttribute("hidden");
     }
 </script>
-<%@include file="/WEB-INF/Interface/Partials/Direttore/Logout.jsp"%>
+<%@include file="/WEB-INF/Interface/Partials/Logout.jsp"%>
 </body>
 </html>

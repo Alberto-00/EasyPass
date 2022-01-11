@@ -18,6 +18,6 @@
         <img class="covidImg" src="${pageContext.request.contextPath}/icons/covid.png" alt="covid">
         <%@include file="../Partials/Direttore/Footer.jsp"%>
     </div>
-    <%@include file="../Partials/Direttore/Logout.jsp"%>
+    <%@include file="../Partials/Logout.jsp"%>
 </body>
 </html>

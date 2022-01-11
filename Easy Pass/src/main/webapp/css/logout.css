@@ -1,0 +1,132 @@
+/******************************
+ *  INIZIO CSS di Logout.jsp  *
+ ******************************/
+.modall {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* scroll se necessario */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Content */
+.modal-contentt {
+    position: fixed;
+    background-color: #fefefe;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    border: none;
+}
+
+.modal-headerr > h2{
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    font-weight: bold;
+    border: none;
+    padding-top: 0.3em;
+    transition: all 0.3s ease 0s;
+}
+
+/* Animation Modal*/
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* Close Button */
+.close {
+    padding: 0 10px 0 9px;
+    margin-top: 8px;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 10px;
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+@media screen and (max-width: 890px){
+    .close{
+        font-size: 24px;
+        margin-top: 3px;
+    }
+}
+
+.close:hover{
+    background-color: #2EE59D;
+    border: 2px solid rgba(24,24,24,0.6);
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-headerr {
+    padding: 2px 16px;
+    background-color: var(--greenS);
+    color: white;
+}
+
+.modal-bodyy {
+    padding: 2px 0 0 25px;
+    background-color: var(--green);
+}
+
+.modal-bodyy p{
+    font-size: 16px;
+    padding: 5px 0 5px 0;
+}
+
+.modal-footerr {
+    padding: 18px;
+    background-color: var(--greenS);
+}
+
+.modal-button {
+    padding: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    background: var(--greenS);
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.modal-button:hover{
+    background-color: #2EE59D;
+    box-shadow: 0 15px 20px rgba(46, 229, 157, 0.4);
+    color: var(--black);
+    border-radius: 14px;
+}
+
+.modal-button:first-child{
+    margin-right: 20px;
+}

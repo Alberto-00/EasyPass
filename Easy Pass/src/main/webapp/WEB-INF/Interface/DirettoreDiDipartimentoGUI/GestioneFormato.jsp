@@ -1,4 +1,3 @@
-<%@ page import="Storage.Formato.Formato" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -63,6 +62,6 @@
         </div>
         <%@include file="../Partials/Direttore/Footer.jsp"%>
     </div>
-    <%@include file="../Partials/Direttore/Logout.jsp"%>
+    <%@include file="../Partials/Logout.jsp"%>
 </body>
 </html>

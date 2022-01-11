@@ -13,12 +13,13 @@
 </head>
 <body>
 <div class="coll-2">
-    <a class="btnn" id="logout" href="javascript:void(0)">Logout</a>
-    <!--<h1 class="titleQR titleStudent">QR Code</h1>-->
+    <div class="center">
+        <a class="btnn" id="logout" href="javascript:void(0)">LOGOUT</a>
+    </div>
     <%  SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
         String path = sessioneDiValidazione.getqRCode();%>
     <img src='http://localhost:8080/Progetto_EasyPass/QRCodes/<%=path%>' alt="QRcode" id="qrcode" class="qrCode">
-    <span id="linkQRcode" style="width: 80%; margin: auto"></span>
+    <span id="linkQRcode"></span>
     <canvas id="canvas" hidden></canvas>
     <hr class="rounded">
     <div class="grid-container" id="elencoEsitiDiv">
@@ -37,7 +38,7 @@
         <button onclick="startAnteprimaReport()" class="termina-sessione-button">Termina</button>
     </div>
 </div>
-<%@include file="/WEB-INF/Interface/Partials/Direttore/Logout.jsp"%>
+<%@include file="/WEB-INF/Interface/Partials/Logout.jsp"%>
 </body>
 <script>
     window.addEventListener('load', function () {
