@@ -127,10 +127,11 @@ public class SessioneDiValidazione {
     /**
      * Viene validata la stringa del Green Pass.
      *
-     * @param GP Green Pass
+     * @param esitoValidazione Green Pass
      * @return {@code Esito}
      */
-    public Esito validaGreenPass(String GP) throws IOException, ParseException {
+    public Esito validaGreenPass(Esito esitoValidazione) throws IOException, ParseException {
+        String GP = esitoValidazione.getStringaGP();
         String encodedDGC = URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
         URL urldemo = new URL("http://localhost:3000/?dgc=" + encodedDGC);
         URLConnection yc = urldemo.openConnection();
@@ -146,7 +147,6 @@ public class SessioneDiValidazione {
         inputLine = in.readLine();
 
         Scanner s = new Scanner(inputLine).useDelimiter(";");
-        Esito esitoValidazione = new Esito();
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0 -> esitoValidazione.setValidita(s.next().compareTo("Valid") == 0);

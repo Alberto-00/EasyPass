@@ -21,21 +21,22 @@
 
 </head>
 <body>
-    <h1>Sei connesso alla sessione: ${param.sessionId}</h1>
-    <div class="areaInvio">
-        <label for="actual-btn">
-            <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file" id="preview-img" style="width: 50%; object-fit: contain">
-            <img src="" id="img" hidden>
-            <canvas id="canvas" hidden></canvas>
+<h1>Sei connesso alla sessione: ${param.sessionId}</h1>
+<div class="areaInvio">
+    <label for="actual-btn">
+        <img src="${pageContext.request.contextPath}/icons/file.svg" alt="file" id="preview-img"
+             style="width: 50%; object-fit: contain">
+        <img src="" id="img" hidden>
+        <canvas id="canvas" hidden></canvas>
     </label>
-    </div>
-    <form name="formDgc" id="formDgc" method="post" action="${pageContext.request.contextPath}/sessioneServlet/InvioGP">
-        <input class="file_added" id="actual-btn" type="file" name="file" accept="image/*" hidden>
-        <input type="hidden" name="dgc" id="dgc">
-    </form>
-    <button type="button" onclick="readQR()" id="myButton" >Invia Green Pass</button>
-    <script>
-        window.addEventListener('load', function () {
+</div>
+<form name="formDgc" id="formDgc" method="post" action="${pageContext.request.contextPath}/sessioneServlet/InvioGP">
+    <input class="file_added" id="actual-btn" type="file" name="file" accept="image/*" hidden>
+    <input type="hidden" name="dgc" id="dgc">
+</form>
+<button type="button" onclick="readQR()" id="myButton">Invia Green Pass</button>
+<script>
+    window.addEventListener('load', function () {
         document.querySelector('input[type="file"]').addEventListener('change', function () {
             if (this.files && this.files[0]) {
                 var img = document.getElementById('img')
@@ -47,7 +48,7 @@
         });
     })
 
-        function readQR() {
+    function readQR() {
         var canvasElement = document.getElementById("canvas");
         var canvas = canvasElement.getContext("2d");
 
@@ -64,7 +65,7 @@
         imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
 
         const code = jsQR(imageData.data, imageData.width, imageData.height);
-        if (code && code.data.substring(0,4).localeCompare("HC1:") == 0) {
+        if (code && code.data.substring(0, 4).localeCompare("HC1:") == 0) {
             let form = document.getElementById("formDgc");
             let inputDgc = document.getElementById("dgc");
             inputDgc.setAttribute("value", code.data);
@@ -75,6 +76,6 @@
             alert("Nessun QR trovato oppure l'immagine non è un Green Pass.")
         }
     }
-    </script>
+</script>
 </body>
 </html>

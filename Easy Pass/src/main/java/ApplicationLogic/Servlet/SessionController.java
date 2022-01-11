@@ -169,7 +169,9 @@ public class SessionController extends ServletLogic {
             if ("/InvioGP".equals(path)) {
                 SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneSenzaRelazioni");
                 if (sessioneDiValidazione != null){
-                    Esito esitoValidazione = sessioneDiValidazione.validaGreenPass(request.getParameter("dgc"));
+                    Esito esitoValidazione = new Esito();
+                    esitoValidazione.setStringaGP(request.getParameter("dgc"));
+                    esitoValidazione = sessioneDiValidazione.validaGreenPass(esitoValidazione);
                     esitoValidazione.setStringaGP("");
                     EsitoDAO edDao = new EsitoDAO();
                     if (edDao.doRetrieveAllByPersonalData(esitoValidazione).isEmpty()){

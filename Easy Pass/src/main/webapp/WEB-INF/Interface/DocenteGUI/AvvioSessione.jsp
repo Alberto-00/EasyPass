@@ -4,12 +4,13 @@
 <head>
     <jsp:include page="/WEB-INF/Interface/Partials/Head.jsp">
         <jsp:param name="docenteStyles" value="docente"/>
-        <jsp:param name="docenteScripts" value="avvioSessione"/>
+        <jsp:param name="docenteScripts" value="docente,avvioSessione"/>
         <jsp:param name="title" value="Easy Pass | Docente"/>
     </jsp:include>
 </head>
 <body>
 <div class="coll-2">
+ <a class="btnn" id="logout" href="javascript:void(0)" style="width: 10%; height: 5%; margin-left: 10px; margin-top: 10px; text-decoration: none; text-align-all: center"></a>
     <div class="student-form-content" hidden>
         <h1 class="titleStudent">Inserisci il numero di Studenti</h1>
         <form class="student-form" id="NumberOfStudentsForm" name="NumberOfStudentsForm"
@@ -29,5 +30,6 @@
        document.getElementsByClassName("avvia-sessione-button").item(0).toggleAttribute("hidden");
     }
 </script>
+<%@include file="/WEB-INF/Interface/Partials/Direttore/Logout.jsp"%>
 </body>
 </html>
