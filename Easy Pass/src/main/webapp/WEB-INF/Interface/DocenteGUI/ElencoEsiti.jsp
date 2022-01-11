@@ -9,6 +9,7 @@
         <jsp:param name="docenteScripts" value="docente,elencoEsiti"/>
         <jsp:param name="title" value="Easy Pass | Docente"/>
     </jsp:include>
+    <script src="${pageContext.request.contextPath}/js/jsQR.js"></script>
 </head>
 <body>
 <div class="coll-2">
@@ -17,7 +18,7 @@
     <%  SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
         String path = sessioneDiValidazione.getqRCode();%>
     <img src='http://localhost:8080/Progetto_EasyPass/QRCodes/<%=path%>' alt="QRcode" id="qrcode" class="qrCode">
-    <span id="linkQRcode" ></span>
+    <span id="linkQRcode" style="width: 80%; margin: auto"></span>
     <canvas id="canvas" hidden></canvas>
     <hr class="rounded">
     <div class="grid-container" id="elencoEsitiDiv">
@@ -62,7 +63,7 @@
             while( urlQRcode.firstChild ) {
                 urlQRcode.removeChild( urlQRcode.firstChild );
             }
-            urlQRcode.appendChild( document.createTextNode(code));
+            urlQRcode.appendChild( document.createTextNode(code.data));
             URL.revokeObjectURL(img.src);
         } else {
             URL.revokeObjectURL(img.src);
