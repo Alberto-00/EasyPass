@@ -71,6 +71,8 @@ $(document).ready(function (){
             nome: {
                 required: true,
                 name_surname: true,
+                minlength: 3,
+                maxlength: 30,
             },
             cognome: {
                 required: true,
@@ -105,6 +107,8 @@ $(document).ready(function (){
                 email: "Email di ateneo errata."
             },
             nome: {
+                minlength: "Il nome è troppo breve.",
+                maxlength: "Il nome è troppo lungo.",
                 required: "Inserire il nome.",
             },
             cognome: {

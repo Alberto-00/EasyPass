@@ -95,7 +95,7 @@ public class Dipartimento {
      * Aggiorna il {@code Formato} corrispondente all'oggetto
      * {@code Dipartimento} in questione.
      *
-     * @param formato Formato da agggiornare
+     * @param formato Formato da aggiornare
      */
     public void impostaFormato(Formato formato) {
         if(formato == null)
