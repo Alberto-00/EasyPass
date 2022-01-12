@@ -50,8 +50,8 @@ public class AccessController extends ServletLogic {
                 * altrimenti verrà inviato un messaggio di errore.
                 * */
                 case "/" -> {
-                    validate(DirettoreValidator.validateSigin(request));
-                    validate(DocenteValidator.validateSigin(request));
+                    validate(DirettoreValidator.validateSignIn(request));
+                    validate(DocenteValidator.validateSignIn(request));
 
                     DirettoreDiDipartimentoDAO direttoreDAO = new DirettoreDiDipartimentoDAO();
                     DocenteDAO docenteDAO = new DocenteDAO();
@@ -81,7 +81,7 @@ public class AccessController extends ServletLogic {
                  * verrà rimandato alla sua pagina iniziale, altrimenti verrà inviato un messaggio di errore.
                  * */
                 case "/registrazione" -> {
-                    validate(DocenteValidator.validateSigup(request));
+                    validate(DocenteValidator.validateSignUp(request));
 
                     Docente docente = new Docente(upperCaseFirstLetter(request.getParameter("nome")),
                             request.getParameter("cognome"), request.getParameter("email2"),
