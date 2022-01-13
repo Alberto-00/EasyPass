@@ -1,6 +1,7 @@
 package Storage.Report;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteMapper;
 
@@ -297,9 +298,10 @@ public class ReportDAO {
      *
      * @param primaData la prima data dell'intervallo di tempo
      * @param secondaData la seconda data dell'intervallo di tempo
+     * @param dipartimento dipartimento in cui ricercare i {@code Report}
      * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
      */
-    public TreeMap<Report, Docente> doSearchByDate(java.util.Date primaData, java.util.Date secondaData) {
+    public TreeMap<Report, Docente> doSearchByDate(java.util.Date primaData, java.util.Date secondaData, Dipartimento dipartimento) {
         if(primaData == null && secondaData == null){
             throw new IllegalArgumentException("The argument 'primaData' and 'secondaData' cannot be null.");
         }
@@ -311,11 +313,12 @@ public class ReportDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query="SELECT doc.*, rep.* FROM docente doc, report rep " +
                         "WHERE doc.Username_Doc = rep.Username_Doc " +
-                        "and (rep.Data_report between ? and ?)";
+                        "and doc.Codice_Dip = ? and (rep.Data_report between ? and ?)";
 
                 ps = conn.prepareStatement(query);
-                ps.setString(1, convertToString(primaData));
-                ps.setString(2, convertToString(secondaData));
+                ps.setString(1, dipartimento.getCodice());
+                ps.setString(2, convertToString(primaData));
+                ps.setString(3, convertToString(secondaData));
                 TreeMap<Report, Docente> treeMap = new TreeMap<>();
                 rs = ps.executeQuery();
 

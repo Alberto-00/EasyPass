@@ -192,7 +192,7 @@ public class Dipartimento {
     public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
         if(date1.before(date2) || date1.compareTo(date2) == 0){
             ReportDAO reportDAO = new ReportDAO();
-            return reportDAO.doSearchByDate(date1, date2);
+            return reportDAO.doSearchByDate(date1, date2, this);
         }
         else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
