@@ -1,6 +1,7 @@
-package Autenticazione;
+package Logic;
 
 import ApplicationLogic.Utils.Validator.DocenteValidator;
+import ApplicationLogic.Utils.Validator.Validator;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import org.junit.Before;
@@ -9,33 +10,43 @@ import org.mockito.Mockito;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class DocenteValidatorTest extends Mockito{
+public class DocenteValidatorTest {
 
     HttpServletRequest request;
     DocenteDAO docenteDAO;
+    Validator validator;
 
     @Before
     public void setUp(){
-        request = mock(HttpServletRequest.class);
-        docenteDAO = mock(DocenteDAO.class);
+        request = Mockito.mock(HttpServletRequest.class);
+        docenteDAO = Mockito.mock(DocenteDAO.class);
+        validator = new Validator(request);
     }
 
+    /*************************************
+     * Validazione Registrazione Docente *
+     *************************************/
     @Test
     public void registrazioneNomeVuotoTest(){
-        String nome = " "; //non corretta
-        String cognome = "GRAVINO"; //corretta
-        String dipartimento = "DI"; //corretta
-        String email = "gravino@unisa.it"; //corretta
-        String password = "EasyPass2022!"; //corretta
+        String nome = "      "; //non corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
-        assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
+        Mockito.when(request.getParameter("nome")).thenReturn(nome);
+        Mockito.when(request.getParameter("cognome")).thenReturn(null);
+        Mockito.when(request.getParameter("dipartimento")).thenReturn(null);
+        Mockito.when(request.getParameter("email2")).thenReturn(null);
+        Mockito.when(request.getParameter("password2")).thenReturn(null);
+
+        validator = DocenteValidator.validateSignUp(request);
+        assertTrue(validator.hasErrors());
+        System.out.println(validator.getErrors().get(0));
+        assertEquals(0, validator.getErrors().get(0).compareTo("Il nome inserito non è corretto."));
     }
 
-    @Test
+    /*@Test
     public void registrazioneLunghezzaNomeMinoreDi3Test(){
         String nome = "a"; //non corretta
         String cognome = "GRAVINO"; //corretta
@@ -43,7 +54,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -55,7 +66,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -67,7 +78,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -79,7 +90,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -91,7 +102,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -103,7 +114,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -115,7 +126,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -127,7 +138,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -139,7 +150,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = ""; //non corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -151,7 +162,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravinounisa.it"; //non corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -163,9 +174,9 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "EasyPass2022!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         Docente docente = new Docente();
-        when(docenteDAO.doRetrieveByKey(email)).thenReturn(docente); //email già registrata
+        Mockito.when(docenteDAO.doRetrieveByKey(email)).thenReturn(docente); //email già registrata
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
         //assert
     }
@@ -178,7 +189,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = ""; //non corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -190,7 +201,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "Aaab"; //non corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -202,7 +213,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "Aaaaaa!222b"; //non corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -214,7 +225,7 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "Aaaa222b"; //non corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
     }
 
@@ -226,12 +237,48 @@ public class DocenteValidatorTest extends Mockito{
         String email = "gravino@unisa.it"; //corretta
         String password = "Aaaa22b!"; //corretta
 
-        setParametersRequests(nome, cognome, dipartimento, email, password);
+        setParametersRequestsRegistration(nome, cognome, dipartimento, email, password);
         assertTrue(DocenteValidator.validateSignUp(request).hasErrors());
+    }*/
+
+
+    /*************************************
+     * Validazione input numero Studenti *
+     *************************************/
+    /*@Test
+    public void numeroStudentiVuotoTest(){
+        String numberStudents = ""; //non corretta
+        setParametersRequestsNumberofStudents(numberStudents);
+        assertTrue(DocenteValidator.validateNumberOfStudents(request).hasErrors());
     }
 
-    private void setParametersRequests(String nome, String cognome, String dipartimento,
-                                       String email, String password){
+    @Test
+    public void numeroStudentiNonRispettaFormatoTest(){
+        String numberStudents = "a"; //non corretta
+        setParametersRequestsNumberofStudents(numberStudents);
+        assertTrue(DocenteValidator.validateNumberOfStudents(request).hasErrors());
+    }
+
+    @Test
+    public void numeroStudentiMinoreUgualeZeroTest(){
+        String numberStudents = "0"; //non corretta
+        setParametersRequestsNumberofStudents(numberStudents);
+        assertTrue(DocenteValidator.validateNumberOfStudents(request).hasErrors());
+    }
+
+    @Test
+    public void numeroStudentiTest(){
+        String numberStudents = "3"; //corretta
+        setParametersRequestsNumberofStudents(numberStudents);
+        assertTrue(DocenteValidator.validateNumberOfStudents(request).hasErrors());
+    }*/
+    
+    private void setParametersRequestsNumberofStudents(String number){
+        request.setAttribute("nStudents", number);
+    }
+
+    private void setParametersRequestsRegistration(String nome, String cognome, String dipartimento,
+                                                   String email, String password){
         request.setAttribute("nome", nome);
         request.setAttribute("cognome", cognome);
         request.setAttribute("dipartimento", dipartimento);

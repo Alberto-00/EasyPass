@@ -19,7 +19,10 @@ public class DocenteValidator {
      */
     public static Validator validateSignIn(HttpServletRequest request){
         Validator validator = new Validator(request);
-        validator.assertMatch("email", Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$|^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta");
+
+        if (validator.assertMatch("email", Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$|^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta"))
+            return validator;
+
         validator.assertMatch("password", Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$"),"La password inserita non è corretta");
         return validator;
     }
@@ -27,32 +30,44 @@ public class DocenteValidator {
 
     /**
      * Crea un {@code Validator} ed effettua vari match per controllare
-     * gli input inseriti durante la Registrazione, in particolare, viene controllato
-     * il nome, il cognome, l'email e la password inseriti dal Docente.
+     * gli input inseriti durante la Registrazione, in particolare, viene
+     * controllato il nome, il cognome, l'email e la password inseriti dal
+     * Docente.
      *
      * @param request contiene i valori da controllare
      * @return {@code Validator}
      */
     public static Validator validateSignUp(HttpServletRequest request){
         Validator validator = new Validator(request);
-        validator.assertMatch("dipartimento", Pattern.compile("^(?!\\s*$).+"), "Inserire il Dipartimento.");
 
-        validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"),"Il nome inserito non è corretto.");
-        if (isBlankRequest("nome", request))
+        if (validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"),"Il nome inserito non è corretto."))
+            return validator;
+        if (checkLengthRequest("nome", request)) {
             validator.getErrors().add("Il nome non rispetta il formato.");
+            return validator;
+        }
 
-        validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"),"Il cognome inserito non è corretto.");
-        if (isBlankRequest("cognome", request))
+        if (validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"),"Il cognome inserito non è corretto."))
+            return validator;
+        if (checkLengthRequest("cognome", request)) {
             validator.getErrors().add("Il cognome non rispetta il formato.");
+            return validator;
+        }
+
+        validator.assertMatch("dipartimento", Pattern.compile("^(?!\\s*$).+"), "Inserire il Dipartimento.");
+        if (validator.hasErrors())
+            return validator;
 
         validator.assertMatch("email2", Pattern.compile("^[a-zA-Z0-9_.]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta");
+        if (validator.hasErrors())
+            return validator;
+
         validator.assertMatch("password2", Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$"),"La password inserita non è corretta");
         return validator;
     }
 
-    private static boolean isBlankRequest(String value, HttpServletRequest request){
-        return request.getParameter(value).isBlank() ||
-                request.getParameter(value).length() < 3 ||
+    private static boolean checkLengthRequest(String value, HttpServletRequest request){
+        return request.getParameter(value).length() < 3 ||
                 request.getParameter(value).length() > 30;
     }
 

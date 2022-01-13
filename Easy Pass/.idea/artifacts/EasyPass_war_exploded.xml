@@ -14,13 +14,12 @@
           <element id="module-output" name="EasyPass" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.mockito:mockito-all:1.10.19" />
-          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
-          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
-          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jdbc:10.1.0-M8" />
-          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:10.1.0-M8" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jdbc:10.0.14" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:10.0.14" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.25" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.11.0" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.12.0" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.15" />
