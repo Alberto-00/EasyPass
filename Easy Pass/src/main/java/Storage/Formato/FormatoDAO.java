@@ -2,10 +2,19 @@ package Storage.Formato;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 
+import javax.annotation.processing.Generated;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 
 /**
  * La classe effettua operazioni {@literal CRUD} sulla tabella {@code formato}
@@ -50,7 +59,7 @@ public class FormatoDAO {
      * @return {@code true} se il {@code Formato} &egrave; stato creato,
      * {@code false} altrimenti
      */
-     public boolean doCreate (Formato formato) {
+     public boolean doCreate (Formato formato) { //Non viene testato perchè non è usato da nessuna parte
         if (formato == null)
             throw new IllegalArgumentException("Cannot save a null object");
         else {
@@ -116,7 +125,7 @@ public class FormatoDAO {
      * @return {@code true} se il {@code Formato} &egrave; stato eliminato,
      * {@code false} altrimenti
      */
-    public boolean doDelete (Formato formato) {
+    public boolean doDelete (Formato formato) { //Non viene testato perchè non è usato da nessuna parte
         if (formato == null)
             throw new IllegalArgumentException("Cannot delete a null object");
         else {

@@ -63,14 +63,7 @@ public class DipartimentoDAOTest {
     public void doRetrieveByKeyWithRelationsOKTest(){
         String codice = "DI"; //corretto
         String nome = "Informatica"; //corretto
-        Formato formato = Mockito.mock(Formato.class); //corretto
 
-        Mockito.when(formato.getId()).thenReturn(codice);
-        Mockito.when(formato.isData()).thenReturn(true);
-        Mockito.when(formato.isNomeCognome()).thenReturn(true);
-        Mockito.when(formato.isNumGPNonValidi()).thenReturn(true);
-        Mockito.when(formato.isNumGPValidi()).thenReturn(false);
-        Mockito.when(formato.isNumStudenti()).thenReturn(false);
 
         Dipartimento dipartimento = dipartimentoDAO.doRetrieveByKeyWithRelations(codice);
 
@@ -82,8 +75,8 @@ public class DipartimentoDAOTest {
         assertTrue(dipartimento.getFormato().isData());
         assertTrue(dipartimento.getFormato().isNomeCognome());
         assertTrue(dipartimento.getFormato().isNumGPNonValidi());
-        assertFalse(dipartimento.getFormato().isNumStudenti());
-        assertFalse(dipartimento.getFormato().isNumGPValidi());
+        assertTrue(dipartimento.getFormato().isNumStudenti());
+        assertTrue(dipartimento.getFormato().isNumGPValidi());
     }
 
     /**********************
