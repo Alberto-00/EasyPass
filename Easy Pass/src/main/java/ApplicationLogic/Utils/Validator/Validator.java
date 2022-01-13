@@ -75,7 +75,6 @@ public class Validator {
     public boolean assertMatch(String value, Pattern regexp, String msg){
         String param = request.getParameter(value);
         boolean condition = required(param) && regexp.matcher(param).matches();
-        System.out.println(condition);
         return gatherError(condition, msg);
     }
 }

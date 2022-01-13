@@ -20,7 +20,7 @@ public class DocenteValidator {
     public static Validator validateSignIn(HttpServletRequest request){
         Validator validator = new Validator(request);
 
-        if (validator.assertMatch("email", Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$|^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta"))
+        if (!validator.assertMatch("email", Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$|^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta"))
             return validator;
 
         validator.assertMatch("password", Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$"),"La password inserita non è corretta");
@@ -40,29 +40,27 @@ public class DocenteValidator {
     public static Validator validateSignUp(HttpServletRequest request){
         Validator validator = new Validator(request);
 
-        if (validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"),"Il nome inserito non è corretto."))
+        if (!validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"),"Il nome inserito non è corretto."))
             return validator;
         if (checkLengthRequest("nome", request)) {
             validator.getErrors().add("Il nome non rispetta il formato.");
             return validator;
         }
 
-        if (validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"),"Il cognome inserito non è corretto."))
+        if (!validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"),"Il cognome inserito non è corretto."))
             return validator;
         if (checkLengthRequest("cognome", request)) {
             validator.getErrors().add("Il cognome non rispetta il formato.");
             return validator;
         }
 
-        validator.assertMatch("dipartimento", Pattern.compile("^(?!\\s*$).+"), "Inserire il Dipartimento.");
-        if (validator.hasErrors())
+        if (!validator.assertMatch("dipartimento", Pattern.compile("^(?!\\s*$).+"), "Inserire il Dipartimento."))
             return validator;
 
-        validator.assertMatch("email2", Pattern.compile("^[a-zA-Z0-9_.]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta");
-        if (validator.hasErrors())
+        if (!validator.assertMatch("email2", Pattern.compile("^[a-zA-Z0-9_.]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$"), "L’e-mail inserita non è corretta."))
             return validator;
 
-        validator.assertMatch("password2", Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$"),"La password inserita non è corretta");
+        validator.assertMatch("password2", Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$"),"La password inserita non è corretta.");
         return validator;
     }
 

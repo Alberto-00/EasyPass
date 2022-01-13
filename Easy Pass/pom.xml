@@ -134,7 +134,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>ApplicationLogic/io/nayuki/qrcodegen/**</excludes>
+                    <excludes>**/io/nayuki/qrcodegen/**</excludes>
                 </configuration>
             </plugin>
         </plugins>
