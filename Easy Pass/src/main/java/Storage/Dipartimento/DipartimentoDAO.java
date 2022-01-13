@@ -3,16 +3,29 @@ package Storage.Dipartimento;
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Formato.FormatoDAO;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 /**
  * La classe effettua operazioni {@literal CRUD} sulla tabella {@code dipartimento}
  */
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 public class DipartimentoDAO {
+
     /**
      * Effettua una query al database restituendo il {@code Dipartimento}
      * con un determinato {@code codice}: il {@code Dipartimento} non &egrave; riempito
@@ -50,7 +63,7 @@ public class DipartimentoDAO {
     /**
      * Effettua una query al database restituendo il {@code Dipartimento}
      * con un determinato {@code codice}: il {@code Dipartimento} &egrave; riempito
-     * anche con le foreign key a cui &egrave; associato.
+     * anche con la foreign key {@code Formato}a cui &egrave; associato.
      *
      * @param codice identificativo del {@code Dipartimento}
      * @return {@code Dipartimento}
@@ -72,9 +85,7 @@ public class DipartimentoDAO {
 
                 if (rs.next()) {
                     Dipartimento dipartimento = DipartimentoMapper.extract(rs);
-                    String idFormato=rs.getString("dip.ID_Formato");
-                    dipartimento.setFormato(new FormatoDAO().doRetrieveById(idFormato));
-                    //TODO: settare anhe l'array di report facendo il retrieve dal db
+                    dipartimento.setFormato(new FormatoDAO().doRetrieveById(rs.getString("dip.ID_Formato")));
                     return dipartimento;
                 }
             } catch (SQLException e){
@@ -123,6 +134,7 @@ public class DipartimentoDAO {
      * @return {@code true} se il {@code Dipartimento} &egrave; stato creato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doCreate (Dipartimento dipartimento) {
         if (dipartimento == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -154,6 +166,7 @@ public class DipartimentoDAO {
      * @return {@code true} se il {@code Dipartimento} &egrave; stato aggiornato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doUpdate (Dipartimento dipartimento) {
         if (dipartimento == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -183,6 +196,7 @@ public class DipartimentoDAO {
      * @return {@code true} se il {@code Dipartimento} &egrave; stato eliminato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doDelete (Dipartimento dipartimento)  {
         if (dipartimento == null)
             throw new IllegalArgumentException("Cannot delete a null object");

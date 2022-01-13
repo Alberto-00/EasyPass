@@ -1,39 +1,120 @@
 package Storage;
 
-import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.Dipartimento;
 import Storage.Dipartimento.DipartimentoDAO;
+import Storage.Formato.Formato;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DipartimentoDAOTest extends Mockito {
+public class DipartimentoDAOTest {
 
-    Connection connection;
     DipartimentoDAO dipartimentoDAO;
 
     @Before
-    public void setUp() throws SQLException {
-        connection = ConnectionSingleton.getInstance().getConnection();
+    public void setUp() {
         dipartimentoDAO = new DipartimentoDAO();
     }
 
-    @Ignore
+    /***********************
+     * Test doRetrieveByID *
+     ***********************/
     @Test
     public void doRetrieveByIdNullTest(){
-        String id = null;
-        assertThrows(IllegalArgumentException.class, ()->dipartimentoDAO.doRetrieveById(id));
+        assertThrows(IllegalArgumentException.class, ()->dipartimentoDAO.doRetrieveById(null));
     }
 
-    @Ignore
+    @Test
+    public void doRetrieveByIdReturnNullObjectTest(){
+        String id = "pp"; //non corretto
+        assertNull(dipartimentoDAO.doRetrieveById(id));
+    }
+
     @Test
     public void doRetrieveByIdOKTest(){
-        String id = "DI";
-        dipartimentoDAO.doRetrieveById(id);
+        String id = "DI"; //corretto
+        String nome = "Informatica"; //corretto
+
+        Dipartimento dipartimento = dipartimentoDAO.doRetrieveById(id);
+        assertNotNull(dipartimento);
+        assertEquals(id, dipartimento.getCodice());
+        assertEquals(nome, dipartimento.getNome());
+    }
+
+    /*************************************
+     * Test doRetrieveByKeyWithRelations *
+     *************************************/
+    @Test
+    public void doRetrieveByKeyWithRelationsNullTest(){
+        assertThrows(IllegalArgumentException.class, ()->dipartimentoDAO.doRetrieveByKeyWithRelations(null));
+    }
+
+    @Test
+    public void doRetrieveByKeyWithRelationsReturnNullObjectTest(){
+        String codice = "pp"; //non corretto
+        assertNull(dipartimentoDAO.doRetrieveByKeyWithRelations(codice));
+    }
+
+    @Test
+    public void doRetrieveByKeyWithRelationsOKTest(){
+        String codice = "DI"; //corretto
+        String nome = "Informatica"; //corretto
+        Formato formato = Mockito.mock(Formato.class); //corretto
+
+        Mockito.when(formato.getId()).thenReturn(codice);
+        Mockito.when(formato.isData()).thenReturn(true);
+        Mockito.when(formato.isNomeCognome()).thenReturn(true);
+        Mockito.when(formato.isNumGPNonValidi()).thenReturn(true);
+        Mockito.when(formato.isNumGPValidi()).thenReturn(false);
+        Mockito.when(formato.isNumStudenti()).thenReturn(false);
+
+        Dipartimento dipartimento = dipartimentoDAO.doRetrieveByKeyWithRelations(codice);
+
+        assertNotNull(dipartimento);
+        assertEquals(codice, dipartimento.getCodice());
+        assertEquals(nome, dipartimento.getNome());
+        assertNotNull(dipartimento.getFormato());
+
+        assertTrue(dipartimento.getFormato().isData());
+        assertTrue(dipartimento.getFormato().isNomeCognome());
+        assertTrue(dipartimento.getFormato().isNumGPNonValidi());
+        assertFalse(dipartimento.getFormato().isNumStudenti());
+        assertFalse(dipartimento.getFormato().isNumGPValidi());
+    }
+
+    /**********************
+     * Test doRetrieveAll *
+     **********************/
+    @Test
+    public void doRetrieveAllNullReturnOKTest(){
+        List<Dipartimento> dipartimenti = dipartimentoDAO.doRetrieveAll();
+        assertNotNull(dipartimenti);
+        doretrieveAllParamTest("DCB", "Chimica e Biologia \"Adolfo Zambelli\"", dipartimenti.get(0));
+        doretrieveAllParamTest("DF", "Fisica \"E.R.Caianiello\"", dipartimenti.get(1));
+        doretrieveAllParamTest("DI", "Informatica", dipartimenti.get(2));
+        doretrieveAllParamTest("DICIV", "Ingegneria Civile", dipartimenti.get(3));
+        doretrieveAllParamTest("DIEM", "Ingegneria dell'Informazione ed Elettrica e Matematica applicata", dipartimenti.get(4));
+        doretrieveAllParamTest("DIFARMA", "Farmacia", dipartimenti.get(5));
+        doretrieveAllParamTest("DIIN", "Ingegneria Industriale", dipartimenti.get(6));
+        doretrieveAllParamTest("DIPMAT", "Matematica", dipartimenti.get(7));
+        doretrieveAllParamTest("DIPMED", "Medicina, Chirurgia e Odontoiatria “Scuola Medica Salernitana”", dipartimenti.get(8));
+        doretrieveAllParamTest("DIPSUM", "Studi Umanistici", dipartimenti.get(9));
+        doretrieveAllParamTest("DISA-MIS", "Scienze Aziendali - Management & Innovation Systems", dipartimenti.get(10));
+        doretrieveAllParamTest("DISES", "Scienze Economiche e Statistiche", dipartimenti.get(11));
+        doretrieveAllParamTest("DISPAC", "Scienze del Patrimonio Culturale", dipartimenti.get(12));
+        doretrieveAllParamTest("DISPC", "Scienze Politiche e della Comunicazione", dipartimenti.get(13));
+        doretrieveAllParamTest("DISPS", "Studi Politici e Sociali", dipartimenti.get(14));
+        doretrieveAllParamTest("DISUFF", "Scienze Umane, Filosofiche e della Formazione", dipartimenti.get(15));
+        doretrieveAllParamTest("DSG", "Scienze Giuridiche (Scuola di Giurisprudenza)", dipartimenti.get(16));
+
+    }
+
+    private void doretrieveAllParamTest(String codice, String nome, Dipartimento dipartimento){
+        assertEquals(nome, dipartimento.getNome());
+        assertEquals(codice, dipartimento.getCodice());
     }
 }

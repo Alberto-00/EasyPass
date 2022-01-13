@@ -211,11 +211,6 @@ public class DocenteValidatorTest {
         Mockito.when(request.getParameter("dipartimento")).thenReturn(dipartimento);
         Mockito.when(request.getParameter("email2")).thenReturn(email);
         Mockito.when(request.getParameter("msg")).thenReturn("Email già registrata.");
-        /*Mockito.when(request.getParameter("password2")).thenReturn(null);
-
-        validator = DocenteValidator.validateSignUp(request);
-        assertFalse(validator.hasErrors());
-        assertTrue(validator.getErrors().isEmpty());*/
 
         assertEquals("Email già registrata.", request.getParameter("msg"));
     }

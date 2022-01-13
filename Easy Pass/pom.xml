@@ -134,7 +134,24 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludes>**/io/nayuki/qrcodegen/**</excludes>
+                    <excludes>
+                        <exclude>io/**/*</exclude>
+                        <exclude>ApplicationLogic/Utils/Validator/DirettoreValidator.class</exclude>
+                        <exclude>ApplicationLogic/Utils/Alert.class</exclude>
+                        <exclude>ApplicationLogic/Utils/FileServlet.class</exclude>
+                        <exclude>ApplicationLogic/Utils/InvalidRequestException.class</exclude>
+                        <exclude>ApplicationLogic/Utils/JSONSerializable.class</exclude>
+                        <exclude>ApplicationLogic/Utils/ServletLogic.class</exclude>
+
+                        <exclude>Storage/Esito/*.class</exclude>
+                        <exclude>Storage/Dipartimento/DipartimentoMapper.class</exclude>
+                        <exclude>Storage/Formato/FormatoMapper.class</exclude>
+                        <exclude>Storage/PersonaleUnisa/PersonaleUnisa.class</exclude>
+                        <exclude>Storage/PersonaleUnisa/Direttore/DirettoreDiDipartimentoMapper.class</exclude>
+                        <exclude>Storage/PersonaleUnisa/Docente/DocenteMapper.class</exclude>
+                        <exclude>Storage/Report/ReportMapper.class</exclude>
+                        <exclude>Storage/SessioneDiValidazione/SessioneDiValidazioneMapper.class</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
