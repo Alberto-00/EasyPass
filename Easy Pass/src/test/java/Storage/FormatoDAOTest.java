@@ -1,7 +1,5 @@
 package Storage;
 
-import Storage.Dipartimento.Dipartimento;
-import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Formato.Formato;
 import Storage.Formato.FormatoDAO;
 import org.junit.Before;
@@ -27,6 +25,7 @@ public class FormatoDAOTest {
         assertThrows(IllegalArgumentException.class, ()->formatoDAO.doRetrieveById(null));
     }
 
+    @Test
     public void doRetrieveByIdReturnNullObjectTest(){
         String id = "pp"; //non corretto
         assertNull(formatoDAO.doRetrieveById(id));
@@ -36,32 +35,32 @@ public class FormatoDAOTest {
     public void doRetrieveByIdOKTest(){
         String id = "DI"; //corretto
 
-        Formato formato=formatoDAO.doRetrieveById(id);
+        Formato formato = formatoDAO.doRetrieveById(id);
         assertNotNull(formato);
         assertEquals(id, formato.getId());
     }
 
-    /***********************
-     * Test doUpdate*
-     ***********************/
+    /*****************
+     * Test doUpdate *
+     ****************/
     @Test
     public void doUpdateNullArgumentTest(){
         assertThrows(IllegalArgumentException.class, ()->formatoDAO.doUpdate(null));
     }
 
     @Test
-    public void doUpDateReturnFalseTest(){ //Testo se il metodo ritorna false quando qualcosa va storto.
-        Formato formato=new Formato();
-        formato.setId("a"); //ID non presente nel database
+    public void doUpDateReturnFalseTest(){
+        Formato formato = new Formato();
+        formato.setId("a");
         assertFalse(formatoDAO.doUpdate(formato));
     }
 
     @Test
     public void doUpDateOKTest(){
-        Formato formato=new Formato("DI",true,true,true,true,true);
+        Formato formato = new Formato("DI",true,true,true,true,true);
         formatoDAO.doUpdate(formato);
 
-        Formato formatoAggiornato=formatoDAO.doRetrieveById(formato.getId());
+        Formato formatoAggiornato = formatoDAO.doRetrieveById(formato.getId());
 
         assertNotNull(formatoAggiornato);
         assertEquals(formato.isData(),formatoAggiornato.isData());
@@ -70,5 +69,4 @@ public class FormatoDAOTest {
         assertEquals(formato.isNumGPValidi(),formatoAggiornato.isNumGPValidi());
         assertEquals(formato.isNumStudenti(),formatoAggiornato.isNumStudenti());
     }
-
 }

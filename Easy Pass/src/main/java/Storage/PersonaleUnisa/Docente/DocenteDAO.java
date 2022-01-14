@@ -5,11 +5,23 @@ import Storage.Dipartimento.Dipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 
 /**
  * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code docente}, e di verifica
@@ -194,6 +206,7 @@ public class DocenteDAO {
      * @return {@code true} se il {@code Docente} &egrave; stato aggiornato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doUpdate(Docente docente) {
         if(docente == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -229,6 +242,7 @@ public class DocenteDAO {
      * @return {@code true} se il {@code Docente} &egrave; stato eliminato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doDelete(Docente docente) {
         if(docente == null){
             throw new IllegalArgumentException("Cannot delete a null object");

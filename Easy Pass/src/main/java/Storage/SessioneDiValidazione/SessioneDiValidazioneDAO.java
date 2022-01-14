@@ -2,10 +2,22 @@ package Storage.SessioneDiValidazione;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 
 /**
  * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code sessione}.
@@ -110,6 +122,7 @@ public class SessioneDiValidazioneDAO {
      * @return {@code true} se la {@code SessioneDiValidazione} &egrave; stata eliminata,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doDelete (SessioneDiValidazione sessione) {
         if (sessione == null)
             throw new IllegalArgumentException("Cannot delete a null object");

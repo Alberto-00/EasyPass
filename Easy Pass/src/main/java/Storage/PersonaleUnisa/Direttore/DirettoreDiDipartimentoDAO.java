@@ -4,7 +4,19 @@ import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Dipartimento.Dipartimento;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.*;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 
 /**
  * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code direttore}, e di verifica
@@ -121,6 +133,7 @@ public class DirettoreDiDipartimentoDAO {
      * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato creato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doCreate(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot save a null object");
@@ -152,6 +165,7 @@ public class DirettoreDiDipartimentoDAO {
      * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato aggiornato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doUpdate(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -182,6 +196,7 @@ public class DirettoreDiDipartimentoDAO {
      * @return {@code true} se il {@code DirettoreDiDipartimento} &egrave; stato eliminato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doDelete(DirettoreDiDipartimento direttore) {
         if(direttore == null)
             throw new IllegalArgumentException("Cannot delete a null object");

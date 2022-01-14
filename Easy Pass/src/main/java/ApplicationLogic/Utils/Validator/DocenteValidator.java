@@ -1,7 +1,19 @@
 package ApplicationLogic.Utils.Validator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.util.regex.Pattern;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 
 /**
  * La classe valida tutti gli input inseriti dal Docente durante la fase
@@ -17,6 +29,7 @@ public class DocenteValidator {
      * @param request contiene i valori da controllare
      * @return {@code Validator}
      */
+    @Generated
     public static Validator validateSignIn(HttpServletRequest request){
         Validator validator = new Validator(request);
 
