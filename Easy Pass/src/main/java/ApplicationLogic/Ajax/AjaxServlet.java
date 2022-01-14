@@ -18,13 +18,15 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
+
+@interface Generated{}
 
 /**
  * La classe si occupa della gestione dei Report e degli Esiti laddove \u00E8
@@ -47,6 +49,7 @@ import java.util.TreeMap;
 @WebServlet(name = "AjaxServlet", value = "/report/*")
 public class AjaxServlet extends ServletLogic {
 
+    @Generated
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -90,40 +93,49 @@ public class AjaxServlet extends ServletLogic {
                         String secondDate = request.getParameter("secondDate");
                         String nameDoc = request.getParameter("nameDoc");
 
+                        DocenteDAO docenteDAO = new DocenteDAO();
+
                         JSONObject root = new JSONObject();
                         JSONArray arrRep = new JSONArray();
                         JSONArray arrDoc = new JSONArray();
 
-                        if (firstDate.compareTo("") != 0 && secondDate.compareTo("") != 0) {
-                            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
-                            Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
-                            boolean checkDate = date1.compareTo(date2) < 0 || date1.compareTo(date2) == 0;
+                        //Ricerca Report solo nome e cognome Docente-------------------------------------------------------
+                        if (!nameDoc.isBlank() && firstDate.isBlank() && secondDate.isBlank()){
+                            String msg = checkDocente(nameDoc, docenteDAO);
+                            if (msg != null){
+                               root.put("dateError", msg);
+                               sendJson(response, root);
+                            } else
+                                searchDocente(response, direttore, nameDoc, root, arrRep, arrDoc);
+                            break;
+                        }
 
-                            if (checkDate)
-                                search(direttore, date1, date2, nameDoc, root, arrRep, arrDoc, response);
-                            else {
-                                root.put("dateError", "La prima data deve essere minore della seconda data.");
+                        //Ricerca Report solo Data-------------------------------------------------------------------------
+                        if (nameDoc.isBlank() && !(firstDate.isBlank() && secondDate.isBlank())){
+                            String msg = checkData(firstDate, secondDate);
+                            if (msg != null){
+                                root.put("dateError", msg);
                                 sendJson(response, root);
-                            }
+                            } else
+                                searchData(response, direttore, firstDate, secondDate, root, arrRep, arrDoc);
                             break;
-                        } else if (firstDate.compareTo("") != 0 && secondDate.compareTo("") == 0) {
-                            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
-                            search(direttore, date1, date1, nameDoc, root, arrRep, arrDoc, response);
-                            break;
-                        } else if (firstDate.compareTo("") == 0 && secondDate.compareTo("") != 0) {
-                            root.put("dateError", "Inserire la prima data.");
+                        }
+
+                        // Ricerca Report completa-------------------------------------------------------------------------
+                        String msgDoc = checkDocente(nameDoc, docenteDAO);
+                        if (msgDoc != null){
+                            root.put("dateError", msgDoc);
                             sendJson(response, root);
                             break;
                         }
-                        if (nameDoc != null && nameDoc.compareTo("") != 0) {
-                            Docente docente = new Docente();
-                            docente.setCognome(cognome(nameDoc));
-                            docente.setNome(nome(nameDoc));
 
-                            TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloDocente(docente);
-                            searchReport(root, arrRep, arrDoc, treeMap);
-                        } else root.put("emptyy", "empty");
-                        sendJson(response, root);
+                        String msgData = checkData(firstDate, secondDate);
+                        if (msgData != null){
+                            root.put("dateError", msgData);
+                            sendJson(response, root);
+                            break;
+                        }
+                        fullSearch(direttore, firstDate, secondDate, nameDoc, root, arrRep, arrDoc, response);
                     } else
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
@@ -198,7 +210,7 @@ public class AjaxServlet extends ServletLogic {
                         throw new InvalidRequestException("Non sei Autorizzato", List.of("Non sei Autorizzato"), HttpServletResponse.SC_FORBIDDEN);
                 }
             }
-        } catch (SQLException | ParseException exception) {
+        } catch (ParseException exception) {
                 exception.printStackTrace();
         } catch (InvalidRequestException exception) {
             exception.printStackTrace();
@@ -206,29 +218,91 @@ public class AjaxServlet extends ServletLogic {
         }
     }
 
+    /* Il metodo permette di cercare tutti i Report generati da un Docente
+     * (appartenente al Dipartimento del Direttore che esegue tale ricerca)
+     * in un determinato periodo di tempo e inviarli al client tramite un JSON.
+     * */
+    private void fullSearch(DirettoreDiDipartimento direttore, String firstDate, String secondDate, String nameDoc,
+                            JSONObject root, JSONArray arrRep, JSONArray arrDoc, HttpServletResponse response)
+            throws InvalidRequestException, IOException, ParseException {
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+        Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
+
+        Docente docente = new Docente();
+        docente.setCognome(surname(nameDoc));
+        docente.setNome(name(nameDoc));
+
+        TreeMap<Report, Docente> treeMap = direttore.ricercaCompletaReport(docente, date1, date2);
+        searchReport(root, arrRep, arrDoc, treeMap);
+        sendJson(response, root);
+    }
+
 
     /* Il metodo permette di cercare tutti i Report generati da un Docente
      * (appartenente al Dipartimento del Direttore che esegue tale ricerca)
-     * e inviarli al client tramite un JSON; in particolare, se il nome e il
-     * cognome non corrispondono al Docente in questione, il JSON invierà la
-     * lista dei Report generata dai Docenti nel periodo di tempo indicato.
+     * specificando il suo nome e cognome e inviarli al client tramite un JSON.
      * */
-    private void search(DirettoreDiDipartimento direttore, Date date1, Date date2, String nameDoc,
-                        JSONObject root, JSONArray arrRep, JSONArray arrDoc, HttpServletResponse response)
-            throws SQLException, InvalidRequestException, IOException {
+    private void searchDocente(HttpServletResponse response, DirettoreDiDipartimento direttore,
+                               String nameDoc, JSONObject root, JSONArray arrRep, JSONArray arrDoc) throws IOException {
+        Docente docente = new Docente();
+        docente.setCognome(surname(nameDoc));
+        docente.setNome(name(nameDoc));
 
-        if (nameDoc != null && nameDoc.compareTo("") != 0){
-            Docente docente = new Docente();
-            docente.setCognome(cognome(nameDoc));
-            docente.setNome(nome(nameDoc));
-
-            TreeMap<Report, Docente> treeMap = direttore.ricercaCompletaReport(docente, date1, date2);
-            searchReport(root, arrRep, arrDoc, treeMap);
-        } else {
-            TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloData(date1, date2);
-            searchReport(root, arrRep, arrDoc, treeMap);
-        }
+        TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloDocente(docente);
+        searchReport(root, arrRep, arrDoc, treeMap);
         sendJson(response, root);
+    }
+
+
+    /* Il metodo permette di cercare tutti i Report generati dai Docenti
+     * (appartenente al Dipartimento del Direttore che esegue tale ricerca)
+     * in un certo periodo di tempo e inviarli al client tramite un JSON.
+     * */
+    private void searchData(HttpServletResponse response, DirettoreDiDipartimento direttore,
+                               String firstDate, String secondDate, JSONObject root, JSONArray arrRep,
+                            JSONArray arrDoc) throws IOException, ParseException {
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
+        Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(secondDate);
+
+        TreeMap<Report, Docente> treeMap = direttore.ricercaReportSoloData(date1, date2);
+        searchReport(root, arrRep, arrDoc, treeMap);
+        sendJson(response, root);
+    }
+
+
+    /* Validazione input Docente */
+    private String checkDocente(String nameDoc, DocenteDAO docenteDAO){
+        if (nameDoc.compareTo("") == 0)
+            return "Inserire un Docente.";
+
+        if (docenteDAO.doRetriebeByNameSurname(name(nameDoc), surname(nameDoc)) == null)
+            return "Il Docente ricercato non esiste.";
+
+        if (!Pattern.compile("^[a-zA-Z .']+$").matcher(nameDoc).matches())
+            return "Il nome del Docente non rispetta il formato.";
+
+        return null;
+    }
+
+    /* Validazione input Data */
+    private String checkData(String firstDate, String secondDate){
+        if (firstDate.isBlank())
+            return "Inserire la prima data.";
+
+        if (!Pattern.compile("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$").matcher(firstDate).matches())
+            return "La prima data non rispetta il formato.";
+
+        if (secondDate.isBlank())
+            return "Inserire la seconda data.";
+
+        if (firstDate.isBlank() && !secondDate.isBlank())
+            return "Inserire la prima data.";
+        if (!Pattern.compile("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$").matcher(secondDate).matches())
+            return "La seconda data non rispetta il formato.";
+
+        if (firstDate.compareTo(secondDate) > 0)
+            return "La prima data deve essere minore della seconda data.";
+        return null;
     }
 
 
@@ -261,7 +335,8 @@ public class AjaxServlet extends ServletLogic {
     /* Il metodo estrapola dalla stringa, una sottostringa formata solo
      * dal nome (o dai nomi) che possiede il Docente.
      * */
-    private String nome(String str){
+    @Generated
+    private String name(String str){
         String[] token = str.split(" ");
         StringBuilder out = new StringBuilder();
 
@@ -280,7 +355,8 @@ public class AjaxServlet extends ServletLogic {
     /* Il metodo estrapola dalla stringa, una sottostringa formata solo
      * dal cognome che possiede il Docente.
      * */
-    private String cognome(String str){
+    @Generated
+    private String surname(String str){
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
 
@@ -299,6 +375,7 @@ public class AjaxServlet extends ServletLogic {
     /* Il metodo verifica se la stringa, passata in input,
      * è formata solo da caratteri UpperCase o meno.
      * */
+    @Generated
     private boolean checkUppercase(String str){
         char[] charArray = str.toCharArray();
         for (char c : charArray) {

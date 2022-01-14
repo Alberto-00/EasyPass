@@ -53,13 +53,13 @@ public class SessioneDiValidazioneDAOTest {
 
     @Test
     public void doCreateRetunFalseTest() {
-        SessioneDiValidazione session = createSessionTest("98.jpg", true, "prova@unisa.it");
+        SessioneDiValidazione session = createSessionTest("98.jpg", true, "");
         assertFalse(sessionDAO.doCreate(session));
     }
 
     @Test
     public void doCreateOKTest() {
-        SessioneDiValidazione session = createSessionTest("98.jpg", true, "gravino@unisa.it");
+        SessioneDiValidazione session = createSessionTest("1.jpg", true, "gravino@unisa.it");
         assertTrue(sessionDAO.doCreate(session));
         sessionDAO.doDelete(session);
     }

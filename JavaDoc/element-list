@@ -3,6 +3,8 @@ ApplicationLogic.Servlet
 ApplicationLogic.Utils
 ApplicationLogic.Utils.Validator
 io.nayuki.qrcodegen
+Logic
+Storage
 Storage.Dipartimento
 Storage.Esito
 Storage.Formato

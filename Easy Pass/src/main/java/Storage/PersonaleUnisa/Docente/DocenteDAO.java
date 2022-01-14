@@ -5,22 +5,12 @@ import Storage.Dipartimento.Dipartimento;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-@Documented
-@Retention(RUNTIME)
-@Target({TYPE, METHOD})
 @interface Generated {}
 
 /**
@@ -48,6 +38,40 @@ public class DocenteDAO {
                 String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, username);
+                rs = ps.executeQuery();
+
+                if (rs.next())
+                    return DocenteMapper.extract(rs);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, rs);
+            } return null;
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo il {@code Docente}
+     * con un determinato {@code nome} e {@code cognome}.
+     *
+     * @param nome nome del Docente
+     * @param cognome cognome del Docente
+     * @return {@code Docente}
+     */
+    public Docente doRetriebeByNameSurname(String nome, String cognome){
+        if(nome == null || cognome == null)
+            throw new IllegalArgumentException("The username must not be null");
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = "SELECT * FROM docente doc WHERE doc.Nome_Doc=? and " +
+                        "doc.Cognome_Doc = ?";
+                ps = conn.prepareStatement(query);
+                ps.setString(1, nome);
+                ps.setString(2, cognome);
                 rs = ps.executeQuery();
 
                 if (rs.next())
