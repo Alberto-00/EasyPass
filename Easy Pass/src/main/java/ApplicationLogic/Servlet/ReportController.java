@@ -81,32 +81,9 @@ public class ReportController extends ServletLogic {
                 String numValidazioni = request.getParameter("numValidazioni");
                 String gpValidi = request.getParameter("gpValidi");
                 String gpNonValidi = request.getParameter("gpNonValidi");
-                String messaggi = "";
 
                 if (direttore != null) {
-                    if (anagrafica == null && ddn == null && numValidazioni == null
-                            && gpValidi == null && gpNonValidi == null) {
-                        messaggi = messaggi + "Selezionare almeno un campo\n";
-                    } else if (ddn != null && anagrafica == null) {
-                        messaggi = messaggi + "Impossibile salvare il formato! Se è selezionata la data deve " +
-                                "essere selezionata anche l'anagrafica\n";
-                    } else {
-                        FormatoDAO formatoDAO = new FormatoDAO();
-                        Formato formato = formatoDAO.doRetrieveById(direttore.getDipartimento().getFormato().getId());
-
-                        if (formato == null) {
-                            formato = new Formato();
-                            formato.setId(direttore.getDipartimento().getCodice());
-                        }
-                        formato.setNomeCognome(anagrafica != null);
-                        formato.setData(ddn != null);
-                        formato.setNumStudenti(numValidazioni != null);
-                        formato.setNumGPValidi(gpValidi != null);
-                        formato.setNumGPNonValidi(gpNonValidi != null);
-                        direttore.impostaFormato(formato);
-                        messaggi = "Il formato è stato salvato correttamente";
-                        gestioneFormato(request, formato);
-                    }
+                    String messaggi = checkAndSetFormato(anagrafica, ddn, numValidazioni, gpValidi, gpNonValidi, direttore, request);
                     request.setAttribute("messaggiUtente", messaggi);
                     request.getRequestDispatcher(view("DirettoreDiDipartimentoGUI/GestioneFormato")).forward(request, response);
                 } else
@@ -144,4 +121,35 @@ public class ReportController extends ServletLogic {
         else value = "";
         request.setAttribute("actualGPNonValidi", value);
     }
+
+    public String checkAndSetFormato(String anagrafica, String ddn, String numValidazioni, String gpValidi, String gpNonValidi, DirettoreDiDipartimento direttore, HttpServletRequest request){
+        String messaggio = "";
+        if (anagrafica == null && ddn == null && numValidazioni == null
+                && gpValidi == null && gpNonValidi == null) {
+            messaggio = "Selezionare almeno un campo\n";
+            return messaggio;
+        } else if (ddn != null && anagrafica == null) {
+            messaggio =  "Impossibile salvare il formato! Se è selezionata la data deve " +
+                    "essere selezionata anche l'anagrafica\n";
+            return messaggio;
+        } else {
+            FormatoDAO formatoDAO = new FormatoDAO();
+            Formato formato = formatoDAO.doRetrieveById(direttore.getDipartimento().getFormato().getId());
+
+            if (formato == null) {
+                formato = new Formato();
+                formato.setId(direttore.getDipartimento().getCodice());
+            }
+            formato.setNomeCognome(anagrafica != null);
+            formato.setData(ddn != null);
+            formato.setNumStudenti(numValidazioni != null);
+            formato.setNumGPValidi(gpValidi != null);
+            formato.setNumGPNonValidi(gpNonValidi != null);
+            direttore.impostaFormato(formato);
+            messaggio = "Il formato è stato salvato correttamente";
+            gestioneFormato(request, formato);
+            return messaggio;
+        }
+    }
 }
+
