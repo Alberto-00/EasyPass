@@ -2,14 +2,11 @@ package Storage;
 
 import Storage.Dipartimento.Dipartimento;
 import Storage.Dipartimento.DipartimentoDAO;
-import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
@@ -54,6 +51,33 @@ public class DocenteDAOTest {
         assertEquals(DigestUtils.sha256Hex(pw), docente.getPassword());
     }
 
+
+    /*************************************
+     * Test doRetrieveByNameSurname *
+     *************************************/
+
+    @Test
+    public void doRetrieveByNameSurnameNullTest() {
+        assertThrows(IllegalArgumentException.class, () -> docenteDAO.doRetrieveByNameSurname(null, null));
+    }
+
+    @Test
+    public void doRetrieveByNameSurnameReturnNullObjectTest() {
+        String nome = "a"; //non corretto
+        String cognome = "a"; //non corretto
+        assertNull(docenteDAO.doRetrieveByNameSurname(nome, cognome));
+    }
+
+    @Test
+    public void doRetrieveByNameSurnameOKTest() {
+        String nome = "Angelo"; //corretto
+        String cognome = "MERIANI"; //corretto
+
+        Docente docente = docenteDAO.doRetrieveByNameSurname(nome, cognome);
+        assertNotNull(docente);
+        assertEquals(nome, docente.getNome());
+        assertEquals(cognome, docente.getCognome());
+    }
 
     /*************************************
      * Test doRetrieveByKeyWithRelations *
@@ -104,7 +128,7 @@ public class DocenteDAOTest {
     @Test
     public void doRetrieveAllWithRelationsReturnNullObjectTest() {
         String codiceDip = "pp"; //non corretto
-        assertNull(docenteDAO.doRetrieveAllWithRelations(codiceDip));
+        assertEquals(new ArrayList<>(), docenteDAO.doRetrieveAllWithRelations(codiceDip));
     }
 
     @Test
@@ -137,7 +161,7 @@ public class DocenteDAOTest {
     @Test
     public void checkUserAndPasswReturnNullObjectTest() {
         Docente docente = new Docente("Alfonso", "Maria", "maria@unisa.it", "hag23!1111a", new Dipartimento()); //non corretto
-        assertNull(docenteDAO.checkUserAndPassw(docente));
+        assertFalse(docenteDAO.checkUserAndPassw(docente));
     }
 
     @Test
@@ -145,6 +169,34 @@ public class DocenteDAOTest {
         Docente docente1 = new Docente("Vincenzo", "DEUFEMIA", "deufemia@unisa.it","EasyPass2022!", new Dipartimento()); //corretto
         assertTrue(docenteDAO.checkUserAndPassw(docente1));
     }
+
+    /*************************************
+     * Test doCreate *
+     *************************************/
+
+    @Test
+    public void doCreateNullTest() {
+        assertThrows(IllegalArgumentException.class, () -> docenteDAO.doCreate(null));
+    }
+
+    @Test
+    public void doCreateReturnNullObjectTest() {
+        DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
+        assertFalse(docenteDAO.doCreate(new Docente("Carmine", "Gravino", "gravino@unisa.it", "A", dipartimentoDAO.doRetrieveById("DI"))));
+    }
+
+    @Test
+    public void doCreateOKTest() {
+        String id = "rossi@unisa.it"; //corretto
+        String nome = "Mario"; //corretto
+        String cognome = "ROSSI"; //corretto
+        String pw = DigestUtils.sha256Hex("EasyPass2022!"); //corretto
+        DipartimentoDAO dipartimentoDAO = new DipartimentoDAO();
+        Docente docente = new Docente(nome, cognome, id, DigestUtils.sha256Hex(pw), dipartimentoDAO.doRetrieveById("DI"));
+
+        assertTrue(docenteDAO.doCreate(docente));
+    }
+
 
 
 }

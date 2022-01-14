@@ -59,7 +59,7 @@ public class DocenteDAO {
      * @param cognome cognome del Docente
      * @return {@code Docente}
      */
-    public Docente doRetriebeByNameSurname(String nome, String cognome){
+    public Docente doRetrieveByNameSurname(String nome, String cognome){
         if(nome == null || cognome == null)
             throw new IllegalArgumentException("The username must not be null");
         else{
