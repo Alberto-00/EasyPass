@@ -38,7 +38,7 @@ public class SessioneDiValidazioneDAOTest {
         SessioneDiValidazione session2 = sessionDAO.doRetrieveById(98);
 
         assertNotNull(session2);
-        assertEquals(session.getqRCode(), session2.getqRCode());
+        assertEquals(session.getQRCode(), session2.getQRCode());
         assertEquals(session.isInCorso(), session2.isInCorso());
         sessionDAO.doDelete(session);
     }
@@ -92,7 +92,7 @@ public class SessioneDiValidazioneDAOTest {
 
         assertEquals(sessionUpdateCheck.getDocente().getUsername(), sessionUpdate.getDocente().getUsername());
         assertEquals(sessionUpdateCheck.isInCorso(), sessionUpdate.isInCorso());
-        assertEquals(sessionUpdateCheck.getqRCode(), sessionUpdate.getqRCode());
+        assertEquals(sessionUpdateCheck.getQRCode(), sessionUpdate.getQRCode());
         sessionDAO.doDelete(sessionUpdate);
     }
 
@@ -101,7 +101,7 @@ public class SessioneDiValidazioneDAOTest {
         session.setInCorso(isIncorso);
         session.setDocente(new Docente());
         session.getDocente().setUsername(user);
-        session.setqRCode(qr + ".jpg");
+        session.setQRCode(qr + ".jpg");
         return session;
     }
 }

@@ -30,7 +30,7 @@ import io.nayuki.qrcodegen.QrCode;
  */
 public class SessioneDiValidazione {
 
-    private String qRCode;
+    private String QRCode;
     private boolean isInCorso;
     private Docente docente;
     private ArrayList<Esito> listaEsiti;
@@ -62,7 +62,7 @@ public class SessioneDiValidazione {
                 parsedSessionId = 0 + parsedSessionId;
             }
         }
-        BufferedImage qrImg = createqRCode(url + parsedSessionId);
+        BufferedImage qrImg = creaQRCode(url + parsedSessionId);
         String uploadPath = ServletLogic.getUploadPath() + "QRcodes" + File.separator;
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -74,20 +74,20 @@ public class SessioneDiValidazione {
 
         this.isInCorso = isInCorso;
         this.docente = docente;
-        this.qRCode = parsedSessionId + ".jpg";
+        this.QRCode = parsedSessionId + ".jpg";
     }
 
     /**
      * Costruttore vuoto.
      */
     public SessioneDiValidazione() {
-        this.qRCode="";
+        this.QRCode ="";
         this.isInCorso=false;
         this.docente=null;
         listaEsiti = new ArrayList<>();
     }
 
-    private BufferedImage createqRCode(String url) {
+    private BufferedImage creaQRCode(String url) {
         QrCode qr0 = QrCode.encodeText(url, QrCode.Ecc.MEDIUM);
         return toImage(qr0, 4, 10); // See QrCodeGeneratorDemo
     }
@@ -100,12 +100,12 @@ public class SessioneDiValidazione {
         this.listaEsiti = listaEsiti;
     }
 
-    public String getqRCode() {
-        return qRCode;
+    public String getQRCode() {
+        return QRCode;
     }
 
-    public void setqRCode(String qRCode) {
-        this.qRCode = qRCode;
+    public void setQRCode(String QRCode) {
+        this.QRCode = QRCode;
     }
 
     public boolean isInCorso() {
@@ -162,6 +162,7 @@ public class SessioneDiValidazione {
         return esitoValidazione;
     }
 
+    //Metodo importato dalla libreria QRCodegenerator
     private static BufferedImage toImage(QrCode qr, int scale, int border, int lightColor, int darkColor) {
         Objects.requireNonNull(qr);
         if (scale <= 0 || border < 0)
@@ -179,6 +180,7 @@ public class SessioneDiValidazione {
         return result;
     }
 
+    //Metodo importato dalla libreria QRCodegenerator
     private static BufferedImage toImage(QrCode qr, int scale, int border) {
         return toImage(qr, scale, border, 0xFFFFFF, 0x000000);
     }
@@ -186,7 +188,7 @@ public class SessioneDiValidazione {
     @Override
     public String toString() {
         return "SessioneDiValidazione{" +
-                "qRCode='" + qRCode + '\'' +
+                "qRCode='" + QRCode + '\'' +
                 ", isInCorso=" + isInCorso +
                 ", docente=" + docente +
                 ", listaEsiti=" + listaEsiti +

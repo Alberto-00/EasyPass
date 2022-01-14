@@ -176,7 +176,7 @@ public class SessionController extends ServletLogic {
                     EsitoDAO edDao = new EsitoDAO();
                     if (edDao.doRetrieveAllByPersonalData(esitoValidazione).isEmpty()){
                         edDao.doCreateWithoutReport(esitoValidazione);
-                        request.setAttribute("sessionId", sessioneDiValidazione.getqRCode().replaceAll("\\D+",""));
+                        request.setAttribute("sessionId", sessioneDiValidazione.getQRCode().replaceAll("\\D+",""));
                         request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
                     } else {
                         throw new InvalidRequestException("Esito già inviato", List.of("Esito già inviato"), HttpServletResponse.SC_FORBIDDEN);

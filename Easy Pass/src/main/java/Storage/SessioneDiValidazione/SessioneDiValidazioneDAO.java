@@ -72,7 +72,7 @@ public class SessioneDiValidazioneDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO sessione VALUES (?, ?, ?)";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, sessione.getqRCode());
+                ps.setString(1, sessione.getQRCode());
                 ps.setString(2, sessione.getDocente().getUsername());
                 ps.setBoolean(3, sessione.isInCorso());
                 return ps.executeUpdate() == 1;
@@ -104,7 +104,7 @@ public class SessioneDiValidazioneDAO {
                 ps = conn.prepareStatement(query);
                 ps.setString(1, sessione.getDocente().getUsername());
                 ps.setBoolean(2, sessione.isInCorso());
-                ps.setString(3, sessione.getqRCode());
+                ps.setString(3, sessione.getQRCode());
                 return ps.executeUpdate() == 1;
 
             } catch (SQLException e) {
@@ -133,7 +133,7 @@ public class SessioneDiValidazioneDAO {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "DELETE FROM sessione ses WHERE ses.QRcode=?";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, sessione.getqRCode());
+                ps.setString(1, sessione.getQRCode());
 
                 return ps.executeUpdate() == 1;
             } catch (SQLException e) {

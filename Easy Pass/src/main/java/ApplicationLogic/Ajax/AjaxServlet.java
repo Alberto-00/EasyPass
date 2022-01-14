@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 /**
  * La classe si occupa della gestione dei Report e degli Esiti laddove \u00E8
@@ -93,6 +94,7 @@ public class AjaxServlet extends ServletLogic {
                         JSONObject root = new JSONObject();
                         JSONArray arrRep = new JSONArray();
                         JSONArray arrDoc = new JSONArray();
+
 
                         if (firstDate.compareTo("") != 0 && secondDate.compareTo("") != 0) {
                             Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(firstDate);
@@ -308,4 +310,17 @@ public class AjaxServlet extends ServletLogic {
         }
         return true;
     }
+
+    public boolean validaFormRicercaReport(Date data1, Date data2, String nomeCompleto, JSONObject root, HttpServletResponse response) throws IOException {
+        //Caso in cui il nome del docente non rispetta il formato
+        if(!((Pattern.compile("^[a-zA-Z .']+$")).matcher(nomeCompleto).matches())){
+            root.put("dateError", "La prima data deve essere minore della seconda data.");
+            sendJson(response, root);
+            return false;
+        }
+        return true;
+    }
 }
+
+
+

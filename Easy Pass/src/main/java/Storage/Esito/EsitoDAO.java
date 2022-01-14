@@ -62,7 +62,7 @@ public class EsitoDAO {
                 String query = "SELECT esi.* FROM esito esi, sessione ses " +
                         "WHERE esi.QRcodeSession = ses.QRcode and ses.QRcode = ?";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, sessione.getqRCode());
+                ps.setString(1, sessione.getQRCode());
                 rs = ps.executeQuery();
                 ArrayList<Esito> esiti = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class EsitoDAO {
                         "AND esi.Nome_Studente = ?" +
                         "AND esi.Ddn_Studente = ?";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, esito.getSessione().getqRCode());
+                ps.setString(1, esito.getSessione().getQRCode());
                 ps.setString(2, esito.getCognomeStudente());
                 ps.setString(3, esito.getNomeStudente());
                 ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
@@ -207,7 +207,7 @@ public class EsitoDAO {
                 ps.setString(3, esito.getNomeStudente());
                 ps.setString(4, esito.getCognomeStudente());
                 ps.setDate(5, (Date) esito.getDataDiNascitaStudente());
-                ps.setString(6, esito.getSessione().getqRCode());
+                ps.setString(6, esito.getSessione().getQRCode());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e){
                 e.printStackTrace();
@@ -241,7 +241,7 @@ public class EsitoDAO {
                 ps.setString(2, esito.getNomeStudente());
                 ps.setString(3, esito.getCognomeStudente());
                 ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
-                ps.setString(5, esito.getSessione().getqRCode());
+                ps.setString(5, esito.getSessione().getQRCode());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e){
                 e.printStackTrace();
@@ -275,7 +275,7 @@ public class EsitoDAO {
                 ps.setString(3, esito.getNomeStudente());
                 ps.setString(4, esito.getNomeStudente());
                 ps.setDate(5, (Date) esito.getDataDiNascitaStudente());
-                ps.setString(6, esito.getSessione().getqRCode());
+                ps.setString(6, esito.getSessione().getQRCode());
                 ps.setInt(7, esito.getId());
                 return ps.executeUpdate() == 1;
             } catch (SQLException e){

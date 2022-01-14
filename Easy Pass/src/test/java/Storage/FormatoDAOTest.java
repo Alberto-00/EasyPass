@@ -34,10 +34,20 @@ public class FormatoDAOTest {
     @Test
     public void doRetrieveByIdOKTest(){
         String id = "DI"; //corretto
+        boolean numStudenti=true; //corretto
+        boolean nomeCognome=true; //corretto
+        boolean data=true; //corretto
+        boolean numGPValidi=true; //corretto
+        boolean numGPNonValidi=true; //corretto
 
         Formato formato = formatoDAO.doRetrieveById(id);
         assertNotNull(formato);
         assertEquals(id, formato.getId());
+        assertEquals(numStudenti, formato.isNumStudenti());
+        assertEquals(nomeCognome, formato.isNomeCognome());
+        assertEquals(data, formato.isData());
+        assertEquals(numGPValidi, formato.isNumGPValidi());
+        assertEquals(numGPNonValidi, formato.isNumGPNonValidi());
     }
 
     /*****************

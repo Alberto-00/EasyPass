@@ -17,7 +17,7 @@
         <a class="btnn" id="logout" href="javascript:void(0)">LOGOUT</a>
     </div>
     <%  SessioneDiValidazione sessioneDiValidazione = (SessioneDiValidazione) session.getAttribute("sessioneDiValidazione");
-        String path = sessioneDiValidazione.getqRCode();%>
+        String path = sessioneDiValidazione.getQRCode();%>
     <img src='http://localhost:8080/Progetto_EasyPass/QRCodes/<%=path%>' alt="QRcode" id="qrcode" class="qrCode">
     <span id="linkQRcode"></span>
     <canvas id="canvas" hidden></canvas>
