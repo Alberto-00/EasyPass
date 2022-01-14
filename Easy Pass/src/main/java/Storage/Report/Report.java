@@ -231,10 +231,10 @@ public class Report implements Comparable<Report>, JSONSerializable {
         writer.close();
     }
 
-    private void zebraRow(Document document, PdfPTable table) throws DocumentException {
+    private void zebraRow(Document documento, PdfPTable tabella) throws DocumentException {
         boolean b = true;
-        for (int i = 1; i < table.getRows().size(); i++){
-            for(PdfPCell c: table.getRows().get(i).getCells()) {
+        for (int i = 1; i < tabella.getRows().size(); i++){
+            for(PdfPCell c: tabella.getRows().get(i).getCells()) {
                 c.setBackgroundColor(b ? new BaseColor(218, 239, 211) :
                         new BaseColor(183, 223, 168));
                 c.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -242,7 +242,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
             }
             b = !b;
         }
-        document.add(table);
+        documento.add(tabella);
     }
 
     @Override

@@ -127,11 +127,11 @@ public class SessioneDiValidazione {
     /**
      * Viene validata la stringa del Green Pass.
      *
-     * @param esitoValidazione Green Pass
+     * @param esito Green Pass
      * @return {@code Esito}
      */
-    public Esito validaGreenPass(Esito esitoValidazione) throws IOException, ParseException {
-        String GP = esitoValidazione.getStringaGP();
+    public Esito validaGreenPass(Esito esito) throws IOException, ParseException {
+        String GP = esito.getStringaGP();
         String encodedDGC = URLEncoder.encode(GP, StandardCharsets.UTF_8.toString());
         URL urldemo = new URL("http://localhost:3000/?dgc=" + encodedDGC);
         URLConnection yc = urldemo.openConnection();
@@ -149,17 +149,17 @@ public class SessioneDiValidazione {
         Scanner s = new Scanner(inputLine).useDelimiter(";");
         for (int i = 0; i < 4; i++) {
             switch (i) {
-                case 0 -> esitoValidazione.setValidita(s.next().compareTo("Valid") == 0);
-                case 1 -> esitoValidazione.setCognomeStudente(s.next());
-                case 2 -> esitoValidazione.setNomeStudente(s.next());
-                case 3 -> esitoValidazione.setDataDiNascitaStudente(new SimpleDateFormat("yyyy-MM-dd").parse(s.next()));
+                case 0 -> esito.setValidita(s.next().compareTo("Valid") == 0);
+                case 1 -> esito.setCognomeStudente(s.next());
+                case 2 -> esito.setNomeStudente(s.next());
+                case 3 -> esito.setDataDiNascitaStudente(new SimpleDateFormat("yyyy-MM-dd").parse(s.next()));
                 default -> {
                 }
             }
         }
-        esitoValidazione.setSessione(this);
+        esito.setSessione(this);
         in.close();
-        return esitoValidazione;
+        return esito;
     }
 
     //Metodo importato dalla libreria QRCodegenerator

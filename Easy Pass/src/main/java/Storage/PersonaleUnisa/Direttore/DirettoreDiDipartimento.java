@@ -5,6 +5,7 @@ import Storage.Formato.Formato;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.PersonaleUnisa;
 import Storage.Report.Report;
+import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -103,13 +104,13 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
      * Il filtro usato per la ricerca opera su un intervallo di tempo per i quali sono
      * stati generati i Report.
      *
-     * @param date1 prima data dell'intervallo di tempo
-     * @param date2 seconda data dell'intervallo di tempo
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
      * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
      */
-    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
-        if(date1.before(date2) || date1.compareTo(date2) == 0)
-           return this.getDipartimento().ricercaReportSoloData(date1, date2);
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date primaData, Date secondaData) {
+        if(primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)
+           return this.getDipartimento().ricercaReportSoloData(primaData, secondaData);
         else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
     }
@@ -121,4 +122,5 @@ public class DirettoreDiDipartimento extends PersonaleUnisa {
     public TreeMap<Report, Docente> ricercaReport() {
         return this.getDipartimento().ricercaReport();
     }
+
 }

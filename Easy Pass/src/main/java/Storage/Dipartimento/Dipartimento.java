@@ -185,14 +185,14 @@ public class Dipartimento {
      * da un Docente e come value le informazioni sul Docente:
      * la ricerca avviene specificando un certo intervallo di tempo.
      *
-     * @param date1 prima data dell'intervallo di tempo
-     * @param date2 seconda data dell'intervallo di tempo
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
      * @return insieme ordinato composto da una lista di Report e di Docenti
      */
-    public TreeMap<Report, Docente> ricercaReportSoloData(Date date1, Date date2) {
-        if(date1.before(date2) || date1.compareTo(date2) == 0){
+    public TreeMap<Report, Docente> ricercaReportSoloData(Date primaData, Date secondaData) {
+        if(primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){
             ReportDAO reportDAO = new ReportDAO();
-            return reportDAO.doSearchByDate(date1, date2, this);
+            return reportDAO.doSearchByDate(primaData, secondaData, this);
         }
         else
             throw new IllegalArgumentException("The arguments 'codDip' cannot be null.");
