@@ -2,6 +2,7 @@ package Storage.PersonaleUnisa.Docente;
 
 import ApplicationLogic.Utils.ConnectionSingleton;
 import Storage.Dipartimento.Dipartimento;
+import Storage.Dipartimento.DipartimentoDAO;
 import Storage.SessioneDiValidazione.SessioneDiValidazione;
 import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
 
@@ -100,7 +101,8 @@ public class DocenteDAO {
             ResultSet rs = null;
             try {
                 conn = ConnectionSingleton.getInstance().getConnection();
-                String query = "SELECT * FROM docente doc WHERE doc.Username_Doc=?";
+                String query = "SELECT doc.* FROM docente doc, dipartimento dip WHERE doc.Username_Doc=? " +
+                        "AND doc.Codice_Dip=dip.Codice_Dip";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, username);
                 rs = ps.executeQuery();
@@ -109,6 +111,8 @@ public class DocenteDAO {
                     Docente docente = DocenteMapper.extract(rs);
                     docente.setDipartimento(new Dipartimento());
                     docente.getDipartimento().setCodice(rs.getString("doc.Codice_Dip"));
+                    DipartimentoDAO dip = new DipartimentoDAO();
+                    docente.setDipartimento(dip.doRetrieveByKeyWithRelations(docente.getDipartimento().getCodice()));
                     return docente;
                 }
             } catch (SQLException e) {
@@ -135,7 +139,8 @@ public class DocenteDAO {
             ResultSet rs = null;
             try {
                 conn = ConnectionSingleton.getInstance().getConnection();
-                String query = "SELECT * FROM docente doc WHERE doc.Codice_Dip = ?";
+                String query = "SELECT doc.* FROM docente doc, dipartimento dip WHERE doc.Codice_Dip = ? " +
+                        "AND doc.Codice_Dip=dip.Codice_Dip";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, codDip);
                 rs = ps.executeQuery();
@@ -145,6 +150,8 @@ public class DocenteDAO {
                     docenti.add(DocenteMapper.extract(rs));
                     docenti.get(i).setDipartimento(new Dipartimento());
                     docenti.get(i).getDipartimento().setCodice(codDip);
+                    DipartimentoDAO dip = new DipartimentoDAO();
+                    docenti.get(i).setDipartimento(dip.doRetrieveByKeyWithRelations(docenti.get(i).getDipartimento().getCodice()));
                 }
                 return docenti;
             } catch (SQLException e) {
