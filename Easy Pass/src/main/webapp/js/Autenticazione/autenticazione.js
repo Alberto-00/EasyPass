@@ -18,7 +18,7 @@ $(document).ready(function (){
     }, "Email o Username errata.");
 
     $.validator.addMethod("strong_password", function (value) {
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,20}$/.test(value)
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-])[A-Za-z\d=^ ì{}+çò°àù§èé#@$!%€*?&:,;'._<>|-]{8,}$/.test(value)
     }, "La password è errata.");
 
     $.validator.addMethod("checklower", function (value){
@@ -39,7 +39,7 @@ $(document).ready(function (){
 
     $.validator.addMethod("name_surname", function (value) {
         return /^[a-zA-Z .']+$/.test(value)
-    }, "Il nome inserito non è corretto.");
+    });
 
     $("form[name='admin-login']").validate({
         rules: {
@@ -77,6 +77,8 @@ $(document).ready(function (){
             cognome: {
                 required: true,
                 name_surname: true,
+                minlength: 3,
+                maxlength: 30,
             },
             dipartimento:{
                 required: true,
@@ -93,26 +95,28 @@ $(document).ready(function (){
                 checkdigit: true,
                 checkspecial: true,
                 minlength: 8,
-                maxlength: 20,
             }
         },
         messages: {
             password2: {
                 required: "Inserire la password.",
                 minlength: "La password deve essere almeno di 8 caratteri.",
-                maxlength: "La password deve essere almeno di 20 caratteri."
             },
             email2: {
                 required: "Inserire l'Email di ateneo.",
                 email: "Email di ateneo errata."
             },
             nome: {
-                minlength: "Il nome è troppo breve.",
-                maxlength: "Il nome è troppo lungo.",
+                minlength: "Il nome inserito è troppo breve.",
+                maxlength: "Il nome inserito è troppo lungo.",
                 required: "Inserire il nome.",
+                name_surname: "Il nome inserito non è corretto.",
             },
             cognome: {
                 required: "Inserire il cognome.",
+                minlength: "Il cognome inserito è troppo breve.",
+                maxlength: "Il cognome inserito è troppo lungo.",
+                name_surname: "Il cognome inserito non è corretto.",
             },
             dipartimento: {
                 required: "Inserire il Dipartimento.",
