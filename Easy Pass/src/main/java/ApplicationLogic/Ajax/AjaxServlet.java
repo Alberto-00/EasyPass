@@ -27,7 +27,6 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 @interface Generated{}
-
 /**
  * La classe si occupa della gestione dei Report e degli Esiti laddove \u00E8
  * stata utilizzata la tecnica Ajax, in particolare sono implementate le
@@ -386,3 +385,6 @@ public class AjaxServlet extends ServletLogic {
         return true;
     }
 }
+
+
+
