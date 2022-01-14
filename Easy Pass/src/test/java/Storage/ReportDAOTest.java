@@ -6,6 +6,7 @@ import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -73,6 +74,7 @@ public class ReportDAOTest {
         assertTrue(reportDAO.doRetrieveDocByReport(codice).isEmpty());
     }
 
+    @Ignore
     @Test //da finire
     public void doRetrieveDocByReportOKTest() {
         Docente docente = new Docente("luca", "ROSSI", "prova@unisa.it", "EasyPass2022!", new Dipartimento());

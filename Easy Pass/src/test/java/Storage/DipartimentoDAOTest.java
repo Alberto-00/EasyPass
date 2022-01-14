@@ -91,7 +91,7 @@ public class DipartimentoDAOTest {
         doretrieveAllParamTest("DIFARMA", "Farmacia", dipartimenti.get(5));
         doretrieveAllParamTest("DIIN", "Ingegneria Industriale", dipartimenti.get(6));
         doretrieveAllParamTest("DIPMAT", "Matematica", dipartimenti.get(7));
-        doretrieveAllParamTest("DIPMED", "Medicina, Chirurgia e Odontoiatria “Scuola Medica Salernitana”", dipartimenti.get(8));
+        doretrieveAllParamTest("DIPMED", "Medicina, Chirurgia e Odontoiatria \"Scuola Medica Salernitana\"", dipartimenti.get(8));
         doretrieveAllParamTest("DIPSUM", "Studi Umanistici", dipartimenti.get(9));
         doretrieveAllParamTest("DISA-MIS", "Scienze Aziendali - Management & Innovation Systems", dipartimenti.get(10));
         doretrieveAllParamTest("DISES", "Scienze Economiche e Statistiche", dipartimenti.get(11));

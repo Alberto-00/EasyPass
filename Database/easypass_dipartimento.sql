@@ -7,7 +7,7 @@ INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIEM',
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIFARMA', 'Farmacia', 'DIFAR');
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIIN', 'Ingegneria Industriale', 'DIIN');
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIPMAT', 'Matematica', 'DIPMA');
-INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIPMED', 'Medicina, Chirurgia e Odontoiatria “Scuola Medica Salernitana”', 'DIPME');
+INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIPMED', 'Medicina, Chirurgia e Odontoiatria "Scuola Medica Salernitana"', 'DIPME');
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DIPSUM', 'Studi Umanistici', 'DIPSU');
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DISA-MIS', 'Scienze Aziendali - Management & Innovation Systems', 'DISA-MIS');
 INSERT INTO easypass.dipartimento (Codice_Dip, Nome, ID_formato) VALUES ('DISES', 'Scienze Economiche e Statistiche', 'DISES');
