@@ -104,7 +104,7 @@ public class DocenteDAOTest {
     @Test
     public void doRetrieveAllWithRelationsReturnNullObjectTest() {
         String codiceDip = "pp"; //non corretto
-        assertNull(docenteDAO.doRetrieveAllWithRelations(codiceDip));
+        assertEquals(docenteDAO.doRetrieveAllWithRelations(codiceDip), new ArrayList<>());
     }
 
     @Test
@@ -137,7 +137,7 @@ public class DocenteDAOTest {
     @Test
     public void checkUserAndPasswReturnNullObjectTest() {
         Docente docente = new Docente("Alfonso", "Maria", "maria@unisa.it", "hag23!1111a", new Dipartimento()); //non corretto
-        assertNull(docenteDAO.checkUserAndPassw(docente));
+        assertFalse(docenteDAO.checkUserAndPassw(docente));
     }
 
     @Test

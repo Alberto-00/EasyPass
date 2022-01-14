@@ -270,7 +270,7 @@ public class AjaxServlet extends ServletLogic {
 
 
     /* Validazione input Docente */
-    private String checkDocente(String nameDoc, DocenteDAO docenteDAO){
+    public static String checkDocente(String nameDoc, DocenteDAO docenteDAO){
         if (nameDoc.compareTo("") == 0)
             return "Inserire un Docente.";
 
@@ -284,7 +284,7 @@ public class AjaxServlet extends ServletLogic {
     }
 
     /* Validazione input Data */
-    private String checkData(String firstDate, String secondDate){
+    public static String checkData(String firstDate, String secondDate){
         if (firstDate.isBlank())
             return "Inserire la prima data.";
 
@@ -296,6 +296,7 @@ public class AjaxServlet extends ServletLogic {
 
         if (firstDate.isBlank() && !secondDate.isBlank())
             return "Inserire la prima data.";
+
         if (!Pattern.compile("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$").matcher(secondDate).matches())
             return "La seconda data non rispetta il formato.";
 
@@ -335,7 +336,7 @@ public class AjaxServlet extends ServletLogic {
      * dal nome (o dai nomi) che possiede il Docente.
      * */
     @Generated
-    private String name(String str){
+    private static String name(String str){
         String[] token = str.split(" ");
         StringBuilder out = new StringBuilder();
 
@@ -355,7 +356,7 @@ public class AjaxServlet extends ServletLogic {
      * dal cognome che possiede il Docente.
      * */
     @Generated
-    private String surname(String str){
+    private static String surname(String str){
         StringBuilder out = new StringBuilder();
         String[] token = str.split(" ");
 
@@ -375,7 +376,7 @@ public class AjaxServlet extends ServletLogic {
      * è formata solo da caratteri UpperCase o meno.
      * */
     @Generated
-    private boolean checkUppercase(String str){
+    private static boolean checkUppercase(String str){
         char[] charArray = str.toCharArray();
         for (char c : charArray) {
             //if any character is not in upper case, return false
