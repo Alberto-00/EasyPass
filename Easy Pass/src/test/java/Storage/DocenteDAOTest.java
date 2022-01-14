@@ -166,8 +166,8 @@ public class DocenteDAOTest {
 
     @Test
     public void checkUserAndPasswOKTest() {
-        Docente docente1 = new Docente("Vincenzo", "DEUFEMIA", "deufemia@unisa.it","EasyPass2022!", new Dipartimento()); //corretto
-        assertTrue(docenteDAO.checkUserAndPassw(docente1));
+        Docente docente = new Docente("Vincenzo", "DEUFEMIA", "deufemia@unisa.it","EasyPass2022!", new Dipartimento()); //corretto
+        assertTrue(docenteDAO.checkUserAndPassw(docente));
     }
 
     /*************************************
@@ -195,6 +195,7 @@ public class DocenteDAOTest {
         Docente docente = new Docente(nome, cognome, id, DigestUtils.sha256Hex(pw), dipartimentoDAO.doRetrieveById("DI"));
 
         assertTrue(docenteDAO.doCreate(docente));
+        docenteDAO.doDelete(docente);
     }
 
 
