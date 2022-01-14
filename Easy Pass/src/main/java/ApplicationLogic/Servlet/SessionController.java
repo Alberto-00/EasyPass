@@ -171,17 +171,18 @@ public class SessionController extends ServletLogic {
                 if (sessioneDiValidazione != null){
                     Esito esitoValidazione = new Esito();
                     esitoValidazione.setStringaGP(request.getParameter("dgc"));
-                    esitoValidazione = sessioneDiValidazione.validaGreenPass(esitoValidazione);
-                    esitoValidazione.setStringaGP("");
-                    EsitoDAO edDao = new EsitoDAO();
-                    if (edDao.doRetrieveAllByPersonalData(esitoValidazione).isEmpty()){
-                        edDao.doCreateWithoutReport(esitoValidazione);
-                        request.setAttribute("sessionId", sessioneDiValidazione.getQRCode().replaceAll("\\D+",""));
-                        request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
-                    } else {
-                        throw new InvalidRequestException("Esito già inviato", List.of("Esito già inviato"), HttpServletResponse.SC_FORBIDDEN);
+                    if (checkGP(esitoValidazione.getStringaGP())) {
+                        esitoValidazione = sessioneDiValidazione.validaGreenPass(esitoValidazione);
+                        esitoValidazione.setStringaGP("");
+                        EsitoDAO edDao = new EsitoDAO();
+                        if (edDao.doRetrieveAllByPersonalData(esitoValidazione).isEmpty()) {
+                            edDao.doCreateWithoutReport(esitoValidazione);
+                            request.setAttribute("sessionId", sessioneDiValidazione.getQRCode().replaceAll("\\D+", ""));
+                            request.getRequestDispatcher(view("StudenteGUI/InvioEffettuato")).forward(request, response);
+                        } else {
+                            throw new InvalidRequestException("Esito già inviato", List.of("Esito già inviato"), HttpServletResponse.SC_FORBIDDEN);
+                        }
                     }
-
                 } else
                     throw new InvalidRequestException("Sessione non esistente", List.of("Sessione non esistente"), HttpServletResponse.SC_NOT_FOUND);
             }
@@ -208,6 +209,13 @@ public class SessionController extends ServletLogic {
             else out.append(str[i]);
         }
         return out.toString();
+    }
+
+    private boolean checkGP(String str) {
+        if (str.startsWith("HC1:"))
+            return true;
+        else
+            return false;
     }
 }
 

@@ -126,11 +126,11 @@ public class ReportController extends ServletLogic {
         String messaggio = "";
         if (anagrafica == null && ddn == null && numValidazioni == null
                 && gpValidi == null && gpNonValidi == null) {
-            messaggio = "Selezionare almeno un campo\n";
+            messaggio = "Selezionare almeno un campo.\n";
             return messaggio;
         } else if (ddn != null && anagrafica == null) {
             messaggio =  "Impossibile salvare il formato! Se è selezionata la data deve " +
-                    "essere selezionata anche l'anagrafica\n";
+                    "essere selezionata anche l'anagrafica.\n";
             return messaggio;
         } else {
             FormatoDAO formatoDAO = new FormatoDAO();

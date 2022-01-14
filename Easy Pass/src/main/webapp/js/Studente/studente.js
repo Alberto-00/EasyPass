@@ -15,7 +15,7 @@ $(document).ready(function () {
                     document.getElementById("myButton").setAttribute('type', 'submit');
                 }
                 else
-                    bootbox.alert("Errore! Formato non valido");
+                    bootbox.alert("Errore! Formato non valido.");
             }
     })
 })
