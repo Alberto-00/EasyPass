@@ -5,10 +5,22 @@ import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteMapper;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TreeMap;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
 
 /**
  * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code report}, e di ricerca
@@ -50,8 +62,7 @@ public class ReportDAO {
 
     /**
      * Effettua una query al database restituendo un insieme di {@code Report}
-     * e di {@code Docenti} di un determinato Dipartimento
-     * con un determinato {@code id}.
+     * e di {@code Docenti} di un determinato Dipartimento.
      *
      * @param idDip id del {@code Dipartimento}
      * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
@@ -126,6 +137,7 @@ public class ReportDAO {
      * @return {@code true} se il {@code Report} &egrave; stato aggiornato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doUpdate (Report report) {
         if (report == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -333,6 +345,7 @@ public class ReportDAO {
         }
     }
 
+    @Generated
     private String convertToString(java.util.Date date){
         String pattern = "yyyy-MM-dd";
         DateFormat df = new SimpleDateFormat(pattern);

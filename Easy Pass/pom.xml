@@ -139,18 +139,25 @@
                         <exclude>ApplicationLogic/Utils/Validator/DirettoreValidator.class</exclude>
                         <exclude>ApplicationLogic/Utils/Alert.class</exclude>
                         <exclude>ApplicationLogic/Utils/FileServlet.class</exclude>
+                        <exclude>ApplicationLogic/Utils/FileServlet$Range.*</exclude>
                         <exclude>ApplicationLogic/Utils/InvalidRequestException.class</exclude>
                         <exclude>ApplicationLogic/Utils/JSONSerializable.class</exclude>
                         <exclude>ApplicationLogic/Utils/ServletLogic.class</exclude>
 
+                        <exclude>ApplicationLogic/Servlet/SessionController.class</exclude>
+
                         <exclude>Storage/Esito/*.class</exclude>
                         <exclude>Storage/Dipartimento/DipartimentoMapper.class</exclude>
                         <exclude>Storage/Formato/FormatoMapper.class</exclude>
+                        <exclude>Storage/Formato/Formato.class</exclude>
                         <exclude>Storage/PersonaleUnisa/PersonaleUnisa.class</exclude>
                         <exclude>Storage/PersonaleUnisa/Direttore/DirettoreDiDipartimentoMapper.class</exclude>
                         <exclude>Storage/PersonaleUnisa/Docente/DocenteMapper.class</exclude>
+                        <exclude>Storage/PersonaleUnisa/Docente/Docente.class</exclude>
                         <exclude>Storage/Report/ReportMapper.class</exclude>
+                        <exclude>Storage/Report/Report.class</exclude>
                         <exclude>Storage/SessioneDiValidazione/SessioneDiValidazioneMapper.class</exclude>
+                        <exclude>Storage/SessioneDiValidazione/SessioneDiValidazione.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>

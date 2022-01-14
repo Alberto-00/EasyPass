@@ -2,10 +2,8 @@ package Storage;
 
 import Storage.Dipartimento.Dipartimento;
 import Storage.Dipartimento.DipartimentoDAO;
-import Storage.Formato.Formato;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -63,7 +61,6 @@ public class DipartimentoDAOTest {
     public void doRetrieveByKeyWithRelationsOKTest(){
         String codice = "DI"; //corretto
         String nome = "Informatica"; //corretto
-
 
         Dipartimento dipartimento = dipartimentoDAO.doRetrieveByKeyWithRelations(codice);
 
