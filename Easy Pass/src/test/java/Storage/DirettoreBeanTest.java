@@ -10,11 +10,13 @@ import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -23,11 +25,20 @@ import org.junit.Before;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DirettoreBeanTest {
-    ReportDAO reportDao=new ReportDAO();
-    DipartimentoDAO dipartimentoDAO=new DipartimentoDAO();
-    DocenteDAO docenteDAO=new DocenteDAO();
-    DirettoreDiDipartimento direttoreDiDipartimento=creaDirettore("mario","ROSSI","password","mariorossi@unisa.it","DI");
-    
+    ReportDAO reportDao;
+    DipartimentoDAO dipartimentoDAO;
+    DocenteDAO docenteDAO;
+    DirettoreDiDipartimento direttoreDiDipartimento;
+
+    @BeforeEach
+    public void setUp(){
+        reportDao=new ReportDAO();
+        dipartimentoDAO=new DipartimentoDAO();
+        docenteDAO=new DocenteDAO();
+        direttoreDiDipartimento=creaDirettore("mario","ROSSI","password","mariorossi@unisa.it","DI");
+
+    }
+
     /***********************
      * Test eliminaReport *
      ***********************/
