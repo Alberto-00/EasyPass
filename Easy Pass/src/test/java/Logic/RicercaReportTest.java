@@ -5,6 +5,7 @@ import ApplicationLogic.Servlet.SessionController;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.ReportDAO;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class RicercaReportTest {
     DocenteDAO docenteDAO;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         docenteDAO = new DocenteDAO();
     }
@@ -24,28 +25,24 @@ public class RicercaReportTest {
 
     @Test
     public void checkDocenteCampoVuotoTest() {
-        docenteDAO = new DocenteDAO();
         String nomeDocente=""; //non corretto
         assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Inserire un Docente.");
     }
 
     @Test
     public void checkDocenteNonEsisteTest() {
-        docenteDAO = new DocenteDAO();
         String nomeDocente="Martina Mulino"; //non corretto
         assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente ricercato non esiste.");
     }
 
     @Test
     public void checkDocenteFormatoErratoTest() {
-        docenteDAO = new DocenteDAO();
         String nomeDocente="Martina Mulino"; //non corretto
         assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente ricercato non esiste.");
     }
 
     @Test
     public void checkDocenteOKTest() {
-        docenteDAO = new DocenteDAO();
         String nomeDocente="Carmine GRAVINO"; //corretto
         assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO),null);
     }
