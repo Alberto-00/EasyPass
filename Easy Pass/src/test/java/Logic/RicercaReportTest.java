@@ -6,7 +6,7 @@ import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.ReportDAO;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class RicercaReportTest {
     DocenteDAO docenteDAO;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         docenteDAO = new DocenteDAO();
     }

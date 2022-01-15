@@ -9,8 +9,9 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ public class DipartimentoBeanTest {
     DocenteDAO docenteDAO;
     Dipartimento dipartimento;
 
-    @BeforeEach
+    @Before
     public void setUp(){
         reportDao=new ReportDAO();
         dipartimentoDAO=new DipartimentoDAO();

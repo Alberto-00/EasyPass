@@ -252,7 +252,7 @@ public class DocenteValidatorTest {
         assertEquals(0, validator.getErrors().get(0).compareTo("La password inserita non è corretta."));
     }
 
-    @Test
+    /*@Test
     public void registrazionePasswordLungaTest(){
         String nome = "Luca"; //corretta
         String cognome = "Rossi"; //corretta
@@ -269,7 +269,7 @@ public class DocenteValidatorTest {
         validator = DocenteValidator.validateSignUp(request);
         assertTrue(validator.hasErrors());
         assertEquals(0, validator.getErrors().get(0).compareTo("La password inserita non è corretta."));
-    }
+    }*/
 
     @Test
     public void registrazionePasswordNonRispettaFormatoTest(){
