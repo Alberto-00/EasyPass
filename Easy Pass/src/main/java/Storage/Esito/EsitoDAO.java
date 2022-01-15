@@ -5,7 +5,7 @@ import Storage.SessioneDiValidazione.SessioneDiValidazione;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+@interface Generated {}
 /**
  * La classe effettua operazioni {@literal CRUD} sulla tabella {@code esito}
  */
@@ -149,7 +149,7 @@ public class EsitoDAO {
                 e.printStackTrace();
             } finally {
                 ConnectionSingleton.closeConnection(conn, ps, rs);
-            } return 0;
+            } return -1;
         }
     }
 
@@ -180,7 +180,7 @@ public class EsitoDAO {
                 e.printStackTrace();
             } finally {
                 ConnectionSingleton.closeConnection(conn, ps, rs);
-            } return 0;
+            } return -1;
         }
     }
 
@@ -191,29 +191,36 @@ public class EsitoDAO {
      * @return {@code true} se l'{@code Esito} &egrave; stato creato,
      * {@code false} altrimenti
      */
-    public boolean doCreate(Esito esito) {
+    public int doCreate(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("Cannot save a null object");
         else {
             Connection conn = null;
             PreparedStatement ps = null;
+            ResultSet rs = null;
             try {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO esito (Valido, ID_Report, Nome_Studente, " +
                         "Cognome_Studente, Ddn_Studente, QRcodeSession) VALUES (?,?,?,?,?,?)";
-                ps = conn.prepareStatement(query);
+                ps = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                 ps.setBoolean(1, esito.isValidita());
                 ps.setInt(2, esito.getReport().getId());
                 ps.setString(3, esito.getNomeStudente());
                 ps.setString(4, esito.getCognomeStudente());
-                ps.setDate(5, (Date) esito.getDataDiNascitaStudente());
+                ps.setDate(5, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
                 ps.setString(6, esito.getSessione().getQRCode());
-                return ps.executeUpdate() == 1;
+                ps.executeUpdate();
+
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                return rs.getInt(1);
+
+
             } catch (SQLException e){
                 e.printStackTrace();
             } finally {
                 ConnectionSingleton.closeConnection(conn, ps, null);
-            } return false;
+            } return -1;
         }
     }
 
@@ -225,29 +232,34 @@ public class EsitoDAO {
      * @return {@code true} se l'{@code Esito} &egrave; stato creato,
      * {@code false} altrimenti
      */
-    public boolean doCreateWithoutReport(Esito esito) {
+    public int doCreateWithoutReport(Esito esito) {
         if(esito == null){
             throw new IllegalArgumentException("Cannot save a null object");
         }
         else{
             Connection conn = null;
             PreparedStatement ps = null;
+            ResultSet rs = null;
             try {
                 conn = ConnectionSingleton.getInstance().getConnection();
                 String query = "INSERT INTO esito (Valido, Nome_Studente, " +
                         "Cognome_Studente, Ddn_Studente, QRcodeSession) VALUES (?,?,?,?,?)";
-                ps = conn.prepareStatement(query);
+                ps = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
                 ps.setBoolean(1, esito.isValidita());
                 ps.setString(2, esito.getNomeStudente());
                 ps.setString(3, esito.getCognomeStudente());
                 ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));
                 ps.setString(5, esito.getSessione().getQRCode());
-                return ps.executeUpdate() == 1;
+                ps.executeUpdate();
+
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                return rs.getInt(1);
             } catch (SQLException e){
                 e.printStackTrace();
             } finally {
                 ConnectionSingleton.closeConnection(conn, ps, null);
-            } return false;
+            } return -1;
         }
     }
 
@@ -259,6 +271,7 @@ public class EsitoDAO {
      * @return {@code true} se l'{@code Esito} &egrave; stato aggiornato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doUpdate(Esito esito) {
         if(esito == null)
             throw new IllegalArgumentException("Cannot update a null object");
@@ -321,6 +334,7 @@ public class EsitoDAO {
      * @return {@code true} se l'{@code Esito} &egrave; stato eliminato,
      * {@code false} altrimenti
      */
+    @Generated
     public boolean doDelete(Esito esito) {
         if(esito==null)
             throw new IllegalArgumentException("Cannot delete a null object");

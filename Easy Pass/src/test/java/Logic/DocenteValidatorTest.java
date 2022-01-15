@@ -27,7 +27,7 @@ public class DocenteValidatorTest {
     /*************************************
      * Validazione Registrazione Docente *
      *************************************/
-    /*@Test
+    @Test
     public void registrazioneNomeVuotoTest(){
         Mockito.when(request.getParameter("nome")).thenReturn(null);
         Mockito.when(request.getParameter("cognome")).thenReturn(null);
@@ -271,7 +271,7 @@ public class DocenteValidatorTest {
         assertEquals(0, validator.getErrors().get(0).compareTo("La password inserita non è corretta."));
     }*/
 
-    /*@Test
+    @Test
     public void registrazionePasswordNonRispettaFormatoTest(){
         String nome = "Luca"; //corretta
         String cognome = "Rossi"; //corretta
@@ -307,20 +307,20 @@ public class DocenteValidatorTest {
         validator = DocenteValidator.validateSignUp(request);
         assertFalse(validator.hasErrors());
         assertTrue(validator.getErrors().isEmpty());
-    }*/
+    }
 
 
     /*************************************
      * Validazione input numero Studenti *
      *************************************/
-    /*@Test
+    @Test
     public void numeroStudentiVuotoTest(){
         Mockito.when(request.getParameter("nStudents")).thenReturn(null);
 
         validator = DocenteValidator.validateNumberOfStudents(request);
         assertTrue(validator.hasErrors());
         assertEquals(0, validator.getErrors().get(0).compareTo("Il numero di Studenti inserito non è corretto."));
-    }*/
+    }
 
     @Test
     public void numeroStudentiNonRispettaFormatoTest(){

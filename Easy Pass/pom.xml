@@ -146,7 +146,8 @@
 
                         <exclude>ApplicationLogic/Servlet/SessionController.class</exclude>
 
-                        <exclude>Storage/Esito/*.class</exclude>
+                        <exclude>Storage/Esito/Esito.class</exclude>
+                        <exclude>Storage/Esito/EsitoMapper.class</exclude>
                         <exclude>Storage/Dipartimento/DipartimentoMapper.class</exclude>
                         <exclude>Storage/Formato/FormatoMapper.class</exclude>
                         <exclude>Storage/Formato/Formato.class</exclude>
