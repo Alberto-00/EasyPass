@@ -31,8 +31,8 @@ public class FormatoTest {
     }
 
     @Parameterized.Parameters public static Collection<Object[]> parameters(){
-        return Arrays.asList(new Object[][] {{null,"true",null,null,null,"Impossibile salvare il formato! Se è selezionata la data deve essere selezionata anche l'anagrafica\n", mock(DirettoreDiDipartimento.class), mock(HttpServletRequest.class)},
-                {null,null,null,null,null, "Selezionare almeno un campo\n", mock(DirettoreDiDipartimento.class), mock(HttpServletRequest.class)}});
+        return Arrays.asList(new Object[][] {{null,"true",null,null,null,"Impossibile salvare il formato! Se è selezionata la data deve essere selezionata anche l'anagrafica.\n", mock(DirettoreDiDipartimento.class), mock(HttpServletRequest.class)},
+                {null,null,null,null,null, "Selezionare almeno un campo.\n", mock(DirettoreDiDipartimento.class), mock(HttpServletRequest.class)}});
     }
 
     @Test
