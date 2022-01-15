@@ -1,7 +1,6 @@
 package Logic;
 
 import ApplicationLogic.Ajax.AjaxServlet;
-import ApplicationLogic.Servlet.SessionController;
 import Storage.Dipartimento.Dipartimento;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
@@ -10,11 +9,8 @@ import Storage.Report.ReportDAO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +29,6 @@ public class RicercaReportTest {
     /*************************************
      * Test checkDocente *
      *************************************/
-
     @Test
     public void checkDocenteCampoVuotoTest() {
         String nomeDocente=""; //non corretto
@@ -55,18 +50,17 @@ public class RicercaReportTest {
     @Test
     public void checkDocenteOKTest() {
         String nomeDocente="Carmine GRAVINO"; //corretto
-        assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO),null);
+        assertNull(AjaxServlet.checkDocente(nomeDocente, docenteDAO));
     }
+
 
     /*************************************
      * Test checkData *
      *************************************/
-
     @Test
     public void checkPrimaDataCampoVuotoTest(){
         String primaData="";// non corretto
-        String secondaData=null;
-        assertEquals(AjaxServlet.checkData(primaData,secondaData),"Inserire la prima data.");
+        assertEquals(AjaxServlet.checkData(primaData, null),"Inserire la prima data.");
     }
 
     @Test

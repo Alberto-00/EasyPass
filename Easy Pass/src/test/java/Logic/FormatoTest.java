@@ -4,13 +4,11 @@ import ApplicationLogic.Servlet.ReportController;
 import Storage.PersonaleUnisa.Direttore.DirettoreDiDipartimento;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import static org.junit.Assert.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 import static org.mockito.Mockito.*;
 
 @RunWith(Parameterized.class)
@@ -38,6 +36,6 @@ public class FormatoTest {
     @Test
     public void validationTest(){
         ReportController reportControllerTest = new ReportController();
-        assertTrue("Un messaggio ritornato dal check del formato non era corrispondente a quello atteso",reportControllerTest.checkAndSetFormato(anagrafica, ddn, numValidazioni, gpValidi,gpNonValidi,direttore,request).compareTo(expectedMessaggio) == 0);
+        assertEquals("Un messaggio ritornato dal check del formato non era corrispondente a quello atteso", 0, reportControllerTest.checkAndSetFormato(anagrafica, ddn, numValidazioni, gpValidi, gpNonValidi, direttore, request).compareTo(expectedMessaggio));
     }
 }

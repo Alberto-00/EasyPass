@@ -86,15 +86,12 @@ $(document).ready(function (){
             email2: {
                 required: true,
                 email: true,
-                email_unisa: true
+                email_unisa: true,
             },
             password2: {
                 required: true,
-                checklower: true,
-                checkupper: true,
-                checkdigit: true,
-                checkspecial: true,
                 minlength: 8,
+                strong_password: true,
             }
         },
         messages: {
@@ -104,7 +101,7 @@ $(document).ready(function (){
             },
             email2: {
                 required: "Inserire l'Email di ateneo.",
-                email: "Email di ateneo errata."
+                email: "Email di ateneo errata.",
             },
             nome: {
                 minlength: "Il nome inserito è troppo breve.",

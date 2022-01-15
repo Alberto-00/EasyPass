@@ -1,0 +1,2340 @@
+{
+  "id": "36f9fa8d-0879-471b-853e-abbfbfd2ae89",
+  "version": "2.0",
+  "name": "Easy Pass",
+  "url": "http://localhost:8080/EasyPass",
+  "tests": [{
+    "id": "92b532d2-d893-49d1-bcf9-63810f38d87b",
+    "name": "TC_2_01 Seleziona numero Studenti",
+    "commands": [{
+      "id": "389a0ee6-ca29-4ef9-9137-399ceaec8ad0",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dfbcb991-1d20-40f7-88ff-100d07ead63e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "786x788",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1d8d22c3-e6f6-4430-b728-5fdf607bfba6",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4304116c-6832-43a5-a3cd-4a0f1e70eac9",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "34399079-bf22-4393-ac95-c63a0d386ed4",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e56d3227-27e2-4f7a-93a0-152db0485155",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f594b42f-955b-45c7-8d59-52f01bc4bb94",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a1b27f1-5eae-4281-af9d-ec838a15fc50",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d83902c6-0264-4b84-94d6-d0a8af2e8519",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "adf0fdaf-dc59-4416-9207-56631b7cd264",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5621df30-ddb0-42d5-a2e3-659754c474e2",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54f0419a-5bdd-4955-a9bc-e38b5c83e291",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ab1f777-ebca-48ea-bc25-65d04e8c74e5",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nStudents-error",
+      "targets": [
+        ["id=nStudents-error", "id"],
+        ["css=#nStudents-error", "css:finder"],
+        ["xpath=//label[@id='nStudents-error']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Inserire il numero di studenti.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire il numero di studenti."
+    }]
+  }, {
+    "id": "8c4a117d-38bb-4dbb-b6dc-f03dcd6b7c22",
+    "name": "TC_2_02 Seleziona numero Studenti",
+    "commands": [{
+      "id": "011ba7ef-a60b-473f-b4a0-4934664a2a79",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9c3ec54a-c6a2-46f1-a8cb-5636954eb369",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "786x788",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ea980c06-ae86-44e3-95ad-4d3ffb0e8a89",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94bc022c-18c8-4929-91b0-18deb34dabc8",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "257333cd-5ebe-4458-ada1-8b6cb4280aed",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f7e23eb-af0e-4194-ab5d-1ca964ea34e0",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f9671748-18ce-43b9-8b23-5f1932d2d238",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "674c2993-ab91-4c30-a18f-e6e1540b5389",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "14ce0cd3-8905-4e93-b1f1-b3b4fc3f1457",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4001c3d9-fc3d-43be-8d7f-06093df68e5d",
+      "comment": "",
+      "command": "type",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "p"
+    }, {
+      "id": "6787ecad-7bf5-4786-95cf-77b11bb3247a",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d79ed9f5-d57a-4535-b738-dbcb409f6226",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b6310842-5e92-4528-9470-96a91f72e6f5",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "47be1b1a-5644-4a34-a9fe-9a14c7c801ca",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nStudents-error",
+      "targets": [
+        ["id=nStudents-error", "id"],
+        ["css=#nStudents-error", "css:finder"],
+        ["xpath=//label[@id='nStudents-error']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il numero inserito non è corretto.')]", "xpath:innerText"]
+      ],
+      "value": "Il numero inserito non è corretto."
+    }]
+  }, {
+    "id": "f4b59e5b-ac7b-48c5-8e60-fdf3360d04a3",
+    "name": "TC_2_03 Seleziona numero Studenti",
+    "commands": [{
+      "id": "81873c7c-6543-4cc5-b9f6-09b4ec5e6ced",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a27db5df-e617-4575-925e-50bcda7dee0c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "786x788",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "74949ae4-082f-4745-a950-85edf5c67850",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6659ad1c-1c1a-45c9-a7b5-2ea5e0758944",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "0bd00c2e-2e3c-4202-9427-126ed6a01c50",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ca4199aa-8c8a-4b3d-98d2-cbf5e06ec901",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "571683b5-887e-4dec-bdce-6c65bccd2d10",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c5c7f92-b0eb-4a02-b2eb-5314d92e0551",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "63465933-c06d-4620-8bc5-db38bbb867e2",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b739a93-6e71-465f-8517-ca3596d58dca",
+      "comment": "",
+      "command": "type",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "00fca6db-d628-4ff3-84a9-b247217107fc",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4cc259b-797b-4dbf-8f5b-e5b1075a4334",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "20b12bab-5a6a-4a62-b817-05bad486ee7c",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3bcb630-82d6-40cb-929c-2e0fd3bd18b7",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nStudents-error",
+      "targets": [
+        ["id=nStudents-error", "id"],
+        ["css=#nStudents-error", "css:finder"],
+        ["xpath=//label[@id='nStudents-error']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/label", "xpath:idRelative"],
+        ["xpath=//label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il numero inserito non è corretto.')]", "xpath:innerText"]
+      ],
+      "value": "Il numero inserito non è corretto."
+    }]
+  }, {
+    "id": "eb137374-06ec-498f-abf5-68c060a057ab",
+    "name": "TC_1_01 Registrazione Docente",
+    "commands": [{
+      "id": "b55110d1-5657-4954-bb1d-6a09f8bd374c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f5f2b6f-57c0-43fe-98a0-ddb3a243efd7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x845",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fa95388e-0848-4fcc-84c1-6d5118f5b50c",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ee66fb8-3483-4968-b503-400fb818de7e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "53158d0a-7fda-4230-8e62-6689ac4e3564",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nome-error",
+      "targets": [
+        ["id=nome-error", "id"],
+        ["css=#nome-error", "css:finder"],
+        ["xpath=//label[@id='nome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Inserire il nome.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire il nome."
+    }]
+  }, {
+    "id": "fc27c5ab-a61c-451b-bccd-17ec64f5082c",
+    "name": "TC_1_02 Registrazione Docente",
+    "commands": [{
+      "id": "a9f99ec8-1e5c-4ec3-89dd-2b4f6884b257",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a34853f4-e6dc-402b-b20e-674e471dfa5f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3684a5a5-8cc5-4bd5-b759-2dd680f34a59",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d3668f7-6c91-4df1-b5bb-af081bceb5ec",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfa8e7e4-cc90-436e-a137-59728ce920bb",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "j"
+    }, {
+      "id": "d79fa198-e683-4372-a7c7-7ec961eca87d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "111a25cc-bc61-4ada-bae0-2586afe7f24a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9ef4b32-adf2-4044-9010-89d4771e892b",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.login-form-button:nth-child(12)",
+      "targets": [
+        ["css=.login-form-button:nth-child(12)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd1b5b25-0bfe-496c-bae2-88b2191257e4",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nome-error",
+      "targets": [
+        ["id=nome-error", "id"],
+        ["css=#nome-error", "css:finder"],
+        ["xpath=//label[@id='nome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il nome inserito è troppo breve.')]", "xpath:innerText"]
+      ],
+      "value": "Il nome inserito è troppo breve."
+    }]
+  }, {
+    "id": "4cee5264-4684-4abe-8f59-6b6113506f2c",
+    "name": "TC_1_03 Registrazione Docente",
+    "commands": [{
+      "id": "f356395a-7b22-4c42-94d9-62baba486d5e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cd60d186-ec38-4a1d-8d30-a03b80596e49",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b6cc6f58-8365-4caf-870f-da465d2f5354",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a17184b-d82b-4529-8839-b75049436c50",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fa4425c-7445-44ea-b2dc-b841a44d48e6",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "mnbvcxzasdfghjklpoiuytrewqazwsxe"
+    }, {
+      "id": "bbd23294-d032-4522-aac8-5ce1aeb97081",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8af81d21-8465-4597-8107-99f7d3b5d7a2",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nome-error",
+      "targets": [
+        ["id=nome-error", "id"],
+        ["css=#nome-error", "css:finder"],
+        ["xpath=//label[@id='nome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il nome inserito è troppo lungo.')]", "xpath:innerText"]
+      ],
+      "value": "Il nome inserito è troppo lungo."
+    }]
+  }, {
+    "id": "9ed0f02f-21fc-4347-bd95-00c14fb001f4",
+    "name": "TC_1_04 Registrazione Docente",
+    "commands": [{
+      "id": "f7c6197c-6149-4a74-834b-e33b512fe1c2",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d9e9826d-7cca-42b1-ae02-243a33fce57f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ebe9edb8-c93c-4e4d-aff7-bd7579c56ed5",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7b12cfd-3b5f-4987-8d9a-488304507ac8",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "85223f95-cadd-496e-a56c-85c7c7678f90",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Carmine3"
+    }, {
+      "id": "6b771186-2d24-4972-841c-32def20c4644",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "32747ead-0304-483f-97e5-29bec70f0459",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=nome-error",
+      "targets": [
+        ["id=nome-error", "id"],
+        ["css=#nome-error", "css:finder"],
+        ["xpath=//label[@id='nome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il nome inserito non è corretto.')]", "xpath:innerText"]
+      ],
+      "value": "Il nome inserito non è corretto."
+    }]
+  }, {
+    "id": "21c7daf6-da4a-4580-b0b2-96e544412e4f",
+    "name": "TC_1_05 Registrazione Docente",
+    "commands": [{
+      "id": "b1b3e3dc-5b0d-4de1-b90e-285f4556e8b4",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "97ddec08-38c3-45d0-a0aa-1c9a50e31c91",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3d45b862-6d4f-4524-a758-3544aebda13a",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8045c481-0279-450d-bc9b-0b3375107b87",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "88f34ebf-9e3c-46b6-8cd2-4f9146c2ed9a",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "5a532870-1841-4953-8689-4c7050079aeb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee01ff74-3017-4023-a896-0f648182062b",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=cognome-error",
+      "targets": [
+        ["id=cognome-error", "id"],
+        ["css=#cognome-error", "css:finder"],
+        ["xpath=//label[@id='cognome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Inserire il cognome.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire il cognome."
+    }]
+  }, {
+    "id": "f8fe2da5-e56c-4e7d-b79e-daad69fdfcc9",
+    "name": "TC_1_06 Registrazione Docente",
+    "commands": [{
+      "id": "91d6b795-2e8a-4577-a4fd-485554480a04",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf550c30-9a7c-44ab-97d8-c76b6942cc92",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "92c7cf39-add2-40e0-a526-e34abd1c8288",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb8095ee-935c-4135-aaf9-185cb433987b",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02991e78-5610-4175-aee7-c71220595652",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "6cc6278a-ea88-46cc-a380-9fb847f551ba",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac0f3ecc-32c3-4c40-b9a0-71e1af48c041",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "a"
+    }, {
+      "id": "745f5c9e-460a-4da3-b1ec-ef3842316309",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "37d075e2-34c0-4c06-8219-c4c6f231932f",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "576d8c0d-4cc7-473f-93d3-47d7f570c50f",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d12c5130-c60c-4ec2-8a89-734eddf3199c",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "379b2414-2779-4e69-ad4b-8bcccc689671",
+      "comment": "",
+      "command": "click",
+      "target": "css=#login-up > .login-form-content",
+      "targets": [
+        ["css=#login-up > .login-form-content", "css:finder"],
+        ["xpath=//form[@id='login-up']/div[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02b73837-1573-48f6-8719-ccc672f9844d",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=cognome-error",
+      "targets": [
+        ["id=cognome-error", "id"],
+        ["css=#cognome-error", "css:finder"],
+        ["xpath=//label[@id='cognome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il cognome inserito è troppo breve.')]", "xpath:innerText"]
+      ],
+      "value": "Il cognome inserito è troppo breve."
+    }]
+  }, {
+    "id": "fc8ce029-61fc-4be8-8cf4-cb52d4759331",
+    "name": "TC_1_07 Registrazione Docente",
+    "commands": [{
+      "id": "f8fda86c-3b85-4bd3-bc1a-0f7566764abe",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "798a7dab-8615-432f-a6ba-7d9f1dc1f08c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dfe3d6d8-0c80-4072-8795-a9db3147fb0c",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "960da49c-9ef1-432f-80e7-e876baf2652e",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eee5ecca-536e-4b83-80e1-068ba814b755",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "03049036-87d8-48bd-af38-d0c375b3449d",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d86a1869-5930-473b-8222-3bf22f47fc67",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "qazwsxedcrfvtgbyhnujmikolplmokni"
+    }, {
+      "id": "90d01ff6-d059-4b2b-afdb-a2cf7663e7f4",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d4340d90-e8e8-4c68-b31b-669c9024a345",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d331a79-5bf5-4dfb-879d-6b6d45d6896f",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7215af3-539b-4de2-bb26-98cdb7d2d1e7",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=#login-up > .login-form-content",
+      "targets": [
+        ["css=#login-up > .login-form-content", "css:finder"],
+        ["xpath=//form[@id='login-up']/div[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffcffba5-d3d4-415a-b603-af96b970706c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#login-up > .login-form-content",
+      "targets": [
+        ["css=#login-up > .login-form-content", "css:finder"],
+        ["xpath=//form[@id='login-up']/div[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "557aee54-c863-490f-91da-5ba1ccca4ce6",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=cognome-error",
+      "targets": [
+        ["id=cognome-error", "id"],
+        ["css=#cognome-error", "css:finder"],
+        ["xpath=//label[@id='cognome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il cognome inserito è troppo lungo.')]", "xpath:innerText"]
+      ],
+      "value": "Il cognome inserito è troppo lungo."
+    }]
+  }, {
+    "id": "32e7f30d-8a9a-4c5e-baac-4e3a8d49130e",
+    "name": "TC_1_08 Registrazione Docente",
+    "commands": [{
+      "id": "dc0546fc-8b40-4a22-9323-da5b97221752",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f21833d1-cf6a-479e-9240-a97b2b04d6d1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "241be596-45c1-4716-b188-15c03ce19803",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f27398b-d370-4b52-b638-5d6f7add774f",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d84ff7d-4cb6-462e-a5d9-12bada71e82c",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "19de5ee7-1a0f-4a86-b6a8-0acfddf7dbc6",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1e1cd41-23f1-4bcc-bc40-07550523d4fe",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi0"
+    }, {
+      "id": "240c63d6-b3c6-474e-ac45-09bf8ab61884",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8dece6c8-1882-435d-94d6-42a9b77b8d30",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=cognome-error",
+      "targets": [
+        ["id=cognome-error", "id"],
+        ["css=#cognome-error", "css:finder"],
+        ["xpath=//label[@id='cognome-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Il cognome inserito non è corretto.')]", "xpath:innerText"]
+      ],
+      "value": "Il cognome inserito non è corretto."
+    }]
+  }, {
+    "id": "97a008ba-d3a7-46f9-9202-fcdf89620c33",
+    "name": "TC_1_09 Registrazione Docente",
+    "commands": [{
+      "id": "5d28b6ae-8048-44c1-88a3-89065d51ca4e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "88cab9cb-0f9c-4b81-b515-a0eb6c79e56c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f748fc4a-0e25-4947-8467-6a5901c67d13",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac1b660a-85bf-474a-b7b6-8d7ad2210aad",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb6f4805-2030-4d32-bbf4-341be96289c7",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "422cd187-d410-453b-9100-69fddfaf20c8",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52bec698-5b48-489b-98c3-4b21a0ac1435",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "553ebce8-f1b8-46ee-95f5-5db7fb7e3827",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef667653-415c-4758-bd9a-a4617b157f46",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dipartimento-error",
+      "targets": [
+        ["id=dipartimento-error", "id"],
+        ["css=#dipartimento-error", "css:finder"],
+        ["xpath=//label[@id='dipartimento-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Inserire il Dipartimento.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire il Dipartimento."
+    }]
+  }, {
+    "id": "aba3815f-0bba-4284-9f91-19c088c692d9",
+    "name": "TC_1_10 Registrazione Docente",
+    "commands": [{
+      "id": "ddf40633-a095-4c00-8519-d3bf328235f2",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f6895851-4105-435c-b0f8-b2ca8ec31773",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "268685c7-3327-49f7-828c-fead2087a570",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "66e3d03f-0ca8-478c-b848-d7f26ae73ff1",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0d94944-74bf-40ea-acae-8b338a1e4f5c",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "3dea4822-9202-4c7f-bda6-ae4e08d5d9db",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb198107-f0c8-4419-853b-ed84d2d18ae8",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "2c74d2b9-6bef-4909-a4e6-26a1d47000fd",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e88a4e0-fdca-4c1f-9ebc-772c1b263e7b",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "0998ec93-a68e-4e34-a6e8-14ebd19dd789",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "562f7455-8c59-4f67-bd84-2e6220f17708",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=email2-error",
+      "targets": [
+        ["id=email2-error", "id"],
+        ["css=#email2-error", "css:finder"],
+        ["xpath=//label[@id='email2-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"]
+      ],
+      "value": "Inserire l'Email di ateneo."
+    }]
+  }, {
+    "id": "6004b462-c9e7-47e3-9752-cdd0f1ba3f86",
+    "name": "TC_1_11 Registrazione Docente",
+    "commands": [{
+      "id": "e8f8804f-f965-4837-b975-20fe5bdd68a7",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "43c20070-bd56-46ad-9e16-67e9cd7b0255",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3db38983-9727-45ca-abea-e27b5b1f7dbd",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d26a19a2-5026-47fc-bddc-ffb50113fb1d",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5cc64e8e-e031-4f7c-b968-b5fba38d7dc5",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "29ab1abc-127b-4058-8b1f-3b62b36b0c17",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4d2582d-fbb1-4a9c-921b-4af8af4eddc4",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "26264c2a-f79d-4e92-a089-38f758e3fad3",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e98aaac1-e688-4672-b9b2-fbe89791ddab",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "cdfbc813-0d38-4a3e-88da-14578e766a80",
+      "comment": "",
+      "command": "click",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac3f3188-7a64-4260-8cc6-e0b472c98ef8",
+      "comment": "",
+      "command": "type",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "lucaunisa.it"
+    }, {
+      "id": "9c3e1278-cf80-486b-b983-d5c322cb52f8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#login-up > .login-form-content",
+      "targets": [
+        ["css=#login-up > .login-form-content", "css:finder"],
+        ["xpath=//form[@id='login-up']/div[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "305b6083-f6a1-4863-829a-86849a911283",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=email2-error",
+      "targets": [],
+      "value": "Email di ateneo errata."
+    }]
+  }, {
+    "id": "830e2720-dc22-4e02-bb6c-aed52e66ea9a",
+    "name": "TC_1_13 Selezione formato Report",
+    "commands": [{
+      "id": "88a23504-7992-49e4-984f-3b1a59bce771",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e7bb35c-e593-420f-be22-4292ea97d3ae",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1af67841-1ead-4848-98b7-89b491793ec5",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5be5b0e6-528d-4d07-863d-bea101fe08ea",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "869bfab1-bb1d-4ef2-8002-cc810c6ccc21",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "044197a6-aff5-46e1-b317-a0d65f9e4f72",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac9599b6-6856-4dcc-85e7-36d1e2f284b3",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "6267dc22-2f3f-4d42-82c4-baa47a517103",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "47197819-e47b-4e41-a9f7-849cee7ed48e",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "6a05bce9-4a83-4022-9243-24c68dfe4fb2",
+      "comment": "",
+      "command": "click",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "238f85b3-170d-464d-82b0-ef5df7e04e06",
+      "comment": "",
+      "command": "type",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "luca@unisa.it"
+    }, {
+      "id": "5e553028-1ee7-45b2-8909-63aa361e8903",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ef67798-5ea0-4b07-9d6d-e6ceede88260",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=password2-error",
+      "targets": [],
+      "value": "Inserire la password."
+    }]
+  }, {
+    "id": "9f03ae42-ad9d-475d-8191-5f5313a77df7",
+    "name": "TC_1_14 Registrazione Docente",
+    "commands": [{
+      "id": "7d8d95b8-2699-4be8-902c-6fd01c819050",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4846cf60-878d-40a7-9fae-723844704f2f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2dd9cb06-2ba7-45ef-b739-00eb37afb5c5",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a8d92e5-be00-4968-b462-2dae55b0b874",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "76b3de09-5c3d-4b28-8ac5-f35f202033ed",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "85bdd625-b5c6-4b69-93a6-504c05773c63",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4329182e-e8bd-4226-ae78-d4a7e860737f",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "157e0b85-ab3f-434d-a0b9-c8639b690edb",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33e72de2-1cb6-4c3a-8108-8634aa0f1994",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "1a599db0-3b3d-4c8e-964e-e48000f887b8",
+      "comment": "",
+      "command": "click",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7ffcadf-b0a0-4ad4-b347-584224d5062a",
+      "comment": "",
+      "command": "type",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "luca@unisa.it"
+    }, {
+      "id": "f2488223-fd6e-48d0-90a7-be7c4fc9a20b",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "06014869-cd0c-4c42-8019-1251b23ee9c8",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "Abc1"
+    }, {
+      "id": "d1275ff3-58a3-4252-a7dd-090473b9992e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#login-up > .login-form-content",
+      "targets": [
+        ["css=#login-up > .login-form-content", "css:finder"],
+        ["xpath=//form[@id='login-up']/div[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2b5b0e9-3a24-44c8-b97d-c0c963008a60",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=password2-error",
+      "targets": [
+        ["id=password2-error", "id"],
+        ["css=#password2-error", "css:finder"],
+        ["xpath=//label[@id='password2-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'La password deve essere almeno di 8 caratteri.')]", "xpath:innerText"]
+      ],
+      "value": "La password deve essere almeno di 8 caratteri."
+    }]
+  }, {
+    "id": "5353571e-3b0a-48c1-bb23-da0b5163a3dd",
+    "name": "TC_1_15 Registrazione Docente",
+    "commands": [{
+      "id": "b254372e-4ab7-471b-8b57-28507087dd2c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "933b9b13-23b2-4a72-a0ba-06a5c93d6a7e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x846",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7dbea54c-7ad6-4d74-8067-29b4777f3f5f",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1423c71e-23d5-4e03-b416-28ffd7bbc714",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cdb587c4-b9d8-49e8-91a7-99ff0e419b77",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "dc04cabc-c7af-4230-a7ab-9af9d28ddb75",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "03f3abc9-19f5-4f59-878c-cb9c2505121a",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "abbc1a9d-8d98-48f7-af49-e3edab24e200",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "81851b2e-5745-4f63-b048-f7c21f3e6988",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "c3a38202-5988-4944-b20c-c4dd90fa8328",
+      "comment": "",
+      "command": "click",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c269b9b-77af-4cea-8e25-59ad2c1e121e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "luca@unisa.it"
+    }, {
+      "id": "79d556fb-10ef-48ff-86f5-40f15cd9b76d",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a540d9c-9252-4875-8e90-9390465c3ec0",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "AbcdefghiA"
+    }, {
+      "id": "50a9de24-52e8-44a1-bd5f-fd77c9b49fa6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(8)",
+      "targets": [
+        ["css=.login-form-button:nth-child(8)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5aebfac4-56f8-4466-a60c-ef9b5afeb4cc",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=password2-error",
+      "targets": [
+        ["id=password2-error", "id"],
+        ["css=#password2-error", "css:finder"],
+        ["xpath=//label[@id='password2-error']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'La password è errata.')]", "xpath:innerText"]
+      ],
+      "value": "La password è errata."
+    }]
+  }],
+  "suites": [{
+    "id": "e2cf518e-800e-4de0-aa33-6d660b6d821d",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/EasyPass"],
+  "plugins": []
+}

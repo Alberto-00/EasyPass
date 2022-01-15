@@ -135,6 +135,7 @@
                 <configuration>
                     <excludes>
                         <exclude>io/**/*</exclude>
+                        <exclude>ApplicationLogic/Servlet/AccessController.class</exclude>
                         <exclude>ApplicationLogic/Utils/Validator/DirettoreValidator.class</exclude>
                         <exclude>ApplicationLogic/Utils/Alert.class</exclude>
                         <exclude>ApplicationLogic/Utils/FileServlet.class</exclude>

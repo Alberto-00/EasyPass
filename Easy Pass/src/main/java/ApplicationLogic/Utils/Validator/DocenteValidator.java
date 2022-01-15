@@ -50,18 +50,20 @@ public class DocenteValidator {
      * @param request contiene i valori da controllare
      * @return {@code Validator}
      */
-    public static Validator validateSignUp(HttpServletRequest request){
+    public static Validator validateSignUp(HttpServletRequest request) {
         Validator validator = new Validator(request);
 
-        if (!validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"),"Il nome inserito non è corretto."))
+        if (!validator.assertMatch("nome", Pattern.compile("^[a-zA-Z .']+$"), "Il nome inserito non è corretto."))
             return validator;
+
         if (checkLengthRequest("nome", request)) {
             validator.getErrors().add("Il nome non rispetta il formato.");
             return validator;
         }
 
-        if (!validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"),"Il cognome inserito non è corretto."))
+        if (!validator.assertMatch("cognome", Pattern.compile("^[a-zA-Z .']+$"), "Il cognome inserito non è corretto."))
             return validator;
+
         if (checkLengthRequest("cognome", request)) {
             validator.getErrors().add("Il cognome non rispetta il formato.");
             return validator;
