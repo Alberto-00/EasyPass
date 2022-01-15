@@ -1,10 +1,12 @@
 package Storage;
 
 import Storage.Dipartimento.Dipartimento;
+import Storage.Dipartimento.DipartimentoDAO;
 import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -74,33 +76,18 @@ public class ReportDAOTest {
         assertTrue(reportDAO.doRetrieveDocByReport(codice).isEmpty());
     }
 
-    @Ignore
-    @Test //da finire
+    @Test
     public void doRetrieveDocByReportOKTest() {
-        Docente docente = new Docente("luca", "ROSSI", "prova@unisa.it", "EasyPass2022!", new Dipartimento());
-        docente.getDipartimento().setCodice("DI");
-
         Report report = createReportTest(new Date(), new Date(), "prova", "DI");
-        report.getDocente().setUsername("prova@unisa.it");
-        docenteDAO.doCreate(docente);
+
         int id = reportDAO.doCreate(report);
         report.setId(id);
 
-        TreeMap<Report, Docente> reportDocente = reportDAO.doRetrieveDocByReport("DI");
-        assertNotNull(reportDocente);
-        assertEquals(docente.getUsername(), reportDocente.get(report).getUsername());
-        assertEquals(docente.getCognome(), reportDocente.get(report).getCognome());
-        assertEquals(docente.getNome(), reportDocente.get(report).getNome());
-        assertEquals(docente.getPassword(), reportDocente.get(report).getPassword());
+        TreeMap<Report, Docente> treeMap = reportDAO.doRetrieveDocByReport("DI");
+        assertTrue(treeMap.containsKey(report));
+        assertTrue(treeMap.containsValue(treeMap.get(report)));
 
-        for (Report r : reportDocente.keySet()) {
-            assertEquals(report.getId(), r.getId());
-            // assertEquals(report.getOrario(), r.getOrario());
-            //assertEquals(report.getData(), r.getData());
-            assertEquals(report.getPathFile(), r.getPathFile());
-        }
         reportDAO.doDelete(report);
-        docenteDAO.doDelete(docente);
     }
 
     private Report createReportTest(Date orario, Date data, String path, String dip){
@@ -108,10 +95,128 @@ public class ReportDAOTest {
         report.setPathFile(path);
         report.setData(data);
         report.setOrario(orario);
-        report.setDip(new Dipartimento());
-        report.getDip().setCodice(dip);
-        report.setDocente(new Docente());
-        report.getDocente().setUsername("gravino@unisa.it");
+        report.setDip(new DipartimentoDAO().doRetrieveById(dip));
+        report.setDocente(new DocenteDAO().doRetrieveByKeyWithRelations("deufemia@unisa.it"));
         return report;
     }
+
+    /*************************************
+     * Test doCreate *
+     *************************************/
+
+    @Test
+    public void doCreateNullTest() {
+        assertThrows(IllegalArgumentException.class, () -> reportDAO.doCreate(null));
+    }
+
+    @Test
+    public void doCreateReturnNullObjectTest() {
+        //Funziona perchè dipartimento non ha valori
+        Report report = new Report(new java.sql.Date(2021-11-11), new java.sql.Time(-11), "aa", new Dipartimento(), new Docente());
+        assertEquals(0, reportDAO.doCreate(report));
+    }
+
+    @Test
+    public void doCreateOKTest() {
+        Report report = createReportTest(new Date(), new Date(), "prova", "DI");
+
+        int a;
+        assertNotEquals(0, a = reportDAO.doCreate(report));
+        report.setId(a);
+        reportDAO.doDelete(report);
+    }
+
+
+    /*************************************
+     * Test doUpdatePath *
+     *************************************/
+
+    @Test
+    public void doUpdatePathNullTest() {
+        assertThrows(IllegalArgumentException.class, () -> reportDAO.doUpdatePath(null));
+    }
+
+    @Test
+    public void doUpdatePathReturnFalseTest() {
+        Report report = new Report();
+        report.setPathFile("");
+        assertFalse(reportDAO.doUpdatePath(report));
+    }
+
+    @Test
+    public void doUpdatePathOKTest() {
+        ReportDAO reportDAO = new ReportDAO();
+        Report report = createReportTest(new Date(), new Date(), "prova", "DI");
+        int a = reportDAO.doCreate(report); report.setId(a);
+
+        Report report2 = createReportTest(new Date(), new Date(), "AAA", "DI"); report2.setId(a);
+        assertTrue(reportDAO.doUpdatePath(report2));
+        reportDAO.doDelete(report);
+        reportDAO.doDelete(report2);
+    }
+
+    /******************************
+     * Test doSearch *
+     ******************************/
+    @Test
+    public void doSearchNullTest(){
+        assertThrows(IllegalArgumentException.class, ()->reportDAO.doSearch(null, null, null));
+    }
+
+    @Test
+    public void doSearchOKTest() {
+        Report report = createReportTest(new Date(), new Date(), "prova", "DI");
+        Docente docente = new DocenteDAO().doRetrieveByKey("deufemia@unisa.it");
+
+        int id = reportDAO.doCreate(report); report.setId(id);
+
+        TreeMap<Report, Docente> treeMap = reportDAO.doSearch(docente, new Date(), new Date());
+        assertNotNull(treeMap);
+
+        reportDAO.doDelete(report);
+    }
+
+    /******************************
+     * Test doSearchByDocName *
+     ******************************/
+    @Test
+    public void doSearchByDocNameNullTest(){
+        assertThrows(IllegalArgumentException.class, ()->reportDAO.doSearchByDocName(null));
+    }
+
+    @Test
+    public void doSearchByDocNameOKTest() {
+        Report report = createReportTest(new Date(), new Date(), "prova", "DI");
+        Docente docente = new DocenteDAO().doRetrieveByKey("deufemia@unisa.it");
+
+        int id = reportDAO.doCreate(report); report.setId(id);
+
+        TreeMap<Report, Docente> treeMap = reportDAO.doSearchByDocName(docente);
+        assertNotNull(treeMap);
+
+        reportDAO.doDelete(report);
+    }
+
+    /******************************
+     * Test doSearchByDate *
+     ******************************/
+    @Test
+    public void doSearchByDateNullTest(){
+        assertThrows(IllegalArgumentException.class, ()->reportDAO.doSearchByDate(null, null, null));
+    }
+
+    @Test
+    public void doSearchByDateOKTest() {
+        Report report = createReportTest(new Date(), new Date(), "prova", "DI");
+        Dipartimento dipartimento = new DipartimentoDAO().doRetrieveById("DI");
+
+        int id = reportDAO.doCreate(report); report.setId(id);
+
+        TreeMap<Report, Docente> treeMap = reportDAO.doSearchByDate(new Date(), new Date(), dipartimento);
+        assertNotNull(treeMap);
+
+        reportDAO.doDelete(report);
+    }
+
+
 }
