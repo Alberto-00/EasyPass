@@ -198,9 +198,6 @@ public class DipartimentoBeanTest {
 
     }
 
-
-
-
     private Report creaReport(Date orario, Date data, String path, String codiceDip,String usernameDoc){
         Report report = new Report();
         report.setPathFile(path);

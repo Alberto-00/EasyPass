@@ -312,8 +312,8 @@ public class AjaxServlet extends ServletLogic {
      * lista del JSON conterrà gli oggetti Report interessati, analogamente, la seconda lista
      * conterrà gli oggetti Docente.
      * */
-    private void searchReport(JSONObject root, JSONArray arrRep, JSONArray arrDoc,
-                              TreeMap<Report, Docente> treeMap) {
+    public static void searchReport(JSONObject root, JSONArray arrRep, JSONArray arrDoc,
+                                     TreeMap<Report, Docente> treeMap) {
         if (treeMap.isEmpty())
             root.put("emptyy", "empty");
         else {
