@@ -51,7 +51,6 @@
             <select id="dipartimento" name="dipartimento" class="login-form-input form-select form-select-lg" aria-label=".form-select-lg" required>
                 <option disabled selected value="">Dipartimento</option>
                 <%List<Dipartimento> dipartimenti = (List<Dipartimento>) request.getServletContext().getAttribute("dipartimenti");
-                    System.out.println(dipartimenti);
                     for (Dipartimento dipartimento : dipartimenti) {%>
                 <option value="<%=dipartimento.getCodice()%>">Dipartimento di <%=dipartimento.getNome()%>
                 </option>
