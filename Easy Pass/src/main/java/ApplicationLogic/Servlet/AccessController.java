@@ -84,7 +84,6 @@ public class AccessController extends ServletLogic {
                     request = validateSignup(DocenteValidator.validateSignUp(request), request);
 
                     if (request.getAttribute("errorMsg") != null){
-                        System.out.println("sono entrato");
                         request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
                         break;
                     }

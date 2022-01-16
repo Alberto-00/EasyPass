@@ -52,11 +52,8 @@ public class ServletLogic extends HttpServlet {
     }
 
     protected HttpServletRequest validateSignup(Validator validator, HttpServletRequest request) throws InvalidRequestException, ServletException, IOException {
-        if(validator.hasErrors()){
-            System.out.println("errore: " + validator.getErrors().get(0));
+        if(validator.hasErrors())
             request.setAttribute("errorMsg", validator.getErrors().get(0));
-            System.out.println(request.getAttribute("errorMsg"));
-        }
         return request;
     }
 
