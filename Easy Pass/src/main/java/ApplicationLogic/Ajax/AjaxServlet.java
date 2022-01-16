@@ -269,7 +269,12 @@ public class AjaxServlet extends ServletLogic {
     }
 
 
-    /* Validazione input Docente */
+    /**
+     * Validazione del Docente.
+     *
+     * @param nameDoc nome e cognome del Docente
+     * @param docenteDAO query sul Docente
+     */
     public static String checkDocente(String nameDoc, DocenteDAO docenteDAO){
         if (nameDoc.compareTo("") == 0)
             return "Inserire un Docente.";
@@ -283,7 +288,12 @@ public class AjaxServlet extends ServletLogic {
         return null;
     }
 
-    /* Validazione input Data */
+    /**
+     * Validazione delle date.
+     *
+     * @param firstDate prima data
+     * @param secondDate seconda data
+     */
     public static String checkData(String firstDate, String secondDate){
         if (firstDate.isBlank())
             return "Inserire la prima data.";
@@ -306,11 +316,16 @@ public class AjaxServlet extends ServletLogic {
     }
 
 
-    /* Il metodo permette di memorizzare all'interno di un JSON due liste, tramite
+    /** Il metodo permette di memorizzare all'interno di un JSON due liste, tramite
      * l'aiuto di un TreeMap. Il TreeMap contiene come chiave gli ID dei Report
      * e come valore i Docenti che hanno generato tali Report, di conseguenza, la prima
      * lista del JSON conterrà gli oggetti Report interessati, analogamente, la seconda lista
      * conterrà gli oggetti Docente.
+     *
+     * @param root contiene la lista dei Report e dei Docenti in JSON
+     * @param arrDoc lista dei Docenti in JSON
+     * @param arrRep lista dei Report in JSON
+     * @param treeMap lista di Report associati ai Docenti
      * */
     public static void searchReport(JSONObject root, JSONArray arrRep, JSONArray arrDoc,
                                      TreeMap<Report, Docente> treeMap) {

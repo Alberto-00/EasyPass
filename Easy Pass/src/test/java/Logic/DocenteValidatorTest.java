@@ -252,25 +252,6 @@ public class DocenteValidatorTest {
         assertEquals(0, validator.getErrors().get(0).compareTo("La password inserita non è corretta."));
     }
 
-    /*@Test
-    public void registrazionePasswordLungaTest(){
-        String nome = "Luca"; //corretta
-        String cognome = "Rossi"; //corretta
-        String dipartimento = "DI"; //corretta
-        String email = "luca@unisa.it"; //corretta
-        String password = "Aadddddddddddddddddddddddddddaaaa!222b"; //non corretta
-
-        Mockito.when(request.getParameter("nome")).thenReturn(nome);
-        Mockito.when(request.getParameter("cognome")).thenReturn(cognome);
-        Mockito.when(request.getParameter("dipartimento")).thenReturn(dipartimento);
-        Mockito.when(request.getParameter("email2")).thenReturn(email);
-        Mockito.when(request.getParameter("password2")).thenReturn(password);
-
-        validator = DocenteValidator.validateSignUp(request);
-        assertTrue(validator.hasErrors());
-        assertEquals(0, validator.getErrors().get(0).compareTo("La password inserita non è corretta."));
-    }*/
-
     @Test
     public void registrazionePasswordNonRispettaFormatoTest(){
         String nome = "Luca"; //corretta

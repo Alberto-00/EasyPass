@@ -1,6 +1,5 @@
 package Storage.PersonaleUnisa;
 
-import ApplicationLogic.Utils.JSONSerializable;
 import Storage.Dipartimento.Dipartimento;
 import org.apache.commons.codec.digest.DigestUtils;
 

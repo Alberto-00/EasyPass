@@ -211,7 +211,5 @@ public class SessionController extends ServletLogic {
         }
         return out.toString();
     }
-
-
 }
 

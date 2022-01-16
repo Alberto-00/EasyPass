@@ -219,7 +219,7 @@ public class EsitoDAO {
             } catch (SQLException e){
                 e.printStackTrace();
             } finally {
-                ConnectionSingleton.closeConnection(conn, ps, null);
+                ConnectionSingleton.closeConnection(conn, ps, rs);
             } return -1;
         }
     }
@@ -258,7 +258,7 @@ public class EsitoDAO {
             } catch (SQLException e){
                 e.printStackTrace();
             } finally {
-                ConnectionSingleton.closeConnection(conn, ps, null);
+                ConnectionSingleton.closeConnection(conn, ps, rs);
             } return -1;
         }
     }

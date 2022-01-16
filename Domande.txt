@@ -1,12 +1,1 @@
-1) Per come abbiamo implementato il sistema la validazione del green pass viene fatta quando lo studente lo invia,
-e stesso in quel momento viene creato e salvato l'esito. Poichè il ministeroAPI interviene nel SC_IGP non è più 
-neccessario l'include. Possiamo toglierlo anche se il prof ce l'ha corretto e approvato? Se non possiamo, 
-va bene dire che usiamo l'include per mostrare l'esito appena creato al docente? Se sì, come si scrive nel sequence?
-
-2) Va bene considerare implicito il fatto che il report viene creato inserendo gli esiti? perchè nel sequence non 
-mostriamo questa cosa
-
-3)Va bene la nota per rispondere al commento del prof che ci ha detto "strano il destroy dell'entity report" nel 
-SD_EliminaReport
-
-4)Nell'ODD di quali classi dobbiamo descrivere le interfacce?
+https://alberto-00.github.io/Progetto-IdS/

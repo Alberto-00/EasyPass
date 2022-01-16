@@ -6,14 +6,10 @@ import Storage.PersonaleUnisa.Docente.Docente;
 import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Date;
-import java.util.Set;
 import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -103,7 +99,6 @@ public class ReportDAOTest {
     /*************************************
      * Test doCreate *
      *************************************/
-
     @Test
     public void doCreateNullTest() {
         assertThrows(IllegalArgumentException.class, () -> reportDAO.doCreate(null));
@@ -111,7 +106,6 @@ public class ReportDAOTest {
 
     @Test
     public void doCreateReturnNullObjectTest() {
-        //Funziona perchè dipartimento non ha valori
         Report report = new Report(new java.sql.Date(2021-11-11), new java.sql.Time(-11), "aa", new Dipartimento(), new Docente());
         assertEquals(0, reportDAO.doCreate(report));
     }
@@ -130,7 +124,6 @@ public class ReportDAOTest {
     /*************************************
      * Test doUpdatePath *
      *************************************/
-
     @Test
     public void doUpdatePathNullTest() {
         assertThrows(IllegalArgumentException.class, () -> reportDAO.doUpdatePath(null));

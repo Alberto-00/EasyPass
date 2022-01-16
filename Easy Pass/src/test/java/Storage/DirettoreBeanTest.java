@@ -10,18 +10,12 @@ import Storage.PersonaleUnisa.Docente.DocenteDAO;
 import Storage.Report.Report;
 import Storage.Report.ReportDAO;
 import org.junit.Before;
-import org.junit.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
-
-import org.junit.Before;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -84,9 +78,9 @@ public class DirettoreBeanTest {
         assertEquals(d.getFormato().isNomeCognome(),f.isNomeCognome());
     }
 
-    /***********************
+    /******************************
      * Test ricercaCompletaReport *
-     ***********************/
+     ******************************/
 
     @Test
     public void ricercaCompletaReportNullArgumentsTest(){
@@ -217,7 +211,8 @@ public class DirettoreBeanTest {
         return report;
     }
 
-    private DirettoreDiDipartimento creaDirettore(String nome, String cognome, String password, String username, String codiceDip){
+    private DirettoreDiDipartimento creaDirettore(String nome, String cognome,
+                                                  String password, String username, String codiceDip){
         DirettoreDiDipartimento d=new DirettoreDiDipartimento();
         d.setNome(nome);
         d.setCognome(cognome);

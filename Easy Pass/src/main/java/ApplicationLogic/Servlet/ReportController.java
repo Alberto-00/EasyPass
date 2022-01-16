@@ -122,6 +122,18 @@ public class ReportController extends ServletLogic {
         request.setAttribute("actualGPNonValidi", value);
     }
 
+    /**
+     * Valida il formato selezionato e lo aggiorna nel database.
+     *
+     * @param anagrafica anagrafica dello Studente
+     * @param ddn data di nascita dello Studente
+     * @param numValidazioni numero validazioni Green Pass
+     * @param gpValidi Green Pass validi
+     * @param gpNonValidi Green Pass non validi
+     * @param direttore Direttore
+     * @param request request
+     * @return notifica di errore o di successo
+     */
     public String checkAndSetFormato(String anagrafica, String ddn, String numValidazioni,
                                      String gpValidi, String gpNonValidi, DirettoreDiDipartimento direttore,
                                      HttpServletRequest request){
@@ -145,8 +157,21 @@ public class ReportController extends ServletLogic {
         }
     }
 
-    public static Formato setFormatoCorretto(Formato formato, DirettoreDiDipartimento direttore, String anagrafica, String ddn, String numValidazioni,
-                                   String gpValidi, String gpNonValidi){
+    /**
+     * Aggiorna il formato.
+     *
+     * @param formato Formato
+     * @param direttore Direttore
+     * @param anagrafica Anagrafica dello Studente
+     * @param ddn data di nascita dello Studente
+     * @param numValidazioni numero di validazioni dei Green Pass
+     * @param gpValidi Green Pass validi
+     * @param gpNonValidi Green Pass non validi
+     * @return {@code Formato} aggiornato
+     */
+    public static Formato setFormatoCorretto(Formato formato, DirettoreDiDipartimento direttore,
+                                             String anagrafica, String ddn, String numValidazioni,
+                                             String gpValidi, String gpNonValidi){
         if (formato == null) {
             formato = new Formato();
             formato.setId(direttore.getDipartimento().getCodice());
