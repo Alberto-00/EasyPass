@@ -3,6 +3,7 @@ package ApplicationLogic.Servlet;
 import ApplicationLogic.Utils.InvalidRequestException;
 import ApplicationLogic.Utils.ServletLogic;
 import ApplicationLogic.Utils.Validator.DocenteValidator;
+import ApplicationLogic.Utils.Validator.StudenteValidator;
 import Storage.Dipartimento.DipartimentoDAO;
 import Storage.Esito.Esito;
 import Storage.Esito.EsitoDAO;
@@ -171,7 +172,7 @@ public class SessionController extends ServletLogic {
                 if (sessioneDiValidazione != null){
                     Esito esitoValidazione = new Esito();
                     esitoValidazione.setStringaGP(request.getParameter("dgc"));
-                    if (checkGP(esitoValidazione.getStringaGP())) {
+                    if (StudenteValidator.checkGP(esitoValidazione.getStringaGP()).compareTo("Green Pass inviato correttamente.") == 0) {
                         esitoValidazione = sessioneDiValidazione.validaGreenPass(esitoValidazione);
                         esitoValidazione.setStringaGP("");
                         EsitoDAO edDao = new EsitoDAO();
@@ -211,11 +212,6 @@ public class SessionController extends ServletLogic {
         return out.toString();
     }
 
-    private boolean checkGP(String str) {
-        if (str.startsWith("HC1:"))
-            return true;
-        else
-            return false;
-    }
+
 }
 
