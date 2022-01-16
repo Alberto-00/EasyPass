@@ -73,7 +73,7 @@
             form.submit();
         } else {
             URL.revokeObjectURL(img.src);
-            alert("Nessun QR trovato oppure l'immagine non è un Green Pass.")
+            alert("Errore! Formato non valido.")
         }
     }
 </script>

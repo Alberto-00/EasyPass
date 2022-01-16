@@ -4782,6 +4782,894 @@
       "targets": [],
       "value": "La prima data deve essere minore della seconda data."
     }]
+  }, {
+    "id": "944fde88-8280-4741-9e2d-ced7aa3686b1",
+    "name": "TC_5_01 Seleziona formato Report",
+    "commands": [{
+      "id": "69be8cd5-7d61-4e3b-b004-cda480e07422",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "37b5ce47-c419-4930-b27a-80b11b4adba3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "621x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "97cf7eb2-c303-4d6e-ba6c-a89845e1052c",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e04ab333-b943-43f9-a050-0923cd14819e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "c8e81388-4dd5-4cd1-8355-8041084ab90b",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "52c41158-945f-4d43-a98d-adc95b56fe62",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "7e2f8db5-6041-4a35-9ed9-22929fdebdc1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5e1fd3f-520f-4f40-a975-5e6a722a348b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(3)",
+      "targets": [
+        ["css=.btnn:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Formato')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneFormato')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d541a80b-fc8e-4ecd-9521-7b081500a302",
+      "comment": "",
+      "command": "click",
+      "target": "id=anagrafica",
+      "targets": [
+        ["id=anagrafica", "id"],
+        ["name=anagrafica", "name"],
+        ["css=#anagrafica", "css:finder"],
+        ["xpath=//input[@id='anagrafica']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f56b66c-a3a6-45d3-b725-dcc381d632a7",
+      "comment": "",
+      "command": "click",
+      "target": "css=#salvaForm > span",
+      "targets": [
+        ["css=#salvaForm > span", "css:finder"],
+        ["xpath=//button[@id='salvaForm']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'SALVA')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f647241-0e44-4012-9b05-970e4adba826",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=messaggiUtente",
+      "targets": [],
+      "value": "Impossibile salvare il formato! Se è selezionata la data deve essere selezionata anche l'anagrafica."
+    }]
+  }, {
+    "id": "c5ec335f-f47a-4fb9-9fa9-346cc7f77fbc",
+    "name": "TC_5_02 Seleziona formato Report",
+    "commands": [{
+      "id": "4c112e18-1d5b-4d09-9cc1-9df84f8c11b4",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18ac9d37-7b9a-48b4-8b00-02e0360cbc46",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "621x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5e918af1-a788-48f7-9db9-68f1ad2711c6",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc3cc8c0-6e63-489f-903d-5058dc2cbd1b",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "80116abd-e45a-4892-93b2-9cddb3501468",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "080c62d5-e19d-427c-b1cc-1121703b5d60",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "5d7ab3aa-0b5d-4bae-87f7-015e6349c7a5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e4f3942-5652-478d-9cfc-0c80c26d2e01",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(3)",
+      "targets": [
+        ["css=.btnn:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Formato')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneFormato')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5e351352-8535-4a31-aba2-b9b156b0de9f",
+      "comment": "",
+      "command": "click",
+      "target": "id=anagrafica",
+      "targets": [
+        ["id=anagrafica", "id"],
+        ["name=anagrafica", "name"],
+        ["css=#anagrafica", "css:finder"],
+        ["xpath=//input[@id='anagrafica']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02014c6d-19c0-4d75-abda-8f3104190a9f",
+      "comment": "",
+      "command": "click",
+      "target": "id=ddn",
+      "targets": [
+        ["id=ddn", "id"],
+        ["name=ddn", "name"],
+        ["css=#ddn", "css:finder"],
+        ["xpath=//input[@id='ddn']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4dbf035-42ab-4cb7-bbf9-19b2628a3108",
+      "comment": "",
+      "command": "click",
+      "target": "id=numValidazioni",
+      "targets": [
+        ["id=numValidazioni", "id"],
+        ["name=numValidazioni", "name"],
+        ["css=#numValidazioni", "css:finder"],
+        ["xpath=//input[@id='numValidazioni']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d24d606-be0d-4240-9923-bec8b27dd4c9",
+      "comment": "",
+      "command": "click",
+      "target": "id=gpValidi",
+      "targets": [
+        ["id=gpValidi", "id"],
+        ["name=gpValidi", "name"],
+        ["css=#gpValidi", "css:finder"],
+        ["xpath=//input[@id='gpValidi']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "27c946c2-6ae6-4450-8ed1-d85ead623960",
+      "comment": "",
+      "command": "click",
+      "target": "id=gpNonValidi",
+      "targets": [
+        ["id=gpNonValidi", "id"],
+        ["name=gpNonValidi", "name"],
+        ["css=#gpNonValidi", "css:finder"],
+        ["xpath=//input[@id='gpNonValidi']", "xpath:attributes"],
+        ["xpath=//form[@id='gestioneFormato']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "66d99064-1cc0-4700-9040-011be3c2a25a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#salvaForm > span",
+      "targets": [
+        ["css=#salvaForm > span", "css:finder"],
+        ["xpath=//button[@id='salvaForm']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'SALVA')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dba2dddf-9030-4107-8b3d-1c76fe963315",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=messaggiUtente",
+      "targets": [],
+      "value": "Selezionare almeno un campo."
+    }]
+  }, {
+    "id": "74891af6-7129-4e34-b6e6-79a2db8fb544",
+    "name": "TC_3_01 Invio Green Pass",
+    "commands": [{
+      "id": "ffedd8dd-e2d5-4363-8f0c-2b685541db65",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4379aefe-dcac-400e-aad2-c6c58bbd835f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "621x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "44be82da-5957-4d57-bd86-03d57005cd25",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3fbddfc-539b-4d4a-87ef-b939a6813c9c",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "25b1afae-6702-4fdd-8ab0-b9bcea798a3e",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0aa506a-d0de-4f09-9e24-8f58891b356c",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "01b55a80-593f-4a41-9e98-69cf5046779c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "46f45ba0-bf28-495a-accd-6e3c6e23daf2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "20bb7d4d-54a6-4dcb-bec3-10c34b6e1eb5",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b1541ed-f9fa-4fd4-900b-559ab68483f8",
+      "comment": "",
+      "command": "type",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "fb6307e4-7498-4966-88ba-4ff75cea0e6c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3eb4ccce-09ca-4279-8123-3a43930062d6",
+      "comment": "",
+      "command": "storeText",
+      "target": "id=linkQRcode",
+      "targets": [],
+      "value": "path"
+    }, {
+      "id": "52e4a031-5133-485b-bb53-2f19b720ca9b",
+      "comment": "",
+      "command": "open",
+      "target": "${path}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a1a8d8b8-2c09-4f8c-8fce-4ec248f3b177",
+      "comment": "",
+      "command": "click",
+      "target": "id=myButton",
+      "targets": [
+        ["id=myButton", "id"],
+        ["css=#myButton", "css:finder"],
+        ["xpath=//button[@id='myButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Invia Green Pass')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9f6a09a-78f4-489a-934f-25f2afa68874",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Nessun Green Pass inserito.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "09c4609f-1c10-4049-a5f1-d345cc38532b",
+    "name": "TC_3_02 Invio Green Pass",
+    "commands": [{
+      "id": "2e179f60-cbc9-4e76-a6fd-0e006c899056",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5d60bccf-dead-47a0-8beb-726c2b32173d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "621x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae5d0dc3-85d8-45a1-a02e-5ed98c37f204",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8011bc2e-7d7e-4d6d-832c-bda21cbfb5bf",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49928757-1adb-46ad-96bc-d22c796b3b6a",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "5ce557ec-18ca-4079-b155-0a3b2dc4c4c0",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "45f6f550-b2a3-4696-8408-a0fcf60bf280",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "82ce814b-a212-487b-a92a-550c30800756",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3402971-0753-4c4d-9a99-da43a495acc5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb668aae-85bd-497d-b3c2-2835a673a123",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b84411ab-700e-49cd-9395-3c70db6e4f87",
+      "comment": "",
+      "command": "type",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "7e0e816a-746f-4911-8b40-8f7ee1d55140",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3fcb8faa-b178-4e54-8521-850fb7a36864",
+      "comment": "",
+      "command": "storeText",
+      "target": "id=linkQRcode",
+      "targets": [],
+      "value": "path"
+    }, {
+      "id": "339af2eb-e2e6-4822-906b-4dda710bfa86",
+      "comment": "",
+      "command": "open",
+      "target": "${path}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0e57b0f9-6ae4-4db3-8b9c-4a1e7d952dee",
+      "comment": "",
+      "command": "type",
+      "target": "id=actual-btn",
+      "targets": [
+        ["id=actual-btn", "id"],
+        ["name=file", "name"],
+        ["css=#actual-btn", "css:finder"],
+        ["xpath=//input[@id='actual-btn']", "xpath:attributes"],
+        ["xpath=//form[@id='formDgc']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\utente\\Desktop\\Martina\\GreenPass\\NonGP.png"
+    }, {
+      "id": "004ad96d-d05f-4d39-8f53-cd56702e9398",
+      "comment": "",
+      "command": "click",
+      "target": "id=myButton",
+      "targets": [
+        ["id=myButton", "id"],
+        ["css=#myButton", "css:finder"],
+        ["xpath=//button[@id='myButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Invia Green Pass')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3aebacd3-29fa-452e-8843-d6c63cafcde0",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Nessun QR trovato oppure l'immagine non è un Green Pass.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "320f6f9a-9386-4a4b-ad9b-b0a4fb2c6689",
+    "name": "TC_3_03 Invio Green Pass",
+    "commands": [{
+      "id": "aa304fb6-f88a-4a84-9742-d45bd2c9beb2",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fcc1c01a-d8a8-47e1-99f0-d7750f9272b2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "621x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca7d81c1-057c-4912-9edc-9e0c9980471f",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3ad7a46-0e25-4487-83d0-f61ebaa710d4",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "f8af8b12-ffd3-4ba7-af71-d6024bffa178",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4fef3638-d543-4c13-9342-eaeb5a23ff1f",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "c4a0e6c3-ba98-4c8f-af63-c5f4dff3a461",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e8e0f79-3668-4e48-aaa8-06e52db6b566",
+      "comment": "",
+      "command": "click",
+      "target": "css=.avvia-sessione-button",
+      "targets": [
+        ["css=.avvia-sessione-button", "css:finder"],
+        ["xpath=//button[@onclick='showForm()']", "xpath:attributes"],
+        ["xpath=//div[@id='avviaSessioneBTN']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Avvia Sessione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e367cb05-78e3-4986-bcd5-b5a25fc34cc2",
+      "comment": "",
+      "command": "click",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a57da22-5a33-4548-ba46-2f4a76b72ee7",
+      "comment": "",
+      "command": "type",
+      "target": "id=nStudents",
+      "targets": [
+        ["id=nStudents", "id"],
+        ["name=nStudents", "name"],
+        ["css=#nStudents", "css:finder"],
+        ["xpath=//input[@id='nStudents']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "f544c08a-4d5d-42e1-8237-fd47c11ae584",
+      "comment": "",
+      "command": "click",
+      "target": "css=.student-form-button",
+      "targets": [
+        ["css=.student-form-button", "css:finder"],
+        ["xpath=//input[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='NumberOfStudentsForm']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bc29343-e79e-412c-936a-2d80df62cb5a",
+      "comment": "",
+      "command": "storeText",
+      "target": "id=linkQRcode",
+      "targets": [],
+      "value": "path"
+    }, {
+      "id": "85506962-ebb6-4cb8-8e5f-bb3aee2cfe43",
+      "comment": "",
+      "command": "open",
+      "target": "${path}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5cf47405-8001-4953-b151-120581ae31eb",
+      "comment": "",
+      "command": "type",
+      "target": "id=actual-btn",
+      "targets": [
+        ["id=actual-btn", "id"],
+        ["name=file", "name"],
+        ["css=#actual-btn", "css:finder"],
+        ["xpath=//input[@id='actual-btn']", "xpath:attributes"],
+        ["xpath=//form[@id='formDgc']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\utente\\Desktop\\Martina\\GreenPass\\Mio.jpeg"
+    }, {
+      "id": "56ee45bc-8c62-4ae8-bf1c-3aec535098c8",
+      "comment": "",
+      "command": "click",
+      "target": "id=myButton",
+      "targets": [
+        ["id=myButton", "id"],
+        ["css=#myButton", "css:finder"],
+        ["xpath=//button[@id='myButton']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Invia Green Pass')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "47b6c0f1-8bd0-4fb9-9711-5094a20d3d1c",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=p",
+      "targets": [
+        ["css=p", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Green Pass inviato correttamente')]", "xpath:innerText"]
+      ],
+      "value": "Green Pass inviato correttamente"
+    }]
   }],
   "suites": [{
     "id": "e2cf518e-800e-4de0-aa33-6d660b6d821d",
