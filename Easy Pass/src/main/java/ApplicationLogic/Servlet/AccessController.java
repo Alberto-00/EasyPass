@@ -81,7 +81,13 @@ public class AccessController extends ServletLogic {
                  * verrà rimandato alla sua pagina iniziale, altrimenti verrà inviato un messaggio di errore.
                  * */
                 case "/registrazione" -> {
-                    validate(DocenteValidator.validateSignUp(request));
+                    request = validateSignup(DocenteValidator.validateSignUp(request), request);
+
+                    if (request.getAttribute("errorMsg") != null){
+                        System.out.println("sono entrato");
+                        request.getRequestDispatcher(view("AutenticazioneGUI/Autenticazione")).forward(request, response);
+                        break;
+                    }
 
                     Docente docente = new Docente(upperCaseFirstLetter(request.getParameter("nome")),
                             request.getParameter("cognome"), request.getParameter("email2"),

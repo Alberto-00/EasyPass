@@ -3,6 +3,7 @@ package ApplicationLogic.Utils;
 import ApplicationLogic.Utils.Validator.Validator;
 import org.json.simple.JSONObject;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +49,15 @@ public class ServletLogic extends HttpServlet {
             throw new InvalidRequestException("Validation Error", validator.getErrors(),
                     HttpServletResponse.SC_BAD_REQUEST);
         }
+    }
+
+    protected HttpServletRequest validateSignup(Validator validator, HttpServletRequest request) throws InvalidRequestException, ServletException, IOException {
+        if(validator.hasErrors()){
+            System.out.println("errore: " + validator.getErrors().get(0));
+            request.setAttribute("errorMsg", validator.getErrors().get(0));
+            System.out.println(request.getAttribute("errorMsg"));
+        }
+        return request;
     }
 
     /**

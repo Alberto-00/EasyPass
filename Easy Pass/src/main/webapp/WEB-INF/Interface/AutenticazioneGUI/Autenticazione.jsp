@@ -14,6 +14,9 @@
 <body>
 
 <!--LOGIN-->
+<c:if test="${not empty errorMsg}">
+    <br><span class="warning" id="messaggiUtente">${errorMsg}</span>
+</c:if>
 <form name="admin-login" id="login-in" class="login-form" action="${pageContext.request.contextPath}/autenticazione/" method="post">
     <div class="login-form-logo-container">
         <img class="login-form-logo" src="${pageContext.request.contextPath}/icons/logo.svg" alt="logo">
@@ -48,6 +51,7 @@
             <select id="dipartimento" name="dipartimento" class="login-form-input form-select form-select-lg" aria-label=".form-select-lg" required>
                 <option disabled selected value="">Dipartimento</option>
                 <%List<Dipartimento> dipartimenti = (List<Dipartimento>) request.getServletContext().getAttribute("dipartimenti");
+                    System.out.println(dipartimenti);
                     for (Dipartimento dipartimento : dipartimenti) {%>
                 <option value="<%=dipartimento.getCodice()%>">Dipartimento di <%=dipartimento.getNome()%>
                 </option>
