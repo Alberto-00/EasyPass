@@ -2326,6 +2326,2462 @@
       ],
       "value": "La password è errata."
     }]
+  }, {
+    "id": "43b14ccf-d2d5-4edb-b9d3-4a4bd0c1c219",
+    "name": "TC_1_12 Registrazione Docente",
+    "commands": [{
+      "id": "930bd04e-d138-4450-a047-e4a197788af1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e993f5c8-4b0d-4be3-a8ba-7d3405569eb8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "84d9403a-bad4-400b-a695-bba592d81d85",
+      "comment": "",
+      "command": "click",
+      "target": "id=sign-in",
+      "targets": [
+        ["id=sign-in", "id"],
+        ["css=#sign-in", "css:finder"],
+        ["xpath=//button[@id='sign-in']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Registrati')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b967d560-ff68-4179-a978-7be301aeacb9",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d9ca4f90-cb2f-49d8-b4ff-b539b7196cbd",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input", "xpath:position"]
+      ],
+      "value": "Luca"
+    }, {
+      "id": "5d0860ba-7ee0-420f-b5db-92e766b07716",
+      "comment": "",
+      "command": "click",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf2f7c0d-3c39-4b5d-b655-6da74372e027",
+      "comment": "",
+      "command": "type",
+      "target": "id=cognome",
+      "targets": [
+        ["id=cognome", "id"],
+        ["name=cognome", "name"],
+        ["css=#cognome", "css:finder"],
+        ["xpath=//input[@id='cognome']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "Rossi"
+    }, {
+      "id": "0974e780-6333-4d03-a196-9e17ad543b92",
+      "comment": "",
+      "command": "click",
+      "target": "id=dipartimento",
+      "targets": [
+        ["id=dipartimento", "id"],
+        ["name=dipartimento", "name"],
+        ["css=#dipartimento", "css:finder"],
+        ["xpath=//select[@id='dipartimento']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f49e4aab-84fb-4be0-a859-59c347205758",
+      "comment": "",
+      "command": "select",
+      "target": "id=dipartimento",
+      "targets": [],
+      "value": "label=Dipartimento di Informatica"
+    }, {
+      "id": "34a5d9b0-be25-4530-b15b-9bae8e8d907e",
+      "comment": "",
+      "command": "click",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a4b0983-0a3d-4db7-9a23-d15b0124e9e0",
+      "comment": "",
+      "command": "type",
+      "target": "id=email2",
+      "targets": [
+        ["id=email2", "id"],
+        ["name=email2", "name"],
+        ["css=#email2", "css:finder"],
+        ["xpath=//input[@id='email2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "gravino@unisa.it"
+    }, {
+      "id": "a3cf33a8-d6cb-4daa-b1bb-04b1cbe71665",
+      "comment": "",
+      "command": "click",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2963b0c2-c912-4caa-8f70-2c6d68f4e108",
+      "comment": "",
+      "command": "type",
+      "target": "id=password2",
+      "targets": [
+        ["id=password2", "id"],
+        ["name=password2", "name"],
+        ["css=#password2", "css:finder"],
+        ["xpath=//input[@id='password2']", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "e7272d5d-3f99-4013-b85e-90124b6af6b3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(7)",
+      "targets": [
+        ["css=.login-form-button:nth-child(7)", "css:finder"],
+        ["xpath=(//button[@type='submit'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='login-up']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div/form/div[2]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b21c7382-d887-4701-8a99-17a4414d6425",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=errorLog",
+      "targets": [
+        ["id=errorLog", "id"],
+        ["css=#errorLog", "css:finder"],
+        ["xpath=//label[@id='errorLog']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Email già registrata.')]", "xpath:innerText"]
+      ],
+      "value": "Email già registrata."
+    }]
+  }, {
+    "id": "378b3cf8-9c81-43e5-ba5e-07c17b3f02a8",
+    "name": "TC_4.1_01 Ricerca Report solo Docente",
+    "commands": [{
+      "id": "97c29e5d-bba1-4c59-92e8-46a81262899f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "931063e1-0e06-43ae-a935-4fd8b21ed4d8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "786x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b7fd7dee-b7b4-4765-80fe-aeb6dac73c65",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "268f3206-0d60-47e2-8ec5-31bf4fefbb88",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "a76284c9-42d5-4cf0-a05f-dd50df6489e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ea2073a6-a9ae-4a48-9a0f-99cacc67c281",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "2b926361-0c8e-4e39-bf9c-efc559dbcadd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "023388cd-97bf-4b2b-a284-ad188da225dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "036a3f73-c2b1-46b2-84c2-d4396e5bca63",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8759ae24-5bd4-42ae-b53e-c23c00ae1f29",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["id=dateMsg", "id"],
+        ["css=#dateMsg", "css:finder"],
+        ["xpath=//span[@id='dateMsg']", "xpath:attributes"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Inserire un Docente.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire un Docente."
+    }]
+  }, {
+    "id": "ffe64f52-46d0-471b-b05d-4bbc2dea19ea",
+    "name": "TC_4.1_02 Ricerca Report solo docente",
+    "commands": [{
+      "id": "baf3f16e-ff80-47a0-ab8f-43b963ba3867",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "026ca5d0-f2a9-4c16-b1ba-201c3d3f3324",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "789x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b2f4a772-7f0f-4d1c-97ca-fea02b08fe48",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1fc7f144-df86-4632-8503-ac8c8e25568f",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "849c1a1a-5883-4406-ab88-793ea6249263",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "14a1aa04-6b94-4e94-9476-118266f0d0e3",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "5f6940da-58fd-44e6-9008-7d0d235128ae",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8c2aa02-ccc0-403f-9270-c863e49ab015",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3e76de84-a1c7-4db0-a575-9aeb1472e81d",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fce5f591-7142-4c87-bb29-60b384793467",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Gennaro Spina"
+    }, {
+      "id": "63948498-aae1-4ac3-9d7f-72667a9fc818",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c3f2f04-b704-4db7-b4b5-7e8ca1c42c2d",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["id=dateMsg", "id"],
+        ["css=#dateMsg", "css:finder"],
+        ["xpath=//span[@id='dateMsg']", "xpath:attributes"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Il Docente ricercato non esiste.')]", "xpath:innerText"]
+      ],
+      "value": "Il Docente cercato non esiste."
+    }]
+  }, {
+    "id": "4af98e7c-c47c-46ec-b8f6-fbeb3102b3dd",
+    "name": "TC_4.1_03 Ricerca Report solo docente",
+    "commands": [{
+      "id": "fa4d9587-514b-416a-99cb-61d1ecbd45a8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6afeb86e-9053-4711-a26f-9b5c3fb1136a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x845",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a3297d5a-143c-4b8f-a928-b477318a6774",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c465fe3-d91c-40c7-adbd-0fbbe1f9fec8",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "493c1c97-d362-4a47-aebc-291f454e9100",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "391da778-a942-445d-ac27-bc69088fd4cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f87e0253-0336-450b-99b4-0df9c22f2a94",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d825ebe-b758-4816-8fac-289cd0ea2775",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9977db12-70df-4f04-8e20-7f510f12b3ee",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "119bcd76-f77b-4148-9e5a-2153ad55f926",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Gennaro22 Spina"
+    }, {
+      "id": "da312687-7d5d-4928-8989-65307c7712dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "76e7954b-655d-4903-89f7-9f7f028d3a63",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Il nome del Docente non rispetta il formato."
+    }]
+  }, {
+    "id": "ad9d32d9-874b-49d1-829c-d2fe2d58baee",
+    "name": "TC_4.2_01 Ricerca Report solo data",
+    "commands": [{
+      "id": "33e4c480-513e-45ac-a90b-2b0b84562a94",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4acf88fb-78cd-4d54-bf5a-2652de714069",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x847",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2f621ac0-c626-4ef7-bc94-b15b11dbbb73",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83bfe479-49f4-4798-b71b-56cb5ef6f3e7",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "415e30eb-1884-44a4-8eb0-f944e69bcec7",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dbe75a10-0038-47fd-bd7e-0f06cc9775e6",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "c4ccfd7c-2580-4e12-91de-8d1632ca60ea",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e720885c-41bb-49f9-a148-1096b2dccb33",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "beee86c0-ddb0-4448-98a1-3b744ef994a0",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnSearch",
+      "targets": [
+        ["id=btnSearch", "id"],
+        ["css=#btnSearch", "css:finder"],
+        ["xpath=//button[@id='btnSearch']", "xpath:attributes"],
+        ["xpath=//div[3]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0fea659f-d129-4ae6-a8d4-aafd032175d9",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["id=dateMsg", "id"],
+        ["css=#dateMsg", "css:finder"],
+        ["xpath=//span[@id='dateMsg']", "xpath:attributes"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Inserire un Docente.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire un Docente."
+    }]
+  }, {
+    "id": "52b4942a-b915-4c6f-ab1b-baf520c8103e",
+    "name": "TC_4.2_02  Ricerca Report solo data",
+    "commands": [{
+      "id": "a7b1fafc-8c47-4ef8-b2b9-735d826532b3",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1fdd5ef3-6f48-4a36-a1d7-bde2f79feb8b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "782x871",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a21650e3-8008-41be-a410-6302e58b824d",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9d6e0ccf-59de-4d8b-90b4-44be1a00e3c0",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "240d2f3d-5d4a-414a-8c6f-f5db31f960e2",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "76f71b2c-b68c-4605-b1c4-431387f952d2",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "0f0b027f-7a94-4fbe-a598-195ae6b4f764",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5bd6f416-1d7c-419e-93c4-cfdfdc571a94",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8951151d-505f-4489-9f87-103b54d67724",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c21fa3e4-eff7-4514-b497-3fd049289568",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9f2b82b-403f-45eb-b54b-0a1442462333",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["id=dateMsg", "id"],
+        ["css=#dateMsg", "css:finder"],
+        ["xpath=//span[@id='dateMsg']", "xpath:attributes"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Inserire un Docente.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire un Docente."
+    }]
+  }, {
+    "id": "db52cbc5-e885-444a-9032-950d0ae09b33",
+    "name": "TC_4.2_03  Ricerca Report solo data",
+    "commands": [{
+      "id": "2a7b6808-cfea-41f5-bcb6-35f8e9db02c4",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66d0e904-f5c2-479e-9881-e4e1c4408558",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "782x871",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "068900cc-ac49-4398-87a2-8e48819cb3be",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8021c841-d8cb-4cf3-8ae1-6deca1bf5afb",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "b0b9c484-8010-464b-b4c5-b371612b0763",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7926296d-f1fb-4051-9352-9923185407a5",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "41abc133-9801-4d3e-befc-7598782e86f1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7d2cfc3-39e7-470d-b094-2ae94725fdab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b479847b-ff3d-47d5-8cb9-2896ff1c7d9d",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90c43471-49fe-4aaf-8a01-1a3b680f849d",
+      "comment": "",
+      "command": "type",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2022-01-22"
+    }, {
+      "id": "ef488bac-daee-4d9d-bc21-a601c971d9a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90a6235f-d7ef-48f1-85b1-6754f930fda4",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["id=dateMsg", "id"],
+        ["css=#dateMsg", "css:finder"],
+        ["xpath=//span[@id='dateMsg']", "xpath:attributes"],
+        ["xpath=//span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'Inserire la seconda data.')]", "xpath:innerText"]
+      ],
+      "value": "Inserire la seconda data."
+    }]
+  }, {
+    "id": "e9e62a25-0985-4c3a-b048-00ae92b39811",
+    "name": "TC_4.2_04  Ricerca Report solo data",
+    "commands": [{
+      "id": "1f7f0c4c-0fb8-4afa-8b41-4583140253f2",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3632666f-9a33-41aa-ad55-24533382c9cf",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1052x848",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8fe32b5d-3b62-443a-ad82-75c7eee42acc",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "16cc6252-c808-4bdc-a716-a609be691a13",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "ab1c3d44-2e07-4665-a3a2-09235e9e8ecb",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1bfcc43e-a782-4160-acc6-91007746beab",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "198fc2cd-f52e-466d-a456-850c6ac15de6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "be6c5965-5117-4a06-b646-6492aa0e6638",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a21eb7e-64ba-42c4-a5c8-8fd45980608b",
+      "comment": "",
+      "command": "click",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7dcc5db-a57e-4b45-892e-364a3c42bceb",
+      "comment": "",
+      "command": "type",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "2022-01-14"
+    }, {
+      "id": "4f487812-cdef-4956-8d05-ba717efda94b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90d2dbf5-615a-4878-bf91-12a17387a3c9",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [
+        ["css=.col-12", "css:finder"],
+        ["xpath=//div[2]/div", "xpath:position"]
+      ],
+      "value": "Inserire la prima data."
+    }]
+  }, {
+    "id": "d3d613af-73e9-4328-8976-084ffb8fd46b",
+    "name": "TC_4.2_05  Ricerca Report solo data",
+    "commands": [{
+      "id": "92ec03d6-0188-436e-8066-a50f3bb5640c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a73cf8ff-b521-4c86-94eb-1f81502c7337",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "086aa6ba-15a5-4538-973e-b22a8812078b",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "7ffcd66e-672d-4a6b-9022-534cae5eb558",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7398f553-b6a5-404d-bf4f-30820665ae20",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f27f0d00-91a9-4032-a6ad-dac7253382f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c905f504-3d24-4588-9963-2d75d7111875",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "70e259ed-2a18-444b-8ef0-6d204e6cf747",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3d93b7e-829b-4c02-aa71-0b35b8283f5b",
+      "comment": "",
+      "command": "type",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2000-12-30"
+    }, {
+      "id": "0384c46e-3bd9-4a04-9d8d-b0d5c8fc9b94",
+      "comment": "",
+      "command": "click",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49a24a45-b14a-46d6-b011-7ed160a206c3",
+      "comment": "",
+      "command": "type",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "26//12//2000"
+    }, {
+      "id": "f52c4dc4-b59c-47e6-b7e6-a4993d34d051",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30587bc7-fdf1-4a42-b684-8e1484edcbef",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Inserire la seconda data."
+    }]
+  }, {
+    "id": "884e380d-5465-4990-b621-c30a2b7bfe1a",
+    "name": "TC_4.2_06 Ricerca Report solo data",
+    "commands": [{
+      "id": "b5471f2c-a87d-484a-ae50-a99e3bb768f9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3bd6a053-989c-45b3-965f-1a3683d10869",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ccb7c463-2b9d-49c7-81b4-cadb6e3ed7a0",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "53d6670e-77f0-4c95-a638-dc69a115a856",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "565f14ac-1d88-4027-991d-d953c4f65944",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "d55c069e-53f2-493c-85c4-ffca13a98514",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4ee8faed-b863-47ab-914b-b928c48c2739",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6815c622-9aa6-43de-8417-54c46b4701bb",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3031ba2e-39f8-4fcd-b6be-5dc12c087300",
+      "comment": "",
+      "command": "type",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2000-12-30"
+    }, {
+      "id": "8f016292-ee34-43f9-b65e-144fd73f5de7",
+      "comment": "",
+      "command": "click",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2527dec9-98cf-4309-9849-618ef68a6c37",
+      "comment": "",
+      "command": "type",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "1999-10-25"
+    }, {
+      "id": "d9ad025b-fc15-440a-b8b6-6ed6cd0b4ce3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ea98b29-f839-41d4-9d11-b11afb808e97",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "La prima data deve essere minore della seconda data."
+    }]
+  }, {
+    "id": "38c31142-49e3-40e0-836a-762a8eac2c7d",
+    "name": "TC_4.3_01 Ricerca completa Report",
+    "commands": [{
+      "id": "f793f0ca-c239-4b2b-8398-a82c641e7a14",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4e59633c-c039-4992-8efc-86bc2bebde71",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6aabd047-6536-4349-90d5-9145cd1b47be",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "aa4c9494-8f56-4ace-998e-bc9769a4026b",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e78ada2d-7e19-4035-8421-875c49764eac",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "6950abe7-9c89-4276-8941-22a0aa37dd3b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "718f19aa-21b8-4f39-a677-42db54025bf5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ce8e12e-db9a-4f91-a107-377a8e28f9f4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6831094e-b0db-4c95-ad49-1a3ddb4960de",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Inserire un Docente."
+    }]
+  }, {
+    "id": "c5b1ee55-c9e2-4e5e-96a8-285998fb5971",
+    "name": "TC_4.3_02 Ricerca completa Report",
+    "commands": [{
+      "id": "886b4953-d071-4f4b-b7c4-612c844d7ee8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6d373707-f055-4a85-ad51-6f6bf217f224",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c1895f01-5ba8-4290-b7a5-57f25d22246e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "a2ffab14-081f-4b21-a418-84c34035c663",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c05ba41-2dcd-4bbb-8823-79e5dc9ad39f",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f2e03334-d2e6-4375-978b-49c845c741bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e7af048-6845-409f-b197-ea189db20fb0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "da3c2db7-e056-4429-950f-94976d77ce5e",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e420567-205f-44a9-a64e-2fc2b81491f0",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Gennaro Spina"
+    }, {
+      "id": "4dee521c-6ea9-4e1d-8a43-ed32018ff7fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f16cdbe0-a375-48e1-adfb-4f4d7f14510c",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Il Docente cercato non esiste."
+    }]
+  }, {
+    "id": "c705a979-2d0b-4370-9a71-ee3c08402663",
+    "name": "TC_4.3_03 Ricerca completa Report",
+    "commands": [{
+      "id": "80488385-4322-4922-aacc-6fc7a16a59ef",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "efef710b-6b51-4c60-ba95-172443a2db0c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "782x871",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6e102f44-cf75-4c2e-9d6a-b684e85adaae",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f78279a9-0bcd-43ac-8194-483b10b6c569",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "7a6a79a8-9c77-4b2a-94d9-895283865c86",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "68ef9545-4520-4903-a2d7-61a4e7e4e90d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "54a8fd0b-4939-4228-a895-899fa7689392",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c42ab3f-33f1-4787-b5e4-ec4d11ee0b94",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "142f8484-03c5-4774-96ed-b3b9e5751059",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc28ddfe-c776-44c7-98f2-10fbc771bb7c",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Carmine22 Gravino"
+    }, {
+      "id": "3a50b499-707e-4861-ad06-468a722ec1ec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f926c3c-a90d-4d03-8061-53e9578f41dc",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Il nome del Docente non rispetta il formato."
+    }]
+  }, {
+    "id": "9ca60e8d-4e8e-4a14-9914-e724e1f4b5a5",
+    "name": "TC_4.3_06 Ricerca completa Report",
+    "commands": [{
+      "id": "14720282-2d25-4c8e-b35d-b44ebef3b19a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d273301b-e745-4320-a584-a13e23d58910",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9497893d-8909-4d38-8c2a-775415a5cd9b",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f55236f3-2926-4b8f-a279-361b32cab931",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "0f363fab-f373-428d-8879-1798537d8a06",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "853e773b-183f-4399-82dd-341bda8c1d9c",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "20494b8e-0d65-4dff-b2b2-f1d04e0d896f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "11587221-ed50-45dc-b695-ccd0c58eb8a4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c4c0e84-e7f6-4237-9d00-d6fdaa5c0746",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4691f071-3360-4c1a-b6b2-8b5b4836c092",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Carmine Gravino"
+    }, {
+      "id": "9d2e4d49-3e82-495d-b12b-63fb2ca8973a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.columnAjax > p",
+      "targets": [
+        ["css=.columnAjax > p", "css:finder"],
+        ["xpath=//div[@id='filter-records']/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Carmine GRAVINO')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "67fd5aeb-d373-41de-bed9-9168a901b859",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "756bd520-eef0-4c65-baf0-3eb8599f1d47",
+      "comment": "",
+      "command": "type",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2000-12-30"
+    }, {
+      "id": "09ee3811-b2a2-48d8-998f-08f787e1467f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f56a92c-f9c7-4e2c-a6df-a78660cef711",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Inserire la seconda data."
+    }]
+  }, {
+    "id": "a7d098fe-ba11-4db2-aa71-69bf38bec93e",
+    "name": "TC_4.3_07 Ricerca completa Report",
+    "commands": [{
+      "id": "169ae5ce-6b85-4fb9-a501-2e3eca2da716",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f1e1507-771e-4666-bfcc-5edd67cba564",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "312342cf-97e7-4f48-a249-57e25cf3ef18",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1efcaa8f-4a7f-40dd-b671-088af788c925",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "ba8e72a2-f9bc-49e6-8a67-392eb04b1d4e",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e523f29-3794-43d6-81cf-07c0db0108d1",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "53439f8f-8654-4ed6-8319-20ff6d31752d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce123813-dbb3-441f-bb5a-addc7a64b526",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a4d90f94-9e67-41d6-9741-8f5b21e1075a",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fbfe8821-99cf-49e1-bf4a-79cd4284620b",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Carmine Gravino"
+    }, {
+      "id": "452a8b69-9f86-4f72-884a-b3f92d64ebd4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.columnAjax > p",
+      "targets": [
+        ["css=.columnAjax > p", "css:finder"],
+        ["xpath=//div[@id='filter-records']/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Carmine GRAVINO')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "36d09071-0da7-403d-a5fb-b707c3e8a6f0",
+      "comment": "",
+      "command": "click",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e0eeeb2-4182-4515-8ff4-05b69fd0df45",
+      "comment": "",
+      "command": "type",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2000-12-26"
+    }, {
+      "id": "6d21abf1-a961-47d4-81aa-909f2f920760",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1a0c0cb-9994-4e7f-94e2-b65e20610f15",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "Inserire la prima data."
+    }]
+  }, {
+    "id": "fe7bfaf4-9bda-4113-8cb5-4e5dd7405258",
+    "name": "TC_4.3_09 Ricerca completa Report",
+    "commands": [{
+      "id": "53e5b7d9-3f24-494c-9c13-224bd5113c6f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/EasyPass/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "83be183b-122f-4bda-8e0f-9446c7212dba",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "784x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e71ed1e4-b05b-4afa-9299-12f55c11bff3",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0b18317-b2bc-4402-a258-b06e2b56d48e",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "lgargano@unisa.it"
+    }, {
+      "id": "5019fc18-6e5f-4c9b-a784-234a1bba545f",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eaae90ad-c74b-4a96-944e-6a96424eb2f8",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "EasyPass2022!"
+    }, {
+      "id": "f0d127a4-8c4b-4500-90d3-2632bc3123b8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-form-button:nth-child(4)",
+      "targets": [
+        ["css=.login-form-button:nth-child(4)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form[@id='login-in']/div[2]/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Accedi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b680c2a4-bf3d-4d8e-86e7-53101d8555df",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnn:nth-child(2)",
+      "targets": [
+        ["css=.btnn:nth-child(2)", "css:finder"],
+        ["xpath=//a[contains(text(),'Gestione Report')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/EasyPass/reportServlet/GestioneReport')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0afe6f2-4dd7-4358-af35-890b64ada1eb",
+      "comment": "",
+      "command": "click",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "388e6a62-b509-446e-84b7-b9f940d0ea9e",
+      "comment": "",
+      "command": "type",
+      "target": "id=searchBar",
+      "targets": [
+        ["id=searchBar", "id"],
+        ["css=#searchBar", "css:finder"],
+        ["xpath=//input[@id='searchBar']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Carmine Gravino"
+    }, {
+      "id": "6e917194-bf93-4746-9038-ffa2fe2cd673",
+      "comment": "",
+      "command": "click",
+      "target": "css=.columnAjax > p",
+      "targets": [
+        ["css=.columnAjax > p", "css:finder"],
+        ["xpath=//div[@id='filter-records']/div/div/div/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'Carmine GRAVINO')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd8d3a1d-e921-400f-be03-4e114579a786",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab94d2a5-b2ec-4af1-850d-c48e8b90ec7a",
+      "comment": "",
+      "command": "click",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1e3793a-0d56-446e-b07a-38e0b406cd2a",
+      "comment": "",
+      "command": "type",
+      "target": "id=primaData",
+      "targets": [
+        ["id=primaData", "id"],
+        ["name=primaData", "name"],
+        ["css=#primaData", "css:finder"],
+        ["xpath=//input[@id='primaData']", "xpath:attributes"],
+        ["xpath=//div[3]/div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2000-12-30"
+    }, {
+      "id": "d52daba4-5299-40d7-b492-1cf763103f67",
+      "comment": "",
+      "command": "click",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d365c23-5765-4d50-9ba7-8bca0e0cdbdc",
+      "comment": "",
+      "command": "type",
+      "target": "id=secondaData",
+      "targets": [
+        ["id=secondaData", "id"],
+        ["name=secondaData", "name"],
+        ["css=#secondaData", "css:finder"],
+        ["xpath=//input[@id='secondaData']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "1999-10-25"
+    }, {
+      "id": "ef04ff90-e1b5-4dce-a6a4-681fe69f2112",
+      "comment": "",
+      "command": "click",
+      "target": "css=.search",
+      "targets": [
+        ["css=.search", "css:finder"],
+        ["xpath=//img[@alt='search']", "xpath:img"],
+        ["xpath=//button[@id='btnSearch']/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/button/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b71281d-5c00-47f6-8816-edeec739c98f",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=dateMsg",
+      "targets": [],
+      "value": "La prima data deve essere minore della seconda data."
+    }]
   }],
   "suites": [{
     "id": "e2cf518e-800e-4de0-aa33-6d660b6d821d",

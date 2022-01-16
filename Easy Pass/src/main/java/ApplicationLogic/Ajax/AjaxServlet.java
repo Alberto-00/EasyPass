@@ -274,11 +274,11 @@ public class AjaxServlet extends ServletLogic {
         if (nameDoc.compareTo("") == 0)
             return "Inserire un Docente.";
 
-        if (docenteDAO.doRetrieveByNameSurname(name(nameDoc), surname(nameDoc)) == null)
-            return "Il Docente ricercato non esiste.";
-
         if (!Pattern.compile("^[a-zA-Z .']+$").matcher(nameDoc).matches())
             return "Il nome del Docente non rispetta il formato.";
+
+        if (docenteDAO.doRetrieveByNameSurname(name(nameDoc), surname(nameDoc)) == null)
+            return "Il Docente cercato non esiste.";
 
         return null;
     }

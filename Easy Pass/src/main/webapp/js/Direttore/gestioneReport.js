@@ -122,7 +122,7 @@ $(document).ready(function() {
                 var arr = JSON.parse(response);
 
                 if (arr.emptyy === "empty"){
-                    $('#textMsg').text("Non ci sono report generati da questo Docente.").hide().fadeIn(500).delay(1600).fadeOut(500)
+                    $('#textMsg').text("Non ci sono report.").hide().fadeIn(500).delay(1600).fadeOut(500)
                 } else if (arr.dateError != null){
                     $('#dateMsg').text(arr.dateError).hide().fadeIn(500).delay(1600).fadeOut(500)
                 } else {
