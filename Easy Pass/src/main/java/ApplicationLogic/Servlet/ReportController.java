@@ -137,19 +137,26 @@ public class ReportController extends ServletLogic {
             FormatoDAO formatoDAO = new FormatoDAO();
             Formato formato = formatoDAO.doRetrieveById(direttore.getDipartimento().getFormato().getId());
 
-            if (formato == null) {
-                formato = new Formato();
-                formato.setId(direttore.getDipartimento().getCodice());
-            }
-            formato.setNomeCognome(anagrafica != null);
-            formato.setData(ddn != null);
-            formato.setNumStudenti(numValidazioni != null);
-            formato.setNumGPValidi(gpValidi != null);
-            formato.setNumGPNonValidi(gpNonValidi != null);
+
+            formato = setFormatoCorretto(formato, direttore,anagrafica,ddn,numValidazioni,gpValidi,gpNonValidi);
             direttore.impostaFormato(formato);
             gestioneFormato(request, formato);
             return "Il formato è stato salvato correttamente";
         }
+    }
+
+    public static Formato setFormatoCorretto(Formato formato, DirettoreDiDipartimento direttore, String anagrafica, String ddn, String numValidazioni,
+                                   String gpValidi, String gpNonValidi){
+        if (formato == null) {
+            formato = new Formato();
+            formato.setId(direttore.getDipartimento().getCodice());
+        }
+        formato.setNomeCognome(anagrafica != null);
+        formato.setData(ddn != null);
+        formato.setNumStudenti(numValidazioni != null);
+        formato.setNumGPValidi(gpValidi != null);
+        formato.setNumGPNonValidi(gpNonValidi != null);
+        return formato;
     }
 }
 
