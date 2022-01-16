@@ -195,7 +195,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
             
             for (Esito esito : esiti) {
                 table.addCell(new Paragraph(String.valueOf(esito.getId()), fontCell));
-                table.addCell(new Paragraph(String.valueOf(esito.isValidita()), fontCell));
+                table.addCell(new Paragraph((Esito.getValidita(esito.isValidita())), fontCell));
                 table.addCell(new Paragraph(esito.getNomeStudente(), fontCell));
                 table.addCell(new Paragraph(esito.getCognomeStudente(), fontCell));
                 table.addCell(new Paragraph(String.valueOf(esito.getDataDiNascitaStudente()), fontCell));
@@ -210,7 +210,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
 
             for (Esito esito : esiti) {
                 table.addCell(new Paragraph(String.valueOf(esito.getId())));
-                table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
+                table.addCell(new Paragraph((Esito.getValidita(esito.isValidita())), fontCell));
                 table.addCell(new Paragraph(esito.getNomeStudente()));
                 table.addCell(new Paragraph(esito.getCognomeStudente()));
             }
@@ -223,7 +223,7 @@ public class Report implements Comparable<Report>, JSONSerializable {
 
             for (Esito esito : esiti) {
                 table.addCell(new Paragraph(String.valueOf(esito.getId())));
-                table.addCell(new Paragraph(String.valueOf(esito.isValidita())));
+                table.addCell(new Paragraph((Esito.getValidita(esito.isValidita())), fontCell));
             }
             zebraRow(document, table);
         }

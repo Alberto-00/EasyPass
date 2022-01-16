@@ -133,6 +133,12 @@ public class Esito implements JSONSerializable {
         this.validita = validita;
     }
 
+    public static String getValidita(boolean val){
+        if(val)
+            return "valido";
+        return "non valido";
+    }
+
     public Report getReport() {
         return report;
     }
