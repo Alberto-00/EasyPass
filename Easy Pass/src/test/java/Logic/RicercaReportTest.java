@@ -38,13 +38,13 @@ public class RicercaReportTest {
     @Test
     public void checkDocenteNonEsisteTest() {
         String nomeDocente="Martina Mulino"; //non corretto
-        assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente ricercato non esiste.");
+        assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente cercato non esiste.");
     }
 
     @Test
     public void checkDocenteFormatoErratoTest() {
         String nomeDocente="Martina Mulino"; //non corretto
-        assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente ricercato non esiste.");
+        assertEquals(AjaxServlet.checkDocente(nomeDocente,docenteDAO), "Il Docente cercato non esiste.");
     }
 
     @Test

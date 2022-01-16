@@ -143,9 +143,7 @@
                         <exclude>ApplicationLogic/Utils/InvalidRequestException.class</exclude>
                         <exclude>ApplicationLogic/Utils/JSONSerializable.class</exclude>
                         <exclude>ApplicationLogic/Utils/ServletLogic.class</exclude>
-
                         <exclude>ApplicationLogic/Servlet/SessionController.class</exclude>
-
                         <exclude>Storage/Esito/Esito.class</exclude>
                         <exclude>Storage/Esito/EsitoMapper.class</exclude>
                         <exclude>Storage/Dipartimento/DipartimentoMapper.class</exclude>
