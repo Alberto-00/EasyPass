@@ -1791,7 +1791,7 @@
     }]
   }, {
     "id": "830e2720-dc22-4e02-bb6c-aed52e66ea9a",
-    "name": "TC_1_13 Selezione formato Report",
+    "name": "TC_1_13 Registrazione Docente",
     "commands": [{
       "id": "88a23504-7992-49e4-984f-3b1a59bce771",
       "comment": "",
@@ -2298,7 +2298,7 @@
         ["xpath=//form[@id='login-up']/div[2]/input[4]", "xpath:idRelative"],
         ["xpath=//input[4]", "xpath:position"]
       ],
-      "value": "AbcdefghiA"
+      "value": "AbcdefghiA!"
     }, {
       "id": "50a9de24-52e8-44a1-bd5f-fd77c9b49fa6",
       "comment": "",
