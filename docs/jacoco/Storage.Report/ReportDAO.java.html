@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.Report</a> &gt; <span class="el_source">ReportDAO.java</span></div><h1>ReportDAO.java</h1><pre class="source lang-java linenums">package Storage.Report;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.Dipartimento;
+import Storage.PersonaleUnisa.Docente.Docente;
+import Storage.PersonaleUnisa.Docente.DocenteMapper;
+
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.TreeMap;
+
+@interface Generated {}
+
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code report}, e di ricerca
+ * applicando alcuni filtri.
+ */
+<span class="fc" id="L19">public class ReportDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo il {@code Report}
+     * con un determinato {@code id}.
+     *
+     * @param id id del {@code Report}
+     * @return {@code Report}
+     */
+    public Report doRetrieveById(int id) {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if(id &lt; 0)</span>
+<span class="fc" id="L30">            throw new IllegalArgumentException(&quot;The id must not be negative&quot;);</span>
+        else {
+<span class="fc" id="L32">            Connection conn = null;</span>
+<span class="fc" id="L33">            PreparedStatement ps = null;</span>
+<span class="fc" id="L34">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L36">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L37">                String query = &quot;SELECT * FROM report rep WHERE rep.ID_report=?&quot;;</span>
+<span class="fc" id="L38">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L39">                ps.setInt(1, id);</span>
+<span class="fc" id="L40">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L43">                    return ReportMapper.extract(rs);</span>
+                }
+<span class="nc" id="L45">            } catch(SQLException e) {</span>
+<span class="nc" id="L46">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L48">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+            }
+<span class="fc" id="L50">        } return null;</span>
+    }
+
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento.
+     *
+     * @param idDip id del {@code Dipartimento}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; doRetrieveDocByReport(String idDip) {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if(idDip == null)</span>
+<span class="fc" id="L62">            throw new IllegalArgumentException(&quot;The id must not be null&quot;);</span>
+        else {
+<span class="fc" id="L64">            Connection conn = null;</span>
+<span class="fc" id="L65">            PreparedStatement ps = null;</span>
+<span class="fc" id="L66">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L68">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L69">                String query=&quot;SELECT doc.*, rep.* FROM docente doc, report rep &quot; +</span>
+                        &quot;WHERE doc.Username_Doc = rep.Username_Doc &quot; +
+                        &quot;and rep.Codice_Dip = ? ORDER BY rep.ID_report&quot;;
+<span class="fc" id="L72">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L73">                ps.setString(1, idDip);</span>
+<span class="fc" id="L74">                TreeMap&lt;Report, Docente&gt; reportDocenteHashMap = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L75">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                while (rs.next())</span>
+<span class="fc" id="L78">                    reportDocenteHashMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));</span>
+<span class="fc" id="L79">                return reportDocenteHashMap;</span>
+<span class="nc" id="L80">            } catch(SQLException e) {</span>
+<span class="nc" id="L81">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L83">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L84">            } return null;</span>
+        }
+    }
+
+     /**
+     * Salva nel database un nuovo {@code Report}.
+     *
+     * @param report nuovo {@code Report} da salvare
+     * @return {@code true} se il {@code Report} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    public int doCreate (Report report) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (report == null)</span>
+<span class="fc" id="L97">            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);</span>
+        else {
+<span class="fc" id="L99">            Connection conn = null;</span>
+<span class="fc" id="L100">            PreparedStatement ps = null;</span>
+<span class="fc" id="L101">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L103">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L104">                String query = &quot;INSERT INTO report (Orario, Data_report, PathFile, Codice_Dip, Username_Doc) VALUES (?, ?, ?, ?, ?)&quot;;</span>
+<span class="fc" id="L105">                ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);</span>
+<span class="fc" id="L106">                ps.setTime(1, new java.sql.Time(report.getOrario().getTime()));</span>
+<span class="fc" id="L107">                ps.setDate(2, new java.sql.Date(report.getData().getTime()));</span>
+<span class="fc" id="L108">                ps.setString(3, report.getPathFile());</span>
+<span class="fc" id="L109">                ps.setString(4, report.getDip().getCodice());</span>
+<span class="fc" id="L110">                ps.setString(5, report.getDocente().getUsername());</span>
+<span class="fc" id="L111">                ps.executeUpdate();</span>
+<span class="fc" id="L112">                rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L113">                rs.next();</span>
+<span class="fc" id="L114">                return rs.getInt(1);</span>
+<span class="fc" id="L115">            } catch(SQLException e) {</span>
+<span class="fc" id="L116">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L118">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L119">            } return 0;</span>
+        }
+    }
+
+    /**
+     * Aggiorna nel database un {@code Report} esistente
+     *
+     * @param report {@code Report} da aggiornare
+     * @return {@code true} se il {@code Report} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doUpdate (Report report) {
+        if (report == null)
+            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;UPDATE report rep SET rep.Orario=?, rep.Data_report=?, &quot; +
+                        &quot;rep.PathFile=?, rep.Codice_Dip=?, rep.Username_Doc=? WHERE rep.ID_report=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setTime(1, (Time) report.getOrario());
+                ps.setDate(2, (Date) report.getData());
+                ps.setString(3, report.getPathFile());
+                ps.setString(4, report.getDip().getCodice());
+                ps.setString(5, report.getDocente().getUsername());
+                ps.setInt(6, report.getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            }
+        } return false;
+    }
+
+    /**
+     * Aggiorna nel database solo il path di un {@code Report} esistente
+     *
+     * @param report {@code Report} da aggiornare
+     * @return {@code true} se il {@code Report} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    public boolean doUpdatePath (Report report) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (report == null)</span>
+<span class="fc" id="L166">            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);</span>
+        else {
+<span class="fc" id="L168">            Connection conn = null;</span>
+<span class="fc" id="L169">            PreparedStatement ps = null;</span>
+            try {
+<span class="fc" id="L171">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L172">                String query = &quot;UPDATE report rep SET rep.PathFile=? WHERE rep.ID_report=?&quot;;</span>
+<span class="fc" id="L173">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L174">                ps.setString(1, report.getPathFile());</span>
+<span class="fc" id="L175">                ps.setInt(2, report.getId());</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                return ps.executeUpdate() == 1;</span>
+<span class="nc" id="L177">            } catch (SQLException e) {</span>
+<span class="nc" id="L178">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L180">                ConnectionSingleton.closeConnection(conn, ps, null);</span>
+            }
+<span class="nc" id="L182">        } return false;</span>
+    }
+
+    /**
+     * Elimina nel database un {@code Report} esistente
+     *
+     * @param report {@code Report} da eliminare
+     * @return {@code true} se il {@code Report} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    public boolean doDelete (Report report) {
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if (report == null)</span>
+<span class="nc" id="L194">            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);</span>
+        else {
+<span class="fc" id="L196">            Connection conn = null;</span>
+<span class="fc" id="L197">            PreparedStatement ps = null;</span>
+            try {
+<span class="fc" id="L199">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L200">                String query = &quot;DELETE FROM report rep WHERE rep.ID_report=?&quot;;</span>
+<span class="fc" id="L201">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L202">                ps.setInt(1, report.getId());</span>
+
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                return ps.executeUpdate() == 1;</span>
+<span class="nc" id="L205">            } catch (SQLException e) {</span>
+<span class="nc" id="L206">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L208">                ConnectionSingleton.closeConnection(conn, ps, null);</span>
+            }
+<span class="nc" id="L210">        } return false;</span>
+    }
+
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento
+     * con un determinato nome e cognome e generati in un certo periodo di tempo.
+     *
+     * @param docente Docente che ha generato i {@code Report}
+     * @param primaData la prima data dell'intervallo di tempo
+     * @param secondaData la seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; doSearch(Docente docente, java.util.Date primaData, java.util.Date secondaData) {
+<span class="pc bpc" id="L224" title="2 of 6 branches missed.">        if(docente != null &amp;&amp; primaData != null &amp;&amp; secondaData != null){</span>
+<span class="fc" id="L225">            Connection conn = null;</span>
+<span class="fc" id="L226">            PreparedStatement ps = null;</span>
+<span class="fc" id="L227">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L229">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L230">                String query=&quot;SELECT doc.*, rep.* FROM docente doc, report rep &quot; +</span>
+                        &quot;WHERE doc.Username_Doc = rep.Username_Doc &quot; +
+                        &quot;and (rep.Data_report between ? and ?) &quot; +
+                        &quot;and doc.Nome_Doc = ? and doc.Cognome_Doc = ?&quot;;
+
+<span class="fc" id="L235">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L236">                ps.setString(1, convertToString(primaData));</span>
+<span class="fc" id="L237">                ps.setString(2, convertToString(secondaData));</span>
+<span class="fc" id="L238">                ps.setString(3, docente.getNome());</span>
+<span class="fc" id="L239">                ps.setString(4, docente.getCognome());</span>
+
+<span class="fc" id="L241">                TreeMap&lt;Report, Docente&gt; treeMap = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L242">                rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">                while(rs.next())</span>
+<span class="fc" id="L244">                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));</span>
+<span class="fc" id="L245">                return treeMap;</span>
+            }
+<span class="nc" id="L247">            catch (SQLException e) {</span>
+<span class="nc" id="L248">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L250">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+            }
+<span class="nc" id="L252">        }</span>
+        else
+<span class="fc" id="L254">            throw new IllegalArgumentException(&quot;The argument 'primaData', 'secondaData' and 'docente' cannot be null&quot;);</span>
+<span class="nc" id="L255">        return null;</span>
+    }
+
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento
+     * con un determinato nome e cognome.
+     *
+     * @param docente Docente che ha generato i {@code Report}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; doSearchByDocName(Docente docente) {
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if(docente == null)</span>
+<span class="fc" id="L268">            throw new IllegalArgumentException(&quot;The argument 'docente' cannot be null&quot;);</span>
+        else{
+<span class="fc" id="L270">            Connection conn = null;</span>
+<span class="fc" id="L271">            PreparedStatement ps = null;</span>
+<span class="fc" id="L272">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L274">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L275">                String query=&quot;SELECT doc.*, rep.* FROM docente doc, report rep &quot; +</span>
+                        &quot;WHERE doc.Username_Doc = rep.Username_Doc &quot; +
+                        &quot;and doc.Nome_Doc = ? and doc.Cognome_Doc = ?&quot;;
+
+<span class="fc" id="L279">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L280">                ps.setString(1,docente.getNome());</span>
+<span class="fc" id="L281">                ps.setString(2,docente.getCognome());</span>
+<span class="fc" id="L282">                TreeMap&lt;Report, Docente&gt; treeMap = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L283">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L285" title="All 2 branches covered.">                while(rs.next())</span>
+<span class="fc" id="L286">                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));</span>
+<span class="fc" id="L287">                return treeMap;</span>
+<span class="nc" id="L288">            }  catch (SQLException e) {</span>
+<span class="nc" id="L289">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L291">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L292">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo un insieme di {@code Report}
+     * e di {@code Docenti} di un determinato Dipartimento generati in un certo
+     * periodo di tempo.
+     *
+     * @param primaData la prima data dell'intervallo di tempo
+     * @param secondaData la seconda data dell'intervallo di tempo
+     * @param dipartimento dipartimento in cui ricercare i {@code Report}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; doSearchByDate(java.util.Date primaData, java.util.Date secondaData, Dipartimento dipartimento) {
+<span class="pc bpc" id="L307" title="1 of 4 branches missed.">        if(primaData == null &amp;&amp; secondaData == null){</span>
+<span class="fc" id="L308">            throw new IllegalArgumentException(&quot;The argument 'primaData' and 'secondaData' cannot be null.&quot;);</span>
+        }
+        else{
+<span class="fc" id="L311">            Connection conn = null;</span>
+<span class="fc" id="L312">            PreparedStatement ps = null;</span>
+<span class="fc" id="L313">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L315">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L316">                String query=&quot;SELECT doc.*, rep.* FROM docente doc, report rep &quot; +</span>
+                        &quot;WHERE doc.Username_Doc = rep.Username_Doc &quot; +
+                        &quot;and doc.Codice_Dip = ? and (rep.Data_report between ? and ?)&quot;;
+
+<span class="fc" id="L320">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L321">                ps.setString(1, dipartimento.getCodice());</span>
+<span class="fc" id="L322">                ps.setString(2, convertToString(primaData));</span>
+<span class="fc" id="L323">                ps.setString(3, convertToString(secondaData));</span>
+<span class="fc" id="L324">                TreeMap&lt;Report, Docente&gt; treeMap = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L325">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L327" title="All 2 branches covered.">                while(rs.next())</span>
+<span class="fc" id="L328">                    treeMap.put(ReportMapper.extract(rs), DocenteMapper.extract(rs));</span>
+<span class="fc" id="L329">                return treeMap;</span>
+<span class="nc" id="L330">            } catch (SQLException e) {</span>
+<span class="nc" id="L331">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L333">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L334">            } return null;</span>
+        }
+    }
+
+    @Generated
+    private String convertToString(java.util.Date date){
+        String pattern = &quot;yyyy-MM-dd&quot;;
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(date);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DipartimentoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.Dipartimento</a> &gt; <span class="el_source">DipartimentoDAO.java</span></div><h1>DipartimentoDAO.java</h1><pre class="source lang-java linenums">package Storage.Dipartimento;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Formato.FormatoDAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+
+/**
+ * La classe effettua operazioni {@literal CRUD} sulla tabella {@code dipartimento}
+ */
+
+@interface Generated {}
+<span class="fc" id="L18">public class DipartimentoDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo il {@code Dipartimento}
+     * con un determinato {@code codice}: il {@code Dipartimento} non &amp;egrave; riempito
+     * con le foreign key a cui &amp;egrave; associato.
+     *
+     * @param codice identificativo del {@code Dipartimento}
+     * @return {@code Dipartimento}
+     */
+    public Dipartimento doRetrieveById(String codice) {
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if(codice == null)</span>
+<span class="fc" id="L30">            throw new IllegalArgumentException(&quot;The id must not be null&quot;);</span>
+        else {
+<span class="fc" id="L32">            Connection conn = null;</span>
+<span class="fc" id="L33">            PreparedStatement ps = null;</span>
+<span class="fc" id="L34">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L36">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L37">                String query = &quot;SELECT * FROM dipartimento dip WHERE dip.Codice_Dip=?&quot;;</span>
+<span class="fc" id="L38">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L39">                ps.setString(1, codice);</span>
+<span class="fc" id="L40">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (rs.next())</span>
+<span class="fc" id="L43">                    return DipartimentoMapper.extract(rs);</span>
+<span class="nc" id="L44">            } catch (SQLException e){</span>
+<span class="nc" id="L45">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L47">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+            }
+        }
+<span class="fc" id="L50">         return null;</span>
+    }
+
+
+    /**
+     * Effettua una query al database restituendo il {@code Dipartimento}
+     * con un determinato {@code codice}: il {@code Dipartimento} &amp;egrave; riempito
+     * anche con la foreign key {@code Formato}a cui &amp;egrave; associato.
+     *
+     * @param codice identificativo del {@code Dipartimento}
+     * @return {@code Dipartimento}
+     */
+    public Dipartimento doRetrieveByKeyWithRelations(String codice) {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if(codice == null)</span>
+<span class="fc" id="L64">            throw new IllegalArgumentException(&quot;The id must not be null&quot;);</span>
+        else {
+<span class="fc" id="L66">            Connection conn = null;</span>
+<span class="fc" id="L67">            PreparedStatement ps = null;</span>
+<span class="fc" id="L68">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L70">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L71">                String query = &quot;SELECT * FROM dipartimento dip, formato form&quot; +</span>
+                        &quot; WHERE dip.Codice_Dip=? and dip.ID_formato = form.ID_formato&quot;;
+<span class="fc" id="L73">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L74">                ps.setString(1, codice);</span>
+<span class="fc" id="L75">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L78">                    Dipartimento dipartimento = DipartimentoMapper.extract(rs);</span>
+<span class="fc" id="L79">                    dipartimento.setFormato(new FormatoDAO().doRetrieveById(rs.getString(&quot;dip.ID_Formato&quot;)));</span>
+<span class="fc" id="L80">                    return dipartimento;</span>
+                }
+<span class="nc" id="L82">            } catch (SQLException e){</span>
+<span class="nc" id="L83">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L85">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+            }
+<span class="fc" id="L87">            return null;</span>
+        }
+    }
+
+    /**
+     * Ritorna tutti i {@code Dipartimenti} situati nel database:
+     * ogni {@code Dipartimento} &amp;egrave; riempito solo con gli attributi propri
+     * della classe, senza le foreign key a cui &amp;egrave; associato.
+     *
+     * @return lista di {@code Dipartimenti}
+     */
+    public ArrayList&lt;Dipartimento&gt; doRetrieveAll() {
+<span class="fc" id="L99">        Connection conn = null;</span>
+<span class="fc" id="L100">        PreparedStatement ps = null;</span>
+<span class="fc" id="L101">        ResultSet rs = null;</span>
+        try {
+<span class="fc" id="L103">            conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L104">            String query = &quot;SELECT * FROM dipartimento dip&quot;;</span>
+<span class="fc" id="L105">            ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L106">            rs = ps.executeQuery();</span>
+<span class="fc" id="L107">            ArrayList&lt;Dipartimento&gt; dipartimenti = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            while (rs.next())</span>
+<span class="fc" id="L110">                dipartimenti.add(DipartimentoMapper.extract(rs));</span>
+
+<span class="fc" id="L112">            return dipartimenti;</span>
+<span class="nc" id="L113">        } catch (SQLException e){</span>
+<span class="nc" id="L114">            e.printStackTrace();</span>
+        } finally {
+<span class="fc" id="L116">            ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L117">        } return null;</span>
+    }
+
+
+    /**
+     * Salva nel database un nuovo {@code Dipartimento}.
+     *
+     * @param dipartimento nuovo {@code Dipartimento} da salvare
+     * @return {@code true} se il {@code Dipartimento} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doCreate (Dipartimento dipartimento) {
+        if (dipartimento == null)
+            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;INSERT INTO dipartimento VALUES (?, ?, ?)&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, dipartimento.getCodice());
+                ps.setString(2, dipartimento.getNome());
+                ps.setString(3, dipartimento.getFormato().getId());
+
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Viene modificato un {@code Dipartimento} già presente nel
+     * database.
+     *
+     * @param dipartimento {@code Dipartimento} da modificare
+     * @return {@code true} se il {@code Dipartimento} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doUpdate (Dipartimento dipartimento) {
+        if (dipartimento == null)
+            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;UPDATE dipartimento dip SET dip.Nome=? WHERE dip.Codice_Dip=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, dipartimento.getNome());
+                ps.setString(2, dipartimento.getCodice());
+
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Viene eliminato un {@code Dipartimento} dal database.
+     *
+     * @param dipartimento {@code Dipartimento} da eliminare
+     * @return {@code true} se il {@code Dipartimento} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doDelete (Dipartimento dipartimento)  {
+        if (dipartimento == null)
+            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = ConnectionSingleton.getInstance().getConnection();
+            String query = &quot;DELETE FROM dipartimento dip WHERE dip.Codice_Dip=?&quot;;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, dipartimento.getCodice());
+
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            ConnectionSingleton.closeConnection(conn, ps, null);
+        } return false;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

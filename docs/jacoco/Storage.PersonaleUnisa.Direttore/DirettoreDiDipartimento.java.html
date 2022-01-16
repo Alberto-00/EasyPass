@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirettoreDiDipartimento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.PersonaleUnisa.Direttore</a> &gt; <span class="el_source">DirettoreDiDipartimento.java</span></div><h1>DirettoreDiDipartimento.java</h1><pre class="source lang-java linenums">package Storage.PersonaleUnisa.Direttore;
+
+import ApplicationLogic.Utils.InvalidRequestException;
+import Storage.Formato.Formato;
+import Storage.PersonaleUnisa.Docente.Docente;
+import Storage.PersonaleUnisa.PersonaleUnisa;
+import Storage.Report.Report;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.List;
+import java.util.TreeMap;
+
+/**
+ * La classe crea degli oggetti {@code DirettoreDiDipartimento} estendendo la classe astratta
+ * {@code PersonaleUnisa}, inoltre, tale classe funge da wrapper per alcuni metodi della classe
+ * {@code Dipartimento}. I metodi forniti da questa classe consentono agli oggetti {@code DirettoreDiDipartimento}
+ * di effettuare operazioni relative alla gestione dei Report e del Formato.
+ *
+ * @see PersonaleUnisa
+ * @see Storage.Dipartimento.Dipartimento
+ */
+public class DirettoreDiDipartimento extends PersonaleUnisa {
+
+    /**
+     * Costruttore vuoto.
+     */
+<span class="fc" id="L28">    public DirettoreDiDipartimento() {</span>
+<span class="fc" id="L29">        this.setNome(&quot;&quot;);</span>
+<span class="fc" id="L30">        this.setCognome(&quot;&quot;);</span>
+<span class="fc" id="L31">        this.setUsername(&quot;&quot;);</span>
+<span class="fc" id="L32">        this.setPassword(&quot;&quot;);</span>
+<span class="fc" id="L33">        this.setDipartimento(null);</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Elimina un Report dal database e dalla cartella dei Report di Tomcat.
+     *
+     * @param report {@code Report} da eliminare
+     */
+    public void eliminaReport(Report report) {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(report == null)</span>
+<span class="fc" id="L43">            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);</span>
+        else
+<span class="fc" id="L45">            this.getDipartimento().eliminaReport(report);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Aggiorna il {@code Formato} del Dipartimento in cui risiede
+     * il Direttore.
+     *
+     * @param formato {@code Formato} da aggiornare
+     */
+    public void impostaFormato(Formato formato) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if(formato == null)</span>
+<span class="fc" id="L56">            throw new IllegalArgumentException(&quot;The argument cannot be a null object&quot;);</span>
+        else
+<span class="fc" id="L58">            this.getDipartimento().impostaFormato(formato);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera sul nome e sul cognome del Docente e su un range di
+     * date per i quali sono stati generati i Report.
+     *
+     * @param docente {@code Docente} che ha generato un sottoinsieme di {@code Report}
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaCompletaReport(Docente docente, Date primaData, Date secondaData) throws InvalidRequestException {
+<span class="fc bfc" id="L74" title="All 6 branches covered.">        if(docente != null &amp;&amp; primaData != null &amp;&amp; secondaData != null){</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)</span>
+<span class="fc" id="L76">               return this.getDipartimento().ricercaCompletaReport(docente, primaData, secondaData);</span>
+            else
+<span class="fc" id="L78">                throw new InvalidRequestException(&quot;La prima data è minore della seconda data.&quot;, List.of(&quot;La prima data è minore della seconda data.&quot;), HttpServletResponse.SC_BAD_REQUEST);</span>
+        } else
+<span class="fc" id="L80">            throw new IllegalArgumentException(&quot;The arguments 'docente', 'primaData' and 'secondaData' cannot be null.&quot;);</span>
+    }
+
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera sul nome e sul cognome del Docente.
+     *
+     * @param docente {@code Docente} che ha generato un sottoinsieme di {@code Report}
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaReportSoloDocente(Docente docente) {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if(docente != null)</span>
+<span class="fc" id="L94">            return this.getDipartimento().ricercaReportSoloDocente(docente);</span>
+        else
+<span class="fc" id="L96">            throw new IllegalArgumentException(&quot;The arguments 'codDip' cannot be null.&quot;);</span>
+    }
+
+    /**
+     * Cerca un insieme ordinato di Report e di Docenti secondo un filtro: viene creato
+     * un TreeMap contenente la lista dei Report e dei Docenti che hanno generato quei
+     * Report.
+     * Il filtro usato per la ricerca opera su un intervallo di tempo per i quali sono
+     * stati generati i Report.
+     *
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaReportSoloData(Date primaData, Date secondaData) {
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">        if(primaData.before(secondaData) || primaData.compareTo(secondaData) == 0)</span>
+<span class="fc" id="L112">           return this.getDipartimento().ricercaReportSoloData(primaData, secondaData);</span>
+        else
+<span class="fc" id="L114">            throw new IllegalArgumentException(&quot;The arguments 'codDip' cannot be null.&quot;);</span>
+    }
+
+    /**
+     * Cerca tutti Report generati dai Docenti del Dipartimento del {@code DirettoreDiDipartimento}.
+     * @return {@code TreeMap} avente come key i {@code Report} e value i {@code Docenti}
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaReport() {
+<span class="fc" id="L122">        return this.getDipartimento().ricercaReport();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

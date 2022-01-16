@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EsitoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.Esito</a> &gt; <span class="el_source">EsitoDAO.java</span></div><h1>EsitoDAO.java</h1><pre class="source lang-java linenums">package Storage.Esito;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
+
+import java.sql.*;
+import java.util.ArrayList;
+@interface Generated {}
+/**
+ * La classe effettua operazioni {@literal CRUD} sulla tabella {@code esito}
+ */
+<span class="fc" id="L12">public class EsitoDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo l'{@code Esito}
+     * con un determinato {@code ID}: l'{@code Esito} non &amp;egrave; riempito
+     * con le foreign key a cui &amp;egrave; associato.
+     *
+     * @param id identificativo dell'{@code Esito}
+     * @return {@code Esito}
+     */
+    public Esito doRetrieveByKey(int id) {
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if(id &lt; 0)</span>
+<span class="fc" id="L24">            throw new IllegalArgumentException(&quot;The ID must not be a negative number&quot;);</span>
+        else{
+<span class="fc" id="L26">            Connection conn = null;</span>
+<span class="fc" id="L27">            PreparedStatement ps = null;</span>
+<span class="fc" id="L28">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L30">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L31">                String query = &quot;SELECT * FROM esito esi WHERE esi.ID_Esito=?&quot;;</span>
+<span class="fc" id="L32">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L33">                ps.setInt(1, id);</span>
+<span class="fc" id="L34">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                if (rs.next())</span>
+<span class="fc" id="L37">                    return EsitoMapper.extract(rs);</span>
+<span class="nc" id="L38">            } catch (SQLException e){</span>
+<span class="nc" id="L39">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L41">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L42">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo gli {@code Esiti}
+     * appartenenti a una determinata {@code Sessione di Validazione}.
+     *
+     * @param sessione Sessione di Validazione a cui &amp;egrave; associato l'{@code Esito}
+     * @return lista di {@code Esiti} appartenenti a quella Sessione di Validaizione
+     */
+    public ArrayList&lt;Esito&gt; doRetrieveAllBySession(SessioneDiValidazione sessione) {
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if(sessione == null)</span>
+<span class="fc" id="L55">            throw new IllegalArgumentException(&quot;The parameter 'sessione' must not be null.&quot;);</span>
+        else{
+<span class="fc" id="L57">            Connection conn = null;</span>
+<span class="fc" id="L58">            PreparedStatement ps = null;</span>
+<span class="fc" id="L59">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L61">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L62">                String query = &quot;SELECT esi.* FROM esito esi, sessione ses &quot; +</span>
+                        &quot;WHERE esi.QRcodeSession = ses.QRcode and ses.QRcode = ?&quot;;
+<span class="fc" id="L64">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L65">                ps.setString(1, sessione.getQRCode());</span>
+<span class="fc" id="L66">                rs = ps.executeQuery();</span>
+<span class="fc" id="L67">                ArrayList&lt;Esito&gt; esiti = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                while (rs.next())</span>
+<span class="fc" id="L70">                    esiti.add(EsitoMapper.extract(rs));</span>
+<span class="fc" id="L71">                return esiti;</span>
+<span class="nc" id="L72">            } catch (SQLException e){</span>
+<span class="nc" id="L73">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L75">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L76">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo gli {@code Esiti}
+     * appartenenti a una determinata {@code Sessione di Validazione}
+     * e a un determinato {@code Studente}.
+     *
+     * @param esito {@code Esito} da ricercare
+     * @return lista di {@code Esiti} di un determinato {@code Studente}
+     */
+    public ArrayList&lt;Esito&gt; doRetrieveAllByPersonalData(Esito esito) {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if(esito == null)</span>
+<span class="fc" id="L90">            throw new IllegalArgumentException(&quot;The parameter 'esito' must not be null.&quot;);</span>
+        else{
+<span class="fc" id="L92">            Connection conn = null;</span>
+<span class="fc" id="L93">            PreparedStatement ps = null;</span>
+<span class="fc" id="L94">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L96">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L97">                String query = &quot;SELECT esi.* FROM esito esi, sessione ses &quot; +</span>
+                        &quot;WHERE esi.QRcodeSession = ses.QRcode and ses.QRcode = ?&quot; +
+                        &quot;AND esi.Cognome_Studente = ?&quot; +
+                        &quot;AND esi.Nome_Studente = ?&quot; +
+                        &quot;AND esi.Ddn_Studente = ?&quot;;
+<span class="fc" id="L102">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L103">                ps.setString(1, esito.getSessione().getQRCode());</span>
+<span class="fc" id="L104">                ps.setString(2, esito.getCognomeStudente());</span>
+<span class="fc" id="L105">                ps.setString(3, esito.getNomeStudente());</span>
+<span class="fc" id="L106">                ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));</span>
+<span class="fc" id="L107">                rs = ps.executeQuery();</span>
+<span class="fc" id="L108">                ArrayList&lt;Esito&gt; esiti = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                while (rs.next())</span>
+<span class="fc" id="L111">                    esiti.add(EsitoMapper.extract(rs));</span>
+<span class="fc" id="L112">                return esiti;</span>
+<span class="nc" id="L113">            } catch (SQLException e){</span>
+<span class="nc" id="L114">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L116">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L117">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database ritornando il numero di {@code Esiti}
+     * validi o non validi
+     *
+     * @param idReport identificativo del {@code Report} contenente gli {@code Esiti}
+     * @param flag booleano impostato su {@code true} per ritornare il numero di {@code Esiti validi},
+     *             altrimenti impostato su {@code false} per ritornare il numero di {@code Esiti non validi},
+     * @return numero di {@code Esiti} validi o non validi
+     */
+    public int contaEsitiValidi(int idReport, boolean flag) {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if(idReport &lt; 0){</span>
+<span class="fc" id="L132">            throw new IllegalArgumentException(&quot;The ID must not be a negative number&quot;);</span>
+        } else{
+<span class="fc" id="L134">            Connection conn = null;</span>
+<span class="fc" id="L135">            PreparedStatement ps = null;</span>
+<span class="fc" id="L136">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L138">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L139">                String query = &quot;SELECT COUNT(*) as Count FROM esito esi, report rep &quot; +</span>
+                        &quot;WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ? AND Valido=?&quot;;
+
+<span class="fc" id="L142">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L143">                ps.setInt(1, idReport);</span>
+<span class="fc" id="L144">                ps.setBoolean(2, flag);</span>
+<span class="fc" id="L145">                rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">                if (rs.next())</span>
+<span class="fc" id="L147">                    return rs.getInt(&quot;Count&quot;);</span>
+<span class="nc" id="L148">            } catch (SQLException e){</span>
+<span class="nc" id="L149">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L151">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L152">            } return -1;</span>
+        }
+    }
+
+    /**
+     * Ritorna il numero di {@code Esiti} che contiene un {@code Report}
+     *
+     * @param idReport Report da analizzare
+     * @return numero di {@code Esiti}
+     */
+    public int numEsiti (int idReport) {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if(idReport &lt; 0){</span>
+<span class="fc" id="L164">            throw new IllegalArgumentException(&quot;The ID must not be a negative number&quot;);</span>
+        } else{
+<span class="fc" id="L166">            Connection conn = null;</span>
+<span class="fc" id="L167">            PreparedStatement ps = null;</span>
+<span class="fc" id="L168">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L170">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L171">                String query = &quot;SELECT COUNT(*) as Count FROM esito esi, report rep &quot; +</span>
+                        &quot;WHERE esi.ID_Report = rep.ID_report and rep.ID_report = ?&quot;;
+
+<span class="fc" id="L174">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L175">                ps.setInt(1, idReport);</span>
+<span class="fc" id="L176">                rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">                if (rs.next())</span>
+<span class="fc" id="L178">                    return rs.getInt(&quot;Count&quot;);</span>
+<span class="nc" id="L179">            } catch (SQLException e){</span>
+<span class="nc" id="L180">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L182">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L183">            } return -1;</span>
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code Esito}.
+     *
+     * @param esito nuovo {@code Esito} da salvare
+     * @return {@code true} se l'{@code Esito} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    public int doCreate(Esito esito) {
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        if(esito == null)</span>
+<span class="fc" id="L196">            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);</span>
+        else {
+<span class="fc" id="L198">            Connection conn = null;</span>
+<span class="fc" id="L199">            PreparedStatement ps = null;</span>
+<span class="fc" id="L200">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L202">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L203">                String query = &quot;INSERT INTO esito (Valido, ID_Report, Nome_Studente, &quot; +</span>
+                        &quot;Cognome_Studente, Ddn_Studente, QRcodeSession) VALUES (?,?,?,?,?,?)&quot;;
+<span class="fc" id="L205">                ps = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);</span>
+<span class="fc" id="L206">                ps.setBoolean(1, esito.isValidita());</span>
+<span class="fc" id="L207">                ps.setInt(2, esito.getReport().getId());</span>
+<span class="fc" id="L208">                ps.setString(3, esito.getNomeStudente());</span>
+<span class="fc" id="L209">                ps.setString(4, esito.getCognomeStudente());</span>
+<span class="fc" id="L210">                ps.setDate(5, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));</span>
+<span class="fc" id="L211">                ps.setString(6, esito.getSessione().getQRCode());</span>
+<span class="fc" id="L212">                ps.executeUpdate();</span>
+
+<span class="fc" id="L214">                rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L215">                rs.next();</span>
+<span class="fc" id="L216">                return rs.getInt(1);</span>
+
+
+<span class="nc" id="L219">            } catch (SQLException e){</span>
+<span class="nc" id="L220">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L222">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L223">            } return -1;</span>
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code Esito} senza la foreign key
+     * del {@code Report}.
+     *
+     * @param esito nuovo {@code Esito} da salvare
+     * @return {@code true} se l'{@code Esito} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    public int doCreateWithoutReport(Esito esito) {
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        if(esito == null){</span>
+<span class="fc" id="L237">            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);</span>
+        }
+        else{
+<span class="fc" id="L240">            Connection conn = null;</span>
+<span class="fc" id="L241">            PreparedStatement ps = null;</span>
+<span class="fc" id="L242">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L244">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L245">                String query = &quot;INSERT INTO esito (Valido, Nome_Studente, &quot; +</span>
+                        &quot;Cognome_Studente, Ddn_Studente, QRcodeSession) VALUES (?,?,?,?,?)&quot;;
+<span class="fc" id="L247">                ps = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);</span>
+<span class="fc" id="L248">                ps.setBoolean(1, esito.isValidita());</span>
+<span class="fc" id="L249">                ps.setString(2, esito.getNomeStudente());</span>
+<span class="fc" id="L250">                ps.setString(3, esito.getCognomeStudente());</span>
+<span class="fc" id="L251">                ps.setDate(4, new java.sql.Date(esito.getDataDiNascitaStudente().getTime()));</span>
+<span class="fc" id="L252">                ps.setString(5, esito.getSessione().getQRCode());</span>
+<span class="fc" id="L253">                ps.executeUpdate();</span>
+
+<span class="fc" id="L255">                rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L256">                rs.next();</span>
+<span class="fc" id="L257">                return rs.getInt(1);</span>
+<span class="nc" id="L258">            } catch (SQLException e){</span>
+<span class="nc" id="L259">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L261">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L262">            } return -1;</span>
+        }
+    }
+
+    /**
+     * Viene modificato un {@code Esito} già presente nel
+     * database.
+     *
+     * @param esito {@code Esito} da modificare
+     * @return {@code true} se l'{@code Esito} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doUpdate(Esito esito) {
+        if(esito == null)
+            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;UPDATE esito SET Valido=?, ID_Report=?, &quot; +
+                        &quot;Nome_Studente=?, Cognome_Studente=?, Ddn_Studente=?, QRcodeSession = ? WHERE ID_Esito=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setBoolean(1, esito.isValidita());
+                ps.setInt(2, esito.getReport().getId());
+                ps.setString(3, esito.getNomeStudente());
+                ps.setString(4, esito.getNomeStudente());
+                ps.setDate(5, (Date) esito.getDataDiNascitaStudente());
+                ps.setString(6, esito.getSessione().getQRCode());
+                ps.setInt(7, esito.getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Viene modificata solo la foreign key {@code Report} associata all'{@code Esito}.
+     *
+     * @param esito {@code Esito} da modificare
+     * @return {@code true} se l'{@code Esito} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    public boolean doUpdateOnlyReport(Esito esito) {
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        if(esito == null)</span>
+<span class="fc" id="L311">            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);</span>
+        else{
+<span class="fc" id="L313">            Connection conn = null;</span>
+<span class="fc" id="L314">            PreparedStatement ps = null;</span>
+            try {
+<span class="fc" id="L316">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L317">                String query = &quot;UPDATE esito SET ID_Report=? WHERE ID_Esito=?&quot;;</span>
+<span class="fc" id="L318">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L319">                ps.setInt(1, esito.getReport().getId());</span>
+<span class="fc" id="L320">                ps.setInt(2, esito.getId());</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">                return ps.executeUpdate() == 1;</span>
+<span class="nc" id="L322">            } catch (SQLException e){</span>
+<span class="nc" id="L323">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L325">                ConnectionSingleton.closeConnection(conn, ps, null);</span>
+<span class="nc" id="L326">            } return false;</span>
+        }
+    }
+
+    /**
+     * Viene eliminato un {@code Esito} dal database.
+     *
+     * @param esito {@code Esito} da eliminare
+     * @return {@code true} se l'{@code Esito} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doDelete(Esito esito) {
+        if(esito==null)
+            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;DELETE FROM esito WHERE ID_Esito=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, esito.getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e){
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

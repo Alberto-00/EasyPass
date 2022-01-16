@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormatoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.Formato</a> &gt; <span class="el_source">FormatoDAO.java</span></div><h1>FormatoDAO.java</h1><pre class="source lang-java linenums">package Storage.Formato;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@interface Generated {}
+
+/**
+ * La classe effettua operazioni {@literal CRUD} sulla tabella {@code formato}
+ */
+<span class="fc" id="L15">public class FormatoDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo il {@code Formato}
+     * con un determinato {@code ID}.
+     *
+     * @param id identificativo del {@code Formato}
+     * @return {@code Formato}
+     */
+    public Formato doRetrieveById(String id) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if(id == null)</span>
+<span class="fc" id="L26">            throw new IllegalArgumentException(&quot;The id must not be null&quot;);</span>
+        else {
+<span class="fc" id="L28">            Connection conn = null;</span>
+<span class="fc" id="L29">            PreparedStatement ps = null;</span>
+<span class="fc" id="L30">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L32">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L33">                String query = &quot;SELECT * FROM formato form WHERE form.ID_formato=?&quot;;</span>
+<span class="fc" id="L34">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L35">                ps.setString(1, id);</span>
+<span class="fc" id="L36">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">                if (rs.next())</span>
+<span class="fc" id="L39">                    return FormatoMapper.extract(rs);</span>
+<span class="nc" id="L40">            } catch (SQLException e) {</span>
+<span class="nc" id="L41">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L43">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L44">            } return null;</span>
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code Formato}.
+     *
+     * @param formato nuovo {@code Formato} da salvare
+     * @return {@code true} se il {@code Formato} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    @Generated
+     public boolean doCreate (Formato formato) { //Non viene testato perchè non è usato da nessuna parte
+        if (formato == null)
+            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;INSERT INTO formato VALUES (?,?, ?, ?, ?, ?)&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1,formato.getId());
+                ps.setBoolean(2, formato.isNumStudenti());
+                ps.setBoolean(3, formato.isNumGPValidi());
+                ps.setBoolean(4, formato.isNumGPNonValidi());
+                ps.setBoolean(5, formato.isNomeCognome());
+                ps.setBoolean(6, formato.isData());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code Formato}.
+     *
+     * @param formato nuovo {@code Formato} da salvare
+     * @return {@code true} se il {@code Formato} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    public boolean doUpdate (Formato formato) {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (formato == null)</span>
+<span class="fc" id="L90">            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);</span>
+        else {
+<span class="fc" id="L92">            Connection conn = null;</span>
+<span class="fc" id="L93">            PreparedStatement ps = null;</span>
+            try {
+<span class="fc" id="L95">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L96">                String query = &quot;UPDATE formato form SET form.N_studenti=?, form.GP_validi=?,&quot; +</span>
+                        &quot;form.GP_nonValidi=?, form.Nome_Cognome=?, form.Ddn=? WHERE form.ID_formato=?&quot;;
+<span class="fc" id="L98">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L99">                ps.setBoolean(1, formato.isNumStudenti());</span>
+<span class="fc" id="L100">                ps.setBoolean(2, formato.isNumGPValidi());</span>
+<span class="fc" id="L101">                ps.setBoolean(3, formato.isNumGPNonValidi());</span>
+<span class="fc" id="L102">                ps.setBoolean(4, formato.isNomeCognome());</span>
+<span class="fc" id="L103">                ps.setBoolean(5, formato.isData());</span>
+<span class="fc" id="L104">                ps.setString(6, formato.getId());</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                return ps.executeUpdate() == 1;</span>
+<span class="nc" id="L107">            } catch (SQLException e) {</span>
+<span class="nc" id="L108">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L110">                ConnectionSingleton.closeConnection(conn, ps, null);</span>
+<span class="nc" id="L111">            } return false;</span>
+        }
+    }
+
+    /**
+     * Viene eliminato un {@code Formato} dal database.
+     *
+     * @param formato {@code Formato} da eliminare
+     * @return {@code true} se il {@code Formato} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doDelete (Formato formato) { //Non viene testato perchè non è usato da nessuna parte
+        if (formato == null)
+            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;DELETE FROM formato form WHERE form.ID_formato=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, formato.getId());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

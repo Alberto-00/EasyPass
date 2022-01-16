@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dipartimento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.Dipartimento</a> &gt; <span class="el_source">Dipartimento.java</span></div><h1>Dipartimento.java</h1><pre class="source lang-java linenums">package Storage.Dipartimento;
+
+import ApplicationLogic.Utils.InvalidRequestException;
+import ApplicationLogic.Utils.ServletLogic;
+import Storage.Formato.Formato;
+import Storage.Formato.FormatoDAO;
+import Storage.PersonaleUnisa.Docente.Docente;
+import Storage.Report.Report;
+import Storage.Report.ReportDAO;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.*;
+
+/**
+ * La classe crea degli oggetti {@code Dipartimento} che contengono come informazione, oltre
+ * al nome e al codice del Dipartimento, anche il {@code Formato} e la lista dei {@code Report} associata.
+ * Le operazioni svolte da questi oggetti riguardano la gestione dei Report, in particolare:
+ * &lt;ul&gt;
+ *     &lt;li&gt;eliminazione dei {@code Report};&lt;/li&gt;
+ *     &lt;li&gt;impostare il {@code Formato} degli Esiti;&lt;/li&gt;
+ *     &lt;li&gt;ricerca dei {@code Report} secondo dei filtri.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+public class Dipartimento {
+
+    private String nome;
+    private String codice;
+    private Formato formato;
+    ArrayList&lt;Report&gt; reports;
+
+    /**
+     * Crea un ogetto {@code Dipartimento} con tutte le informazioni
+     * passate in input.
+     *
+     * @param nome nome del Dipartimento
+     * @param codice codice di Dipartimento
+     * @param formato Formato degli Esiti del Dipartimento
+     * @param reports lista di Report generata dai Docenti di quel Dipartimento
+     */
+<span class="nc" id="L41">    public Dipartimento(String nome, String codice, Formato formato, ArrayList&lt;Report&gt; reports) {</span>
+<span class="nc" id="L42">        this.nome = nome;</span>
+<span class="nc" id="L43">        this.codice = codice;</span>
+<span class="nc" id="L44">        this.formato = formato;</span>
+<span class="nc" id="L45">        this.reports = Objects.requireNonNullElseGet(reports, ArrayList::new);</span>
+<span class="nc" id="L46">    }</span>
+
+    /**
+     * Costruttore vuoto.
+     */
+<span class="fc" id="L51">    public Dipartimento() {</span>
+<span class="fc" id="L52">        this.nome = &quot;&quot;;</span>
+<span class="fc" id="L53">        this.codice = &quot;&quot;;</span>
+<span class="fc" id="L54">        this.formato = null;</span>
+<span class="fc" id="L55">        this.reports=new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">    }</span>
+
+    public String getNome() {
+<span class="fc" id="L59">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="fc" id="L63">        this.nome = nome;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getCodice() {
+<span class="fc" id="L67">        return codice;</span>
+    }
+
+    public void setCodice(String codice) {
+<span class="fc" id="L71">        this.codice = codice;</span>
+<span class="fc" id="L72">    }</span>
+
+    public Formato getFormato() {
+<span class="fc" id="L75">        return formato;</span>
+    }
+
+    public void setFormato(Formato formato) {
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if(formato.getId().compareTo(this.codice)==0)</span>
+<span class="fc" id="L80">            this.formato = formato;</span>
+        else
+<span class="nc" id="L82">            throw new IllegalArgumentException(&quot;The id of the object 'formato' must be the same of the id of this instance of Dipartimento.&quot;);</span>
+<span class="fc" id="L83">    }</span>
+
+    public ArrayList&lt;Report&gt; getReports() {
+<span class="nc" id="L86">        return reports;</span>
+    }
+
+    public void setReports(ArrayList&lt;Report&gt; reports) {
+<span class="nc" id="L90">        this.reports = reports;</span>
+<span class="nc" id="L91">    }</span>
+
+
+    /**
+     * Aggiorna il {@code Formato} corrispondente all'oggetto
+     * {@code Dipartimento} in questione.
+     *
+     * @param formato Formato da aggiornare
+     */
+    public void impostaFormato(Formato formato) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(formato == null)</span>
+<span class="fc" id="L102">            throw new IllegalArgumentException(&quot;The argument cannot be a null object&quot;);</span>
+        else{
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if(formato.getId().compareTo(this.codice)==0){</span>
+<span class="fc" id="L105">                this.formato=formato;</span>
+<span class="fc" id="L106">                FormatoDAO formatoDAO=new FormatoDAO();</span>
+<span class="fc" id="L107">                formatoDAO.doUpdate(formato);</span>
+<span class="fc" id="L108">            }</span>
+            else
+<span class="nc" id="L110">                throw new IllegalArgumentException(&quot;The id of the argument is different from the attribute 'codice' of 'Dipartimento'&quot;);</span>
+        }
+<span class="fc" id="L112">    }</span>
+
+
+    /**
+     * Elimina il Report, passato in input, sia dal Database
+     * che dalla cartella di Tomcat.
+     *
+     * @param report Report da eliminare
+     */
+    public void eliminaReport(Report report) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if(report == null){</span>
+<span class="fc" id="L123">            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);</span>
+        } else{
+<span class="fc" id="L125">            this.reports.remove(report);</span>
+<span class="fc" id="L126">            ReportDAO reportDAO = new ReportDAO();</span>
+<span class="fc" id="L127">            reportDAO.doDelete(report);</span>
+            try {
+<span class="fc" id="L129">                File file = new File(ServletLogic.getUploadPath() + &quot;Report&quot; + File.separator +  report.getPathFile());</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                if (file.exists()) {</span>
+<span class="nc" id="L131">                    file.delete();</span>
+                }
+<span class="nc" id="L133">            } catch (Exception e) {</span>
+<span class="nc" id="L134">                e.printStackTrace();</span>
+<span class="fc" id="L135">            }</span>
+        }
+<span class="fc" id="L137">    }</span>
+
+
+    /**
+     * Crea un TreeMap avente come key i Report generati da un
+     * Docente e come value le informazioni sul Docente: la ricerca avviene
+     * mediante il nome e il cognome del Docente che ha generato i Report
+     * in un certo periodo di tempo.
+     *
+     * @param docente docente che ha generato un insieme di Report
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaCompletaReport(Docente docente, Date primaData, Date secondaData)
+            throws InvalidRequestException {
+
+<span class="fc bfc" id="L154" title="All 6 branches covered.">        if(docente != null &amp;&amp; primaData != null &amp;&amp; secondaData != null){</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">            if (primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){</span>
+<span class="fc" id="L156">                ReportDAO reportDAO=new ReportDAO();</span>
+<span class="fc" id="L157">                return reportDAO.doSearch(docente, primaData, secondaData);</span>
+            } else
+<span class="fc" id="L159">                throw new InvalidRequestException(&quot;La prima data è minore della seconda data.&quot;, List.of(&quot;La prima data è minore della seconda data.&quot;), HttpServletResponse.SC_BAD_REQUEST);</span>
+        } else
+<span class="fc" id="L161">            throw new IllegalArgumentException(&quot;The arguments 'docente', 'primaData' and 'secondaData' cannot be null.&quot;);</span>
+    }
+
+
+    /**
+     * Crea un TreeMap avente come key i Report generati da un Docente
+     * e come value le informazioni sul Docente: la ricerca avviene mediante il
+     * nome e il cognome del Docente.
+     *
+     * @param docente docente che ha generato un insieme di Report
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaReportSoloDocente(Docente docente) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if(docente != null){</span>
+<span class="fc" id="L175">            ReportDAO reportDAO = new ReportDAO();</span>
+<span class="fc" id="L176">            return reportDAO.doSearchByDocName(docente);</span>
+        }
+        else
+<span class="fc" id="L179">            throw new IllegalArgumentException(&quot;The arguments 'codDip' cannot be null.&quot;);</span>
+    }
+
+
+    /**
+     * Crea un TreeMap avente come key i Report generati
+     * da un Docente e come value le informazioni sul Docente:
+     * la ricerca avviene specificando un certo intervallo di tempo.
+     *
+     * @param primaData prima data dell'intervallo di tempo
+     * @param secondaData seconda data dell'intervallo di tempo
+     * @return insieme ordinato composto da una lista di Report e di Docenti
+     */
+    public TreeMap&lt;Report, Docente&gt; ricercaReportSoloData(Date primaData, Date secondaData) {
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">        if(primaData.before(secondaData) || primaData.compareTo(secondaData) == 0){</span>
+<span class="fc" id="L194">            ReportDAO reportDAO = new ReportDAO();</span>
+<span class="fc" id="L195">            return reportDAO.doSearchByDate(primaData, secondaData, this);</span>
+        }
+        else
+<span class="fc" id="L198">            throw new IllegalArgumentException(&quot;The arguments 'codDip' cannot be null.&quot;);</span>
+    }
+
+    public TreeMap&lt;Report, Docente&gt; ricercaReport() {
+<span class="fc" id="L202">        ReportDAO reportDAO = new ReportDAO();</span>
+<span class="fc" id="L203">        return reportDAO.doRetrieveDocByReport(this.getCodice());</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L208">        return &quot;Dipartimento{&quot; +</span>
+                &quot;nome='&quot; + nome + '\'' +
+                &quot;, codice='&quot; + codice + '\'' +
+                &quot;, formato=&quot; + formato +
+                &quot;, reports=&quot; + reports +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

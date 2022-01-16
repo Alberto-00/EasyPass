@@ -1,0 +1,16 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+EasyPass,ApplicationLogic.Ajax,AjaxServlet,107,123,4,20,25,31,7,12,4,3
+EasyPass,ApplicationLogic.Utils.Validator,StudenteValidator,3,13,0,4,1,5,1,3,1,1
+EasyPass,ApplicationLogic.Utils.Validator,Validator,0,65,1,11,0,14,1,11,0,6
+EasyPass,ApplicationLogic.Utils.Validator,DocenteValidator,3,102,0,16,1,22,1,11,1,3
+EasyPass,Storage.SessioneDiValidazione,SessioneDiValidazioneDAO,9,151,1,11,5,42,1,9,0,4
+EasyPass,Storage.Dipartimento,DipartimentoDAO,11,139,0,10,7,43,0,9,0,4
+EasyPass,Storage.Dipartimento,Dipartimento,51,189,5,21,15,49,9,21,4,13
+EasyPass,Storage.Formato,FormatoDAO,8,110,0,8,5,30,0,7,0,3
+EasyPass,ApplicationLogic.Utils,ConnectionSingleton,9,84,3,9,0,26,3,7,0,4
+EasyPass,Storage.Report,ReportDAO,39,457,4,32,22,122,4,23,0,9
+EasyPass,ApplicationLogic.Servlet,ReportController,268,64,36,14,62,14,28,4,3,3
+EasyPass,Storage.Esito,EsitoDAO,38,451,2,26,23,123,2,21,0,9
+EasyPass,Storage.PersonaleUnisa.Docente,DocenteDAO,40,359,5,23,16,99,4,17,0,7
+EasyPass,Storage.PersonaleUnisa.Direttore,DirettoreDiDipartimento,0,111,2,18,0,27,2,15,0,7
+EasyPass,Storage.PersonaleUnisa.Direttore,DirettoreDiDipartimentoDAO,11,160,0,10,7,49,0,9,0,4

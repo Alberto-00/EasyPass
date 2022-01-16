@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocenteValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">ApplicationLogic.Utils.Validator</a> &gt; <span class="el_source">DocenteValidator.java</span></div><h1>DocenteValidator.java</h1><pre class="source lang-java linenums">package ApplicationLogic.Utils.Validator;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.util.regex.Pattern;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
+
+/**
+ * La classe valida tutti gli input inseriti dal Docente durante la fase
+ * di Login, di Registrazione e di inserimento del numero di Studenti.
+ */
+<span class="nc" id="L22">public class DocenteValidator {</span>
+
+    /**
+     * Crea un {@code Validator} ed effettua vari match per controllare
+     * gli input inseriti durante il Login, in particolare, viene controllata
+     * l'email e la password inseriti dal Docente.
+     *
+     * @param request contiene i valori da controllare
+     * @return {@code Validator}
+     */
+    @Generated
+    public static Validator validateSignIn(HttpServletRequest request){
+        Validator validator = new Validator(request);
+
+        if (!validator.assertMatch(&quot;email&quot;, Pattern.compile(&quot;^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$|^[a-zA-Z0-9_.+-]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$&quot;), &quot;L’e-mail inserita non è corretta&quot;))
+            return validator;
+
+        validator.assertMatch(&quot;password&quot;, Pattern.compile(&quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&amp;:,;'._&lt;&gt;|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&amp;:,;'._&lt;&gt;|-]{8,}$&quot;),&quot;La password inserita non è corretta&quot;);
+        return validator;
+    }
+
+
+    /**
+     * Crea un {@code Validator} ed effettua vari match per controllare
+     * gli input inseriti durante la Registrazione, in particolare, viene
+     * controllato il nome, il cognome, l'email e la password inseriti dal
+     * Docente.
+     *
+     * @param request contiene i valori da controllare
+     * @return {@code Validator}
+     */
+    public static Validator validateSignUp(HttpServletRequest request) {
+<span class="fc" id="L54">        Validator validator = new Validator(request);</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!validator.assertMatch(&quot;nome&quot;, Pattern.compile(&quot;^[a-zA-Z .']+$&quot;), &quot;Il nome inserito non è corretto.&quot;))</span>
+<span class="fc" id="L57">            return validator;</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (checkLengthRequest(&quot;nome&quot;, request)) {</span>
+<span class="fc" id="L60">            validator.getErrors().add(&quot;Il nome non rispetta il formato.&quot;);</span>
+<span class="fc" id="L61">            return validator;</span>
+        }
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (!validator.assertMatch(&quot;cognome&quot;, Pattern.compile(&quot;^[a-zA-Z .']+$&quot;), &quot;Il cognome inserito non è corretto.&quot;))</span>
+<span class="fc" id="L65">            return validator;</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (checkLengthRequest(&quot;cognome&quot;, request)) {</span>
+<span class="fc" id="L68">            validator.getErrors().add(&quot;Il cognome non rispetta il formato.&quot;);</span>
+<span class="fc" id="L69">            return validator;</span>
+        }
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (!validator.assertMatch(&quot;dipartimento&quot;, Pattern.compile(&quot;^(?!\\s*$).+&quot;), &quot;Inserire il Dipartimento.&quot;))</span>
+<span class="fc" id="L73">            return validator;</span>
+
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (!validator.assertMatch(&quot;email2&quot;, Pattern.compile(&quot;^[a-zA-Z0-9_.]{3,}@(?:(?:[a-zA-Z0-9-]+\\.)?[a-zA-Z]+\\.)?(unisa)\\.it$&quot;), &quot;L’e-mail inserita non è corretta.&quot;))</span>
+<span class="fc" id="L76">            return validator;</span>
+
+<span class="fc" id="L78">        validator.assertMatch(&quot;password2&quot;, Pattern.compile(&quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[=^ ì{}+çò°àù§èé#@$!%€*?&amp;:,;'._&lt;&gt;|-])[A-Za-z\\d=^ ì{}+çò°àù§èé#@$!%€*?&amp;:,;'._&lt;&gt;|-]{8,}$&quot;),&quot;La password inserita non è corretta.&quot;);</span>
+<span class="fc" id="L79">        return validator;</span>
+    }
+
+    private static boolean checkLengthRequest(String value, HttpServletRequest request){
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        return request.getParameter(value).length() &lt; 3 ||</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">                request.getParameter(value).length() &gt; 30;</span>
+    }
+
+
+    /**
+     * Crea un {@code Validator} ed effettua il match tra la regex e l'input del numero
+     * degli Studenti.
+     *
+     * @param request contiene il valore da controllare
+     * @return {@code Validator}
+     */
+    public static Validator validateNumberOfStudents(HttpServletRequest request){
+<span class="fc" id="L96">        Validator validator = new Validator(request);</span>
+<span class="fc" id="L97">        validator.assertMatch(&quot;nStudents&quot;, Pattern.compile(&quot;^[1-9]+[0-9]*$&quot;), &quot;Il numero di Studenti inserito non è corretto.&quot;);</span>
+<span class="fc" id="L98">        return validator;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

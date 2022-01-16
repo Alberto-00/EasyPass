@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DocenteDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.PersonaleUnisa.Docente</a> &gt; <span class="el_source">DocenteDAO.java</span></div><h1>DocenteDAO.java</h1><pre class="source lang-java linenums">package Storage.PersonaleUnisa.Docente;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.Dipartimento;
+import Storage.Dipartimento.DipartimentoDAO;
+import Storage.SessioneDiValidazione.SessioneDiValidazione;
+import Storage.SessioneDiValidazione.SessioneDiValidazioneDAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+@interface Generated {}
+
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code docente}, e di verifica
+ * delle credenziali inserite dal Docente.
+ */
+<span class="fc" id="L21">public class DocenteDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo il {@code Docente}
+     * con un determinato {@code username}.
+     *
+     * @param username username del Docente
+     * @return {@code Docente}
+     */
+    public Docente doRetrieveByKey(String username) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(username == null)</span>
+<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;The username must not be null&quot;);</span>
+        else{
+<span class="fc" id="L34">            Connection conn = null;</span>
+<span class="fc" id="L35">            PreparedStatement ps = null;</span>
+<span class="fc" id="L36">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L38">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L39">                String query = &quot;SELECT * FROM docente doc WHERE doc.Username_Doc=?&quot;;</span>
+<span class="fc" id="L40">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L41">                ps.setString(1, username);</span>
+<span class="fc" id="L42">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                if (rs.next())</span>
+<span class="fc" id="L45">                    return DocenteMapper.extract(rs);</span>
+<span class="nc" id="L46">            } catch (SQLException e) {</span>
+<span class="nc" id="L47">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L49">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L50">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo il {@code Docente}
+     * con un determinato {@code nome} e {@code cognome}.
+     *
+     * @param nome nome del Docente
+     * @param cognome cognome del Docente
+     * @return {@code Docente}
+     */
+    public Docente doRetrieveByNameSurname(String nome, String cognome){
+<span class="pc bpc" id="L63" title="1 of 4 branches missed.">        if(nome == null || cognome == null)</span>
+<span class="fc" id="L64">            throw new IllegalArgumentException(&quot;The username must not be null&quot;);</span>
+        else{
+<span class="fc" id="L66">            Connection conn = null;</span>
+<span class="fc" id="L67">            PreparedStatement ps = null;</span>
+<span class="fc" id="L68">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L70">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L71">                String query = &quot;SELECT * FROM docente doc WHERE doc.Nome_Doc=? and &quot; +</span>
+                        &quot;doc.Cognome_Doc = ?&quot;;
+<span class="fc" id="L73">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L74">                ps.setString(1, nome);</span>
+<span class="fc" id="L75">                ps.setString(2, cognome);</span>
+<span class="fc" id="L76">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                if (rs.next())</span>
+<span class="fc" id="L79">                    return DocenteMapper.extract(rs);</span>
+<span class="nc" id="L80">            } catch (SQLException e) {</span>
+<span class="nc" id="L81">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L83">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L84">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo un oggetto
+     * {@code Docente} senza la foreign key della Sessione di validazione associata.
+     *
+     * @param username username del Docente da cercare
+     * @return {@code Docente}
+     */
+    public Docente doRetrieveByKeyWithRelations(String username) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if(username == null)</span>
+<span class="fc" id="L97">            throw new IllegalArgumentException(&quot;The username must not be null&quot;);</span>
+        else{
+<span class="fc" id="L99">            Connection conn = null;</span>
+<span class="fc" id="L100">            PreparedStatement ps = null;</span>
+<span class="fc" id="L101">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L103">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L104">                String query = &quot;SELECT doc.* FROM docente doc, dipartimento dip WHERE doc.Username_Doc=? &quot; +</span>
+                        &quot;AND doc.Codice_Dip=dip.Codice_Dip&quot;;
+<span class="fc" id="L106">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L107">                ps.setString(1, username);</span>
+<span class="fc" id="L108">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L111">                    Docente docente = DocenteMapper.extract(rs);</span>
+<span class="fc" id="L112">                    docente.setDipartimento(new Dipartimento());</span>
+<span class="fc" id="L113">                    docente.getDipartimento().setCodice(rs.getString(&quot;doc.Codice_Dip&quot;));</span>
+<span class="fc" id="L114">                    DipartimentoDAO dip = new DipartimentoDAO();</span>
+<span class="fc" id="L115">                    docente.setDipartimento(dip.doRetrieveByKeyWithRelations(docente.getDipartimento().getCodice()));</span>
+<span class="fc" id="L116">                    return docente;</span>
+                }
+<span class="nc" id="L118">            } catch (SQLException e) {</span>
+<span class="nc" id="L119">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L121">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L122">            } return null;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo una lista di
+     * {@code Docenti} appartenenti a un determinato Dipartimento.
+     *
+     * @param codDip codice di Dipartimento dei Docenti da cercare
+     * @return lista di {@code Docenti}
+     */
+    public ArrayList&lt;Docente&gt; doRetrieveAllWithRelations(String codDip) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if(codDip == null)</span>
+<span class="fc" id="L135">            throw new IllegalArgumentException(&quot;The 'codDip' must not be null&quot;);</span>
+        else{
+<span class="fc" id="L137">            Connection conn = null;</span>
+<span class="fc" id="L138">            PreparedStatement ps = null;</span>
+<span class="fc" id="L139">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L141">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L142">                String query = &quot;SELECT doc.* FROM docente doc, dipartimento dip WHERE doc.Codice_Dip = ? &quot; +</span>
+                        &quot;AND doc.Codice_Dip=dip.Codice_Dip&quot;;
+<span class="fc" id="L144">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L145">                ps.setString(1, codDip);</span>
+<span class="fc" id="L146">                rs = ps.executeQuery();</span>
+<span class="fc" id="L147">                ArrayList&lt;Docente&gt; docenti = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                for (int i = 0; rs.next(); i++) {</span>
+<span class="fc" id="L150">                    docenti.add(DocenteMapper.extract(rs));</span>
+<span class="fc" id="L151">                    docenti.get(i).setDipartimento(new Dipartimento());</span>
+<span class="fc" id="L152">                    docenti.get(i).getDipartimento().setCodice(codDip);</span>
+<span class="fc" id="L153">                    DipartimentoDAO dip = new DipartimentoDAO();</span>
+<span class="fc" id="L154">                    docenti.get(i).setDipartimento(dip.doRetrieveByKeyWithRelations(docenti.get(i).getDipartimento().getCodice()));</span>
+                }
+<span class="fc" id="L156">                return docenti;</span>
+<span class="nc" id="L157">            } catch (SQLException e) {</span>
+<span class="nc" id="L158">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L160">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L161">            } return null;</span>
+        }
+    }
+
+    /**
+     * Si verifica nel database se esiste un Docente registrato con una
+     * determinata email e password.
+     *
+     * @param docente Docente
+     * @return {@code true} se esiste un {@code Docente} con
+     * quelle credenziali, altrimenti {@code false}
+     */
+    public boolean checkUserAndPassw(Docente docente) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if(docente == null){</span>
+<span class="fc" id="L175">            throw new IllegalArgumentException(&quot;The docente must not be null&quot;);</span>
+        } else {
+<span class="fc" id="L177">            Connection conn = null;</span>
+<span class="fc" id="L178">            PreparedStatement ps = null;</span>
+<span class="fc" id="L179">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L181">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L182">                String query = &quot;SELECT * FROM docente doc WHERE doc.Username_Doc = ? and doc.Password_Doc = ?&quot;;</span>
+<span class="fc" id="L183">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L184">                ps.setString(1, docente.getUsername());</span>
+<span class="fc" id="L185">                ps.setString(2, docente.getPassword());</span>
+<span class="fc" id="L186">                rs = ps.executeQuery();</span>
+<span class="fc" id="L187">                return rs.next();</span>
+<span class="nc" id="L188">            } catch (SQLException e) {</span>
+<span class="nc" id="L189">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L191">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L192">            } return false;</span>
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code Docente}.
+     *
+     * @param docente nuovo {@code Docente} da salvare
+     * @return {@code true} se il {@code Docente} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    public boolean doCreate(Docente docente) {
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if(docente == null)</span>
+<span class="fc" id="L205">            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);</span>
+        else {
+<span class="fc" id="L207">            Connection conn = null;</span>
+<span class="fc" id="L208">            PreparedStatement ps = null;</span>
+            try {
+<span class="fc" id="L210">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L211">                String query = &quot;INSERT INTO docente VALUES (?,?,?,?,?)&quot;;</span>
+<span class="fc" id="L212">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L213">                ps.setString(1, docente.getUsername());</span>
+<span class="fc" id="L214">                ps.setString(2, docente.getNome());</span>
+<span class="fc" id="L215">                ps.setString(3, docente.getCognome().toUpperCase());</span>
+<span class="fc" id="L216">                ps.setString(4, docente.getPassword());</span>
+<span class="fc" id="L217">                ps.setString(5, docente.getDipartimento().getCodice());</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                if (docente.getSessioni() != null){</span>
+<span class="nc" id="L219">                    SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                    for (SessioneDiValidazione sessione : docente.getSessioni()) {</span>
+<span class="nc" id="L221">                        sessioneDao.doCreate(sessione);</span>
+<span class="nc" id="L222">                    }</span>
+                }
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">                return ps.executeUpdate() == 1;</span>
+<span class="fc" id="L225">            } catch (SQLException e) {</span>
+<span class="fc" id="L226">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L228">                ConnectionSingleton.closeConnection(conn, ps, null);</span>
+<span class="fc" id="L229">            } return false;</span>
+        }
+    }
+
+    /**
+     * Aggiorna nel database un {@code Docente} esistente.
+     *
+     * @param docente {@code Docente} da aggiornare
+     * @return {@code true} se il {@code Docente} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doUpdate(Docente docente) {
+        if(docente == null)
+            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;UPDATE docente SET Nome_Doc=?, Cognome_Doc=?, Password_Doc=?, Codice_Dip=? WHERE Username_Doc=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, docente.getNome());
+                ps.setString(2, docente.getCognome().toUpperCase());
+                ps.setString(3, docente.getPassword());
+                ps.setString(4, docente.getDipartimento().getCodice());
+                SessioneDiValidazioneDAO sessioneDao = new SessioneDiValidazioneDAO();
+
+                for(SessioneDiValidazione sessione: docente.getSessioni())
+                    sessioneDao.doUpdate(sessione);
+
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Elimina nel database un {@code Docente} esistente.
+     *
+     * @param docente {@code Docente} da eliminare
+     * @return {@code true} se il {@code Docente} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doDelete(Docente docente) {
+        if(docente == null){
+            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);
+        }
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;DELETE FROM docente WHERE Username_Doc=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, docente.getUsername());
+                if (ps.executeUpdate() == 1)
+                    return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

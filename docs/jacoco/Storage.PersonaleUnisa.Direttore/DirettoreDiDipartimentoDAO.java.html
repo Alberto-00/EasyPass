@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirettoreDiDipartimentoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">EasyPass</a> &gt; <a href="index.source.html" class="el_package">Storage.PersonaleUnisa.Direttore</a> &gt; <span class="el_source">DirettoreDiDipartimentoDAO.java</span></div><h1>DirettoreDiDipartimentoDAO.java</h1><pre class="source lang-java linenums">package Storage.PersonaleUnisa.Direttore;
+
+import ApplicationLogic.Utils.ConnectionSingleton;
+import Storage.Dipartimento.DipartimentoDAO;
+import Storage.Dipartimento.Dipartimento;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.sql.*;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+@Documented
+@Retention(RUNTIME)
+@Target({TYPE, METHOD})
+@interface Generated {}
+
+/**
+ * La classe effettua operazioni {@literal CRUD}, sulla tabella {@code direttore}, e di verifica
+ * delle credenziali inserite dal Direttore di Dipartimento.
+ */
+<span class="fc" id="L25">public class DirettoreDiDipartimentoDAO {</span>
+
+    /**
+     * Effettua una query al database restituendo il {@code DirettoreDiDipartimento}
+     * con un determinato {@code username}.
+     *
+     * @param username username del Direttore di Dipartimento
+     * @return {@code DirettoreDiDipartimento}
+     */
+    public DirettoreDiDipartimento doRetrieveByKey(String username) {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if(username == null)</span>
+<span class="fc" id="L36">            throw new IllegalArgumentException(&quot;The username must not be null&quot;);</span>
+        else {
+<span class="fc" id="L38">            Connection conn = null;</span>
+<span class="fc" id="L39">            PreparedStatement ps = null;</span>
+<span class="fc" id="L40">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L42">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L43">                String query = &quot;SELECT * FROM direttore dir WHERE dir.Username_Dir=?&quot;;</span>
+<span class="fc" id="L44">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L45">                ps.setString(1, username);</span>
+<span class="fc" id="L46">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L49">                    DirettoreDiDipartimento direttore = DirettoreDiDipartimentoMapper.extract(rs);</span>
+<span class="fc" id="L50">                    Dipartimento dipartimento = new Dipartimento();</span>
+<span class="fc" id="L51">                    dipartimento.setCodice(rs.getString(&quot;dir.Codice_Dip&quot;));</span>
+<span class="fc" id="L52">                    direttore.setDipartimento(dipartimento);</span>
+<span class="fc" id="L53">                    return direttore;</span>
+                }
+<span class="nc" id="L55">            } catch (SQLException e) {</span>
+<span class="nc" id="L56">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L58">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L59">            } return null;</span>
+        }
+    }
+
+    /**
+     * Si verifica nel database se esiste un Direttore registrato con una
+     * determinata email e password.
+     *
+     * @param direttore Direttore da controllare
+     * @return {@code true} se esiste un {@code DirettoreDiDipartimento} con
+     * quelle credenziali, altrimenti {@code false}
+     */
+    public boolean checkUserAndPassw(DirettoreDiDipartimento direttore) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if(direttore == null)</span>
+<span class="fc" id="L73">            throw new IllegalArgumentException(&quot;The direttore must not be null&quot;);</span>
+        else {
+<span class="fc" id="L75">            Connection conn = null;</span>
+<span class="fc" id="L76">            PreparedStatement ps = null;</span>
+<span class="fc" id="L77">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L79">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L80">                String query = &quot;SELECT * FROM direttore dir WHERE dir.Username_Dir = ? and dir.Password_Dir = ?&quot;;</span>
+<span class="fc" id="L81">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L82">                ps.setString(1, direttore.getUsername());</span>
+<span class="fc" id="L83">                ps.setString(2, direttore.getPassword());</span>
+<span class="fc" id="L84">                rs = ps.executeQuery();</span>
+<span class="fc" id="L85">                return rs.next();</span>
+<span class="nc" id="L86">            } catch (SQLException e) {</span>
+<span class="nc" id="L87">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L89">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="nc" id="L90">            } return false;</span>
+        }
+    }
+
+    /**
+     * Effettua una query al database restituendo un oggetto
+     * {@code DirettoreDiDipartimento} con le foreign key associate.
+     *
+     * @param username username del Direttore da cercare
+     * @return {@code DirettoreDiDipartimento} con le foreign key associate.
+     */
+    public DirettoreDiDipartimento doRetrieveByKeyWithRelations(String username) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if(username==null)</span>
+<span class="fc" id="L103">            throw new IllegalArgumentException(&quot;The username must not be null&quot;);</span>
+        else{
+<span class="fc" id="L105">            Connection conn = null;</span>
+<span class="fc" id="L106">            PreparedStatement ps = null;</span>
+<span class="fc" id="L107">            ResultSet rs = null;</span>
+            try {
+<span class="fc" id="L109">                conn = ConnectionSingleton.getInstance().getConnection();</span>
+<span class="fc" id="L110">                String query = &quot;SELECT * FROM direttore dir WHERE dir.Username_Dir=?&quot;;</span>
+<span class="fc" id="L111">                ps = conn.prepareStatement(query);</span>
+<span class="fc" id="L112">                ps.setString(1, username);</span>
+<span class="fc" id="L113">                rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L115" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L116">                    DirettoreDiDipartimento direttore = DirettoreDiDipartimentoMapper.extract(rs);</span>
+<span class="fc" id="L117">                    String codiceDip=rs.getString(&quot;dir.Codice_Dip&quot;);</span>
+<span class="fc" id="L118">                    direttore.setDipartimento(new DipartimentoDAO().doRetrieveByKeyWithRelations(codiceDip));</span>
+<span class="fc" id="L119">                    return direttore;</span>
+                }
+<span class="nc" id="L121">            } catch (SQLException e) {</span>
+<span class="nc" id="L122">                e.printStackTrace();</span>
+            } finally {
+<span class="fc" id="L124">                ConnectionSingleton.closeConnection(conn, ps, rs);</span>
+<span class="fc" id="L125">            } return null;</span>
+        }
+    }
+
+    /**
+     * Salva nel database un nuovo {@code DirettoreDiDipartimento}.
+     *
+     * @param direttore nuovo {@code DirettoreDiDipartimento} da salvare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &amp;egrave; stato creato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doCreate(DirettoreDiDipartimento direttore) {
+        if(direttore == null)
+            throw new IllegalArgumentException(&quot;Cannot save a null object&quot;);
+        else {
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;INSERT INTO direttore VALUES (?,?,?,?,?)&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, direttore.getUsername());
+                ps.setString(2, direttore.getNome());
+                ps.setString(3, direttore.getCognome().toUpperCase());
+                ps.setString(4, direttore.getPassword());
+                ps.setString(5, direttore.getDipartimento().getCodice());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Aggiorna nel database un {@code DirettoreDiDipartimento} esistente.
+     *
+     * @param direttore {@code DirettoreDiDipartimento} da aggiornare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &amp;egrave; stato aggiornato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doUpdate(DirettoreDiDipartimento direttore) {
+        if(direttore == null)
+            throw new IllegalArgumentException(&quot;Cannot update a null object&quot;);
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;UPDATE direttore SET Nome_Dir=?, Cognome_Dir=?, Password_Dir=?, Codice_Dip=? WHERE Username_Dir=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, direttore.getNome());
+                ps.setString(2, direttore.getCognome());
+                ps.setString(3, direttore.getPassword());
+                ps.setString(4, direttore.getDipartimento().getCodice());
+                return ps.executeUpdate() == 1;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+
+    /**
+     * Elimina nel database un {@code DirettoreDiDipartimento} esistente.
+     *
+     * @param direttore {@code DirettoreDiDipartimento} da eliminare
+     * @return {@code true} se il {@code DirettoreDiDipartimento} &amp;egrave; stato eliminato,
+     * {@code false} altrimenti
+     */
+    @Generated
+    public boolean doDelete(DirettoreDiDipartimento direttore) {
+        if(direttore == null)
+            throw new IllegalArgumentException(&quot;Cannot delete a null object&quot;);
+        else{
+            Connection conn = null;
+            PreparedStatement ps = null;
+            try {
+                conn = ConnectionSingleton.getInstance().getConnection();
+                String query = &quot;DELETE FROM direttore WHERE Username_Dir=?&quot;;
+                ps = conn.prepareStatement(query);
+                ps.setString(1, direttore.getUsername());
+                if (ps.executeUpdate() == 1)
+                    return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                ConnectionSingleton.closeConnection(conn, ps, null);
+            } return false;
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
