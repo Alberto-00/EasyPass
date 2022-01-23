@@ -20,9 +20,6 @@
         </sourceRoots>
       </configuration>
     </facet>
-    <facet type="Spring" name="Spring">
-      <configuration />
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
     <output url="file://$MODULE_DIR$/target/classes" />
