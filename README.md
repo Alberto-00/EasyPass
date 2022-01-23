@@ -5,7 +5,7 @@
   🦠 Web App for Green Pass validation. 🦠<br>
   A project for<br>
   Software Engineering<br> 
-  courses at University of Salerno.
+  course at University of Salerno.
 </p>
 <h1 dir="auto">
   <a id="user-content-project-description-and-introduction" class="anchor" aria-hidden="true" href="#project-description-and-introduction">
@@ -25,7 +25,7 @@
   Introduction
 </h2>
 <p dir="auto">
-  🦠🎓 Web App for Green Pass validation. Produced for the Software Engineering courses of Computer Science at University of Salerno.
+  🦠🎓 Web App for Green Pass validation. Produced for the Software Engineering course of Computer Science at University of Salerno.
 </p>
 <h2 dir="auto">
   <a id="user-content-authors" class="anchor" aria-hidden="true" href="#authors">
