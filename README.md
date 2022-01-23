@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./Easy Pass/src/main/webapp/icons/logo.svg"/>
+  <img src="./Easy Pass/src/main/webapp/icons/github.svg"/>
 </p>
 <p align="center" dir="auto">
   🦠 Web App for Green Pass validation. 🦠<br>
