@@ -51,8 +51,8 @@
   Documentation
 </h2>
 <ul dir="auto">
-<li>Project's javadoc can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/Progetto-IdS/" rel="nofollow">Javadoc Link</a>.</li>
-<li>Testing's JaCoCo can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/Progetto-IdS/" rel="nofollow">JaCoCo Link</a>
+<li>Project's javadoc can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/EasyPass/" rel="nofollow">Javadoc Link</a>.</li>
+<li>Testing's JaCoCo can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/EasyPass/" rel="nofollow">JaCoCo Link</a>
 </ul>
 <h1 dir="auto">
   <a id="user-content-technical-informations" class="anchor" aria-hidden="true" href="#technical-informations">
