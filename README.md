@@ -53,6 +53,7 @@
 <ul dir="auto">
 <li>Project's javadoc can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/EasyPass/" rel="nofollow">Javadoc Link</a>.</li>
 <li>Testing's JaCoCo can be found in <em>docs</em> directory and at the following link: <a href="https://alberto-00.github.io/EasyPass/" rel="nofollow">JaCoCo Link</a>
+  <lI>Easy Pass AI module can be found at the following link: <a href="https://github.com/Alberto-00/EasyPass-AI" rel="nofollow">Easy Pass AI</a></>
 </ul>
 <h1 dir="auto">
   <a id="user-content-technical-informations" class="anchor" aria-hidden="true" href="#technical-informations">
